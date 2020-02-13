@@ -17,8 +17,7 @@ Import "UtilityScripts.lua"
 Import "DebugScripts.lua"
 Import "PlayerAIData.lua"
 --Codex Menu
-Import "CodexMenuScripts.lua"
-Import "CodexMenuData.lua"
+
 Import "Art.lua"
 Import "EnemyAI.lua"
 Import "UpgradeManager.lua"
