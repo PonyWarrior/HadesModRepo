@@ -511,7 +511,7 @@ function AddTraitToHero(args)
 	-- traits may have information that acts on weapons, so we must first equip all associated weapons to the player
 	EquipReferencedWeapons( traitData )
 	AddTraitData( CurrentRun.Hero, traitData, args )
-
+	CodexMenuData.LastAddedTrait = traitData.Name --Codex Menu
 	EquipSpecialWeapons( CurrentRun.Hero, traitData )
 	AddAssistWeapons( CurrentRun.Hero, traitData )
 	for weaponName, v in pairs( CurrentRun.Hero.Weapons ) do
