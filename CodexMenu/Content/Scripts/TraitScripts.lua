@@ -65,8 +65,8 @@ function MaximumChillThread( args )
 	end
 end
 
-function CheckChillKill( args, victim )
-	if victim.Slowed and not victim.IsDead and victim.Health / victim.MaxHealth <= args.ChillDeathThreshold and ( victim.Phases == nil or victim.CurrentPhase == victim.Phases ) then
+function CheckChillKill( args, attacker, victim )
+	if attacker == CurrentRun.Hero and victim.Slowed and not victim.IsDead and victim.Health / victim.MaxHealth <= args.ChillDeathThreshold and ( victim.Phases == nil or victim.CurrentPhase == victim.Phases ) then
 		FireWeaponFromUnit({ Weapon = "DemeterChillKill", AutoEquip = true, Id = CurrentRun.Hero.ObjectId, DestinationId = victim.ObjectId, FireFromTarget = true })
 		PlaySound({ Name = "/SFX/DemeterEnemyFreezeShatter", Id = victim.ObjectId })
 
@@ -77,7 +77,7 @@ function CheckChillKill( args, victim )
 			SetAnimation({ Name = victim.DeathAnimation, DestinationId = victim.ObjectId })
 			-- @todo Notify on death animation finish
 		end
-		thread( Kill, victim )
+		thread( Kill, victim, { ImpactAngle = 0, AttackerTable = CurrentRun.Hero, AttackerId = CurrentRun.Hero.ObjectId })
 	end
 end
 
@@ -211,6 +211,7 @@ function ProcessTraitData( args )
 	if traitName == nil then
 		traitName = args.TraitData.Name
 	end
+	traitData.Title = traitData.Name
 
 	local numExisting = GetTraitCount( unit, traitData )
 
@@ -639,15 +640,21 @@ function AreTraitsIdentical( traitA, traitB )
 		return true
 	end
 
-	if traitA.OnExpire ~= nil or traitB.OnExpire ~= nil then
+	if traitA.LastCurseName ~= traitB.LastCurseName or traitA.LastBlessingName ~= traitB.LastBlessingName then
 		return false
 	end
 
-	if traitA.LastCurseName ~= nil or traitA.LastBlessingName or traitB.LastCurseName ~= nil or traitB.LastBlessingName then
-		return false
+	if traitA.RemainingUses or traitB.RemainingUses then
+		return traitB.Name == traitA.Name and traitB.Id == traitA.Id
 	end
+	return traitB.Name == traitA.Name
+end
 
-	return traitB.Name == traitA.Name and traitB.RemainingUses == traitA.RemainingUses
+function GetTraitUniqueId()
+	if CurrentRun then
+		return GetRunDepth( CurrentRun ) .. tostring( _worldTime )
+	end
+	return tostring(_worldTime)
 end
 
 function UpdateHeroTraitDictionary( )
@@ -703,11 +710,15 @@ function AddTraitData( unit, traitData, args )
 		return
 	end
 
+	newTrait.Id =  GetTraitUniqueId()
+
 	table.insert( unit.Traits, newTrait )
+
+	PriorityTrayTraitAdd( newTrait, { DeferSort = true })
 	if unit == CurrentRun.Hero and not args.SkipUIUpdate then
-		TraitUIUpdate( newTrait )
 		UpdateHeroTraitDictionary()
 		TraitUIAdd( newTrait, true )
+		SortPriorityTraits()
 	end
 
 	AddOnHitWeapons( unit, newTrait )
@@ -914,7 +925,7 @@ function RemoveWeaponTrait( traitName )
 		for upgradeName, amount in pairs( CurrentRun.MetaUpgrades or GameState.MetaUpgrades ) do
 			local upgradeData = MetaUpgradeData[upgradeName]
 			local hasAffectedMetaUpgrade = false
-			if upgradeData.PropertyChanges ~= nil then
+			if upgradeData and upgradeData.PropertyChanges ~= nil then
 				for _, propertyChange in pairs( upgradeData.PropertyChanges) do
 					if ( propertyChange.WeaponNames ~= nil and Contains(propertyChange.WeaponNames, weaponName )) or ( propertyChange.WeaponName ~= nil and propertyChange.WeaponName == weaponName ) then
 						hasAffectedMetaUpgrade = true
@@ -933,12 +944,9 @@ function RemoveWeaponTrait( traitName )
 
 		for i, removedTraitData in pairs(removedWeaponTraits) do
 			AddTraitToHero({ TraitData = removedTraitData })
-			--TraitUIUpdate( removedTraitData )
-			--TraitUIAdd( removedTraitData, false )
 		end
 
 		UpdateHeroTraitDictionary()
-		TraitUIResortRecent()
 	end
 end
 
@@ -964,9 +972,8 @@ function RemoveTraitData( unit, trait, args )
 		end
 	end
 	if unit == CurrentRun.Hero and not args.SkipUIUpdate then
-		TraitUIUpdate( trait )
 		UpdateHeroTraitDictionary()
-		TraitUIResortRecent()
+		PriorityTrayTraitRemove( trait )
 		TraitUIRemove( trait )
 	end
 
@@ -980,12 +987,7 @@ function RemoveTraitData( unit, trait, args )
 	end
 
 	if trait.AddIncomingDamageModifiers and unit.IncomingDamageModifiers ~= nil then
-		for modifierIndex, modifier in pairs(unit.IncomingDamageModifiers) do
-			if modifier.Name == trait.Name then
-				unit.IncomingDamageModifiers[modifierIndex] = nil
-				break
-			end
-		end
+		RemoveIncomingDamageModifier( unit, trait.Name )
 	end
 	if trait.AddOutgoingDamageModifiers then
 		for modifierIndex, modifier in pairs(unit.OutgoingDamageModifiers) do
@@ -1010,6 +1012,19 @@ function RemoveTraitData( unit, trait, args )
 		if unit.WeaponDataOverride then
 			for key, data in pairs(trait.WeaponDataOverride) do
 				unit.WeaponDataOverride[key] = nil
+			end
+
+			-- reapply any other weapon data overrides
+			for i, traitData in pairs( unit.Traits ) do
+				if traitData.WeaponDataOverride then
+					for key, data in pairs(traitData.WeaponDataOverride) do
+						if unit.WeaponDataOverride[key] then
+							unit.WeaponDataOverride[key] = MergeTables(unit.WeaponDataOverride[key], data )
+						else
+							unit.WeaponDataOverride[key] = MergeTables(WeaponData[key], data )
+						end
+					end
+				end
 			end
 		end
 	end
@@ -1217,7 +1232,7 @@ end
 
 function GetLootSourceName( traitName )
 	for lootName, god in pairs(LootData) do
-		if god.GodLoot and not god.DebugOnly and god.TraitIndex[traitName] then
+		if ( god.GodLoot or god.TreatAsGodLootByShops ) and not god.DebugOnly and god.TraitIndex[traitName] then
 			return lootName
 		end
 	end
@@ -1357,6 +1372,7 @@ function SetTraitsOnLoot( lootData )
 		Common = {},
 		Rare = {},
 		Epic = {},
+		Heroic = {},
 		Legendary = {},
 	}
 
@@ -1373,17 +1389,11 @@ function SetTraitsOnLoot( lootData )
 			if rarityLevels == nil then
 				rarityLevels = { Common = true }
 			end
-			if rarityLevels.Common ~= nil then
-				rarityTable.Common[upgradeData.ItemName] = upgradeData
-			end
-			if rarityLevels.Rare ~= nil then
-				rarityTable.Rare[upgradeData.ItemName] = upgradeData
-			end
-			if rarityLevels.Epic ~= nil then
-				rarityTable.Epic[upgradeData.ItemName] = upgradeData
-			end
-			if rarityLevels.Legendary ~= nil then
-				rarityTable.Legendary[upgradeData.ItemName] = upgradeData
+
+			for key, table in pairs( rarityTable ) do
+				if rarityLevels[key] ~= nil then
+					table[upgradeData.ItemName] = upgradeData
+				end
 			end
 		end
 	end
@@ -1395,6 +1405,8 @@ function SetTraitsOnLoot( lootData )
 			upgradeOptions[i].Rarity = upgradeData.Rarity
 		elseif rarityTable.Legendary[upgradeData.ItemName] and lootData.RarityChances.Legendary and RandomChance( lootData.RarityChances.Legendary ) then
 			upgradeOptions[i].Rarity = "Legendary"
+		elseif rarityTable.Epic[upgradeData.ItemName] and lootData.RarityChances.Heroic and RandomChance( lootData.RarityChances.Heroic) then
+			upgradeOptions[i].Rarity = "Heroic"
 		elseif rarityTable.Epic[upgradeData.ItemName] and lootData.RarityChances.Epic and RandomChance( lootData.RarityChances.Epic ) then
 			upgradeOptions[i].Rarity = "Epic"
 		elseif rarityTable.Rare[upgradeData.ItemName] and lootData.RarityChances.Rare and RandomChance( lootData.RarityChances.Rare ) then
@@ -1403,6 +1415,7 @@ function SetTraitsOnLoot( lootData )
 			upgradeOptions[i].Rarity = "Common"
 		end
 		rarityTable.Legendary[upgradeData.ItemName] = nil
+		rarityTable.Heroic[upgradeData.ItemName] = nil
 		rarityTable.Epic[upgradeData.ItemName] = nil
 		rarityTable.Rare[upgradeData.ItemName] = nil
 		rarityTable.Common[upgradeData.ItemName] = nil
@@ -1414,6 +1427,7 @@ function SetTraitsOnLoot( lootData )
 		{
 			Rare = not IsEmpty(rarityTable.Rare),
 			Epic = not IsEmpty(rarityTable.Epic),
+			Heroic = not IsEmpty(rarityTable.Heroic),
 			Legendary = not IsEmpty(rarityTable.Legendary),
 		}
 
@@ -1422,6 +1436,9 @@ function SetTraitsOnLoot( lootData )
 		if validRarities.Legendary and lootData.RarityChances.Legendary and RandomChance( lootData.RarityChances.Legendary ) then
 			chosenRarity = "Legendary"
 			chosenUpgrade = GetRandomValue( rarityTable.Legendary )
+		elseif validRarities.Heroic and lootData.RarityChances.Heroic and RandomChance( lootData.RarityChances.Heroic ) then
+			chosenRarity = "Heroic"
+			chosenUpgrade = GetRandomValue( rarityTable.Heroic )
 		elseif validRarities.Epic and lootData.RarityChances.Epic and RandomChance( lootData.RarityChances.Epic ) then
 			chosenRarity = "Epic"
 			chosenUpgrade = GetRandomValue( rarityTable.Epic )
@@ -1437,6 +1454,7 @@ function SetTraitsOnLoot( lootData )
 			chosenUpgrade.Rarity = chosenRarity
 			table.insert(upgradeOptions, chosenUpgrade)
 			rarityTable.Legendary[chosenUpgrade.ItemName] = nil
+			rarityTable.Heroic[chosenUpgrade.ItemName] = nil
 			rarityTable.Epic[chosenUpgrade.ItemName] = nil
 			rarityTable.Rare[chosenUpgrade.ItemName] = nil
 			rarityTable.Common[chosenUpgrade.ItemName] = nil
@@ -1463,6 +1481,7 @@ function SetTraitsOnLoot( lootData )
 		{
 			Rare = not IsEmpty(rarityTable.Rare),
 			Epic = not IsEmpty(rarityTable.Epic),
+			Heroic = not IsEmpty(rarityTable.Heroic),
 			Legendary = not IsEmpty(rarityTable.Legendary),
 		}
 
@@ -1474,6 +1493,9 @@ function SetTraitsOnLoot( lootData )
 		elseif validRarities.Epic and lootData.RarityChances.Epic then
 			chosenRarity = "Epic"
 			chosenUpgrade = GetRandomValue( rarityTable.Epic )
+		elseif validRarities.Heroic and lootData.RarityChances.Heroic then
+			chosenRarity = "Heroic"
+			chosenUpgrade = GetRandomValue( rarityTable.Heroic )
 		elseif validRarities.Legendary and lootData.RarityChances.Legendary then
 			chosenRarity = "Legendary"
 			chosenUpgrade = GetRandomValue( rarityTable.Legendary )
@@ -1486,6 +1508,7 @@ function SetTraitsOnLoot( lootData )
 			chosenUpgrade.Rarity = chosenRarity
 			table.insert(upgradeOptions, chosenUpgrade)
 			rarityTable.Legendary[chosenUpgrade.ItemName] = nil
+			rarityTable.Heroic[chosenUpgrade.ItemName] = nil
 			rarityTable.Epic[chosenUpgrade.ItemName] = nil
 			rarityTable.Rare[chosenUpgrade.ItemName] = nil
 			rarityTable.Common[chosenUpgrade.ItemName] = nil
@@ -1551,13 +1574,19 @@ function ExtractValue( unit, extractToTable, table, extractData)
 		local name = extractData.MetaUpgradeName
 		local numUpgrades = GetNumMetaUpgrades( name )
 		local upgradeData = MetaUpgradeData[name]
-		value = (upgradeData.BaseValue or 0) + GetMetaUpgradeStatDelta(upgradeData) * numUpgrades
+		value = GetTotalStatChange( upgradeData )
 	elseif extractData.Format == "ExistingAmmoDropDelay" then
 		local ammoDivisor = GetTotalHeroTraitValue( "AmmoReclaimTimeDivisor" )
 		if ammoDivisor == 0 then
 			ammoDivisor = 1
 		end
 		value = math.max(0.1, WeaponData.RangedWeapon.AmmoDropDelay / ammoDivisor)
+	elseif extractData.Format == "ExistingAmmoReloadDelay" then
+		local ammoDivisor = GetTotalHeroTraitValue( "AmmoReloadTimeDivisor" )
+		if ammoDivisor == 0 then
+			ammoDivisor = 1
+		end
+		value = math.max(0.1, GetBaseAmmoReloadTime() / ammoDivisor)
 	elseif extractData.Format == "ExistingWrathStocks" then
 		if not CurrentRun or not CurrentRun.Hero or not CurrentRun.Hero.SuperMeterLimit or not CurrentRun.Hero.SuperCost then
 			value = 1
@@ -1607,11 +1636,13 @@ function ExtractTotalValues(unit, newTraitData )
 
 				newTraitData[data.ExtractAs.."NewTotal"] = FormatExtractedValue(incrementedTotal, data)
 			end
-		elseif data.Format == "AmmoDelayDivisor" then
+		elseif data.Format == "AmmoDelayDivisor" or data.Format == "AmmoReloadDivisor" then
 			total = 0
 			for s, traitData in pairs(CurrentRun.Hero.Traits) do
 				if traitData.AmmoReclaimTimeDivisor then
 					total = total + traitData.AmmoReclaimTimeDivisor
+				elseif traitData.AmmoReloadTimeDivisor then
+					total = total + traitData.AmmoReloadTimeDivisor
 				end
 			end
 			if total ~= 0 then
@@ -1621,7 +1652,11 @@ function ExtractTotalValues(unit, newTraitData )
 			end
 
 			if not isOnUnit then
-				incrementedTotal = total + newTraitData.AmmoReclaimTimeDivisor
+				if newTraitData.AmmoReclaimTimeDivisor then
+					incrementedTotal = total + newTraitData.AmmoReclaimTimeDivisor
+				elseif newTraitData.AmmoReloadTimeDivisor then
+					incrementedTotal = total + newTraitData.AmmoReloadTimeDivisor
+				end
 				if incrementedTotal ~= 0 then
 					newTraitData[data.ExtractAs.."NewTotal"] = FormatExtractedValue(incrementedTotal, data)
 				end
@@ -1669,6 +1704,9 @@ function FormatExtractedValue(value, extractData)
 		elseif extractData.Format == "AmmoDelayDivisor" then
 			DebugAssert({ Condition = value ~= 0, Text = "A divisor formatted value is zero!" .. value .. " " .. tostring(extractData.Key) })
 			value = WeaponData.RangedWeapon.AmmoDropDelay / value
+		elseif extractData.Format == "AmmoReloadDivisor" then
+			DebugAssert({ Condition = value ~= 0, Text = "A divisor formatted value is zero!" .. value .. " " .. tostring(extractData.Key) })
+			value = GetBaseAmmoReloadTime() / value
 		elseif extractData.Format == "PercentDelta" then
 			-- eg 1.3 becomes "30"
 			value = (value - 1) * 100
@@ -1847,7 +1885,8 @@ function AddStackToTraits( source, args )
 	end
 
 	UpdateHeroTraitDictionary()
-	TraitUIResortRecent()
+	SortPriorityTraits()
+
 	for i, traitData in pairs( CurrentRun.Hero.Traits ) do
 		if upgradedTraits[traitData.Name] then
 			wait(0.1)

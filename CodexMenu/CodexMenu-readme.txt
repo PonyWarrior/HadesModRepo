@@ -44,3 +44,6 @@ Added Chaos boon spawn
 Fix crash if you press codex key while codex is opening
 Added remove last added trait to Orpheus
 Added upgrade last added trait rarity to Eurydice
+
+1.3.3
+Updated to game version 0.26829
