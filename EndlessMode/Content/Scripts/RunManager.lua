@@ -3,6 +3,7 @@ function CreateNewHero( prevRun, args )
 	local newHero = DeepCopyTable( newHeroData )
 	newHero.SpeakerId = 1
 	newHero.Traits = {}
+	newHero.RecentTraits = {}
 	newHero.Health = newHero.MaxHealth
 	newHero.InvulnerableFlags = {}
 	newHero.PersistentInvulnerableFlags = {}
@@ -54,6 +55,31 @@ function InitHeroLastStands( newHero )
 				Icon = "ExtraLifeZag",
 				WeaponName = "LastStandMetaUpgradeShield",
 				HealFraction = 0.5,
+				Silent = true
+			})
+		end
+	end
+	for s = 1, GetNumMetaUpgrades("ExtraChanceWrathMetaUpgrade" ) do
+		for i = 1, MetaUpgradeData["ExtraChanceWrathMetaUpgrade"].ChangeValue do
+			AddLastStand({
+				Unit = newHero,
+				IncreaseMax = true,
+				Icon = "ExtraLifeZag",
+				WeaponName = "LastStandMetaUpgradeWrath",
+				HealFraction = 0.2,
+				Silent = true
+			})
+		end
+	end
+	for s = 1, GetNumMetaUpgrades("ExtraChanceReplenishMetaUpgrade" ) do
+		for i = 1, MetaUpgradeData["ExtraChanceReplenishMetaUpgrade"].ChangeValue do
+			AddLastStand({
+				Name = "ExtraChanceReplenishMetaUpgrade",
+				Unit = newHero,
+				IncreaseMax = true,
+				Icon = "ExtraLifeReplenish",
+				WeaponName = "LastStandMetaUpgradeShield",
+				HealFraction = MetaUpgradeData.ExtraChanceReplenishMetaUpgrade.HealPercent,
 				Silent = true
 			})
 		end
@@ -130,6 +156,7 @@ function StartNewGame()
 	GameState.ItemInteractions = {}
 	GameState.EnemySpawns = {}
 	GameState.EnemyKills = {}
+	GameState.EnemyEliteAttributeKills = {}
 	GameState.EnemyDamage = {}
 	GameState.CompletedObjectiveSets = {}
 	GameState.ObjectivesCompleted = {}
@@ -155,13 +182,20 @@ function StartNewGame()
 	GameState.RecordLastClearedShrineReward = {}
 	GameState.ClearedWithMetaUpgrades = {}
 	GameState.SpeechRecordContexts = {}
-
 	GameState.MetaUpgradesUnlocked = {}
+	GameState.MetaUpgradeStagesUnlocked = 0
+	GameState.MetaUpgradesSelected = {}
+	GameState.MetaUpgradeState = {}
+
 	for metaUpgradeName, metaUpgradeData in pairs( MetaUpgradeData ) do
 		if metaUpgradeData.Starting then
 			GameState.MetaUpgradesUnlocked[metaUpgradeName] = true
 		end
 	end
+	for k, metaUpgradeChoices  in pairs( MetaUpgradeOrder ) do
+		GameState.MetaUpgradesSelected[k] = metaUpgradeChoices[1]
+	end
+
 	InitializeGiftData()
 	GameState.ReturnedRandomEligibleSourceNames = {}
 	GameState.PlayedRandomRunIntroData = {}
@@ -197,8 +231,10 @@ function StartNewRun( prevRun, args )
 	CurrentRun = {}
 	CurrentRun.DamageRecord = {}
 	CurrentRun.HealthRecord = {}
+	CurrentRun.ConsumableRecord = {}
 	CurrentRun.ActualHealthRecord = {}
 	CurrentRun.BlockTimerFlags = {}
+	CurrentRun.WeaponsFiredRecord = {}
 
 	if args ~= nil then
 		if args.RunOverrides ~= nil then
@@ -221,10 +257,11 @@ function StartNewRun( prevRun, args )
 	UpdateRunHistoryCache( CurrentRun )
 	CheckRunStartFlags( CurrentRun )
 
-	CurrentRun.RoomCreations= {}
+	CurrentRun.RoomCreations = {}
 	CurrentRun.LootTypeHistory = {}
 	CurrentRun.NPCInteractions = {}
 	CurrentRun.AnimationState = {}
+	CurrentRun.EventState = {}
 	CurrentRun.ActivationRecord = {}
 	CurrentRun.SpeechRecord = {}
 	CurrentRun.TextLinesRecord = {}
@@ -245,19 +282,21 @@ function StartNewRun( prevRun, args )
 	CurrentRun.GameplayTime = 0
 	CurrentRun.BiomeTime = 0
 	CurrentRun.ActiveBiomeTimer = GetNumMetaUpgrades("BiomeSpeedShrineUpgrade") > 0
-	CurrentRun.NumRerolls = GetNumMetaUpgrades( "RerollMetaUpgrade" )
+	CurrentRun.NumRerolls = GetNumMetaUpgrades( "RerollMetaUpgrade" ) + GetNumMetaUpgrades("RerollPanelMetaUpgrade")
 	CurrentRun.ThanatosSpawns = 0
 	CurrentRun.SupportAINames = {}
 	CurrentRun.Hero.TargetMetaRewardsAdjustSpeed = 10.0
 	CurrentRun.ClosedDoors = {}
 	CurrentRun.CompletedStyxWings = 0
 	CurrentRun.TargetShrinePointThreshold = GetCurrentRunClearedShrinePointThreshold( GetEquippedWeapon() )
+	CurrentRun.BannedEliteAttributes = {}
 	if ConfigOptionCache.EasyMode then
 		CurrentRun.EasyModeLevel = GameState.EasyModeLevel
 	end
 	InitHeroLastStands( CurrentRun.Hero )
 
 	InitializeRewardStores( CurrentRun )
+	SelectBannedEliteAttributes( CurrentRun )
 
 	if args ~= nil and args.RoomName ~= nil then
 		CurrentRun.CurrentRoom = CreateRoom( RoomData[args.RoomName], args )
@@ -397,8 +436,7 @@ function CreateRoom( roomData, args )
 			fishingPointChance = fishingPointChance * mutator.FishingPointChanceMultiplier
 		end
 	end
-	room.FishingPointChanceSuccess =  RandomChance( fishingPointChance )
-
+	room.FishingPointChanceSuccess =  RandomChance( fishingPointChance + GetTotalHeroTraitValue("FishingPointChanceBonus") )
 	if CurrentRun.RoomCreations[room.Name] == nil then
 		CurrentRun.RoomCreations[room.Name] = 0
 	end
@@ -794,7 +832,7 @@ function SetupEncounter( encounterData, room )
 	end
 
 	if encounter.Generated then
-		GenerateEncounter(CurrentRun, CurrentRun.CurrentRoom, encounter)
+		GenerateEncounter(CurrentRun, room, encounter)
 	end
 
 	-- Check if enemies need to be introduced
@@ -805,7 +843,7 @@ function SetupEncounter( encounterData, room )
 				if requiredIntroEncounterName ~= nil and not HasEncounterBeenCompleted(requiredIntroEncounterName) and IsGameStateEligible( CurrentRun, EncounterData[requiredIntroEncounterName] ) then
 					encounter = DeepCopyTable(EncounterData[requiredIntroEncounterName])
 					if encounter.Generated then
-						GenerateEncounter(CurrentRun, CurrentRun.CurrentRoom, encounter)
+						GenerateEncounter(CurrentRun, room, encounter)
 					end
 				end
 			end
@@ -896,7 +934,7 @@ function GenerateEncounter( currentRun, room, encounter )
 		encounter.DifficultyRating = encounter.DifficultyRating * (1 + GetNumMetaUpgrades("EnemyCountShrineUpgrade") * (MetaUpgradeData.EnemyCountShrineUpgrade.ChangeValue - 1 ) )
 	end
 
-	local minDifficulty = encounter.MinimumDifficulty or MinimumDifficulty
+	local minDifficulty = encounter.MinimumDifficulty or ConstantsData.MinimumDifficulty
 	encounter.DifficultyRating = math.max( minDifficulty, encounter.DifficultyRating )
 
 	encounter.ActiveEnemyCap = CalculateActiveEnemyCap( currentRun, room, encounter )
@@ -993,8 +1031,8 @@ function GenerateEncounter( currentRun, room, encounter )
 				waveTypeCount = waveTypeCount + 1
 
 				wave.RequireCompletedIntro = wave.requireCompletedIntro or requireCompletedIntro
-				FillEnemyTypes(encounter, wave)
-				FillEnemyCounts(encounter, wave)
+				FillEnemyTypes(encounter, wave, room)
+				FillEnemyCounts(encounter, wave, room)
 			end
 		end
 	else
@@ -1003,14 +1041,14 @@ function GenerateEncounter( currentRun, room, encounter )
 		for waveNum, wave in pairs(encounter.SpawnWaves) do
 			if waveNum > preExistingWaves then
 				wave.RequireCompletedIntro = wave.requireCompletedIntro or requireCompletedIntro
-				FillEnemyTypes(encounter, wave)
-				FillEnemyCounts(encounter, wave)
+				FillEnemyTypes(encounter, wave, room)
+				FillEnemyCounts(encounter, wave, room)
 			end
 		end
 	end
 end
 
-function FillEnemyTypes( encounter, wave )
+function FillEnemyTypes( encounter, wave, room )
 	local spawnTable = wave.Spawns
 	local requireCompletedIntro = wave.RequireCompletedIntro
 
@@ -1033,7 +1071,7 @@ function FillEnemyTypes( encounter, wave )
 	local removeIndexes = {}
 	local eliteCapReached = false
 	local eliteTypeCount = 0
-	for index, spawnData in ipairs( spawnTable ) do
+	for index, spawnData in pairs( spawnTable ) do
 		if spawnData.RequiredMetaUpgrade ~= nil and GetNumMetaUpgrades(spawnData.RequiredMetaUpgrade) == 0 then
 			table.insert(removeIndexes, index)
 		end
@@ -1056,6 +1094,7 @@ function FillEnemyTypes( encounter, wave )
 	end
 
 	local typesToAdd = enemyTypeCount - TableLength(spawnTable)
+	DebugPrint({ Text=enemyTypeCount })
 
 	-- Make sure there are enough enemy types to choose from
 	local eligibleEnemiesCount = TableLength(eligibleEnemies)
@@ -1081,6 +1120,9 @@ function FillEnemyTypes( encounter, wave )
 				spawnData.Name = newTypeName
 			end
 		end
+		--[[if EnemyData[spawnData.Name].IsElite and room.EliteAttributes[spawnData.Name] == nil then
+			PickEliteAttributes( room, EnemyData[spawnData.Name] )
+		end]]
 	end
 
 	for i=1, typesToAdd do
@@ -1089,6 +1131,9 @@ function FillEnemyTypes( encounter, wave )
 			return
 		end
 		AddToSpawnTable(spawnTable, newTypeName)
+		--[[if EnemyData[newTypeName].IsElite and room.EliteAttributes[newTypeName] == nil then
+			PickEliteAttributes( room, EnemyData[newTypeName] )
+		end]]
 		RemoveAllValues(eligibleEnemies, newTypeName)
 
 		if not eliteCapReached and encounter.MaxEliteTypes ~= nil then
@@ -1136,7 +1181,24 @@ function AddToSpawnTable(spawnTable, newTypeName)
 	table.insert(spawnTable, newTypeData)
 end
 
-function FillEnemyCounts( encounter, wave )
+function CalculateEnemyDifficultyRating( enemyName, room )
+	local difficultyRating = EnemyData[enemyName].GeneratorData.DifficultyRating
+
+	if EnemyData[enemyName].IsElite and room.EliteAttributes[enemyName] ~= nil then
+		local difficultyRatingMultiplier = 1
+		for k, attributeName in pairs(room.EliteAttributes[enemyName]) do
+			if EnemyData[enemyName].EliteAttributeData[attributeName].DifficultyRatingMultiplier ~= nil then
+				difficultyRatingMultiplier = difficultyRatingMultiplier + EnemyData[enemyName].EliteAttributeData[attributeName].DifficultyRatingMultiplier - 1
+			end
+		end
+		difficultyRating = difficultyRating * difficultyRatingMultiplier
+	end
+
+	return difficultyRating
+
+end
+
+function FillEnemyCounts( encounter, wave, room )
 	local spawnTable = wave.Spawns
 
 	if encounter.InfiniteSpawns then
@@ -1157,7 +1219,7 @@ function FillEnemyCounts( encounter, wave )
 		-- Calculate how much difficulty the pre-made spawns have
 		if not spawnData.Generated and ((spawnData.CountMin ~= nil and spawnData.CountMax ~= nil) or spawnData.TotalCount ~= nil) then
 			local count = spawnData.TotalCount or spawnData.CountMax
-			accumulatedDifficulty = accumulatedDifficulty + (EnemyData[spawnData.Name].GeneratorData.DifficultyRating * count)
+			accumulatedDifficulty = accumulatedDifficulty + (CalculateEnemyDifficultyRating(spawnData.Name, room) * count)
 		else
 			spawnData.Generated = true
 			spawnData.GeneratorData = EnemyData[spawnData.Name].GeneratorData
@@ -1205,7 +1267,7 @@ function FillEnemyCounts( encounter, wave )
 
 			spawnData.TotalCount = spawnData.TotalCount + allowedCount
 
-			local typeDifficulty = spawnData.GeneratorData.DifficultyRating * allowedCount
+			local typeDifficulty = CalculateEnemyDifficultyRating(spawnData.Name, room) * allowedCount
 			accumulatedDifficulty = accumulatedDifficulty + typeDifficulty
 		end
 	end
@@ -1270,7 +1332,11 @@ function IsEnemyEligible( enemyName, encounter, wave )
 		end
 	end
 
-	if not IsGameStateEligible(CurrentRun, EnemyData[enemyName]) then
+	local isGameStateEligibleArgs = {}
+	if EnemyData[enemyName].IsElite and GetNumMetaUpgrades("EnemyEliteShrineUpgrade") > 0 then
+		isGameStateEligibleArgs.SkipMinBiomeDepth = true
+	end
+	if not IsGameStateEligible(CurrentRun, EnemyData[enemyName], EnemyData[enemyName], isGameStateEligibleArgs ) then
 		return false
 	end
 
@@ -1527,8 +1593,7 @@ function ChooseRoomReward( run, room, rewardStoreName, previouslyChosenRewards, 
 		end
 	end
 
-	local numRerolls = CurrentRun.NumRerolls
-	RandomSynchronize( 4 + numRerolls )
+	RandomSynchronize( 4 )
 	local eligibleRewardKeys = {}
 	for key, reward in pairs( run.RewardStores[rewardStoreName] ) do
 		if IsRoomRewardEligible( CurrentRun, room, reward, previouslyChosenRewards, args ) then
@@ -1614,11 +1679,13 @@ function GetEligibleInteractedGod( ignoredGod )
 	return GetRandomValue(GetEligibleInteractedGods( ignoredGod ))
 end
 
-function GetInteractedGodsThisRun(ignoredGod)
+function GetInteractedGodsThisRun( ignoredGod )
 	local interactedGods = {}
-	for lootName, i in pairs(CurrentRun.LootTypeHistory) do
-		if LootData[lootName].GodLoot and (ignoredGod == nil or lootName ~= ignoredGod) then
-			table.insert( interactedGods, lootName )
+	if CurrentRun ~= nil then
+		for lootName, i in pairs( CurrentRun.LootTypeHistory ) do
+			if LootData[lootName].GodLoot and (ignoredGod == nil or lootName ~= ignoredGod) then
+				table.insert( interactedGods, lootName )
+			end
 		end
 	end
 	return interactedGods
@@ -1630,7 +1697,7 @@ end
 function GetUninteractedGodThisRun()
 	local notInteractedGods = {}
 	for godName, godData in pairs(LootData) do
-		if godData.GodLoot and not godData.DebugOnly and CurrentRun.LootTypeHistory[godName] == nil then
+		if godData.GodLoot and not godData.DebugOnly and CurrentRun.LootTypeHistory[godName] == nil and IsGameStateEligible( CurrentRun, godData ) then
 			table.insert(notInteractedGods, godData.Name)
 		end
 	end
@@ -1713,7 +1780,7 @@ function GetRunDepth( currentRun )
 		end
 		depth = depth + 1
 	end
-	if CurrentRun.Hero.EndlessModLoopedTimes < 1 then
+	if CurrentRun.Hero.EndlessModLoopedTimes ~= nil and CurrentRun.Hero.EndlessModLoopedTimes < 1 then
 		local endlessModBonus = 100 * CurrentRun.Hero.EndlessModLoopedTimes
 		if depth < endlessModBonus then
 			depth = depth + endlessModBonus
@@ -1837,16 +1904,21 @@ function GetNumRunsNotCleared()
 	return count
 end
 
-function RecordRunCleared()
-
-	-- set current run to Cleared / victory achieved; used with GetNumRunsCleared()
-	CurrentRun.Cleared = true
+function RecordRunStats()
+	CurrentRun.EndingRoomName = CurrentRun.CurrentRoom.Name
 	CurrentRun.WeaponsCache = DeepCopyTable( CurrentRun.Hero.Weapons )
 	CurrentRun.TraitCache = {}
 	for k, traitData in pairs( CurrentRun.Hero.Traits ) do
 		CurrentRun.TraitCache[traitData.Name] = (CurrentRun.TraitCache[traitData.Name] or 0) + 1
 	end
 	CurrentRun.ShrinePointsCache = GetTotalSpentShrinePoints()
+end
+
+function RecordRunCleared()
+
+	-- set current run to Cleared / victory achieved; used with GetNumRunsCleared()
+	CurrentRun.Cleared = true
+	RecordRunStats()
 
 	GameState.TimesCleared = 0
 	GameState.TimesClearedWeapon = {}
@@ -1858,7 +1930,9 @@ function RecordRunCleared()
 	end
 
 	for upgradeName, upgradeAmount in pairs( GameState.MetaUpgrades ) do
-		GameState.ClearedWithMetaUpgrades[upgradeName] = math.max( GameState.ClearedWithMetaUpgrades[upgradeName] or 0, upgradeAmount )
+		if IsMetaUpgradeActive( upgradeName ) then
+			GameState.ClearedWithMetaUpgrades[upgradeName] = math.max( GameState.ClearedWithMetaUpgrades[upgradeName] or 0, upgradeAmount )
+		end
 	end
 
 	GameState.ConsecutiveClearsRecord = 0
@@ -2200,7 +2274,12 @@ function HasSeenRoomInNumRuns( roomName, runCount )
 
 end
 
-function GetNumMetaUpgrades( upgradeName )
+function GetNumMetaUpgrades( upgradeName, args )
+	args = args or {}
+	if not args.UnModified and not IsMetaUpgradeActive( upgradeName ) then
+		return 0
+	end
+
 	if CurrentRun.MetaUpgrades ~= nil then
 		-- Run override
 		return CurrentRun.MetaUpgrades[upgradeName] or 0
@@ -2219,7 +2298,7 @@ end
 
 function GetTotalSpentMetaPoints()
 	local total = 0
-	for k, upgradeName in pairs( MetaUpgradeOrder ) do
+	for k, upgradeName in pairs( GameState.MetaUpgradesSelected ) do
 		for i = 1, GetNumMetaUpgrades( upgradeName ) do
 			local price = GetMetaUpgradePrice( MetaUpgradeData[upgradeName], i - 1 )
 			if price ~= nil then
@@ -2548,6 +2627,17 @@ function IsGameStateEligible( currentRun, source, requirements, args )
 			return false
 		end
 	end
+	if requirements.RequiredMaxAnyTextLines ~= nil then
+		local numTrue = 0
+		for k, textLineSet in pairs( requirements.RequiredMaxAnyTextLines.TextLines ) do
+			if TextLinesRecord[textLineSet] then
+				numTrue = numTrue + 1
+			end
+		end
+		if numTrue > requirements.RequiredMaxAnyTextLines.Count then
+			return false
+		end
+	end
 
 	if requirements.RequiredAnyTextLinesThisRun ~= nil then
 		local anyTrue = false
@@ -2633,7 +2723,7 @@ function IsGameStateEligible( currentRun, source, requirements, args )
 		local codexEntryFound = false
 		for chapterName, chapterData in pairs(Codex) do
 			for entryName in pairs(Codex[chapterName].Entries) do
-				if entryName == requiredEntryName and ( CodexStatus[chapterName][entryName] == nil or CodexStatus[chapterName][entryName][requiredEntryIndex] == nil or not CodexStatus[chapterName][entryName][requiredEntryIndex].Unlocked ) then
+				if entryName == requiredEntryName and ( CodexStatus[chapterName][entryName] == nil or CodexStatus[chapterName][entryName][requiredEntryIndex] == nil or not CodexStatus[chapterName][entryName][requiredEntryIndex].Unlocked or CodexStatus[chapterName][entryName].New ) then
 					return false
 				else
 					codexEntryFound = true
@@ -2672,7 +2762,7 @@ function IsGameStateEligible( currentRun, source, requirements, args )
 		end
 	end
 
-	if requirements.RequiredGodLootThisRun ~= nil and not CurrentRun.LootTypeHistory[requirements.RequiredGodLootThisRun] then
+	if requirements.RequiredLootThisRun ~= nil and not CurrentRun.LootTypeHistory[requirements.RequiredLootThisRun] then
 		return false
 	end
 
@@ -2698,6 +2788,14 @@ function IsGameStateEligible( currentRun, source, requirements, args )
 
 	if requirements.RequiredFalseWeapon ~= nil and CurrentRun.Hero.Weapons[requirements.RequiredFalseWeapon] then
 		return false
+	end
+
+	if requirements.RequiredMinWeaponKills ~= nil then
+		for requiredWeapon, requiredWeaponKillCount in pairs( requirements.RequiredMinWeaponKills ) do
+			if GameState.WeaponKills[requiredWeapon] == nil or GameState.WeaponKills[requiredWeapon] < requiredWeaponKillCount then
+				return false
+			end
+		end
 	end
 
 	if requirements.ConsecutiveDeathsInRoom ~= nil then
@@ -2889,6 +2987,10 @@ function IsGameStateEligible( currentRun, source, requirements, args )
 	end
 
 	if requirements.RequiredAssistKeepsake ~= nil and GameState.LastAssistTrait ~= requirements.RequiredAssistKeepsake  then
+		return false
+	end
+
+	if requirements.RequiresMaxAssistTrait  ~= nil and ( GameState.LastAssistTrait ~= requirements.RequiresMaxAssistTrait or GetAssistKeepsakeLevel( requirements.RequiresMaxAssistTrait ) < 5 ) then
 		return false
 	end
 
@@ -3089,11 +3191,15 @@ function IsGameStateEligible( currentRun, source, requirements, args )
 		return false
 	end
 
-	if requirements.RequiredBiome ~= nil and currentRun.CurrentRoom.RoomSetName ~= requirements.RequiredBiome then
-		return false
+	if requirements.RequiredBiome ~= nil then
+		if currentRun.CurrentRoom == nil or currentRun.CurrentRoom.RoomSetName ~= requirements.RequiredBiome then
+			return false
+		end
 	end
-	if requirements.RequiredFalseBiome ~= nil and currentRun.CurrentRoom.RoomSetName == requirements.RequiredFalseBiome then
-		return false
+	if requirements.RequiredFalseBiome ~= nil then
+		if currentRun.CurrentRoom == nil or currentRun.CurrentRoom.RoomSetName == requirements.RequiredFalseBiome then
+			return false
+		end
 	end
 
 	if requirements.RequirePreviousRoomSet ~= nil then
@@ -3186,6 +3292,16 @@ function IsGameStateEligible( currentRun, source, requirements, args )
 
 	if requirements.RequiredCurrentClearTimeMax ~= nil and currentRun.GameplayTime > requirements.RequiredCurrentClearTimeMax then
 		return false
+	end
+
+	if requirements.RequiredWeaponsFiredThisRun ~= nil then
+		local totalFires = 0
+		for k, weaponName in pairs( requirements.RequiredWeaponsFiredThisRun.Names ) do
+			totalFires = totalFires + (currentRun.WeaponsFiredRecord[weaponName] or 0)
+		end
+		if totalFires < requirements.RequiredWeaponsFiredThisRun.Count then
+			return false
+		end
 	end
 
 	if requirements.RequiredClearsWithWeapons ~= nil then
@@ -3284,6 +3400,19 @@ function IsGameStateEligible( currentRun, source, requirements, args )
 
 	if requirements.RequiredMinUnlockedWeaponEnchantments ~= nil and GetNumUnlockedWeaponUpgrades() < requirements.RequiredMinUnlockedWeaponEnchantments then
 		return false
+	end
+
+	if requirements.RequiredMinSuperLockKeysSpentOnWeapon ~= nil then
+		local totalInvestment = 0
+		local weaponName = requirements.RequiredMinSuperLockKeysSpentOnWeapon.Name
+		for index in pairs( WeaponUpgradeData[weaponName] ) do
+			for level = 1, (GetWeaponUpgradeLevel( weaponName, index )) do
+				totalInvestment = totalInvestment + WeaponUpgradeData[weaponName][index].Costs[level]
+			end
+		end
+		if totalInvestment < requirements.RequiredMinSuperLockKeysSpentOnWeapon.Count then
+			return false
+		end
 	end
 
 	if requirements.RequiredMaxWeaponUpgrade ~= nil and requirements.RequiredMaxWeaponUpgradeIndex ~= nil then
@@ -3411,8 +3540,14 @@ function IsGameStateEligible( currentRun, source, requirements, args )
 		return false
 	end
 
-	if requirements.RequiredMinBiomeDepth ~= nil and currentBiomeDepth < requirements.RequiredMinBiomeDepth then
+	if not args.SkipMinBiomeDepth and requirements.RequiredMinBiomeDepth ~= nil and currentBiomeDepth < requirements.RequiredMinBiomeDepth then
 		return false
+	end
+
+	if requirements.EliteShrineUpgradeMinBiomeDepth ~= nil and requirements.IsElite and GetNumMetaUpgrades("EnemyEliteShrineUpgrade") > 0 then
+		if currentBiomeDepth < requirements.EliteShrineUpgradeMinBiomeDepth then
+			return false
+		end
 	end
 
 	if requirements.RequiredMaxBiomeDepth ~= nil and currentBiomeDepth > requirements.RequiredMaxBiomeDepth then
@@ -3536,6 +3671,24 @@ function IsGameStateEligible( currentRun, source, requirements, args )
 		end
 	end
 
+	if requirements.RequiredEncountersThisRun ~= nil then
+		for k, encounterName in pairs( requirements.RequiredEncountersThisRun ) do
+			if not HasEncounterOccurred( currentRun, encounterName, true ) then
+				return false
+			end
+		end
+	end
+
+	if requirements.RequiredMinEncountersThisRun ~= nil then
+		local count = 0
+		for k, encounterName in pairs( requirements.RequiredMinEncountersThisRun.Names ) do
+			count = count + (currentRun.EncountersCompletedCache[encounterName] or 0)
+		end
+		if count < requirements.RequiredMinEncountersThisRun.Count then
+			return false
+		end
+	end
+
 	if requirements.RequiredKillEnemiesFound and IsEmpty( RequiredKillEnemies ) then
 		return false
 	end
@@ -3587,6 +3740,9 @@ function IsGameStateEligible( currentRun, source, requirements, args )
 	end
 
 	if requirements.RequiredMetaUpgradeUnlocked ~= nil and not GameState.MetaUpgradesUnlocked[requirements.RequiredMetaUpgradeUnlocked] then
+		return false
+	end
+	if requirements.RequiredMetaUpgradeStageUnlocked ~= nil and GameState.MetaUpgradeStagesUnlocked < requirements.RequiredMetaUpgradeStageUnlocked then
 		return false
 	end
 
@@ -3664,9 +3820,7 @@ function IsGameStateEligible( currentRun, source, requirements, args )
 
 	if requirements.RequiredKills ~= nil then
 		for requiredKill, requiredKillCount in pairs( requirements.RequiredKills ) do
-			requiredKillCount = requiredKillCount or 1
 			if GameState.EnemyKills[requiredKill] == nil or GameState.EnemyKills[requiredKill] < requiredKillCount then
-				DebugPrint({ Text = GameState.EnemyKills[requiredKill] })
 				return false
 			end
 		end
@@ -3675,6 +3829,14 @@ function IsGameStateEligible( currentRun, source, requirements, args )
 	if requirements.RequiredFalseKills ~= nil then
 		for k, requiredKill in pairs(requirements.RequiredFalseKills ) do
 			if GameState.EnemyKills[requiredKill] ~= nil and GameState.EnemyKills[requiredKill] > 0 then
+				return false
+			end
+		end
+	end
+
+	if requirements.RequiredEliteAttributeKills ~= nil then
+		for requiredKill, requiredKillCount in pairs( requirements.RequiredEliteAttributeKills ) do
+			if (GameState.EnemyEliteAttributeKills[requiredKill] or 0) < requiredKillCount then
 				return false
 			end
 		end
@@ -3865,6 +4027,10 @@ function IsGameStateEligible( currentRun, source, requirements, args )
 		return false
 	end
 
+	if requirements.RequiredConsecutiveClears ~= nil and GameState.ConsecutiveClears ~= nil and GameState.ConsecutiveClears ~= requirements.RequiredConsecutiveClears then
+		return false
+	end
+
 	if requirements.PlayerMaxHealthFraction ~= nil and currentRun.Hero.Health / currentRun.Hero.MaxHealth >= requirements.PlayerMaxHealthFraction then
 		return false
 	end
@@ -3873,8 +4039,39 @@ function IsGameStateEligible( currentRun, source, requirements, args )
 		return false
 	end
 
+	if requirements.RequiredMinLastStandsUsed ~= nil then
+		if currentRun.Hero.LastStandsUsed == nil or requirements.RequiredMinLastStandsUsed > currentRun.Hero.LastStandsUsed then
+			return false
+		end
+	end
+
+	if requirements.RequiredMinTraitsSold ~= nil then
+		if currentRun.Hero.TraitsSold == nil or requirements.RequiredMinTraitsSold > currentRun.Hero.TraitsSold then
+			return false
+		end
+	end
+
 	if requirements.IsIdAlive ~= nil and not IsAlive({ Id = requirements.IsIdAlive }) then
 		return false
+	end
+	if requirements.AreIdsAlive ~= nil then
+		for i, id in pairs( requirements.AreIdsAlive ) do
+			if not IsAlive({ Id = id }) then
+				return false
+			end
+		end
+	end
+	if requirements.AreAnyIdsAlive ~= nil then
+		local anyAlive = false
+		for i, id in pairs( requirements.AreAnyIdsAlive ) do
+			if IsAlive({ Id = id }) then
+				anyAlive = true
+				break
+			end
+		end
+		if not anyAlive then
+			return false
+		end
 	end
 	if requirements.AreIdsNotAlive ~= nil then
 		for i, id in pairs( requirements.AreIdsNotAlive ) do
@@ -3886,6 +4083,17 @@ function IsGameStateEligible( currentRun, source, requirements, args )
 
 	if requirements.MaxThanatosSpawnsThisRun ~= nil and currentRun.ThanatosSpawns ~= nil and currentRun.ThanatosSpawns >= requirements.MaxThanatosSpawnsThisRun then
 		return false
+	end
+
+	if requirements.RequiredMaxThanatosKillsThisRun ~= nil then
+		for roomIndex = #currentRun.RoomHistory, 1, -1 do
+			if currentRun.RoomHistory[roomIndex].Encounter.ThanatosKills then
+				if currentRun.RoomHistory[roomIndex].Encounter.ThanatosKills > requirements.RequiredMaxThanatosKillsThisRun then
+					return false
+				end
+				break
+			end
+		end
 	end
 
 	if requirements.ObjectivesCompleted ~= nil then
@@ -3926,6 +4134,19 @@ function IsGameStateEligible( currentRun, source, requirements, args )
 	if requirements.AnyQuestWithStatus ~= nil and not HasAnyQuestWithStatus( requirements.AnyQuestWithStatus ) then
 		return false
 	end
+	if requirements.RequiredMinQuestsComplete ~= nil then
+		local numQuestsComplete = 0
+		if GameState.QuestStatus ~= nil then
+			for questName, questStatus in pairs( GameState.QuestStatus ) do
+				if questStatus == "CashedOut" then
+					numQuestsComplete = numQuestsComplete + 1
+				end
+			end
+		end
+		if numQuestsComplete < requirements.RequiredMinQuestsComplete then
+			return false
+		end
+	end
 
 	if requirements.AnyAffordableGhostAdminItem ~= nil then
 		local canAffordAny = false
@@ -3944,7 +4165,7 @@ function IsGameStateEligible( currentRun, source, requirements, args )
 		end
 	end
 
-	if requirements.CaughtFishThisRun ~= nil and IsEmpty( currentRun.CaughtFish ) then
+	if requirements.RequiredMinCaughtFishThisRun ~= nil and GetNumFishCaught( currentRun ) < requirements.RequiredMinCaughtFishThisRun then
 		return false
 	end
 
@@ -3960,7 +4181,26 @@ function IsGameStateEligible( currentRun, source, requirements, args )
 		return false
 	end
 
-	if requirements.RequiredMinTotalCaughtFish  ~= nil and GetNumLifetimeFish() < requirements.RequiredMinTotalCaughtFish then
+	if requirements.RequiredMinTotalCaughtFish ~= nil and GetNumLifetimeFish() < requirements.RequiredMinTotalCaughtFish then
+		return false
+	end
+
+	if requirements.RequiredAnyCaughtFishTypes ~= nil then
+		local anyTrue = false
+		for k, fishType in pairs( requirements.RequiredAnyCaughtFishTypes ) do
+			if GameState.TotalCaughtFish[fishType] then
+				anyTrue = true
+				break
+			end
+		end
+		if not anyTrue then
+			return false
+		end
+	end
+
+	if requirements.RequiredMaxTotalCaughtFish  ~= nil and GetNumLifetimeFish() > requirements.RequiredMaxTotalCaughtFish then
+		DebugPrint({ Text="RunManager.lua:4057 ".."" })
+		DebugPrint({ Text=GetNumLifetimeFish() })
 		return false
 	end
 
@@ -4002,6 +4242,26 @@ function IsGameStateEligible( currentRun, source, requirements, args )
 		end
 	end
 
+	if requirements.MinRunsSinceAnyTextLines ~= nil then
+		for k, textLines in pairs( requirements.MinRunsSinceAnyTextLines.TextLines ) do
+			local runsSinceOccured = 0
+			for runIndex = #GameState.RunHistory + 1, 1, -1 do
+				local prevRun = GameState.RunHistory[runIndex] or currentRun
+				if prevRun.TextLinesRecord ~= nil and prevRun.TextLinesRecord[textLines] then
+					if runsSinceOccured < requirements.MinRunsSinceAnyTextLines.Count then
+						DebugPrint({ Text = "textLines = "..textLines..", ".."runsSinceOccured = "..runsSinceOccured })
+						return false
+					end
+				end
+				runsSinceOccured = runsSinceOccured + 1
+				if runsSinceOccured >= requirements.MinRunsSinceAnyTextLines.Count then
+					-- Already exceeded safely
+					break
+				end
+			end
+		end
+	end
+
 	if requirements.RequiredTrueConfigOptions ~= nil then
 		for k, configOption in pairs( requirements.RequiredTrueConfigOptions ) do
 			if not GetConfigOptionValue({ Name = configOption }) then
@@ -4014,6 +4274,24 @@ function IsGameStateEligible( currentRun, source, requirements, args )
 			if GetConfigOptionValue({ Name = configOption }) then
 				return false
 			end
+		end
+	end
+
+	if requirements.RequiresHadesProcession then
+		if CurrentDeathAreaRoom ~= nil and not CurrentDeathAreaRoom.HadesProcessionActive then
+			return false
+		end
+	end
+
+	if requirements.RequiresFalseHadesProcession then
+		if CurrentDeathAreaRoom ~= nil and CurrentDeathAreaRoom.HadesProcessionActive then
+			return false
+		end
+	end
+
+	if requirements.RequiresFalseGossiping then
+		if CurrentDeathAreaRoom ~= nil and CurrentDeathAreaRoom.GossipingActive then
+			return false
 		end
 	end
 
@@ -4041,6 +4319,19 @@ function IsGameStateEligible( currentRun, source, requirements, args )
 			end
 		end
 		if not anyTrue then
+			return false
+		end
+	end
+
+	if requirements.RequiredCosmeticPurchaseable ~= nil then
+		local cosmeticData = ConditionalItemData[requirements.RequiredCosmeticPurchaseable]
+		if GameState.CosmeticsAdded[cosmeticData.Name] or not IsGameStateEligible( CurrentRun, cosmeticData, cosmeticData.GameStateRequirements ) then
+			return false
+		end
+	end
+	if requirements.RequiredFalseCosmeticPurchaseable ~= nil then
+		local cosmeticData = ConditionalItemData[requirements.RequiredFalseCosmeticPurchaseable]
+		if not GameState.CosmeticsAdded[cosmeticData.Name] and IsGameStateEligible( CurrentRun, cosmeticData, cosmeticData.GameStateRequirements ) then
 			return false
 		end
 	end
@@ -4218,6 +4509,16 @@ function IsGameStateEligible( currentRun, source, requirements, args )
 	end
 	if requirements.RequiredMoneyMax ~= nil then
 		if currentRun.Money > requirements.RequiredMoneyMax then
+			return false
+		end
+	end
+
+	if requirements.RequiredConsumablesThisRun ~= nil then
+		local count = 0
+		for k, name in pairs( requirements.RequiredConsumablesThisRun.Names ) do
+			count = count + (currentRun.ConsumableRecord[name] or 0)
+		end
+		if count < requirements.RequiredConsumablesThisRun.Count then
 			return false
 		end
 	end
@@ -4467,6 +4768,13 @@ function IsGameStateEligible( currentRun, source, requirements, args )
 	if requirements.RequiredFalseScreenOpen ~= nil and IsScreenOpen( requirements.RequiredFalseScreenOpen ) then
 		return false
 	end
+	if requirements.RequiredFalseScreensOpen ~= nil then
+		for k, screenName in pairs( requirements.RequiredFalseScreensOpen ) do
+			if IsScreenOpen( screenName ) then
+				return false
+			end
+		end
+	end
 
 	if requirements.RequiredScreenViewed ~= nil and not GameState.ScreensViewed[requirements.RequiredScreenViewed] then
 		return false
@@ -4606,5 +4914,17 @@ function InvalidateCheckpoint()
 		CurrentRun.CurrentRoom.CheckpointInvalidated = true
 		SetConfigOption({ Name = "ValidCheckpoint", Value = false })
 		SaveProfile({ ShowSaveSpinner = false })
+	end
+end
+
+function SelectBannedEliteAttributes( run )
+	local banCount = 2
+	local banOptions = ShallowCopyTable( EnemySets.EliteAttributesRunBanOptions )
+
+	for i = 1, banCount do
+		local banChoice = RemoveRandomValue( banOptions )
+		if banChoice ~= nil then
+			table.insert( run.BannedEliteAttributes, banChoice )
+		end
 	end
 end

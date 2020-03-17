@@ -33,6 +33,9 @@ HeroData =
 		InvulnerableFrameMinDamage = 10,
 		InvulnerableFrameCumulativeDamageDuration = 0.6,
 		InvulnerableFrameDuration = 1.3,
+		PerfectDashHitDisableDuration = 0.3,
+
+		ComboThreshold = 12,
 
 		CanBeFrozen = true,
 		FreezeTimeReductionPerInput = 1.3,
@@ -86,7 +89,10 @@ HeroData =
 		OnDeathShakeScreenAngle = 90,
 
 		DamagedAnimation = "ZagreusOnHit",
-		DamagedFx = "PlayerHitSpark",
+		DamagedFxStyles =
+		{
+			Default = "PlayerHitSpark",
+		},
 		InvulnerableHitFx = "PlayerArmorHitSpark",
 
 		CanBeStyxPoisoned = true,
@@ -138,7 +144,7 @@ HeroData =
 			ForceCommon = false,
 			RareChance = 0.10,
 			EpicChance = 0.05,
-			LegendaryChance = 0.35,
+			LegendaryChance = 0.15,
 			ReplaceChance = 0.1,
 		},
 		HermesData =
@@ -158,7 +164,12 @@ HeroData =
 			ForceCommon = true,
 		},
 		RushWeaponMaxRange = 400,
-
+		HeroAlliedUnits =
+		{
+			NPC_Thanatos_Field_01 = true,
+			DusaSummon = true,
+			TrainingMeleeSummon = true,
+		},
 		AttachedAnimationName = "LaurelCindersSpawner",
 		AttachedLightName = "LightCharacterEllipse01",
 		AttachedLightScale = 1.2,
@@ -250,14 +261,16 @@ HeroData =
 			"ZagreusStart_Bink",
 			"ZagreusStop_Bink",
 			"ZagreusRun_Bink",
-			"ZagreusWrath_Bink",
 			"ZagreusStun_Bink",
 			"ZagreusInteractionFishing_Bink",
 			"ZagreusInteractionFishingFail_Bink",
-		}
+		},
+		WeaponBinks =
+		{
+			"ZagreusWrath_Bink",
+		},
 	},
 }
-
 HeroVoiceLines =
 {
 	NotReadyVoiceLines =
@@ -969,11 +982,21 @@ HeroVoiceLines =
 			-- I implore the Fates.
 			{ Cue = "/VO/ZagreusField_1232" },
 			-- Give me another.
-			{ Cue = "/VO/ZagreusField_1233" },
+			{ Cue = "/VO/ZagreusField_1233", RequiredFalseScreensOpen = { "UpgradeChoice", "StoreScreen", "SellTraitScreen" }, },
 			-- Something else.
 			{ Cue = "/VO/ZagreusField_1234" },
 			-- I'll take another.
-			{ Cue = "/VO/ZagreusField_1235" },
+			{ Cue = "/VO/ZagreusField_1235", RequiredFalseScreensOpen = { "UpgradeChoice", "StoreScreen", "SellTraitScreen" }, },
+			-- Let's see what else.
+			{ Cue = "/VO/ZagreusField_3405" },
+			-- What else is there?
+			{ Cue = "/VO/ZagreusField_3406" },
+			-- I'd like to see more options.
+			{ Cue = "/VO/ZagreusField_3407", RequiredScreenOpen = "UpgradeChoice", },
+			-- What about these?
+			{ Cue = "/VO/ZagreusField_3408", RequiredScreenOpen = "UpgradeChoice", },
+			-- What else?
+			{ Cue = "/VO/ZagreusField_3409" },
 		},
 		{
 			BreakIfPlayed = true,
@@ -984,6 +1007,25 @@ HeroVoiceLines =
 			Source = { SubtitleColor = Color.ChaosVoice },
 			NoTarget = true,
 			RequiredRooms = { "RoomSecret01", "RoomSecret02", "RoomSecret03" },
+
+			-- Is this preferable?
+			{ Cue = "/VO/Chaos_0232",  },
+			-- This, perhaps?
+			{ Cue = "/VO/Chaos_0233",  },
+			-- Perhaps this.
+			{ Cue = "/VO/Chaos_0234",  },
+			-- This, then?
+			{ Cue = "/VO/Chaos_0235",  },
+			-- This outcome, then.
+			{ Cue = "/VO/Chaos_0236",  },
+			-- Then, this?
+			{ Cue = "/VO/Chaos_0237",  },
+			-- Done.
+			{ Cue = "/VO/Chaos_0238",  },
+			-- Very well.
+			{ Cue = "/VO/Chaos_0239",  },
+			-- Granted.
+			{ Cue = "/VO/Chaos_0240",  },
 
 			-- How predictable.
 			{ Cue = "/VO/Chaos_0127" },
@@ -998,16 +1040,18 @@ HeroVoiceLines =
 			-- That was not what I had in mind.
 			{ Cue = "/VO/Chaos_0132" },
 
+			--[[
 			-- Now that was unexpected.
-			{ Cue = "/VO/Chaos_0143" },
+			{ Cue = "/VO/Chaos_0143", RequiredFalseScreensOpen = { "UpgradeChoice" }, },
 			-- Why, that is rather strange.
-			{ Cue = "/VO/Chaos_0144" },
+			{ Cue = "/VO/Chaos_0144", RequiredFalseScreensOpen = { "UpgradeChoice" }, },
 			-- How very interesting.
-			{ Cue = "/VO/Chaos_0145" },
+			{ Cue = "/VO/Chaos_0145", RequiredFalseScreensOpen = { "UpgradeChoice" }, },
 			-- That was quite strange.
-			{ Cue = "/VO/Chaos_0146" },
+			{ Cue = "/VO/Chaos_0146", RequiredFalseScreensOpen = { "UpgradeChoice" }, },
 			-- Quite unanticipated.
-			{ Cue = "/VO/Chaos_0147" },
+			{ Cue = "/VO/Chaos_0147", RequiredFalseScreensOpen = { "UpgradeChoice" }, },
+			]]--
 		},
 	},
 	RerollOutcomeVoiceLines =
@@ -1059,33 +1103,56 @@ HeroVoiceLines =
 	},
 	CannotRerollVoiceLines =
 	{
-		BreakIfPlayed = true,
-		RandomRemaining = true,
-		PreLineWait = 0.3,
-		CooldownTime = 7,
+		--[[
+		{
+			BreakIfPlayed = true,
+			RandomRemaining = true,
+			PreLineWait = 0.3,
+			CooldownTime = 7,
+			RequiredScreenOpen = "UpgradeChoice",
 
-		-- Can't do that here.
-		{ Cue = "/VO/ZagreusField_1236", RequiredPlayed = { "/VO/ZagreusField_1244" } },
-		-- The Fates aren't listening to me.
-		{ Cue = "/VO/ZagreusField_1237", RequiredPlayed = { "/VO/ZagreusField_1244" } },
-		-- Not here.
-		{ Cue = "/VO/ZagreusField_1238", RequiredPlayed = { "/VO/ZagreusField_1244" } },
-		-- Not going to work here.
-		{ Cue = "/VO/ZagreusField_1239", RequiredPlayed = { "/VO/ZagreusField_1244" } },
-		-- My authority's no good here.
-		{ Cue = "/VO/ZagreusField_1240", RequiredPlayed = { "/VO/ZagreusField_1244" } },
-		-- The Fates aren't having it.
-		{ Cue = "/VO/ZagreusField_1241", RequiredPlayed = { "/VO/ZagreusField_1244" } },
-		-- That won't work here.
-		{ Cue = "/VO/ZagreusField_1242", RequiredPlayed = { "/VO/ZagreusField_1244" } },
-		-- I only wish.
-		{ Cue = "/VO/ZagreusField_1243", RequiredPlayed = { "/VO/ZagreusField_1244" } },
-		-- Can't change that one.
-		{ Cue = "/VO/ZagreusField_1244" },
-		-- I'm stuck with that one.
-		{ Cue = "/VO/ZagreusField_1245", RequiredPlayed = { "/VO/ZagreusField_1244" } },
-		-- My authority does have its limitations.
-		{ Cue = "/VO/ZagreusField_1246", RequiredPlayed = { "/VO/ZagreusField_1244" } },
+			-- The Fates aren't having it.
+			-- { Cue = "/VO/ZagreusField_3412" },
+			-- The Fates won't budge.
+			-- The Fates won't let me.
+			-- The Fates aren't letting me.
+			-- The Fates say no.
+			-- The Fates say no I guess.
+			-- The Fates won't have it.
+			-- Ah, come on.
+			-- I guess the Fates won't let me try that here.
+		},
+		]]--
+		{
+			BreakIfPlayed = true,
+			RandomRemaining = true,
+			PreLineWait = 0.3,
+			CooldownTime = 7,
+			-- RequiredFalseScreenOpen = "UpgradeChoice",
+
+			-- Can't do that here.
+			{ Cue = "/VO/ZagreusField_1236", RequiredPlayed = { "/VO/ZagreusField_1244" } },
+			-- The Fates aren't listening to me.
+			{ Cue = "/VO/ZagreusField_1237", RequiredPlayed = { "/VO/ZagreusField_1244" } },
+			-- Not here.
+			{ Cue = "/VO/ZagreusField_1238", RequiredPlayed = { "/VO/ZagreusField_1244" } },
+			-- Not going to work here.
+			{ Cue = "/VO/ZagreusField_1239", RequiredPlayed = { "/VO/ZagreusField_1244" } },
+			-- My authority's no good here.
+			{ Cue = "/VO/ZagreusField_1240", RequiredPlayed = { "/VO/ZagreusField_1244" } },
+			-- The Fates aren't having it.
+			{ Cue = "/VO/ZagreusField_1241", RequiredPlayed = { "/VO/ZagreusField_1244" } },
+			-- That won't work here.
+			{ Cue = "/VO/ZagreusField_1242", RequiredPlayed = { "/VO/ZagreusField_1244" } },
+			-- I only wish.
+			{ Cue = "/VO/ZagreusField_1243", RequiredPlayed = { "/VO/ZagreusField_1244" } },
+			-- Can't change that one.
+			{ Cue = "/VO/ZagreusField_1244" },
+			-- I'm stuck with that one.
+			{ Cue = "/VO/ZagreusField_1245", RequiredPlayed = { "/VO/ZagreusField_1244" } },
+			-- My authority does have its limitations.
+			{ Cue = "/VO/ZagreusField_1246", RequiredPlayed = { "/VO/ZagreusField_1244" } },
+		},
 	},
 	CannotFightVoiceLines =
 	{
@@ -1460,7 +1527,7 @@ HeroVoiceLines =
 			PlayOnceFromTableThisRun = true,
 			RequiredMinCompletedRuns = 3,
 			-- these lines are only meant to play after combat in standard rooms so the following is for safety
-			RequiredFalseRooms = { "A_Boss01", "B_Boss01", "C_Boss01", "D_Boss01", "A_PreBoss01", "B_PreBoss01", "A_Reprieve01", "B_Reprieve01", "C_Repreive01", "D_Repreive01",
+			RequiredFalseRooms = { "A_Boss01", "B_Boss01", "B_Boss02", "C_Boss01", "D_Boss01", "A_PreBoss01", "B_PreBoss01", "A_Reprieve01", "B_Reprieve01", "C_Repreive01", "D_Repreive01",
 				"A_Story01", "B_Story01", "C_Story01",
 				"A_Shop01", "B_Shop01", "C_Shop01", },
 
@@ -1884,6 +1951,14 @@ HeroVoiceLines =
 		{ Cue = "/VO/ZagreusField_1032", RequiredWeapon = "SpearWeapon", },
 		-- I'll run you through.
 		{ Cue = "/VO/ZagreusField_1033", RequiredWeapon = "SpearWeapon", },
+		-- Come face Malphon and me.
+		{ Cue = "/VO/ZagreusField_3246", RequiredWeapon = "FistWeapon", },
+		-- More punching practice then.
+		{ Cue = "/VO/ZagreusField_3247", RequiredWeapon = "FistWeapon", },
+		-- Who's getting punched.
+		{ Cue = "/VO/ZagreusField_3248", RequiredWeapon = "FistWeapon", },
+		-- These Fists are going to do the talking, soon.
+		{ Cue = "/VO/ZagreusField_3249", RequiredWeapon = "FistWeapon", SuccessiveChanceToPlay = 0.01 },
 		-- More target practice.
 		{ Cue = "/VO/ZagreusField_1322", RequiredWeapon = "GunWeapon", },
 		-- Let's fire it up.
@@ -1894,6 +1969,26 @@ HeroVoiceLines =
 		{ Cue = "/VO/ZagreusField_1325", RequiredWeapon = "GunWeapon", },
 		-- May I help you?
 		{ Cue = "/VO/ZagreusField_1034", },
+		-- Bring it.
+		{ Cue = "/VO/ZagreusField_3252", },
+		-- Come.
+		{ Cue = "/VO/ZagreusField_3253", },
+		-- More coming.
+		{ Cue = "/VO/ZagreusField_3254", },
+		-- More to fight.
+		{ Cue = "/VO/ZagreusField_3255", },
+		-- There's more.
+		{ Cue = "/VO/ZagreusField_3256", },
+		-- Here they come.
+		{ Cue = "/VO/ZagreusField_3257", },
+		-- Keep them coming.
+		{ Cue = "/VO/ZagreusField_3258", },
+		-- Welcome.
+		{ Cue = "/VO/ZagreusField_3259", },
+		-- Heh, good.
+		{ Cue = "/VO/ZagreusField_3260", },
+		-- Ready for them.
+		{ Cue = "/VO/ZagreusField_3261", },
 	},
 	FinalWaveVoiceLines =
 	{
@@ -1902,6 +1997,8 @@ HeroVoiceLines =
 		RequiredFalseEncounters = { "DevotionTestTartarus", "DevotionTestAsphodel", "DevotionTestElysium", },
 		CooldownTime = 300,
 		PreLineWait = 2.0,
+		RequiredFalseBiome = "Tartarus",
+		SuccessiveChanceToPlay = 0.25,
 
 		-- Almost there...
 		{ Cue = "/VO/ZagreusField_0188" },
@@ -2256,7 +2353,15 @@ HeroVoiceLines =
 			-- All right, then, let's get mad.
 			-- { Cue = "/VO/ZagreusField_1471", RequiredTextLinesThisRun = "PoseidonWrathIntro01", RequiredLastGodLoot = "PoseidonUpgrade", PlayOnce = true },
 			-- The wrath of Poseidon at my beck and call.
-			{ Cue = "/VO/ZagreusField_2250", RequiredTextLinesThisRun = "PoseidonWrathIntro01", RequiredLastGodLoot = "PoseidonUpgrade", PlayOnce = true },
+			{ Cue = "/VO/ZagreusField_2250", RequiredRoom = "RoomOpening", RequiredTextLinesThisRun = "PoseidonWrathIntro01", RequiredLastGodLoot = "PoseidonUpgrade", PlayOnce = true },
+		},
+		{
+			BreakIfPlayed = true,
+			PreLineWait = 1.1,
+			Queue = "Always",
+
+			-- All right, let's catch some fish.
+			{ Cue = "/VO/ZagreusField_3340", RequiredRoom = "RoomOpening", RequiredTextLinesThisRun = "PoseidonFishQuest01", RequiredLastGodLoot = "PoseidonUpgrade", PlayOnce = true, PlayOnceContext = "FishQuestIntro", },
 		},
 		{
 			RandomRemaining = true,
@@ -2576,7 +2681,7 @@ HeroVoiceLines =
 		BreakIfPlayed = true,
 		PreLineWait = 0.7,
 		SuccessiveChanceToPlay = 0.66,
-		RequiredFalseRooms = { "A_Boss01", "A_Boss02", "A_Boss03", "B_Boss01", "C_MiniBoss01", "C_Boss01", "D_Boss01" },
+		RequiredFalseRooms = { "A_Boss01", "A_Boss02", "A_Boss03", "B_Boss01", "B_Boss02", "C_MiniBoss01", "C_Boss01", "D_Boss01" },
 		CooldownTime = 200,
 
 		-- The Pierced Butterfly grows stronger.
@@ -2606,7 +2711,7 @@ HeroVoiceLines =
 		BreakIfPlayed = true,
 		PreLineWait = 0.7,
 		SuccessiveChanceToPlay = 0.66,
-		RequiredFalseRooms = { "A_Boss01", "A_Boss02", "A_Boss03", "B_Boss01", "C_MiniBoss01", "C_Boss01", "D_Boss01" },
+		RequiredFalseRooms = { "A_Boss01", "A_Boss02", "A_Boss03", "B_Boss01", "B_Boss02", "C_MiniBoss01", "C_Boss01", "D_Boss01" },
 
 		-- My Keepsake powered up.
 		{ Cue = "/VO/ZagreusField_1641" },
@@ -2629,6 +2734,46 @@ HeroVoiceLines =
 		-- Short work.
 		{ Cue = "/VO/ZagreusField_1997" },
 	},
+	KeepsakeChallengeFailedVoiceLines =
+	{
+		RandomRemaining = true,
+		BreakIfPlayed = true,
+		PreLineWait = 0.4,
+		SuccessiveChanceToPlay = 0.2,
+		RequiredFalseRooms = { "A_Boss01", "A_Boss02", "A_Boss03", "B_Boss01", "B_Boss02", "C_MiniBoss01", "C_Boss01", "D_Boss01" },
+		RequiredFalseBiome = "Styx",
+		Cooldowns =
+		{
+			{ Name = "ZagreusAnyQuipSpeech" },
+		},
+
+		-- Damn it...!
+		{ Cue = "/VO/ZagreusField_3439" },
+		-- Damn.
+		{ Cue = "/VO/ZagreusField_3440" },
+		-- Ah.
+		{ Cue = "/VO/ZagreusField_3441" },
+		-- Blast.
+		{ Cue = "/VO/ZagreusField_3442" },
+		-- Blood and...
+		{ Cue = "/VO/ZagreusField_3443" },
+		-- Nrgh...
+		{ Cue = "/VO/ZagreusField_3444" },
+		-- <Tsk>
+		{ Cue = "/VO/ZagreusField_3445" },
+		-- <Scoff>
+		{ Cue = "/VO/ZagreusField_3446" },
+		-- Not quite...
+		{ Cue = "/VO/ZagreusField_3447" },
+		-- The Butterfly...
+		{ Cue = "/VO/ZagreusField_3448", RequiredTrait = "PerfectClearDamageBonusTrait", },
+		-- Sorry, Than...
+		{ Cue = "/VO/ZagreusField_3449", RequiredTrait = "PerfectClearDamageBonusTrait", },
+		-- The Plume...
+		{ Cue = "/VO/ZagreusField_3450", RequiredTrait = "FastClearDodgeBonusTrait", },
+		-- Sorry, Hermes...
+		{ Cue = "/VO/ZagreusField_3451", RequiredTrait = "FastClearDodgeBonusTrait", },
+	},
 	ThanatosExitReactionVoiceLines =
 	{
 		RandomRemaining = true,
@@ -2638,7 +2783,7 @@ HeroVoiceLines =
 		RequiredFalseTextLinesThisRun = { "BecameCloseWithThanatos01Than_GoToHim", "BecameCloseWithThanatos01_BThan_GoToHim" },
 
 		-- Bye...?
-		{ Cue = "/VO/ZagreusField_1629", PreLineWait = 1.0 },
+		{ Cue = "/VO/ZagreusField_1629", PreLineWait = 1.0, RequiredFalseTextLines = { "ThanatosGift05" } },
 		-- Well, see you!
 		{ Cue = "/VO/ZagreusField_1630", PreLineWait = 1.3 },
 		-- See you, Than.
@@ -2652,9 +2797,22 @@ HeroVoiceLines =
 		-- Oh, Than.
 		{ Cue = "/VO/ZagreusField_1635", RequiredTextLines = { "ThanatosGift05" } },
 		-- Poof.
-		{ Cue = "/VO/ZagreusField_1636", PreLineWait = 1.1 },
+		-- { Cue = "/VO/ZagreusField_1636", PreLineWait = 1.1, RequiredFalseTextLinesThisRun = { "ThanatosHomeChat18" } },
 		-- Ugh.
-		{ Cue = "/VO/ZagreusField_1637", PreLineWait = 1.1 },
+		{ Cue = "/VO/ZagreusField_1637", PreLineWait = 1.1, RequiredFalseTextLines = { "ThanatosGift05" } },
+		-- Bye, Than.
+		{ Cue = "/VO/ZagreusField_3425", PreLineWait = 1.1, RequiredTextLines = { "ThanatosGift06" } },
+		-- See you, Than...
+		{ Cue = "/VO/ZagreusField_3426", PreLineWait = 1.1, RequiredTextLines = { "ThanatosGift05" } },
+		-- There he goes.
+		{ Cue = "/VO/ZagreusField_3427", RequiredTextLines = { "ThanatosGift03" } },
+		-- And he's off.
+		{ Cue = "/VO/ZagreusField_3428", RequiredTextLines = { "ThanatosGift07" } },
+		-- Wish I could do that.
+		{ Cue = "/VO/ZagreusField_3429", PreLineWait = 1.3, RequiredTextLines = { "ThanatosGift04" } },
+		-- Thanks for the help.
+		{ Cue = "/VO/ZagreusField_3430", PreLineWait = 1.1, RequiredTextLines = { "ThanatosGift06" } },
+
 	},
 
 	BiomeTimerAboutToExpireVoiceLines =
@@ -4092,7 +4250,7 @@ HeroVoiceLines =
 			-- The path toward the surface lies somewhere beyond all that.
 			{ Cue = "/VO/ZagreusField_0363", RequiredTrueFlags = { "Overlook" }, },
 			-- I can do this. I can do this. I can do this.
-			{ Cue = "/VO/ZagreusField_0364", RequiredTrueFlags = { "Overlook" }, TriggerCooldowns = { Name = "ZagreusBountyEarnedConfirmationVoiceLines", Time = 60 }, },
+			{ Cue = "/VO/ZagreusField_0364", RequiredTrueFlags = { "Overlook" }, TriggerCooldowns = { Name = "ZagreusBountyEarnedConfirmationVoiceLines", }, },
 			-- Through all that... the way to the surface...
 			{ Cue = "/VO/ZagreusField_0365", RequiredTrueFlags = { "Overlook" }, },
 			-- Wretches of the damned, beware. I'm coming back.
@@ -4320,7 +4478,37 @@ HeroVoiceLines =
 			{ Cue = "/VO/Storyteller_0301" },
 		}
 	},
+	UsedWaterCoolerVoiceLines =
+	{
+		RandomRemaining = true,
+		BreakIfPlayed = true,
+		PreLineWait = 0.45,
+		Cooldowns =
+		{
+			{ Name = "ZagreusAnyQuipSpeech" },
+		},
 
+		-- Not thirsty.
+		{ Cue = "/VO/ZagreusHome_2390", },
+		-- Still not thirsty.
+		{ Cue = "/VO/ZagreusHome_2391", RequiredPlayed = { "/VO/ZagreusHome_2390" }, },
+		-- Still definitely not thirsty.
+		{ Cue = "/VO/ZagreusHome_2392", RequiredPlayed = { "/VO/ZagreusHome_2391" }, },
+		-- Mm, no.
+		{ Cue = "/VO/ZagreusHome_2393", RequiredPlayed = { "/VO/ZagreusHome_2390" }, },
+		-- I've had enough Stygian water, thanks.
+		{ Cue = "/VO/ZagreusHome_2394", RequiredPlayed = { "/VO/ZagreusHome_2390" }, },
+		-- Never seen anyone drink this stuff.
+		{ Cue = "/VO/ZagreusHome_2395", RequiredPlayed = { "/VO/ZagreusHome_2390" }, },
+		-- I can wait till the next Fountain Chamber.
+		{ Cue = "/VO/ZagreusHome_2396", RequiredPlayed = { "/VO/ZagreusHome_2390" }, RequiredAnyCosmetics = { "TartarusReprieve", "AsphodelReprieve", "ElysiumReprieve" } },
+		-- No...
+		{ Cue = "/VO/ZagreusHome_2397", RequiredPlayed = { "/VO/ZagreusHome_2390" }, },
+		-- Not happening.
+		{ Cue = "/VO/ZagreusHome_2398", RequiredPlayed = { "/VO/ZagreusHome_2390" }, },
+		-- Never.
+		{ Cue = "/VO/ZagreusHome_2399", RequiredPlayed = { "/VO/ZagreusHome_2390" }, },
+	},
 	UsedBarbellVoiceLines =
 	{
 		RandomRemaining = true,
@@ -4677,46 +4865,71 @@ HeroVoiceLines =
 	},
 	FishNotCaughtVoiceLines =
 	{
-		BreakIfPlayed = true,
-		RandomRemaining = true,
-		PreLineWait = 1.8,
+		{
+			BreakIfPlayed = true,
+			RandomRemaining = true,
+			PreLineWait = 1.8,
 
-		-- Drat.
-		{ Cue = "/VO/ZagreusField_3117" },
-		-- Ah well.
-		{ Cue = "/VO/ZagreusField_3118" },
-		-- Missed...
-		{ Cue = "/VO/ZagreusField_3119" },
-		-- Tsk...
-		{ Cue = "/VO/ZagreusField_3120" },
-		-- Got away.
-		{ Cue = "/VO/ZagreusField_3121" },
-		-- You win this round, fish.
-		{ Cue = "/VO/ZagreusField_3122" },
-		-- Blood and...
-		{ Cue = "/VO/ZagreusField_3123" },
-		-- Argh.
-		{ Cue = "/VO/ZagreusField_3124" },
-		-- Missed it.
-		{ Cue = "/VO/ZagreusField_3125" },
-		-- Not quite.
-		{ Cue = "/VO/ZagreusField_3126" },
-		-- I missed...
-		{ Cue = "/VO/ZagreusField_3127" },
-		-- Blasted little...
-		{ Cue = "/VO/ZagreusField_3128" },
-		-- Damn.
-		{ Cue = "/VO/ZagreusField_3129" },
-		-- That little...
-		{ Cue = "/VO/ZagreusField_3130" },
-		-- I'll get you next time, fish!
-		{ Cue = "/VO/ZagreusField_3131" },
-		-- Lost it.
-		{ Cue = "/VO/ZagreusField_3132" },
-		-- No good.
-		{ Cue = "/VO/ZagreusField_3133" },
-		-- Curses!
-		{ Cue = "/VO/ZagreusField_3134" },
+			-- Drat.
+			{ Cue = "/VO/ZagreusField_3117" },
+			-- Ah well.
+			{ Cue = "/VO/ZagreusField_3118" },
+			-- Missed...
+			{ Cue = "/VO/ZagreusField_3119" },
+			-- Tsk...
+			{ Cue = "/VO/ZagreusField_3120" },
+			-- Got away.
+			{ Cue = "/VO/ZagreusField_3121" },
+			-- You win this round, fish.
+			{ Cue = "/VO/ZagreusField_3122" },
+			-- Blood and...
+			{ Cue = "/VO/ZagreusField_3123" },
+			-- Argh.
+			{ Cue = "/VO/ZagreusField_3124" },
+			-- Missed it.
+			{ Cue = "/VO/ZagreusField_3125" },
+			-- Not quite.
+			{ Cue = "/VO/ZagreusField_3126" },
+			-- I missed...
+			{ Cue = "/VO/ZagreusField_3127" },
+			-- Blasted little...
+			{ Cue = "/VO/ZagreusField_3128" },
+			-- Damn.
+			{ Cue = "/VO/ZagreusField_3129" },
+			-- That little...
+			{ Cue = "/VO/ZagreusField_3130" },
+			-- I'll get you next time, fish!
+			{ Cue = "/VO/ZagreusField_3131" },
+			-- Lost it.
+			{ Cue = "/VO/ZagreusField_3132" },
+			-- No good.
+			{ Cue = "/VO/ZagreusField_3133" },
+			-- Curses!
+			{ Cue = "/VO/ZagreusField_3134" },
+		},
+		{
+			BreakIfPlayed = true,
+			RandomRemaining = true,
+			PreLineWait = 0.89,
+			NoTarget = true,
+			RequiredTextLines = { "ChaosFirstPickUp" },
+			SuccessiveChanceToPlay = 0.66,
+			Source = { SubtitleColor = Color.ChaosVoice },
+			RequiredBiome = "Secrets",
+
+			-- You are eluded.
+			{ Cue = "/VO/Chaos_0249",  },
+			-- Thwarted.
+			{ Cue = "/VO/Chaos_0250",  },
+			-- Thwarted again.
+			{ Cue = "/VO/Chaos_0251",  },
+			-- Defeated.
+			{ Cue = "/VO/Chaos_0252",  },
+			-- Defeated, once again.
+			{ Cue = "/VO/Chaos_0253",  },
+			-- Denied of victory.
+			{ Cue = "/VO/Chaos_0254",  },
+		},
 	},
 	FishNotCaughtTooLateVoiceLines =
 	{
@@ -4809,12 +5022,25 @@ HeroVoiceLines =
 	-- Home Events
 	FlashbackEndedVoiceLines =
 	{
-		BreakIfPlayed = true,
-		RandomRemaining = true,
-		PreLineWait = 0.65,
+		{
+			BreakIfPlayed = true,
+			RandomRemaining = true,
+			PreLineWait = 0.65,
+			RequiredTextLines = { "Flashback_Mother_01" },
+			RequiredFalseTextLines = { "Flashback_DayNightJob_01" },
 
-		-- Mother... I wonder... will you even remember me?
-		{ Cue = "/VO/ZagreusHome_0067", },
+			-- Mother... I wonder... will you even remember me?
+			{ Cue = "/VO/ZagreusHome_0067", },
+		},
+		{
+			BreakIfPlayed = true,
+			RandomRemaining = true,
+			PreLineWait = 0.65,
+			RequiredTextLines = { "Flashback_DayNightJob_01" },
+
+			-- ...Ugh... at least I can't be late for that job anymore.
+			{ Cue = "/VO/ZagreusHome_2137", },
+		},
 	},
 	ShadeEavesdropVoiceLines =
 	{
@@ -4984,36 +5210,73 @@ HeroVoiceLines =
 	},
 	WeaponKitUnlockedVoiceLines =
 	{
-		BreakIfPlayed = true,
-		RandomRemaining = true,
-		PreLineWait = 0.35,
-		CooldownTime = 5,
+		{
+			BreakIfPlayed = true,
+			RandomRemaining = true,
+			PreLineWait = 0.35,
+			CooldownTime = 5,
 
-		-- There we go!
-		{ Cue = "/VO/ZagreusHome_0143" },
-		-- Open up.
-		{ Cue = "/VO/ZagreusHome_0144" },
-		-- Let's see what's in here.
-		{ Cue = "/VO/ZagreusHome_0355" },
-		-- Let's try it.
-		{ Cue = "/VO/ZagreusHome_0352" },
+			-- There we go!
+			{ Cue = "/VO/ZagreusHome_0143" },
+			-- Open up.
+			{ Cue = "/VO/ZagreusHome_0144" },
+			-- Let's see what's in here.
+			{ Cue = "/VO/ZagreusHome_0355" },
+			-- Let's try it.
+			{ Cue = "/VO/ZagreusHome_0352" },
+		},
 	},
 	WeaponKitSpecialInteractVoiceLines =
 	{
-		BreakIfPlayed = true,
-		RandomRemaining = true,
-		PreLineWait = 0.65,
+		{
+			BreakIfPlayed = true,
+			RandomRemaining = true,
+			PreLineWait = 0.65,
+			RequiredWeapon = "SpearWeapon",
+			Queue = "Always",
 
-		-- Varatha: I see you through the eyes of the crimson phoenix!
-		{ Cue = "/VO/ZagreusHome_2027" },
+			-- Varatha: I see you through the eyes of the crimson phoenix!
+			{ Cue = "/VO/ZagreusHome_2027" },
+		},
+		{
+			BreakIfPlayed = true,
+			RandomRemaining = true,
+			PreLineWait = 0.65,
+			RequiredWeapon = "SwordWeapon",
+			Queue = "Always",
+
+			-- Stygius: I see your kingly pardon from a prison of stone!
+			{ Cue = "/VO/ZagreusHome_2047" },
+		},
+		{
+			BreakIfPlayed = true,
+			RandomRemaining = true,
+			PreLineWait = 0.65,
+			RequiredWeapon = "BowWeapon",
+			Queue = "Always",
+
+			-- @temp Think I need a shave...
+			{ Cue = "/VO/ZagreusHome_0071" },
+		},
 	},
 	MetaUpgradeUnlockedVoiceLines =
 	{
+		PlayOnce = true,
+		PlayOnceContext = "MirrorUnlocks",
 		BreakIfPlayed = true,
-		RandomRemaining = true,
 		PreLineWait = 0.35,
 		CooldownTime = 5,
 
+		-- Show me something new.
+		{ Cue = "/VO/ZagreusHome_2309", },
+		-- How else can I improve?
+		{ Cue = "/VO/ZagreusHome_2310", },
+		-- What more potential do I have?
+		{ Cue = "/VO/ZagreusHome_2311", },
+		-- Let's see the last of them.
+		{ Cue = "/VO/ZagreusHome_2312", },
+
+		--[[
 		-- Something for the Mirror.
 		-- { Cue = "/VO/ZagreusField_0433" },
 		-- A facet for the Mirror.
@@ -5036,6 +5299,37 @@ HeroVoiceLines =
 		{ Cue = "/VO/ZagreusHome_0353", RequiredPlayed = { "/VO/ZagreusHome_0341" } },
 		-- This one then.
 		{ Cue = "/VO/ZagreusHome_0354", RequiredPlayed = { "/VO/ZagreusHome_0341" } },
+		]]--
+	},
+	MetaUpgradesResetVoiceLines =
+	{
+		{
+			BreakIfPlayed = true,
+			RandomRemaining = true,
+			PreLineWait = 0.75,
+			CooldownTime = 20,
+			SuccessiveChanceToPlayAll = 0.75,
+
+			-- I'd like my Darkness back.
+			{ Cue = "/VO/ZagreusHome_2305" },
+			-- How about a new beginning.
+			{ Cue = "/VO/ZagreusHome_2306" },
+			-- Let's try this Mirror stuff again.
+			{ Cue = "/VO/ZagreusHome_2307" },
+			-- Return my Darkness to me.
+			{ Cue = "/VO/ZagreusHome_2308" },
+		},
+		{
+			BreakIfPlayed = true,
+			RandomRemaining = true,
+			PreLineWait = 0.75,
+			CooldownTime = 20,
+
+			-- All right.
+			{ Cue = "/VO/ZagreusHome_1856" },
+			-- That should do it.
+			{ Cue = "/VO/ZagreusHome_0145" },
+		},
 	},
 	-- Shrine
 	CannotUnlockShrineVoiceLines =
@@ -5113,7 +5407,7 @@ HeroVoiceLines =
 			RandomRemaining = true,
 			PreLineWait = 0.65,
 			RequiresNotInOnslaught = true,
-			ChanceToPlayAgain = 0.05,
+			ChanceToPlayAgain = 0.03,
 			PlayOnce = true,
 			Cooldowns =
 			{
@@ -5128,6 +5422,8 @@ HeroVoiceLines =
 			{ Cue = "/VO/ZagreusHome_1129", RequiredWeapon = "ShieldWeapon" },
 			-- It can sense Coronacht.
 			{ Cue = "/VO/ZagreusHome_1130", RequiredWeapon = "BowWeapon" },
+			-- The Pact can tell I have Malphon this time.
+			{ Cue = "/VO/ZagreusHome_2034", RequiredWeapon = "FistWeapon" },
 			-- It sees I chose Exagryph.
 			{ Cue = "/VO/ZagreusHome_1131", RequiredWeapon = "GunWeapon" },
 		},
@@ -5483,6 +5779,18 @@ HeroVoiceLines =
 		{ Cue = "/VO/ZagreusHome_1597", RequiredPlayed = { "/VO/ZagreusHome_1594" } },
 		-- Pleasure doing business with you, Fates.
 		{ Cue = "/VO/ZagreusHome_1598" },
+		-- Prophecy fulfilled!
+		{ Cue = "/VO/ZagreusHome_2339" },
+		-- Scratch one off the Fated List.
+		{ Cue = "/VO/ZagreusHome_2340" },
+		-- Was only a matter of time I suppose.
+		{ Cue = "/VO/ZagreusHome_2341" },
+		-- That's one prophecy out of the way.
+		{ Cue = "/VO/ZagreusHome_2342" },
+		-- I guess this came to pass!
+		{ Cue = "/VO/ZagreusHome_2343" },
+		-- What do you know, this came true.
+		{ Cue = "/VO/ZagreusHome_2344" },
 	},
 
 	-- Trophy Quest
@@ -5612,6 +5920,7 @@ HeroVoiceLines =
 	-- Run Cleared
 	RunClearedVoiceLines =
 	{
+		Queue = "Interrupt",
 		{
 			RandomRemaining = true,
 			BreakIfPlayed = true,
@@ -6171,6 +6480,19 @@ GameOutroData =
 		{
 			-- One of these days, or nights, not so very long from now, the Prince may finally traverse beyond this point. And then, what shall become of him, and I? Well, hopefully, not this:
 			{ Cue = "/VO/Storyteller_0285", PreLineWait = 0.8, NoTarget = true },
+		},
+	},
+	{
+		RequiredMinRunsCleared = 6,
+		Header = "Outro_Waiting",
+		FadeOutWait = 11.75,
+		-- so that 'first ending: styx' is guaranteed to play first
+		-- RequiredPlayed = { "/VO/Storyteller_0261" },
+		SubtitleColor = Color.NarratorVoice,
+		VoiceLines =
+		{
+			-- Upon the surface realm, the mortal-loving Prince would doubtless find that death still comes in a variety of different forms. One of the most common, yet perhaps least interesting, involves simply waiting... long... enough... until...
+			{ Cue = "/VO/Storyteller_0302", PreLineWait = 0.8, NoTarget = true },
 		},
 	},
 

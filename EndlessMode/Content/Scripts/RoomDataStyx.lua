@@ -7,6 +7,7 @@ RoomSetData.Styx =
 		--DevotionEncounters = {"DevotionTestElysium"},
 		LocationText = "Location_Styx",
 		LocationTextShort = "Location_Styx_Short",
+		ResultText = "RunHistoryScreenResult_Styx",
 		BlockHadesOverlay = true,
 		TargetMetaRewardsRatio = 0.33,
 		SecretSpawnChance = 0.0,
@@ -230,6 +231,17 @@ RoomSetData.Styx =
 		IsMiniBossRoom = true,
 		RewardPreviewIcon = "RoomElitePreview2",
 		RewardPreviewFx = "RoomRewardAvailableRareSparkles",
+
+		UnthreadedEvents =
+		{
+			{
+				FunctionName = "CheckAssistHint",
+				Args =
+				{
+					Delay = 10.0,
+				}
+			},
+		},
 	},
 
 	D_MiniBoss01 =
@@ -253,10 +265,10 @@ RoomSetData.Styx =
 			SuccessiveChanceToPlayAll = 0.05,
 			ThreadName = "RoomThread",
 
-			-- The Satyrs must be fashioning those things...
-			{ Cue = "/VO/ZagreusField_2885" },
-			-- It's quiet, finally...
-			{ Cue = "/VO/ZagreusField_2886" },
+			-- Go clop your hooves in hell.
+			{ Cue = "/VO/ZagreusField_2877" },
+			-- Get out of here!
+			{ Cue = "/VO/ZagreusField_2878" },
 		},
 	},
 
@@ -348,7 +360,35 @@ RoomSetData.Styx =
 	{
 		InheritFrom = { "BaseStyxMiniBoss", "BaseStyxWingEnd", "BaseStyx", },
 
-		LegalEncounters = { "MiniBossHeavyRangedForked" },
+		LegalEncounters = { "MiniBossCrawler", "MiniBossHeavyRangedForked" },
+
+		EncounterSpecificDataOverwrites =
+		{
+			MiniBossCrawler =
+			{
+				EntranceFunctionName = "RoomEntranceCrawlerMiniBoss",
+				UnthreadedEvents =
+				{
+					{
+						FunctionName = "BossIntro",
+						Args =
+						{
+							ProcessTextLinesIds = { 552394 },
+							SetupBossIds = { 552394 },
+						},
+					},
+					{
+						FunctionName = "CheckAssistHint",
+						Args =
+						{
+							Delay = 10.0,
+						}
+					},
+				},
+				--IntroSequenceDuration = 4.0,
+				SkipLastKillSound = true,
+			}
+		},
 
 		NumExits = 1,
 		ZoomFraction = 0.85,
@@ -361,11 +401,12 @@ RoomSetData.Styx =
 			PreLineWait = 1.6,
 			SuccessiveChanceToPlayAll = 0.05,
 			ThreadName = "RoomThread",
+			RequiredEncounters = { "MiniBossHeavyRangedForked" },
 
-			-- Go clop your hooves in hell.
-			{ Cue = "/VO/ZagreusField_2877" },
-			-- Get out of here!
-			{ Cue = "/VO/ZagreusField_2878" },
+			-- The Satyrs must be fashioning those things...
+			{ Cue = "/VO/ZagreusField_2885" },
+			-- It's quiet, finally...
+			{ Cue = "/VO/ZagreusField_2886" },
 		},
 	},
 
@@ -635,6 +676,7 @@ RoomSetData.Styx =
 		InheritFrom = { "BaseStyx" },
 		RewardPreviewIcon = "RoomElitePreview4",
 		RewardPreviewFx = "RoomRewardAvailableRareSparkles",
+		ResultText = "RunHistoryScreenResult_D_Boss01",
 		ReverbValue = 0.75,
 		--Endless mode
 		NextRoomSet = { "Tartarus", },
@@ -707,6 +749,13 @@ RoomSetData.Styx =
 					UnlockDelay = 4.5,
 				},
 			},
+			{
+				FunctionName = "CheckAssistHint",
+				Args =
+				{
+					Delay = 10.0,
+				}
+			},
 		},
 
 		EnterVoiceLines =
@@ -729,6 +778,16 @@ RoomSetData.Styx =
 				PreLineWait = 2.25,
 				-- Well, Guan Yu...? Take good care of Varatha for me.
 				{ Cue = "/VO/ZagreusField_3231" },
+			},
+			{
+				PlayOnce = true,
+				BreakIfPlayed = true,
+				RequiredTextLines = { "NyxRevealsArthurAspect01" },
+				RequiredWeapon = "SwordWeapon",
+				RequiredLastInteractedWeaponUpgrade = "SwordConsecrationTrait",
+				PreLineWait = 2.25,
+				-- We made it, Stygius. I hope this Arthur serves you well someday.
+				{ Cue = "/VO/ZagreusField_3250" },
 			},
 			{
 				BreakIfPlayed = true,
@@ -814,6 +873,7 @@ RoomSetData.Styx =
 		ThreadedEvents =
 		{
 			{ FunctionName = "DisplayLocationText", Args = { Text = "Location_Styx" } },
+			{ FunctionName = "CheckLocationUnlock", Args = { Biome = "Styx" } },
 		},
 
 		-- Room Audio Below This Line

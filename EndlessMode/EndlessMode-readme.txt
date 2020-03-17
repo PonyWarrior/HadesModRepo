@@ -43,3 +43,6 @@ Added Codex Menu compatible version
 
 1.3.5
 Updated mod files to v0.25129
+
+1.3.6
+Updated to game version 0.26829

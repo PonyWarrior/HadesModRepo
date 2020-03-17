@@ -986,6 +986,68 @@ TraitData =
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
+
+			{
+				WeaponNames = { "FistWeapon", "FistWeapon2", "FistWeapon3", "FistWeapon4", "FistWeapon5" },
+				ProjectileProperty = "Graphic",
+				ChangeValue = "FistFxZeus",
+				ChangeType = "Absolute"
+			},
+			{
+				WeaponName = "FistWeaponDash",
+				ProjectileProperty = "StartFx",
+				ChangeValue = "FistFxSwipeZeus",
+				ChangeType = "Absolute",
+			},
+
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeC-Zeus-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon2" },
+				WeaponProperty = "ChargeFx",
+				ChangeValue = "ChargeAttack-Zeus",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon2" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeA-Zeus-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon3" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeAFlipped-Zeus-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon3" },
+				WeaponProperty = "ChargeFx",
+				ChangeValue = "ChargeAttack-Zeus",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeaponDash" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeC-Zeus-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
 		},
 	},
 
@@ -1120,6 +1182,14 @@ TraitData =
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
+			{
+				WeaponNames = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "FistFxUppercutDirectionalZeus",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
 		},
 	},
 
@@ -1235,7 +1305,8 @@ TraitData =
 		Slot = "Rush",
 		PreEquipWeapons = { "LightningDash" },
 
-		AddRush = {
+		AddRush =
+		{
 			FunctionName = "ZeusDash",
 			RunOnce = true,
 		},
@@ -1729,6 +1800,76 @@ TraitData =
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
+			{
+				WeaponNames = { "FistWeapon", "FistWeapon2", "FistWeapon3", "FistWeapon4", "FistWeapon5" },
+				ProjectileProperty = "Graphic",
+				ChangeValue = "FistFxAthena",
+				ChangeType = "Absolute"
+			},
+			{
+				WeaponName = "FistWeaponDash",
+				ProjectileProperty = "StartFx",
+				ChangeValue = "FistFxSwipeAthena",
+				ChangeType = "Absolute",
+			},
+
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeC-Athena-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon2" },
+				WeaponProperty = "ChargeFx",
+				ChangeValue = "ChargeAttack-Athena",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon2" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeA-Athena-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon3" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeAFlipped-Athena-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon3" },
+				WeaponProperty = "ChargeFx",
+				ChangeValue = "ChargeAttack-Athena",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeaponDash" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeC-Athena-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon3" },
+				ProjectileProperty = "StartFx",
+				ChangeValue = "null",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
 
 		},
 	},
@@ -1763,7 +1904,7 @@ TraitData =
 		PropertyChanges =
 		{
 			{
-				WeaponNames = { "SpearWeaponThrow", "SpearWeaponThrowReturn", "SwordParry", "ShieldThrow", "BowSplitShot", "GunGrenadeToss" },
+				WeaponNames = { "SpearWeaponThrow", "SpearWeaponThrowReturn", "SwordParry", "ShieldThrow", "BowSplitShot", "GunGrenadeToss", "FistWeaponSpecial", "FistWeaponSpecialDash" },
 				ProjectileProperty = "DeflectProjectiles",
 				ChangeValue = true,
 				ChangeType = "Absolute"
@@ -1792,6 +1933,7 @@ TraitData =
 				ChangeValue = 450,
 				ChangeType = "Absolute"
 			},
+
 			--[[
 			{
 				WeaponName = "SwordParry",
@@ -1905,6 +2047,13 @@ TraitData =
 				ProjectileName = "SpearRushWeapon",
 				ProjectileProperty = "DetonateGraphic",
 				ChangeValue = "SpearRushTrailFx-Athena",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "FistFxUppercutDirectionalAthena",
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
@@ -2384,7 +2533,7 @@ TraitData =
 	{
 		InheritFrom = { "ShopTier1Trait" },
 		Icon = "Boon_Athena_11",
-		PreEquipWeapons = {"LastStandMetaUpgradeShield", "LastStandReincarnateShield"},
+		PreEquipWeapons = {"LastStandMetaUpgradeWrath", "LastStandMetaUpgradeShield", "LastStandReincarnateShield"},
 		RarityLevels =
 		{
 			Common =
@@ -2407,7 +2556,7 @@ TraitData =
 		PropertyChanges =
 		{
 			{
-				WeaponNames = {"LastStandMetaUpgradeShield", "LastStandReincarnateShield"},
+				WeaponNames = { "LastStandMetaUpgradeWrath", "LastStandMetaUpgradeShield", "LastStandReincarnateShield"},
 				EffectName = "MagicShield",
 				EffectProperty = "Duration",
 				BaseValue = 2,
@@ -2422,7 +2571,7 @@ TraitData =
 				ChangeType = "Add",
 			},
 			{
-				WeaponNames = {"LastStandMetaUpgradeShield", "LastStandReincarnateShield"},
+				WeaponNames = { "LastStandMetaUpgradeWrath", "LastStandMetaUpgradeShield", "LastStandReincarnateShield"},
 				EffectName = "MagicShieldInvincible",
 				EffectProperty = "Duration",
 				DeriveValueFrom = "MagicShield"
@@ -2567,7 +2716,7 @@ TraitData =
 		PropertyChanges =
 		{
 			{
-				WeaponNames = {"SwordWeapon", "SwordWeapon2", "SwordWeaponDash", "SpearWeapon", "SpearWeapon2", "SpearWeapon3", "SpearWeaponDash" },
+				WeaponNames = {"SwordWeapon", "SwordWeapon2", "SwordWeaponDash", "SpearWeapon", "SpearWeapon2", "SpearWeapon3", "SpearWeaponDash",},
 				ProjectileProperty = "ImpactVelocity",
 				ChangeType = "Add",
 				BaseMin = 1600,
@@ -2651,7 +2800,7 @@ TraitData =
 				IgnoreRarity = true,
 			},
 			{
-				WeaponNames = { "GunWeapon", "GunWeaponDash" },
+				WeaponNames = { "GunWeapon", "GunWeaponDash", "FistWeapon", "FistWeapon2","FistWeapon3","FistWeapon4","FistWeapon5", "FistWeaponSpecial", "FistWeaponSpecialDash" },
 				ProjectileProperty = "ImpactVelocity",
 				ChangeType = "Add",
 				BaseMin = 1200,
@@ -2665,7 +2814,7 @@ TraitData =
 				IgnoreRarity = true,
 			},
 			{
-				WeaponNames = { "GunWeapon", "GunWeaponDash" },
+				WeaponNames = { "GunWeapon", "GunWeaponDash", "FistWeapon", "FistWeapon2","FistWeapon3","FistWeapon4","FistWeapon5", "FistWeaponSpecial", "FistWeaponSpecialDash" },
 				ProjectileProperty = "ImpactVelocityCap",
 				ChangeType = "Add",
 				BaseMin = 1200,
@@ -2905,6 +3054,68 @@ TraitData =
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
+			{
+				WeaponNames = { "FistWeapon", "FistWeapon2", "FistWeapon3", "FistWeapon4", "FistWeapon5" },
+				ProjectileProperty = "Graphic",
+				ChangeValue = "FistFxPoseidon",
+				ChangeType = "Absolute"
+			},
+			{
+				WeaponName = "FistWeaponDash",
+				ProjectileProperty = "StartFx",
+				ChangeValue = "FistFxSwipePoseidon",
+				ChangeType = "Absolute",
+			},
+
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeC-Poseidon-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon2" },
+				WeaponProperty = "ChargeFx",
+				ChangeValue = "ChargeAttack-Poseidon",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon2" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeA-Poseidon-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon3" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeAFlipped-Poseidon-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon3" },
+				WeaponProperty = "ChargeFx",
+				ChangeValue = "ChargeAttack-Poseidon",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeaponDash" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeC-Poseidon-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
 		},
 	},
 
@@ -3022,7 +3233,7 @@ TraitData =
 				IgnoreRarity = true,
 			},
 			{
-				WeaponNames = { "GunGrenadeToss" },
+				WeaponNames = { "GunGrenadeToss", "FistWeaponSpecial", "FistWeaponSpecialDash"  },
 				ExcludeProjectileName = "GunGrenadeSelfDamage",
 				ProjectileProperty = "ImpactVelocity",
 				ChangeType = "Add",
@@ -3037,7 +3248,7 @@ TraitData =
 				IgnoreRarity = true,
 			},
 			{
-				WeaponNames = { "GunGrenadeToss" },
+				WeaponNames = { "GunGrenadeToss", "FistWeaponSpecial", "FistWeaponSpecialDash"  },
 				ExcludeProjectileName = "GunGrenadeSelfDamage",
 				ProjectileProperty = "ImpactVelocityCap",
 				ChangeType = "Add",
@@ -3196,6 +3407,13 @@ TraitData =
 				ProjectileName = "SpearRushWeapon",
 				ProjectileProperty = "DetonateGraphic",
 				ChangeValue = "SpearRushTrailFx-Poseidon",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "FistFxUppercutDirectionalPoseidon",
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
@@ -3773,7 +3991,7 @@ TraitData =
 		{
 			BossDamageMultiplier =
 			{
-				BaseValue = 1.05,
+				BaseValue = 1.10,
 				SourceIsMultiplier = true,
 				IdenticalMultiplier =
 				{
@@ -3854,6 +4072,16 @@ TraitData =
 				ChangeValue = true,
 			},
 		}
+	},
+
+	FishingTrait =
+	{
+		InheritFrom = { "ShopTier3Trait" },
+		RequiredFalseTrait = "FishingTrait",
+		RequiredTextLines = { "PoseidonFishQuest01" },
+		Icon = "Boon_Poseidon_13",
+		FishingPointChanceBonus = 0.2,
+		DisableFishRequirements = true,
 	},
 
 	HealthRewardBonusTrait =
@@ -4006,6 +4234,12 @@ TraitData =
 		},
 	},
 
+	PoseidonPickedUpMinorLootTrait =
+	{
+		InheritFrom = { "ShopTier1Trait" },
+		Hidden = true,
+	},
+
 	RoomRewardMaxHealthTrait =
 	{
 		InheritFrom = { "ShopTier1Trait" },
@@ -4045,7 +4279,7 @@ TraitData =
 			ReplaceBonus = 0.34,
 		},
 	},
-
+	--/
 	-- Artemis
 	ArtemisWeaponTrait =
 	{
@@ -4335,6 +4569,70 @@ TraitData =
 				ExcludeLinked = true,
 			},
 
+			{
+				WeaponNames = { "FistWeapon", "FistWeapon2", "FistWeapon3", "FistWeapon4", "FistWeapon5" },
+				ProjectileProperty = "Graphic",
+				ChangeValue = "FistFxArtemis",
+				ChangeType = "Absolute"
+			},
+
+			{
+				WeaponName = "FistWeaponDash",
+				ProjectileProperty = "StartFx",
+				ChangeValue = "FistFxSwipeArtemis",
+				ChangeType = "Absolute",
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeC-Artemis-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon2" },
+				WeaponProperty = "ChargeFx",
+				ChangeValue = "ChargeAttack-Artemis",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon2" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeA-Artemis-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon3" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeAFlipped-Artemis-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon3" },
+				WeaponProperty = "ChargeFx",
+				ChangeValue = "ChargeAttack-Artemis",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeaponDash" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeC-Artemis-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+
+
 		},
 	},
 
@@ -4513,6 +4811,13 @@ TraitData =
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
+			{
+				WeaponNames = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "FistFxUppercutDirectionalArtemis",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
 		},
 	},
 
@@ -4527,19 +4832,19 @@ TraitData =
 		{
 			Common =
 			{
-				Multiplier = 1.0,
+				Multiplier = 1.000,
 			},
 			Rare =
 			{
-				Multiplier = 1.2,
+				Multiplier = 1.145,
 			},
 			Epic =
 			{
-				Multiplier = 1.4,
+				Multiplier = 1.290,
 			},
 			Heroic =
 			{
-				Multiplier = 1.6,
+				Multiplier = 1.435,
 			}
 		},
 		PropertyChanges =
@@ -4610,6 +4915,7 @@ TraitData =
 	ArtemisRushTrait =
 	{
 		InheritFrom = { "ShopTier1Trait" },
+		RequiredFalseTrait = "BowStoredChargeTrait",
 		God = "Artemis",
 		Icon = "Boon_Artemis_03",
 		Slot = "Rush",
@@ -5077,10 +5383,85 @@ TraitData =
 		}
 	},
 
+	UnstoredAmmoDamageTrait =
+	{
+		InheritFrom = { "ShopTier3Trait" },
+		RequiredFalseTrait = "MagnetismTrait",
+		RequiredInactiveMetaUpgrade = "AmmoMetaUpgrade",
+		Icon = "Boon_Hermes_02",
+		AddOutgoingDamageModifiers =
+		{
+			UnstoredAmmoMultiplier = 1.5,
+			ExtractValues =
+			{
+				{
+					Key = "UnstoredAmmoMultiplier",
+					ExtractAs = "TooltipDamage",
+					Format = "PercentDelta",
+				},
+			}
+		},
+
+	},
+
+	AmmoReloadTrait =
+	{
+		InheritFrom = { "ShopTier1Trait" },
+		CustomTrayText = "AmmoReloadTrait_Tray",
+		RequiredInactiveMetaUpgrade = "AmmoMetaUpgrade",
+		Icon = "Boon_Hermes_03",
+		RequiredFalseTrait = "AmmoReloadTrait",
+		RarityLevels =
+		{
+			Common =
+			{
+				MinMultiplier = 1.00,
+				MaxMultiplier = 1.00,
+			},
+			Rare =
+			{
+				MinMultiplier = 2.75/2.5,
+				MaxMultiplier = 2.75/2.5,
+			},
+			Epic =
+			{
+				MinMultiplier = 2.75/2.25,
+				MaxMultiplier = 2.75/2.25,
+			},
+			Heroic =
+			{
+				Multiplier = 2.75/2,
+			}
+		},
+		AmmoReloadTimeDivisor =
+		{
+			BaseValue = 3/2.75,
+			IdenticalMultiplier =
+			{
+				Value = DuplicateMultiplier,
+			},
+		},
+		ExtractValues =
+		{
+			{
+				Key = "AmmoReloadTimeDivisor",
+				ExtractAs = "TooltipAmmo",
+				Format = "AmmoReloadDivisor",
+				DecimalPlaces = 2.0,
+			},
+			{
+				ExtractAs = "TooltipTotalAmmoDelay",
+				Format = "ExistingAmmoReloadDelay",
+				SkipAutoExtract = true,
+				DecimalPlaces = 2.0,
+			}
+		}
+	},
 	AmmoReclaimTrait =
 	{
 		InheritFrom = { "ShopTier1Trait" },
 		CustomTrayText = "AmmoReclaimTrait_Tray",
+		RequiredInactiveMetaUpgrade = "ReloadAmmoMetaUpgrade",
 		Icon = "Boon_Hermes_03",
 		RequiredFalseTraits = { "AresRangedTrait", "DionysusRangedTrait", "DemeterRangedTrait" },
 		RarityLevels =
@@ -5102,7 +5483,7 @@ TraitData =
 			},
 			Heroic =
 			{
-				Multiplier = 1.6,
+				Multiplier = 2.5,
 			}
 		},
 		AmmoReclaimTimeDivisor =
@@ -5435,7 +5816,7 @@ TraitData =
 	{
 		InheritFrom = { "ShopTier2Trait" },
 		God = "Aphrodite",
-		Icon = "Boon_Aphrodite_05",
+		Icon = "Boon_Aphrodite_12",
 		PreEquipWeapons = { "AphroditeShoutWeapon", "AreaWeakenAphrodite", "PoseidonAphroditeTouchWeapon" },
 		RequiredFalseTrait = "AphroditePotencyTrait",
 		RarityLevels =
@@ -5798,6 +6179,68 @@ TraitData =
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
+
+			{
+				WeaponNames = { "FistWeapon", "FistWeapon2", "FistWeapon3", "FistWeapon4", "FistWeapon5" },
+				ProjectileProperty = "Graphic",
+				ChangeValue = "FistFxAphrodite",
+				ChangeType = "Absolute"
+			},
+			{
+				WeaponName = "FistWeaponDash",
+				ProjectileProperty = "StartFx",
+				ChangeValue = "FistFxSwipeAphrodite",
+				ChangeType = "Absolute",
+			},
+
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeC-Aphrodite-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon2" },
+				WeaponProperty = "ChargeFx",
+				ChangeValue = "ChargeAttack-Aphrodite",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon2" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeA-Aphrodite-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon3" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeAFlipped-Aphrodite-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon3" },
+				WeaponProperty = "ChargeFx",
+				ChangeValue = "ChargeAttack-Aphrodite",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeaponDash" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeC-Aphrodite-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
 		}
 	},
 
@@ -5948,6 +6391,13 @@ TraitData =
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
+			{
+				WeaponNames = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "FistFxUppercutDirectionalAphrodite",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
 		}
 	},
 
@@ -6094,6 +6544,7 @@ TraitData =
 				ProjectileProperty = "DamageLow",
 				BaseMin = 20,
 				BaseMax = 20,
+				AsInt = true,
 				DepthMult = DepthDamageMultiplier,
 				IdenticalMultiplier =
 				{
@@ -6328,7 +6779,7 @@ TraitData =
 			{
 				WeaponName = "AreaWeakenAphrodite",
 				ProjectileProperty = "DamageLow",
-				BaseMin = 20,
+				BaseMin = 25,
 				BaseMax = 25,
 				DepthMult = DepthDamageMultiplier,
 				IdenticalMultiplier =
@@ -6750,6 +7201,75 @@ TraitData =
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
+
+			{
+				WeaponNames = { "FistWeapon", "FistWeapon2", "FistWeapon3", "FistWeapon4", "FistWeapon5" },
+				ProjectileProperty = "Graphic",
+				ChangeValue = "FistFxAres",
+				ChangeType = "Absolute"
+			},
+			{
+				WeaponName = "FistWeaponDash",
+				ProjectileProperty = "StartFx",
+				ChangeValue = "FistFxSwipeAres",
+				ChangeType = "Absolute",
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeC-Ares-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon2" },
+				WeaponProperty = "ChargeFx",
+				ChangeValue = "ChargeAttack-Ares",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon2" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeA-Ares-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon3" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeAFlipped-Ares-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon3" },
+				WeaponProperty = "ChargeFx",
+				ChangeValue = "ChargeAttack-Ares",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeaponDash" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeC-Ares-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon" },
+				ProjectileProperty = "StartFx",
+				ChangeValue = "null",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
 		},
 	},
 
@@ -6853,7 +7373,7 @@ TraitData =
 			{
 				WeaponName = "BowSplitShot",
 				ProjectileProperty = "Graphic",
-				ChangeValue = "BowWeaponArrow-Ares",
+				ChangeValue = "BowWeaponArrow-Ares-SplitShot",
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
@@ -6931,7 +7451,13 @@ TraitData =
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
-
+			{
+				WeaponNames = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "FistFxUppercutDirectionalAres",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
 		},
 	},
 
@@ -7659,7 +8185,7 @@ TraitData =
 				SourceIsMultiplier = true,
 				IdenticalMultiplier =
 				{
-					Value = -0.9,
+					Value = -0.6,
 				},
 			},
 			ValidWeapons = WeaponSets.HeroAllWeapons,
@@ -8492,6 +9018,69 @@ TraitData =
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
+			{
+				WeaponNames = { "FistWeapon", "FistWeapon2", "FistWeapon3", "FistWeapon4", "FistWeapon5" },
+				ProjectileProperty = "Graphic",
+				ChangeValue = "FistFxDionysus",
+				ChangeType = "Absolute"
+			},
+			{
+				WeaponName = "FistWeaponDash",
+				ProjectileProperty = "StartFx",
+				ChangeValue = "FistFxSwipeDionysus",
+				ChangeType = "Absolute",
+			},
+
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeC-Dionysus-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon2" },
+				WeaponProperty = "ChargeFx",
+				ChangeValue = "ChargeAttack-Dionysus",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon2" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeA-Dionysus-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon3" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeAFlipped-Dionysus-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon3" },
+				WeaponProperty = "ChargeFx",
+				ChangeValue = "ChargeAttack-Dionysus",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeaponDash" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeC-Dionysus-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+
 		}
 	},
 
@@ -8626,7 +9215,7 @@ TraitData =
 			{
 				WeaponName = "BowSplitShot",
 				ProjectileProperty = "Graphic",
-				ChangeValue = "BowWeaponArrow-Dionysus",
+				ChangeValue = "BowWeaponArrow-Dionysus-SplitShot",
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
@@ -8644,6 +9233,13 @@ TraitData =
 				ProjectileName = "SpearRushWeapon",
 				ProjectileProperty = "DetonateGraphic",
 				ChangeValue = "SpearRushTrailFx-Dionysus",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "FistFxUppercutDirectionalDionysus",
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
@@ -8730,13 +9326,6 @@ TraitData =
 				WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
 				WeaponProperty = "FireOnRelease",
 				ChangeValue = true,
-				ChangeType = "Absolute",
-			},
-			{
-				TraitName = "RapidCastTrait",
-				WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
-				WeaponProperty = "FireOnRelease",
-				ChangeValue = false,
 				ChangeType = "Absolute",
 			},
 			{
@@ -8967,6 +9556,7 @@ TraitData =
 		InheritFrom = { "SynergyTrait" },
 		Icon = "Artemis_Zeus_01",
 		RequiredFalseTrait = "AmmoBoltTrait",
+		RequiredInactiveMetaUpgrade = "ReloadAmmoMetaUpgrade",
 		PreEquipWeapons = { "ZeusAmmoWeapon" },
 		AmmoFieldWeapon =
 		{
@@ -9462,6 +10052,91 @@ TraitData =
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
+			{
+				WeaponNames = { "FistWeapon", "FistWeapon2", "FistWeapon3", "FistWeapon4", "FistWeapon5" },
+				ProjectileProperty = "Graphic",
+				ChangeValue = "FistFxDemeter",
+				ChangeType = "Absolute"
+			},
+			{
+				WeaponName = "FistWeaponDash",
+				ProjectileProperty = "StartFx",
+				ChangeValue = "FistFxSwipeDemeter",
+				ChangeType = "Absolute",
+			},
+
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeC-Demeter-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon2" },
+				WeaponProperty = "ChargeFx",
+				ChangeValue = "ChargeAttack-Demeter",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon2" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeA-Demeter-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon3" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeAFlipped-Demeter-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon3" },
+				WeaponProperty = "ChargeFx",
+				ChangeValue = "ChargeAttack-Demeter",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeaponDash" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeC-Demeter-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponName = "SwordWeapon",
+				ProjectileProperty = "StartFx",
+				ChangeValue = "null",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponName = "SwordWeapon2",
+				ProjectileProperty = "StartFx",
+				ChangeValue = "SwordSwipe-Demeter-Flipped",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponName = "SwordWeapon3",
+				ProjectileProperty = "StartFx",
+				ChangeValue = "SwordSwipe-Demeter",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
 
 		}
 	},
@@ -9571,6 +10246,13 @@ TraitData =
 				ProjectileName = "ShieldThrow",
 				ProjectileProperty = "DetonateGraphic",
 				ChangeValue = "ShieldThrowTrailMirage-Demeter",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "FistFxUppercutDirectionalDemeter",
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
@@ -9715,8 +10397,8 @@ TraitData =
 			{
 				WeaponNames = WeaponSets.HeroRushWeapons,
 				ProjectileProperty = "DamageLow",
-				BaseMin = 10,
-				BaseMax = 10,
+				BaseMin = 15,
+				BaseMax = 15,
 				AsInt = true,
 				MinMultiplier = 0.2,
 				IdenticalMultiplier =
@@ -10238,6 +10920,7 @@ TraitData =
 	{
 		InheritFrom = { "ShopTier3Trait" },
 		RequiredFalseTrait = "MagnetismTrait",
+		RequiredInactiveMetaUpgrade = "ReloadAmmoMetaUpgrade",
 		Icon = "Boon_Hermes_11",
 		PropertyChanges =
 		{
@@ -10548,26 +11231,27 @@ TraitData =
 		{
 			Common =
 			{
-				MinMultiplier = 1.0,
-				MaxMultiplier = 1.0,
+				MinMultiplier = 1.00,
+				MaxMultiplier = 1.00,
 			},
 			Rare =
 			{
-				MinMultiplier = 0.5,
-				MaxMultiplier = 0.5,
+				MinMultiplier = 0.75,
+				MaxMultiplier = 0.75,
 			},
 			Epic =
 			{
-				MinMultiplier = 0.15,
-				MaxMultiplier = 0.15,
+				MinMultiplier = 0.50,
+				MaxMultiplier = 0.50,
 			},
 			Heroic =
 			{
-				MinMultiplier = 0.05,
-				MaxMultiplier = 0.05,
+				MinMultiplier = 0.25,
+				MaxMultiplier = 0.25,
 			},
 		},
 		RequiredFalseTraits = { "RapidCastTrait", "BowLoadAmmoTrait" },
+		RequiredInactiveMetaUpgrade = "ReloadAmmoMetaUpgrade",
 		Icon = "Boon_Hermes_02",
 		PropertyChanges =
 		{
@@ -11271,6 +11955,15 @@ TraitData =
 			},
 
 			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponNames = { "SwordWeapon" },
+				ProjectileProperty = "StartFx2",
+				ChangeValue = "HermesSwipeLineC_Sword3_Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
 				WeaponNames = { "SwordWeapon", "SwordWeapon2", "SwordWeapon3" },
 				WeaponProperty = "ChargeTime",
 				BaseValue = 0.7,
@@ -11372,6 +12065,14 @@ TraitData =
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
+
+			{
+				WeaponNames = { "FistWeapon", "FistWeapon2", "FistWeapon3", "FistWeapon4", "FistWeapon5", "FistWeaponDash" },
+				WeaponProperty = "ChargeTime",
+				BaseValue = 0.7,
+				ChangeType = "Multiply",
+				ExcludeLinked = true,
+			},
 		},
 		ExtractEntry =
 		{
@@ -11436,6 +12137,13 @@ TraitData =
 				WeaponName = "SwordParry",
 				WeaponProperty = "ChargeStartAnimation",
 				ChangeValue = "ZagreusSwordAlt01ParryChargeFast",
+				ChangeType = "Absolute",
+			},
+			{
+				TraitName = "SwordConsecrationTrait",
+				WeaponName = "SwordParry",
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusSwordAlt03ParryCharge", -- this is different from the others on purpose
 				ChangeType = "Absolute",
 			},
 			{
@@ -11614,6 +12322,13 @@ TraitData =
 				ChangeValue = "HermesWings_Bow",
 				ChangeType = "Absolute",
 			},
+			{
+				TraitName = "ShieldTwoShieldTrait",
+				WeaponName = "ShieldThrow",
+				ProjectileProperty = "StartFx",
+				ChangeValue = "null",
+				ChangeType = "Absolute",
+			},
 
 			{
 				WeaponName = "BowSplitShot",
@@ -11711,7 +12426,31 @@ TraitData =
 				ChangeType = "Absolute",
 			},
 
+			{
+				WeaponName = "FistWeaponSpecial",
+				WeaponProperty = "ChargeTime",
+				BaseValue = 0.7,
+				ChangeType = "Multiply",
+			},
+			{
+				WeaponName = "FistWeaponSpecial",
+				WeaponProperty = "Cooldown",
+				BaseValue = 0.7,
+				ChangeType = "Multiply",
+			},
 
+			{
+				WeaponName = "FistWeaponSpecialDash",
+				WeaponProperty = "ChargeTime",
+				BaseValue = 0.7,
+				ChangeType = "Multiply",
+			},
+			{
+				WeaponName = "FistWeaponSpecialDash",
+				WeaponProperty = "Cooldown",
+				BaseValue = 0.7,
+				ChangeType = "Multiply",
+			},
 
 		},
 		ExtractEntry =
@@ -11844,6 +12583,7 @@ TraitData =
 			"TemporaryBonusDamageTrait",
 			"TemporaryMoveSpeedTrait",
 			"TemporaryDoorHealTrait",
+			"TemporaryLastStandHealTrait",
 			},
 			Amount = { BaseValue = 4 },
 			ExtractValues =
@@ -11869,11 +12609,11 @@ TraitData =
 			},
 			Rare =
 			{
-				Multiplier = 2.0,
+				Multiplier = 1.5,
 			},
 			Epic =
 			{
-				Multiplier = 3.0,
+				Multiplier = 2.0,
 			}
 		},
 		Icon = "Keepsake_Skelly_Tooth",
@@ -12126,8 +12866,8 @@ TraitData =
 			{
 				{
 					Name = "MinorMoneyDrop",
-					MinAmount = 2,
-					MaxAmount = 3,
+					MinAmount = 1,
+					MaxAmount = 1,
 				},
 				{
 					Name = "HealDropMinor",
@@ -12172,6 +12912,7 @@ TraitData =
 			},
 		},
 		RemainingUses = { BaseValue = 1 },
+		LoadPackages = "NPC_Sisyphus_01_Assist",
 		ExtractValues =
 		{
 			{
@@ -12243,11 +12984,8 @@ TraitData =
 		},
 		LoadBinks =
 		{
-			"Enemy_BloodlessNaked_Idle_Bink",
 			"Enemy_Skeleton_Idle_Bink",
 			"Enemy_Skeleton_OnHit_Bink",
-			"Enemy_Skeleton_Attack_Bink",
-			"Enemy_Skeleton_Activate_Bink",
 			"Enemy_Skeleton_Dead_Bink",
 		},
 	},
@@ -12316,6 +13054,11 @@ TraitData =
 			},
 		},
 		LoadPackages = "DusaSummon",
+		Binks =
+		{
+			"NPC_DusaIdle_Bink",
+			"NPC_DusaIdleWorking_Bink",
+		}
 	},
 
 
@@ -12669,6 +13412,7 @@ TraitData =
 		Icon = "Boon_Dionysus_12",
 		InheritFrom = { "ShopTier1Trait" },
 		God = "Dionysus",
+		PriorityDisplay = true,
 		RarityLevels =
 		{
 			Common =
@@ -12771,6 +13515,48 @@ TraitData =
 				Key = "MetaPointHealMultiplier",
 				ExtractAs = "TooltipHealConversion",
 				Format = "Percent",
+			}
+		}
+	},
+
+	BackstabAlphaStrikeTrait =
+	{
+		Icon = "Keepsake_Shawl",
+		EquipSound = "/SFX/Menu Sounds/KeepsakeNyxShawl",
+		InheritFrom = { "GiftTrait" },
+		InRackTitle = "BackstabAlphaStrikeTrait_Rack",
+		RarityLevels =
+		{
+			Common =
+			{
+				Multiplier = 1.0,
+			},
+			Rare =
+			{
+				Multiplier = 1.5,
+			},
+			Epic =
+			{
+				Multiplier = 2.0,
+			}
+		},
+		AddOutgoingDamageModifiers =
+		{
+			HitMaxHealthMultiplier = {
+				BaseValue = 1.1,
+				SourceIsMultiplier = true,
+			},
+			HitVulnerabilityMultiplier = {
+				BaseValue = 1.1,
+				SourceIsMultiplier = true,
+			},
+			ExtractValues =
+			{
+				{
+					Key = "HitMaxHealthMultiplier",
+					ExtractAs = "TooltipBonus",
+					Format = "PercentDelta",
+				},
 			}
 		}
 	},
@@ -12945,6 +13731,7 @@ TraitData =
 				BaseValue = 25,
 				AsInt = true,
 				ChangeType = "Add",
+				MaintainDelta = true,
 				ExtractValue =
 				{
 					ExtractAs = "TooltipHealth",
@@ -13331,22 +14118,6 @@ TraitData =
 		InfiniteAmmo = true,
 	},
 
-	ReturnAmmoTrait =
-	{
-		ReturnAmmoChance = 0.15,
-		ExtractValues =
-		{
-			{
-				Key = "ReturnAmmoChance",
-				ExtractAs = "TooltipAmmoChance",
-				Format = "Percent",
-			}
-		},
-		Cost = 250,
-		CostIncreasePerStack = 250,
-	},
-
-
 	TemporaryImprovedWeaponTrait =
 	{
 		InheritFrom = { "ShopTrait" },
@@ -13439,6 +14210,38 @@ TraitData =
 		}
 	},
 
+	TemporaryLastStandHealTrait =
+	{
+		InheritFrom = { "ShopTrait" },
+		Icon = "Shop_Jug",
+		RequiredInactiveMetaUpgrade = "ExtraChanceMetaUpgrade",
+		Cost = 50,
+		RemainingUses = 20,
+		UsesAsEncounters = true,
+		LastStandHealFraction = 0.10,
+		ExtractValues =
+		{
+			{
+				Key = "LastStandHealFraction",
+				ExtractAs = "TooltipHeal",
+				Format = "Percent",
+			}
+		}
+	},
+	UpgradedTemporaryLastStandHealTrait =
+	{
+		InheritFrom = { "TemporaryLastStandHealTrait" },
+		LastStandHealFraction = 0.5,
+		RemainingUses = 15,
+		ExtractValues =
+		{
+			{
+				Key = "LastStandHealFraction",
+				ExtractAs = "TooltipHeal",
+				Format = "Percent",
+			}
+		}
+	},
 	TemporaryBonusDamageTrait =
 	{
 		InheritFrom = { "ShopTrait" },
@@ -13532,6 +14335,7 @@ TraitData =
 		RemainingUses = 1,
 		ForceChallengeSwitch = true,
 		RequiredCosmetics = { "ChallengeSwitches1" },
+		RequiredMaxDepth = 32,
 	},
 
 	TemporaryForcedSecretDoorTrait =
@@ -13699,7 +14503,7 @@ TraitData =
 	{
 		InheritFrom = { "WeaponTrait" },
 		Icon = "Weapon_Sword_09",
-		RequiredFalseTraits = { "SwordTwoComboTrait", "SwordHeavySecondStrikeTrait" },
+		RequiredFalseTraits = { "SwordTwoComboTrait", "SwordHeavySecondStrikeTrait", "SwordConsecrationTrait" },
 		RequiredWeapon = "SwordWeapon",
 		AddOutgoingDamageModifiers =
 		{
@@ -13861,7 +14665,7 @@ TraitData =
 				ExcludeLinked = true,
 			},
 		},
-		LoadBinks =
+		WeaponBinks =
 		{
 			"ZagreusSword01_Bink",
 			"ZagreusSword01ReturnToIdle_Bink",
@@ -13874,10 +14678,11 @@ TraitData =
 		{
 			SwordWeapon =
 			{
-				Binks =
+				WeaponBinks =
 				{
 					"ZagreusSword01_Bink",
 					"ZagreusSword01ReturnToIdle_Bink",
+					"ZagreusSword01DashAttack_Bink",
 					"ZagreusSword01Run_Bink",
 					"ZagreusSword01RunStop_Bink",
 					"ZagreusSword01Parry_Bink"
@@ -13890,6 +14695,706 @@ TraitData =
 				Key = "SwordPostParryCriticalAmount",
 				ExtractAs = "TooltipPercentChance",
 				Format = "Percent",
+			},
+		}
+	},
+
+	SwordConsecrationTrait =
+	{
+		Icon = "WeaponEnchantment_Sword04",
+		InheritFrom = { "WeaponEnchantmentTrait" },
+		RequiredWeapon = "SwordWeapon",
+		AddOnFireWeapons = { "ConsecrationField" },
+		LegalOnFireWeapons = { "SwordParry" },
+		CustomTrayText = "SwordConsecrationTrait_Tray",
+		PostWeaponUpgradeScreenAnimation = "ZagreusSwordAlt03ParryReturnToIdle",
+		PostWeaponUpgradeScreenAngle = 300,
+		RarityLevels =
+		{
+			Common =
+			{
+				MinMultiplier = 1.00,
+				MaxMultiplier = 1.00,
+			},
+			Rare =
+			{
+				MinMultiplier = 1.25,
+				MaxMultiplier = 1.25,
+			},
+			Epic =
+			{
+				MinMultiplier = 1.50,
+				MaxMultiplier = 1.50,
+			},
+			Heroic =
+			{
+				MinMultiplier = 1.75,
+				MaxMultiplier = 1.75,
+			},
+			Legendary =
+			{
+				MinMultiplier = 2.00,
+				MaxMultiplier = 2.00,
+			},
+		},
+		WeaponBinks =
+		{
+			"ZagreusSwordArthurIdle_Bink",
+			"ZagreusSwordArthurRun_Bink",
+			"ZagreusSwordArthurRunStop_Bink",
+			"ZagreusSwordArthurAttack1_Bink",
+			"ZagreusSwordArthurAttack2_Bink",
+			"ZagreusSwordArthurAttack3_Bink",
+			"ZagreusSwordArthurAttackParry_Bink",
+		},
+		WeaponDataOverride =
+		{
+			SwordWeapon =
+			{
+				WeaponBinks =
+				{
+					"ZagreusSwordArthurIdle_Bink",
+					"ZagreusSwordArthurRun_Bink",
+					"ZagreusSwordArthurRunStop_Bink",
+					"ZagreusSwordArthurAttack1_Bink",
+					"ZagreusSwordArthurAttack2_Bink",
+					"ZagreusSwordArthurAttack3_Bink",
+					"ZagreusSwordArthurAttackParry_Bink",
+				},
+
+				HitSimSlowCooldown = 0.2,
+				HitSimSlowParameters =
+				{
+					{ ScreenPreWait = 0.04, Fraction = 0.03, LerpTime = 0.0 },
+					{ ScreenPreWait = 0.02, Fraction = 0.20, LerpTime = 0.06 },
+					{ ScreenPreWait = 0.02, Fraction = 1.00, LerpTime = 0.07 },
+
+					--{ ScreenPreWait = 0.01, Fraction = 0.01, LerpTime = 0 },
+					--{ ScreenPreWait = 0.06, Fraction = 0.3, LerpTime = 0.07 },
+					--{ ScreenPreWait = 0.08, Fraction = 1.0, LerpTime = 0.07 },
+				},
+			},
+
+			SwordWeapon2 =
+			{
+				HitSimSlowCooldown = 0.2,
+				HitSimSlowParameters =
+				{
+					{ ScreenPreWait = 0.04, Fraction = 0.05, LerpTime = 0.0 },
+					{ ScreenPreWait = 0.03, Fraction = 0.20, LerpTime = 0.06 },
+					{ ScreenPreWait = 0.03, Fraction = 1.00, LerpTime = 0.07 },
+
+					--{ ScreenPreWait = 0.01, Fraction = 0.01, LerpTime = 0 },
+					--{ ScreenPreWait = 0.06, Fraction = 0.3, LerpTime = 0.07 },
+					--{ ScreenPreWait = 0.08, Fraction = 1.0, LerpTime = 0.07 },
+				},
+
+			},
+
+			SwordWeapon3 =
+			{
+				HitSimSlowCooldown = 0.2,
+				HitSimSlowParameters =
+				{
+					{ ScreenPreWait = 0.04, Fraction = 0.01, LerpTime = 0.0 },
+					{ ScreenPreWait = 0.05, Fraction = 0.15, LerpTime = 0.06 },
+					{ ScreenPreWait = 0.08, Fraction = 1.0, LerpTime = 0.07 },
+
+					--{ ScreenPreWait = 0.01, Fraction = 0.01, LerpTime = 0 },
+					--{ ScreenPreWait = 0.06, Fraction = 0.3, LerpTime = 0.07 },
+					--{ ScreenPreWait = 0.08, Fraction = 1.0, LerpTime = 0.07 },
+				},
+				Sounds =
+				{
+					FireSounds =
+					{
+						{ Name = "/VO/ZagreusEmotes/EmoteHeavyAttacking" },
+						{ Name = "/SFX/Enemy Sounds/Minotaur/HugeAxeSwing" }
+					},
+					ChargeSounds =
+					{
+						{ Name = "/VO/ZagreusEmotes/EmoteHeavyCharging" },
+						{
+							Name = "/Leftovers/SFX/AuraCharge" ,
+							StoppedBy = { "TriggerRelease" }
+						},
+					},
+					ImpactSounds =
+					{
+						Invulnerable = "/SFX/SwordWallHitClank",
+						Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
+						Bone = "/SFX/MetalBoneSmash",
+						Brick = "/SFX/MetalStoneClang",
+						Stone = "/SFX/MetalStoneClang",
+						Organic = "/SFX/StabSplatterSmall",
+						StoneObstacle = "/SFX/SwordWallHitClank",
+						BrickObstacle = "/SFX/SwordWallHitClank",
+						MetalObstacle = "/SFX/SwordWallHitClank",
+						BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
+					},
+				},
+			},
+			SwordWeaponDash =
+			{
+				HitSimSlowCooldown = 0.2,
+				Sounds =
+				{
+					FireSounds =
+					{
+						{ Name = "/VO/ZagreusEmotes/EmoteSpearThrow" },
+						{ Name = "/SFX/Player Sounds/ZagreusSwordSwipe" },
+					},
+					ImpactSounds =
+					{
+						Invulnerable = "/SFX/SwordWallHitClank",
+						Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
+						Bone = "/SFX/MetalBoneSmash",
+						Brick = "/SFX/MetalStoneClang",
+						Stone = "/SFX/MetalStoneClang",
+						Organic = "/SFX/StabSplatterSmall",
+						StoneObstacle = "/SFX/SwordWallHitClank",
+						BrickObstacle = "/SFX/SwordWallHitClank",
+						MetalObstacle = "/SFX/SwordWallHitClank",
+						BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
+					},
+				},
+			},
+			SwordParry =
+			{
+				HitSimSlowCooldown = 0.2,
+				Sounds =
+				{
+					FireSounds =
+					{
+						{ Name = "/VO/ZagreusEmotes/EmoteHeavyAttacking" },
+					},
+					ChargeSounds =
+					{
+						{ Name = "/VO/ZagreusEmotes/EmoteCharging" },
+						{ Name = "/SFX/Player Sounds/ZagreusSwordSwipe" },
+					},
+					ImpactSounds =
+					{
+						Invulnerable = "/SFX/SwordWallHitClank",
+						Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
+						Bone = "/SFX/MetalBoneSmash",
+						Brick = "/SFX/MetalStoneClang",
+						Stone = "/SFX/MetalStoneClang",
+						Organic = "/SFX/StabSplatterSmall",
+						StoneObstacle = "/SFX/SwordWallHitClank",
+						BrickObstacle = "/SFX/SwordWallHitClank",
+						MetalObstacle = "/SFX/SwordWallHitClank",
+						BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
+					},
+				},
+			},
+		},
+		PropertyChanges =
+		{
+
+			-- Main Attack Changes / Excalibur
+			{
+				WeaponNames = { "SwordWeaponDash", "SwordWeapon", "SwordWeapon2", "SwordWeapon3" },
+				WeaponProperty = "FullyAutomatic",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			-- SwordWeaponDash
+			{
+				WeaponNames = { "SwordWeaponDash" },
+				WeaponProperty = "ChargeTime",
+				ChangeValue = 0.20,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeaponDash" },
+				WeaponProperty = "ChargeCancelMovement",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeaponDash" },
+				WeaponProperty = "CancelMovement",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeaponDash" },
+				WeaponProperty = "RootOwnerWhileFiring",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeaponDash" },
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusSwordArthurAttack1_Charge",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeaponDash" },
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusSwordArthurAttack1_Fire",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeaponDash" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeC-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeaponDash" },
+				ProjectileProperty = "DamageLow",
+				ChangeValue = 50,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeaponDash" },
+				ProjectileProperty = "DamageHigh",
+				ChangeValue = 50,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			-- SwordWeapon
+			{
+				WeaponNames = { "SwordWeapon" },
+				WeaponProperty = "ChargeTime",
+				ChangeValue = 0.25,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeapon" },
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusSwordArthurAttack1_Charge",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeapon" },
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusSwordArthurAttack1_Fire",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeapon" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeC-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeapon" },
+				WeaponProperty = "RootOwnerWhileFiring",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeapon" },
+				WeaponProperty = "ChargeCancelMovement",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeapon" },
+				WeaponProperty = "Projectile",
+				ChangeValue = "SwordWeaponArthur1",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeapon" },
+				EffectName = "SwordDisableArthur",
+				EffectProperty = "Active",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeapon" },
+				EffectName = "SwordDisableArthurCancellable",
+				EffectProperty = "Active",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeapon" },
+				EffectName = "SwordDisable",
+				EffectProperty = "Active",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeapon" },
+				EffectName = "SwordDisableCancelableAndLockTrigger",
+				EffectProperty = "Active",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+
+			-- SwordWeapon2
+			{
+				WeaponNames = { "SwordWeapon2" },
+				WeaponProperty = "ChargeTime",
+				ChangeValue = 0.35,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeapon2" },
+				WeaponProperty = "ControlWindow",
+				ChangeValue = 0.6,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeapon2" },
+				WeaponProperty = "ChargeFx",
+				ChangeValue = "ChargeAttack-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeapon2" },
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusSwordArthurAttack2_Charge",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "SwordWeapon2" },
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusSwordArthurAttack2_Fire",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeapon2" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeA-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeapon2" },
+				WeaponProperty = "ChargeCancelMovement",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeapon2" },
+				WeaponProperty = "RootOwnerWhileFiring",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeapon2" },
+				WeaponProperty = "Projectile",
+				ChangeValue = "SwordWeaponArthur2",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeapon2" },
+				WeaponProperty = "BarrelLength",
+				ChangeValue = "0",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeapon2" },
+				EffectName = "SwordDisableArthur2",
+				EffectProperty = "Active",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeapon2" },
+				EffectName = "SwordDisableArthurCancellable2",
+				EffectProperty = "Active",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeapon2" },
+				EffectName = "SwordDisable2",
+				EffectProperty = "Active",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeapon2" },
+				EffectName = "SwordDisableCancelableAndLockTrigger2",
+				EffectProperty = "Active",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+
+			-- SwordWeapon3
+			{
+				WeaponNames = { "SwordWeapon3" },
+				WeaponProperty = "ChargeTime",
+				ChangeValue = 0.50,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeapon3" },
+				WeaponProperty = "ControlWindow",
+				ChangeValue = 0.6,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeapon3" },
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusSwordArthurAttack3_Charge",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "SwordWeapon3" },
+				WeaponProperty = "ChargeFx",
+				ChangeValue = "ChargeAttack-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "SwordWeapon3" },
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusSwordArthurAttack3_Fire",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeapon3" },
+				WeaponProperty = "FireFx",
+				ChangeValue = "SwordSwipeAFlipped-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "SwordWeapon3" },
+				WeaponProperty = "SelfVelocity",
+				ChangeValue = 0.75,
+				ChangeType = "Multiply",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeapon3" },
+				WeaponProperty = "SelfVelocityCap",
+				ChangeValue = 0.75,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeapon3" },
+				WeaponProperty = "CancelMovement",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeapon3" },
+				WeaponProperty = "ChargeCancelMovement",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponName = "SwordWeapon3",
+				EffectName = "SwordDisable3",
+				EffectProperty = "Active",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponName = "SwordWeapon3",
+				EffectName = "SwordDisableAttackCancelable3",
+				EffectProperty = "Active",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponName = "SwordWeapon3",
+				EffectName = "SwordDisableCancelable3",
+				EffectProperty = "Active",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponName = "SwordWeapon3",
+				EffectName = "ArthurSwordDisable3",
+				EffectProperty = "Active",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponName = "SwordWeapon3",
+				EffectName = "ArthurSwordDisableCancelable3",
+				EffectProperty = "Active",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeapon3" },
+				WeaponProperty = "Projectile",
+				ChangeValue = "SwordWeaponArthur3",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeapon3" },
+				WeaponProperty = "BarrelLength",
+				ChangeValue = 0,
+				ExcludeLinked = true,
+			},
+
+
+			-- Sword Parry
+
+			{
+				WeaponNames = { "SwordParry" },
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusSwordAlt03ParryCharge",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "SwordParry" },
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusSwordAlt03ParryFire",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponName = "SwordParry",
+				ProjectileProperty = "DetonateGraphic",
+				ChangeValue = "RadialNovaSwordParry-Arthur",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "SwordParry" },
+				WeaponProperty = "ChargeTime",
+				ChangeValue = 0.5,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "SwordParry" },
+				ProjectileProperty = "DamageLow",
+				ChangeValue = 70,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordParry" },
+				ProjectileProperty = "DamageHigh",
+				ChangeValue = 70,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			-- Consecration Field
+			{
+				WeaponName = "ConsecrationField",
+				EffectName = "ConsecrationSlow",
+				EffectProperty = "Modifier",
+				ChangeValue = 0.50,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "ConsecrationField",
+				EffectName = "ConsecrationDamageReduction",
+				EffectProperty = "Modifier",
+				BaseValue = 0.8,
+				SourceIsMultiplier = true,
+				ChangeType = "Multiply",
+				ExtractValue =
+				{
+					ExtractAs = "TooltipDamageReduction",
+					Format = "NegativePercentDelta",
+				}
+			},
+			--[[
+			{
+				WeaponName = "ConsecrationField",
+				EffectName = "DodgeBonus",
+				EffectProperty = "DodgeChance",
+				BaseValue = 0.10,
+				ChangeType = "Add",
+				ExtractValue =
+				{
+					ExtractAs = "TooltipDodge",
+					Format = "Percent",
+				}
+			},
+			]]
+			--[[
+			{
+				WeaponName = "ConsecrationField",
+				EffectName = "ConsecrationDamage",
+				EffectProperty = "Modifier",
+				BaseValue = 1.07,
+				SourceIsMultiplier = true,
+				ChangeType = "Multiply",
+				ExtractValue =
+				{
+					ExtractAs = "TooltipDamage",
+					Format = "PercentDelta",
+				}
+			},
+			]]
+
+			{
+				LuaProperty = "MaxHealth",
+				ChangeValue = 50,
+				AsInt = true,
+				ChangeType = "Add",
+				ExtractValue =
+				{
+					ExtractAs = "TooltipHealth",
+				}
 			},
 		}
 	},
@@ -14197,7 +15702,7 @@ TraitData =
 	{
 		InheritFrom = { "WeaponTrait" },
 		Icon = "Weapon_Sword_01",
-		RequiredFalseTraits = { "SwordHeavySecondStrikeTrait", "SwordCriticalTrait", "SwordThirdStrikeChargeTrait" },
+		RequiredFalseTraits = { "SwordHeavySecondStrikeTrait", "SwordCriticalTrait", "SwordThirdStrikeChargeTrait", "SwordConsecrationTrait" },
 		RequiredWeapon = "SwordWeapon",
 		PropertyChanges =
 		{
@@ -14266,6 +15771,14 @@ TraitData =
 				WeaponName = "SwordWeapon",
 				EffectName = "SwordDisableCancelableAndLockTrigger",
 				EffectProperty = "RequestTriggerLock",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "SwordWeapon",
+				EffectName = "SwordDisableCancelableAndLockTrigger",
+				EffectProperty = "Cancelable",
 				ChangeValue = false,
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
@@ -14274,6 +15787,14 @@ TraitData =
 				WeaponName = "SwordWeapon2",
 				EffectName = "SwordDisableCancelableAndLockTrigger2",
 				EffectProperty = "RequestTriggerLock",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "SwordWeapon2",
+				EffectName = "SwordDisableCancelableAndLockTrigger2",
+				EffectProperty = "Cancelable",
 				ChangeValue = false,
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
@@ -14334,7 +15855,7 @@ TraitData =
 			{
 				WeaponName = "SwordParry",
 				ProjectileProperty = "DamageRadius",
-				ChangeValue = 0.7,
+				ChangeValue = 0.85,
 				ChangeType = "MultiplyBase",
 			},
 			--[[
@@ -14396,7 +15917,7 @@ TraitData =
 		InheritFrom = { "WeaponTrait" },
 		Icon = "Weapon_Sword_03",
 		RequiredWeapon = "SwordWeapon",
-		RequiredFalseTraits = { "SwordTwoComboTrait", "SwordCriticalTrait" },
+		RequiredFalseTraits = { "SwordTwoComboTrait", "SwordCriticalTrait", "SwordConsecrationTrait" },
 		SetupFunction =
 		{
 			Name = "PermanentSwitchWeapon",
@@ -14669,22 +16190,16 @@ TraitData =
 				{
 					FireSounds =
 					{
-						{ Name = "/VO/ZagreusEmotes/EmotePowerAttacking" },
+						{ Name = "/VO/ZagreusEmotes/EmoteHeavySpecialAttack" },
+						{ Name = "/SFX/Player Sounds/ZagreusSwordParry" },
 					},
-					ImpactSounds =
+					ChargeSounds =
 					{
-						Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
-						Bone = "/SFX/ArrowMetalBoneSmash",
-						Brick = "/SFX/ArrowMetalStoneClang",
-						Stone = "/SFX/ArrowMetalStoneClang",
-						Organic = "/SFX/ArrowImpactSplatter",
-						StoneObstacle = "/SFX/SwordWallHitClankSmall",
-						BrickObstacle = "/SFX/SwordWallHitClankSmall",
-						MetalObstacle = "/SFX/SwordWallHitClankSmall",
-						BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
+						{ Name = "/VO/ZagreusEmotes/EmoteCharging" },
+						{ Name = "/SFX/Player Sounds/ZagreusSwordSwipe" },
 					},
 				},
-			}
+			},
 		},
 	},
 
@@ -14693,7 +16208,7 @@ TraitData =
 		InheritFrom = { "WeaponTrait" },
 		Icon = "Weapon_Sword_12",
 		RequiredWeapon = "SwordWeapon",
-		MaxHealthMultiplier = 0.3,
+		MaxHealthMultiplier = 0.4,
 		AddOutgoingLifestealModifiers =
 		{
 			ValidWeapons = {"SwordWeapon", "SwordWeapon2", "SwordWeapon3" },
@@ -14705,7 +16220,7 @@ TraitData =
 		{
 			{
 				LuaProperty = "MaxHealth",
-				ChangeValue = 0.3,
+				ChangeValue = 0.4,
 				ChangeType = "Multiply",
 				ExtractValue =
 				{
@@ -14740,25 +16255,6 @@ TraitData =
 				}
 			},
 		},
-		EnemyPropertyChanges =
-		{
-			{
-				UnitProperty = "FriendlyDamageTakenMultiplier",
-				BaseMin = 3.0,
-				BaseMax = 3.0,
-				SourceIsMultiplier = true,
-				IdenticalMultiplier =
-				{
-					Value = DuplicateMultiplier,
-				},
-				ChangeType = "MultiplyBase",
-				ExtractValue =
-				{
-					ExtractAs = "TooltipDamageIncrease",
-					Format = "PercentDelta",
-				}
-			},
-		}
 	},
 
 	SwordBackstabTrait =
@@ -14815,7 +16311,7 @@ TraitData =
 		InheritFrom = { "WeaponTrait" },
 		Icon = "Weapon_Bow_03",
 		RequiredWeapon = "BowWeapon",
-		RequiredFalseTraits = { "BowTapFireTrait", "BowChainShotTrait" },
+		RequiredFalseTraits = { "BowTapFireTrait", "BowChainShotTrait", "BowBeamTrait" },
 		AddOutgoingDamageModifiers =
 		{
 			ValidWeaponMultiplier =
@@ -14896,7 +16392,7 @@ TraitData =
 		InheritFrom = { "WeaponTrait" },
 		Icon = "Weapon_Bow_04",
 		RequiredWeapon = "BowWeapon",
-		RequiredFalseTraits = { "BowPowerShotTrait", "BowSlowChargeDamageTrait" },
+		RequiredFalseTraits = { "BowPowerShotTrait", "BowSlowChargeDamageTrait", "BowBeamTrait" },
 		WeaponDataOverride =
 		{
 			BowWeapon =
@@ -14935,6 +16431,20 @@ TraitData =
 				WeaponNames = { "BowWeapon", "BowWeaponDash" },
 				WeaponProperty = "ForceReleaseOnFire",
 				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				WeaponProperty = "AllowExternalForceRelease",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				WeaponProperty = "ForceReleaseWeaponOnFire",
+				ChangeValue = "null",
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
@@ -15033,8 +16543,8 @@ TraitData =
 	{
 		InheritFrom = { "WeaponTrait" },
 		Icon = "Weapon_Bow_06",
-		RequiredFalseTrait = "BowTapFireTrait",
 		RequiredWeapon = "BowWeapon",
+		RequiredFalseTraits = { "BowTapFireTrait", "BowBeamTrait" },
 		AddOutgoingDamageModifiers =
 		{
 			ValidWeapons = { "BowWeapon", "BowWeaponDash" },
@@ -15065,7 +16575,13 @@ TraitData =
 				ChangeValue = 4,
 				ChangeType = "Add",
 			},
-
+			{
+				TraitName = "BowMarkHomingTrait",
+				WeaponName = "BowSplitShot",
+				WeaponProperty = "NumProjectiles",
+				ChangeValue = 4,
+				ChangeType = "Add",
+			},
 			{
 				WeaponName = "BowSplitShot",
 				WeaponProperty = "ProjectileAngleOffset",
@@ -15406,7 +16922,7 @@ TraitData =
 		InheritFrom = { "WeaponTrait" },
 		Icon = "Weapon_Bow_11",
 		RequiredWeapon = "BowWeapon",
-		RequiredFalseTraits = { "BowSecondaryBarrageTrait" },
+		RequiredFalseTraits = { "BowSecondaryBarrageTrait", "BowBeamTrait", "BowMarkHomingTrait" },
 		WeaponDataOverride =
 		{
 			BowSplitShot =
@@ -15418,6 +16934,7 @@ TraitData =
 					{
 						{
 							Name = "/SFX/Player Sounds/ZagreusBowChargeup" ,
+							Key = "SecondaryBowChargeup",
 							StoppedBy = { "ChargeCancel", "TriggerRelease", "Fired" },
 						},
 					},
@@ -15489,7 +17006,7 @@ TraitData =
 			{
 				WeaponNames = { "BowSplitShot" },
 				WeaponProperty = "ChargeRangeMultiplier",
-				ChangeValue = 4.0,
+				ChangeValue = 2.0,
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
@@ -15503,7 +17020,7 @@ TraitData =
 			{
 				WeaponNames = { "BowSplitShot" },
 				ProjectileProperty = "Range",
-				ChangeValue = 0.25,
+				ChangeValue = 0.5,
 				ChangeType = "Multiply",
 				ExcludeLinked = true,
 			},
@@ -15628,6 +17145,13 @@ TraitData =
 				WeaponNames = { "BowWeapon", "BowWeaponDash" },
 				ProjectileProperty = "BounceWhenOutOfJumpTargets",
 				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				ProjectileProperty = "ExpireWhenOutOfJumps",
+				ChangeValue = true,
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
@@ -15843,7 +17367,7 @@ TraitData =
 		PostWeaponUpgradeScreenAnimation = "ZagreusShieldAlt01Idle",
 		PostWeaponUpgradeScreenAngle = 180,
 		PreEquipWeapons = { "ShieldThrowProjectileBonusApplicator", "ChaosShieldThrow" },
-		LoadBinks =
+		WeaponBinks =
 		{
 		  "ZagreusShield01QuickAttack_Bink",
 		  "ZagreusShield01DashAttack_Bink",
@@ -15857,7 +17381,7 @@ TraitData =
 		{
 			ShieldWeapon =
 			{
-				Binks =
+				WeaponBinks =
 				{
 				  "ZagreusShield01QuickAttack_Bink",
 				  "ZagreusShield01DashAttack_Bink",
@@ -16069,7 +17593,7 @@ TraitData =
 				WeaponName = "ShieldThrow",
 				ProjectileName = "ShieldCatchBlast",
 				ProjectileProperty = "DamageLow",
-				BaseValue = 60,
+				BaseValue = 50,
 				ChangeType = "Absolute",
 				ExtractValue =
 				{
@@ -16152,7 +17676,7 @@ TraitData =
 			{
 				WeaponName = "ShieldWeaponRush",
 				WeaponProperty = "ChargeRangeMultiplier",
-				ChangeValue = 10,
+				ChangeValue = 5,
 			},
 
 			{
@@ -16168,7 +17692,7 @@ TraitData =
 			{
 				WeaponName = "ShieldWeaponRush",
 				ProjectileProperty = "Range",
-				ChangeValue = 80,
+				ChangeValue = 175,
 			},
 			{
 				WeaponName = "ShieldWeaponRush",
@@ -16717,7 +18241,10 @@ TraitData =
 			{
 				RecallOnFailToFire = "ShieldThrow",
 				NotReadySound = "/SFX/Player Sounds/ZagreusShieldReturn",
-				Binks =
+			},
+			ShieldWeapon =
+			{
+				WeaponBinks =
 				{
 					"ZagreusShield02QuickAttack_Bink",
 					"ZagreusShield02DashAttack_Bink",
@@ -16729,7 +18256,7 @@ TraitData =
 				},
 			},
 		},
-		LoadBinks =
+		WeaponBinks =
 		{
 			"ZagreusShield02QuickAttack_Bink",
 			"ZagreusShield02DashAttack_Bink",
@@ -16777,6 +18304,13 @@ TraitData =
 				ProjectileName = "ShieldThrow",
 				ProjectileProperty = "DamageHigh",
 				DeriveValueFrom = "DamageLow",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "ShieldThrow",
+				ProjectileName = "ShieldThrow",
+				ProjectileProperty = "ClearWeaponBonusesOnHit",
+				ChangeValue = true,
 				ExcludeLinked = true,
 			},
 			{
@@ -17062,7 +18596,7 @@ TraitData =
 		AddOutgoingDamageModifiers =
 		{
 			ValidWeapons = { "ShieldWeaponRush" },
-			PerfectChargeMultiplier = 4.0,
+			PerfectChargeMultiplier = 5.0,
 			ExcludeLinked = true,
 			ExtractValues =
 			{
@@ -17125,25 +18659,6 @@ TraitData =
 		InheritFrom = { "WeaponTrait" },
 		Icon = "Weapon_Shield_07",
 		RequiredWeapon = "ShieldWeapon",
-		EnemyPropertyChanges =
-		{
-			{
-				UnitProperty = "FriendlyDamageTakenMultiplier",
-				BaseMin = 5.0,
-				BaseMax = 5.0,
-				SourceIsMultiplier = true,
-				IdenticalMultiplier =
-				{
-					Value = DuplicateMultiplier,
-				},
-				ChangeType = "MultiplyBase",
-				ExtractValue =
-				{
-					ExtractAs = "TooltipDamageIncrease",
-					Format = "Percent",
-				}
-			},
-		}
 	},
 
 	ShieldBashDamageTrait =
@@ -17824,7 +19339,7 @@ TraitData =
 		InheritFrom = { "WeaponTrait" },
 		Icon = "Weapon_Spear_01",
 		RequiredWeapon = "SpearWeapon",
-		RequiredFalseTraits = { "SpearSpinDamageRadius", "SpearSpinChargeLevelTime", "SpearSpinTravel" },
+		RequiredFalseTraits = { "SpearSpinDamageRadius", "SpearSpinChargeLevelTime", "SpearSpinTravel", "SpearWeaveTrait" },
 		PropertyChanges =
 		{
 
@@ -17992,7 +19507,7 @@ TraitData =
 			{
 				WeaponNames = { "SpearWeaponThrow" },
 				ProjectileProperty = "DamageLow",
-				ChangeValue = 60,
+				ChangeValue = 50,
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 				ExtractValue =
@@ -18349,47 +19864,39 @@ TraitData =
 		RequiredWeapons = {"SpearWeapon", "SpearWeaponThrow",},
 		RequiredFalseTraits = { "SpearAutoAttack", "SpearSpinAura" },
 		CustomTrayText = "SpearSpinTravel_Tray",
-		LoadBinks =
+		WeaponBinks =
 		{
 			"ZagreusSpear03Run_Bink",
 			"ZagreusSpear03RunStop_Bink",
-			"ZagreusSpear03_Bink",
-			"ZagreusSpear03ReturnToIdle_Bink",
 			"ZagreusSpear03Spin_Bink",
 			"ZagreusSpear03DashAttack_Bink",
 			"ZagreusSpear03Throw_Bink",
-			"ZagreusSpear03ThrowReceive_Bink",
-
 
 			"ZagreusSpearLunarThrust1_Bink",
 			"ZagreusSpearLunarThrust2_Bink",
 			"ZagreusSpearLunarThrust3_Bink",
 
 			"ZagreusSpearLunarThrustIdle_Bink",
-			"ZagreusSpearLunarDashAttack_Bink",
-
+			"ZagreusSpear03ReturnToIdle_Bink"
 		},
 		WeaponDataOverride =
 		{
 			SpearWeapon =
 			{
-				Binks =
+				WeaponBinks =
 				{
 					"ZagreusSpear03Run_Bink",
 					"ZagreusSpear03RunStop_Bink",
-					"ZagreusSpear03_Bink",
-					"ZagreusSpear03ReturnToIdle_Bink",
 					"ZagreusSpear03Spin_Bink",
 					"ZagreusSpear03DashAttack_Bink",
 					"ZagreusSpear03Throw_Bink",
-					"ZagreusSpear03ThrowReceive_Bink",
 
 					"ZagreusSpearLunarThrust1_Bink",
 					"ZagreusSpearLunarThrust2_Bink",
 					"ZagreusSpearLunarThrust3_Bink",
 
 					"ZagreusSpearLunarThrustIdle_Bink",
-					"ZagreusSpearLunarDashAttack_Bink",
+					"ZagreusSpear03ReturnToIdle_Bink"
 				},
 
 				Sounds =
@@ -18448,7 +19955,7 @@ TraitData =
 					FireSounds =
 					{
 						{ Name = "/VO/ZagreusEmotes/EmoteAttacking_ShieldThrow" },
-						{ Name = "/SFX/Player Sounds/ZagreusSpearThrust" },
+						{ Name = "/SFX/Player Sounds/ZagreusSwordOverhead" },
 					},
 					ImpactSounds =
 					{
@@ -18690,6 +20197,18 @@ TraitData =
 				WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
 				ProjectileProperty = "MultipleObstacleCollisions",
 				ChangeValue = false,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+				ProjectileProperty = "CheckObstacleImpact",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+				ProjectileProperty = "NumBounces",
+				ChangeValue = 99999,
 				ChangeType = "Absolute",
 			},
 			{
@@ -19021,6 +20540,7 @@ TraitData =
 				BaseValue = 0.3, -- Make sure to change MaxHealthMultiplier in this trait above if this is altered
 				SourceIsMultiplier = true,
 				ChangeType = "Multiply",
+				MaintainDelta = true,
 				ExtractValue =
 				{
 					ExtractAs = "TooltipHealthCurse",
@@ -19032,7 +20552,7 @@ TraitData =
 			{
 				WeaponName = "SpearWeaponThrowReturn",
 				WeaponProperty = "FireGraphic",
-				ChangeValue = "ZagreusSpearAlt03ThrowFireReturn",
+				ChangeValue = "null",
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
@@ -19061,48 +20581,6 @@ TraitData =
 				WeaponName = "SpearWeaponDash",
 				WeaponProperty = "FireGraphic",
 				ChangeValue = "ZagreusSpearAlt03DashAttack",
-				ChangeType = "Absolute",
-				ExcludeLinked = true,
-			},
-			{
-				WeaponName = "SpearWeapon",
-				WeaponProperty = "ChargeStartAnimation",
-				ChangeValue = "ZagreusSpearAlt03Charge1",
-				ChangeType = "Absolute",
-				ExcludeLinked = true,
-			},
-			{
-				WeaponName = "SpearWeapon",
-				WeaponProperty = "FireGraphic",
-				ChangeValue = "ZagreusSpearAlt03Attack1",
-				ChangeType = "Absolute",
-				ExcludeLinked = true,
-			},
-			{
-				WeaponName = "SpearWeapon2",
-				WeaponProperty = "ChargeStartAnimation",
-				ChangeValue = "ZagreusSpearAlt03Charge2",
-				ChangeType = "Absolute",
-				ExcludeLinked = true,
-			},
-			{
-				WeaponName = "SpearWeapon2",
-				WeaponProperty = "FireGraphic",
-				ChangeValue = "ZagreusSpearAlt03Attack2",
-				ChangeType = "Absolute",
-				ExcludeLinked = true,
-			},
-			{
-				WeaponName = "SpearWeapon3",
-				WeaponProperty = "ChargeStartAnimation",
-				ChangeValue = "ZagreusSpearAlt03Charge3",
-				ChangeType = "Absolute",
-				ExcludeLinked = true,
-			},
-			{
-				WeaponName = "SpearWeapon3",
-				WeaponProperty = "FireGraphic",
-				ChangeValue = "ZagreusSpearAlt03Attack3",
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
@@ -19684,6 +21162,13 @@ TraitData =
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
+			{
+				WeaponNames = { "SpearWeaponThrow" },
+				WeaponProperty = "ChargeStartFx",
+				ChangeValue = "SpearChargeThrowTrait",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
 			--[[
 			{
 				WeaponNames = { "SpearWeaponThrow" },
@@ -19869,6 +21354,27 @@ TraitData =
 				ChangeValue = 800,
 				ChangeType = "Absolute",
 			},
+			{
+				TraitName = "GunGrenadeDropTrait",
+				WeaponName = "GunSlowWeapon",
+				ProjectileProperty = "UseStartLocation",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+			},
+			{
+				TraitName = "GunGrenadeDropTrait",
+				WeaponName = "GunSlowWeapon",
+				ProjectileProperty = "UseStartLocation",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+			},
+			{
+				TraitName = "GunGrenadeDropTrait",
+				WeaponName = "GunSlowWeapon",
+				ProjectileProperty = "DamageRadius",
+				ChangeValue = 1.5,
+				ChangeType = "Multiply",
+			},
 		},
 	},
 	GunShotgunTrait =
@@ -19879,15 +21385,23 @@ TraitData =
 		RequiredFalseTraits = { "GunSniperTrait", "GunInfiniteAmmoTrait", "GunMinigunTrait", "GunConsecutiveFireTrait" },
 		PropertyChanges =
 		{
-			--[[
-			{
-				WeaponNames = { "GunWeapon" },
-				WeaponProperty = "MaxAmmo",
-				ChangeValue = -6,
-				ChangeType = "Add",
-			},
-			]]
 
+			{
+				WeaponNames = { "GunWeapon", "GunWeaponDash" },
+				ProjectileProperty = "DamageLow",
+				ChangeValue = 50,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+				ExtractValue =
+				{
+					ExtractAs = "TooltipDamage",
+				},
+			},
+			{
+				WeaponNames = { "GunWeapon", "GunWeaponDash" },
+				ProjectileProperty = "DamageHigh",
+				DeriveValueFrom = "DamageLow",
+			},
 			{
 				WeaponNames = { "GunWeapon", "GunWeaponDash" },
 				WeaponProperty = "Cooldown",
@@ -19903,62 +21417,211 @@ TraitData =
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
-
 			{
 				WeaponNames = { "GunWeapon", "GunWeaponDash" },
-				WeaponProperty = "NumProjectiles",
-				ChangeValue = 5,
+				ProjectileProperty = "StartFx",
+				ChangeValue = "GunShotgunBlastRandomFlip",
 				ChangeType = "Absolute",
-				ExtractValue =
-				{
-					ExtractAs = "TooltipProjectiles",
-				},
 				ExcludeLinked = true,
 			},
-
 			{
-				WeaponNames = { "GunWeaponDash" },
-				WeaponProperty = "ProjectileInterval",
-				ChangeValue = 0,
+				TraitName = "AphroditeWeaponTrait",
+				WeaponNames = { "GunWeapon", "GunWeaponDash" },
+				ProjectileProperty = "StartFx",
+				ChangeValue = "GunShotgunBlastRandomFlip-Aphrodite",
 				ChangeType = "Absolute",
-				ExtractValue =
-				{
-					ExtractAs = "TooltipProjectiles",
-				},
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "AphroditeWeaponTrait",
+				WeaponNames = { "GunWeapon", "GunWeaponDash" },
+				ProjectileProperty = "ImpactFx",
+				ChangeValue = "null",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "AresWeaponTrait",
+				WeaponNames = { "GunWeapon", "GunWeaponDash" },
+				ProjectileProperty = "StartFx",
+				ChangeValue = "GunShotgunBlastRandomFlip-Ares",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "AresWeaponTrait",
+				WeaponNames = { "GunWeapon", "GunWeaponDash" },
+				ProjectileProperty = "ImpactFx",
+				ChangeValue = "null",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "ArtemisWeaponTrait",
+				WeaponNames = { "GunWeapon", "GunWeaponDash" },
+				ProjectileProperty = "StartFx",
+				ChangeValue = "GunShotgunBlastRandomFlip-Artemis",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "ArtemisWeaponTrait",
+				WeaponNames = { "GunWeapon", "GunWeaponDash" },
+				ProjectileProperty = "ImpactFx",
+				ChangeValue = "null",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "AthenaWeaponTrait",
+				WeaponNames = { "GunWeapon", "GunWeaponDash" },
+				ProjectileProperty = "StartFx",
+				ChangeValue = "GunShotgunBlastRandomFlip-Athena",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "AthenaWeaponTrait",
+				WeaponNames = { "GunWeapon", "GunWeaponDash" },
+				ProjectileProperty = "ImpactFx",
+				ChangeValue = "null",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "DionysusWeaponTrait",
+				WeaponNames = { "GunWeapon", "GunWeaponDash" },
+				ProjectileProperty = "StartFx",
+				ChangeValue = "GunShotgunBlastRandomFlip-Dionysus",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "DionysusWeaponTrait",
+				WeaponNames = { "GunWeapon", "GunWeaponDash" },
+				ProjectileProperty = "ImpactFx",
+				ChangeValue = "null",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "DemeterWeaponTrait",
+				WeaponNames = { "GunWeapon", "GunWeaponDash" },
+				ProjectileProperty = "StartFx",
+				ChangeValue = "GunShotgunBlastRandomFlip-Demeter",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "DemeterWeaponTrait",
+				WeaponNames = { "GunWeapon", "GunWeaponDash" },
+				ProjectileProperty = "ImpactFx",
+				ChangeValue = "null",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "PoseidonWeaponTrait",
+				WeaponNames = { "GunWeapon", "GunWeaponDash" },
+				ProjectileProperty = "StartFx",
+				ChangeValue = "GunShotgunBlastRandomFlip-Poseidon",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "PoseidonWeaponTrait",
+				WeaponNames = { "GunWeapon", "GunWeaponDash" },
+				ProjectileProperty = "ImpactFx",
+				ChangeValue = "null",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "ZeusWeaponTrait",
+				WeaponNames = { "GunWeapon", "GunWeaponDash" },
+				ProjectileProperty = "StartFx",
+				ChangeValue = "GunShotgunBlastRandomFlip-Zeus",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "ZeusWeaponTrait",
+				WeaponNames = { "GunWeapon", "GunWeaponDash" },
+				ProjectileProperty = "ImpactFx",
+				ChangeValue = "null",
+				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
 			{
 				WeaponNames = { "GunWeapon", "GunWeaponDash" },
-				WeaponProperty = "ProjectileSpacing",
-				ChangeValue = 0,
+				ProjectileProperty = "Graphic",
+				ChangeValue = "null",
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
-
 			{
 				WeaponNames = { "GunWeapon", "GunWeaponDash" },
-				WeaponProperty = "ProjectileAngleOffset",
-				ChangeValue = 25,
+				ProjectileProperty = "ExpandBlastDuringDetonation",
+				ChangeValue = true,
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
-
 			{
 				WeaponNames = { "GunWeapon", "GunWeaponDash" },
-				WeaponProperty = "ProjectileAngleOffsetMin",
-				ChangeValue = -0.3,
+				ProjectileProperty = "CheckUnitImpact",
+				ChangeValue = false,
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
-
 			{
 				WeaponNames = { "GunWeapon", "GunWeaponDash" },
-				WeaponProperty = "ProjectileAngleOffsetMax",
-				ChangeValue = 0.3,
+				ProjectileProperty = "BlastSpeed",
+				ChangeValue = 3400,
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
-
+			{
+				WeaponNames = { "GunWeapon", "GunWeaponDash" },
+				ProjectileProperty = "Speed",
+				ChangeValue = 3400,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "GunWeapon", "GunWeaponDash" },
+				ProjectileProperty = "Fuse",
+				ChangeValue = 0.05,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "GunWeapon", "GunWeaponDash" },
+				ProjectileProperty = "DamageRadius",
+				ChangeValue = 250,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "GunWeapon", "GunWeaponDash" },
+				ProjectileProperty = "DamageRadiusScaleY",
+				ChangeValue = 0.5,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "GunWeapon", "GunWeaponDash" },
+				ProjectileProperty = "ImmunityDuration",
+				ChangeValue = 0.06,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "GunWeapon", "GunWeaponDash" },
+				ProjectileProperty = "RequireHitCenter",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
 			{
 				WeaponNames = { "GunWeapon", "GunWeaponDash" },
 				ProjectileProperty = "Range",
@@ -19966,7 +21629,6 @@ TraitData =
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
-
 			{
 				WeaponNames = { "GunWeapon", "GunWeaponDash" },
 				WeaponProperty = "AutoLockRange",
@@ -20789,7 +22451,7 @@ TraitData =
 			{
 				WeaponName = "GunGrenadeToss",
 				WeaponProperty = "ProjectileInterval",
-				ChangeValue = 0.08,
+				ChangeValue = 0.13,
 				ChangeType = "Absolute",
 			},
 
@@ -20817,6 +22479,24 @@ TraitData =
 				WeaponName = "GunGrenadeToss",
 				ProjectileProperty = "DamageHigh",
 				DeriveValueFrom = "DamageLow",
+			},
+
+			{
+				WeaponName = "GunGrenadeToss",
+				ProjectileProperty = "Graphic",
+				ChangeValue = "null",
+			},
+			{
+				WeaponName = "GunGrenadeToss",
+				ProjectileProperty = "UnpauseAnimation",
+				ChangeValue = "GunGrenade",
+			},
+			{
+				WeaponName = "GunGrenadeToss",
+				EffectName = "GrenadeClusterDisable",
+				EffectProperty = "Active",
+				ChangeValue = true,
+				ChangeType = "Absolute",
 			},
 		},
 	},
@@ -20880,7 +22560,7 @@ TraitData =
 		},
 		Icon = "WeaponEnchantment_Gun02",
 		RequiredWeapon = "GunWeapon",
-		LoadBinks =
+		WeaponBinks =
 		{
 			"ZagreusGun02_Bink",
 			"ZagreusGun02Run_Bink",
@@ -20894,7 +22574,7 @@ TraitData =
 			{
 				IdleReloadAnimation = "ZagreusGunAlt02ReloadStart",
 				MovingReloadAnimation = "ZagreusGunAlt02RunReload",
-				Binks =
+				WeaponBinks =
 				{
 					"ZagreusGun02_Bink",
 					"ZagreusGun02Run_Bink",
@@ -21019,6 +22699,18 @@ TraitData =
 			},
 			{
 				WeaponName = "GunGrenadeToss",
+				WeaponProperty = "FireOnRelease",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "GunGrenadeToss",
+				WeaponProperty = "FireFx",
+				ChangeValue = "null",
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "GunGrenadeToss",
 				WeaponProperty = "TargetReticleAnimation",
 				ChangeValue = "null",
 				ChangeType = "Absolute",
@@ -21057,12 +22749,6 @@ TraitData =
 				WeaponName = "GunGrenadeToss",
 				ProjectileProperty = "AffectsSelf",
 				ChangeValue = true,
-				ChangeType = "Absolute",
-			},
-			{
-				WeaponName = "GunGrenadeToss",
-				ProjectileProperty = "SelfDamageMultiplier",
-				ChangeValue = 0.01,
 				ChangeType = "Absolute",
 			},
 			{
@@ -21238,6 +22924,1703 @@ TraitData =
 
 		},
 	},
+
+	-- Fist Weapon
+
+	FistHeavyAttackTrait =
+	{
+		InheritFrom = { "WeaponTrait" },
+		Icon = "Weapon_Gun_11",
+		RequiredWeapon = "FistWeapon",
+		AddOutgoingDamageModifiers =
+		{
+			ValidWeaponMultiplier = 1.1,
+			ValidWeapons = { "FistWeapon", "FistWeapon2", "FistWeapon3", "FistWeapon4", "FistWeapon5" },
+			ExtractValues =
+			{
+				{
+					Key = "ValidWeaponMultiplier",
+					ExtractAs = "TooltipDamageIncrease",
+					Format = "PercentDelta",
+				},
+			}
+		},
+		PropertyChanges =
+		{
+			{
+				WeaponName = "FistWeapon",
+				ProjectileName = "FistWeapon",
+				EffectName = "OnHitStun",
+				EffectProperty = "Active",
+				ChangeValue = true,
+			},
+			--[[
+			{
+				WeaponNames = { "FistWeapon", "FistWeapon2", "FistWeapon3", "FistWeapon4", "FistWeapon5" },
+				WeaponProperty = "FullyAutomatic",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponNames = { "FistWeapon", "FistWeapon2", "FistWeapon3", "FistWeapon4", "FistWeapon5" },
+				WeaponProperty = "ChargeTime",
+				ChangeValue = 0.08,
+				ChangeType = "Absolute",
+			},
+			]]
+		},
+	},
+
+	FistReachAttackTrait =
+	{
+		InheritFrom = { "WeaponTrait" },
+		Icon = "Weapon_Fist_07",
+		RequiredWeapon = "FistWeapon",
+		AddOutgoingDamageModifiers =
+		{
+			ValidWeaponMultiplier = 1.20,
+			ValidWeapons = { "FistWeapon", "FistWeapon2", "FistWeapon3", "FistWeapon4", "FistWeapon5" },
+			ExtractValues =
+			{
+				{
+					Key = "ValidWeaponMultiplier",
+					ExtractAs = "TooltipDamageIncrease",
+					Format = "PercentDelta",
+				},
+			}
+		},
+		PropertyChanges =
+		{
+			{
+				WeaponName = "FistWeapon",
+				ProjectileName = "FistWeapon",
+				ProjectileProperty = "AttachToOwner",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "FistWeapon",
+				ProjectileName = "FistWeapon",
+				ProjectileProperty = "Range",
+				ChangeValue = 650,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "FistWeapon",
+				WeaponProperty = "AutoLockRange",
+				ChangeValue = 650,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "FistWeapon",
+				ProjectileName = "FistWeapon",
+				ProjectileProperty = "Speed",
+				ChangeValue = 4000,
+				ChangeType = "Absolute",
+			},
+						{
+				WeaponName = "FistWeapon",
+				ProjectileName = "FistWeapon",
+				ProjectileProperty = "Acceleration",
+				ChangeValue = -24000,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponNames = { "FistWeapon", "FistWeapon2", "FistWeapon3", "FistWeapon4", "FistWeapon5" },
+				ProjectileProperty = "Graphic",
+				ChangeValue = "FistFxBase_Reach",
+				ChangeType = "Absolute"
+			},
+			{
+				TraitName = "AphroditeWeaponTrait",
+				WeaponNames = { "FistWeapon", "FistWeapon2", "FistWeapon3", "FistWeapon4", "FistWeapon5" },
+				ProjectileProperty = "Graphic",
+				ChangeValue = "FistFxAphrodite_Reach",
+				ChangeType = "Absolute"
+			},
+			{
+				TraitName = "AresWeaponTrait",
+				WeaponNames = { "FistWeapon", "FistWeapon2", "FistWeapon3", "FistWeapon4", "FistWeapon5" },
+				ProjectileProperty = "Graphic",
+				ChangeValue = "FistFxAres_Reach",
+				ChangeType = "Absolute"
+			},
+						{
+				TraitName = "AthenaWeaponTrait",
+				WeaponNames = { "FistWeapon", "FistWeapon2", "FistWeapon3", "FistWeapon4", "FistWeapon5" },
+				ProjectileProperty = "Graphic",
+				ChangeValue = "FistFxAthena_Reach",
+				ChangeType = "Absolute"
+			},
+			{
+				TraitName = "ArtemisWeaponTrait",
+				WeaponNames = { "FistWeapon", "FistWeapon2", "FistWeapon3", "FistWeapon4", "FistWeapon5" },
+				ProjectileProperty = "Graphic",
+				ChangeValue = "FistFxArtemis_Reach",
+				ChangeType = "Absolute"
+			},
+						{
+				TraitName = "DemeterWeaponTrait",
+				WeaponNames = { "FistWeapon", "FistWeapon2", "FistWeapon3", "FistWeapon4", "FistWeapon5" },
+				ProjectileProperty = "Graphic",
+				ChangeValue = "FistFxDemeter_Reach",
+				ChangeType = "Absolute"
+			},
+			{
+				TraitName = "DionysusWeaponTrait",
+				WeaponNames = { "FistWeapon", "FistWeapon2", "FistWeapon3", "FistWeapon4", "FistWeapon5" },
+				ProjectileProperty = "Graphic",
+				ChangeValue = "FistFxDionysus_Reach",
+				ChangeType = "Absolute"
+			},
+						{
+				TraitName = "PoseidonWeaponTrait",
+				WeaponNames = { "FistWeapon", "FistWeapon2", "FistWeapon3", "FistWeapon4", "FistWeapon5" },
+				ProjectileProperty = "Graphic",
+				ChangeValue = "FistFxPoseidon_Reach",
+				ChangeType = "Absolute"
+			},
+			{
+				TraitName = "ZeusWeaponTrait",
+				WeaponNames = { "FistWeapon", "FistWeapon2", "FistWeapon3", "FistWeapon4", "FistWeapon5" },
+				ProjectileProperty = "Graphic",
+				ChangeValue = "FistFxZeus_Reach",
+				ChangeType = "Absolute"
+			},
+
+		},
+	},
+
+	FistChargeAttackTrait =
+	{
+		InheritFrom = { "WeaponTrait" },
+		Icon = "Weapon_Fist_02",
+		RequiredWeapon = "FistWeapon",
+		RequiredFalseTraits = { "FistAttackFinisherTrait" },
+		AddOutgoingDamageModifiers =
+		{
+			ValidWeapons = { "FistWeapon" },
+			PerfectChargeMultiplier = 1.5,
+			ExcludeLinked = true,
+			ExtractValues =
+			{
+				{
+					Key = "PerfectChargeMultiplier",
+					ExtractAs = "TooltipDamageIncrease",
+					Format = "PercentDelta",
+				}
+			},
+		},
+		WeaponDataOverride =
+		{
+			FistWeapon =
+			{
+				Sounds =
+				{
+					ChargeSounds =
+					{
+						{
+							Name = "/SFX/Player Sounds/ZagreusBowChargeup" ,
+							Key = "FistWeaponCharge",
+							StoppedBy = { "ChargeCancel", "TriggerRelease", "Fired" },
+						},
+						{ Name = "/VO/ZagreusEmotes/EmoteCharging_Bow" },
+					},
+					FireSounds =
+					{
+						PerfectChargeSounds =
+						{
+							{ Name = "/SFX/Player Sounds/ZagreusCriticalFire" },
+						},
+						{ Name = "/VO/ZagreusEmotes/EmotePowerAttacking_Fist5" },
+						{ Name = "/SFX/Player Sounds/ZagreusFistWhoosh" },
+					},
+					ImpactSounds =
+					{
+						Invulnerable = "/SFX/FistImpactSmall",
+						Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
+						Bone = "/SFX/FistImpactSmall",
+						Brick = "/SFX/FistImpactSmall",
+						Stone = "/SFX/FistImpactSmall",
+						Organic = "/SFX/FistImpactSmall",
+						StoneObstacle = "/SFX/FistImpactSmall",
+						BrickObstacle = "/SFX/FistImpactSmall",
+						MetalObstacle = "/SFX/FistImpactSmall",
+						BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
+					},
+				},
+			},
+			FistWeapon2 =
+			{
+				Sounds =
+				{
+					ChargeSounds =
+					{
+						{
+							Name = "/SFX/Player Sounds/ZagreusBowChargeup" ,
+							Key = "FistWeapon2Charge",
+							StoppedBy = { "ChargeCancel", "TriggerRelease", "Fired" },
+						},
+					},
+					FireSounds =
+					{
+						{ Name = "/VO/ZagreusEmotes/EmoteAttacking_Fist2" },
+						{ Name = "/SFX/Player Sounds/ZagreusFistWhoosh" },
+					},
+					ImpactSounds =
+					{
+						Invulnerable = "/SFX/FistImpactSmall",
+						Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
+						Bone = "/SFX/FistImpactSmall",
+						Brick = "/SFX/FistImpactSmall",
+						Stone = "/SFX/FistImpactSmall",
+						Organic = "/SFX/FistImpactSmall",
+						StoneObstacle = "/SFX/FistImpactSmall",
+						BrickObstacle = "/SFX/FistImpactSmall",
+						MetalObstacle = "/SFX/FistImpactSmall",
+						BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
+					},
+				},
+			},
+		},
+		PropertyChanges =
+		{
+			{
+				WeaponNames = { "FistWeapon", "FistWeapon2" },
+				WeaponProperty = "ChargeTime",
+				ChangeValue = 0.25,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon", "FistWeapon2" },
+				WeaponProperty = "ChargeCancelGraphic",
+				ChangeValue = "ZagreusFistRun",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon", "FistWeapon2" },
+				WeaponProperty = "CancelChargeOnRelease",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon" },
+				WeaponProperty = "ChargeStartFx",
+				ChangeValue = "FistChargeAttackTrait",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon2" },
+				WeaponProperty = "ChargeStartFx",
+				ChangeValue = "FistChargeAttackTrait2",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon", "FistWeapon2" },
+				WeaponProperty = "MinChargeToFire",
+				ChangeValue = 0.3,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon", "FistWeapon2" },
+				WeaponProperty = "LockTriggerForCharge",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon", "FistWeapon2" },
+				WeaponProperty = "FireOnRelease",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon", "FistWeapon2" },
+				WeaponProperty = "ChargeCancelMovement",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon", "FistWeapon2" },
+				WeaponProperty = "BlockMoveInput",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon", "FistWeapon2" },
+				WeaponProperty = "RootOwnerWhileFiring",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon", "FistWeapon2" },
+				WeaponProperty = "BelowMinChargeCooldown",
+				ChangeValue = 0.02,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon", "FistWeapon2" },
+				WeaponProperty = "AimLineAnimation",
+				ChangeValue = "AuraAimLineShield",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			--[[
+			{
+				WeaponNames = { "FistWeapon" },
+				WeaponProperty = "SelfVelocity",
+				ChangeValue = 300,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon" },
+				WeaponProperty = "SelfVelocityCap",
+				ChangeValue = 1800,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon" },
+				WeaponProperty = "ChargeVelocityMultiplier",
+				ChangeValue = 3,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			]]
+			{
+				WeaponNames = { "FistWeapon", "FistWeapon2" },
+				WeaponProperty = "ChargeDamageMultiplier",
+				ChangeValue = 2.0,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon", "FistWeapon2" },
+				WeaponProperty = "PerfectChargeWindowDuration",
+				ChangeValue = 0.15,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon2" },
+				WeaponProperty = "SwapOnFire",
+				ChangeValue = "FistWeapon",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon" },
+				EffectName = "FistDisable",
+				EffectProperty = "Active",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon" },
+				EffectName = "FistDisableAndLockTrigger",
+				EffectProperty = "Active",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon2" },
+				EffectName = "FistDisable2",
+				EffectProperty = "Active",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon2" },
+				EffectName = "FistDisableAndLockTrigger2",
+				EffectProperty = "Active",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "FistWeapon" },
+				EffectName = "FistChargeDisable",
+				EffectProperty = "Active",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon" },
+				EffectName = "FistChargeDisableAndLockTrigger",
+				EffectProperty = "Active",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon2" },
+				EffectName = "FistChargeDisable2",
+				EffectProperty = "Active",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon2" },
+				EffectName = "FistChargeDisableAndLockTrigger2",
+				EffectProperty = "Active",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			--[[
+			{
+				WeaponNames = { "FistWeapon" },
+				WeaponProperty = "SwapOnFire",
+				ChangeValue = "null",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "FistWeapon" },
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusHeavyPunch_Fire1",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			]]
+			--[[
+			{
+				WeaponNames = { "FistWeapon" },
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusFistFlurryPunch_Complete",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon" },
+				WeaponProperty = "NumProjectiles",
+				ChangeValue = 5,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon" },
+				WeaponProperty = "ProjectileInterval",
+				ChangeValue = 0.12,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon" },
+				EffectName = "FistSelfSlowCharge",
+				EffectProperty = "Active",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon" },
+				EffectName = "FistDisable",
+				EffectProperty = "Active",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon" },
+				EffectName = "FistDisableAndLockTrigger",
+				EffectProperty = "Active",
+				ChangeValue = false,
+				Type = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon" },
+				EffectName = "FistFlurryHalt",
+				EffectProperty = "Active",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon" },
+				EffectName = "FistFlurryDisable",
+				EffectProperty = "Active",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon" },
+				EffectName = "FistFlurryDisableAndLockTrigger",
+				EffectProperty = "Active",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon" },
+				EffectName = "FistFlurrySelfSlowCharge",
+				EffectProperty = "Active",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			]]
+		},
+	},
+
+	FistDashAttackHealthBufferTrait =
+	{
+		InheritFrom = { "WeaponTrait" },
+		Icon = "Weapon_Fist_01",
+		RequiredWeapon = "FistWeapon",
+		AddOutgoingDamageModifiers =
+		{
+			ValidWeapons = { "FistWeaponDash", "FistWeaponDash" },
+			HealthBufferDamageMultiplier = 10,
+		},
+		PropertyChanges =
+		{
+			{
+				WeaponNames = { "FistWeaponDash", "FistWeaponDash" },
+				ProjectileProperty = "IgnoreCoverageAngles",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+		},
+	},
+
+
+	-- Experimental Stuff
+	FistKillTrait =
+	{
+		InheritFrom = { "WeaponTrait" },
+		Icon = "Weapon_Fist_06",
+		RequiredWeapon = "FistWeapon",
+		OnEnemyDeathWeapon =
+		{
+			Weapon = "FistKillBuff",
+			RequiredKillWeapons = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+		},
+		PropertyChanges =
+		{
+
+		},
+	},
+
+	FistKillNovaTrait =
+	{
+		InheritFrom = { "WeaponTrait" },
+		Icon = "Weapon_Gun_11",
+		RequiredWeapon = "FistWeapon",
+		OnEnemyDeathWeapon =
+		{
+			Weapon = "FistKillNova",
+			RequiredKillWeapons = { "FistWeaponDash" },
+			FireAtDeathLocation = true,
+		},
+		PropertyChanges =
+		{
+
+		},
+	},
+
+	FistConsecutiveAttackTrait =
+	{
+		InheritFrom = { "WeaponTrait" },
+		Icon = "Weapon_Fist_09",
+		RequiredWeapon = "FistWeapon",
+		PropertyChanges =
+		{
+			{
+				WeaponNames = { "FistWeapon", "FistWeapon2", "FistWeapon3", "FistWeapon4", "FistWeapon5", "FistWeaponDash" },
+				ProjectileName = "FistWeapon",
+				ProjectileProperty = "ConsecutiveHitWindow",
+				ChangeValue = 0.18,
+				ChangeType = "Absolute",
+			},
+
+			{
+				WeaponNames = { "FistWeapon", "FistWeapon2", "FistWeapon3", "FistWeapon4", "FistWeapon5", "FistWeaponDash" },
+				ProjectileName = "FistWeapon",
+				ProjectileProperty = "DamagePerConescutiveHit",
+				ChangeValue = 5,
+				ChangeType = "Absolute",
+			},
+		},
+	},
+
+	FistAttackFinisherTrait =
+	{
+		InheritFrom = { "WeaponTrait" },
+		Icon = "Weapon_Fist_08",
+		RequiredWeapon = "FistWeapon",
+		RequiredFalseTraits = { "FistChargeAttackTrait" },
+		AddOutgoingDamageModifiers =
+		{
+			ValidWeaponMultiplier = 1.6,
+			ValidWeapons = { "FistWeaponDash" },
+			ExtractValues =
+			{
+				{
+					Key = "ValidWeaponMultiplier",
+					ExtractAs = "TooltipDamageIncrease",
+					Format = "PercentDelta",
+				},
+			}
+		},
+		PropertyChanges =
+		{
+			{
+				WeaponNames = { "FistWeapon5" },
+				WeaponProperty = "SwapOnFire",
+				ChangeValue = "FistWeaponDash",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon5" },
+				WeaponProperty = "CooldownWeaponSlotThree",
+				ChangeValue = 0,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+		},
+	},
+
+	FistDoubleDashSpecialTrait =
+	{
+		InheritFrom = { "WeaponTrait" },
+		Icon = "Weapon_Fist_03",
+		RequiredWeapon = "FistWeapon",
+		RequiredFalseTraits = { "FistSpecialFireballTrait" },
+		AddOutgoingDamageModifiers =
+		{
+			ValidWeaponMultiplier = 1.5,
+			ValidWeapons = { "FistWeaponSpecialDash" },
+			ExtractValues =
+			{
+				{
+					Key = "ValidWeaponMultiplier",
+					ExtractAs = "TooltipDamageIncrease",
+					Format = "PercentDelta",
+				},
+			}
+		},
+		PropertyChanges =
+		{
+			{
+				WeaponNames = { "FistWeaponSpecialDash" },
+				ProjectileProperty = "Fuse",
+				ChangeValue = 0.04,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponNames = { "FistWeaponSpecialDash" },
+				ProjectileProperty = "DamageRadius",
+				ChangeValue = 450,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponNames = { "FistWeaponSpecialDash" },
+				ProjectileProperty = "DamageRadiusScaleX",
+				ChangeValue = 0.9,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecialDash" },
+				ProjectileProperty = "DamageRadiusScaleY",
+				ChangeValue = 0.5,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecialDash" },
+				ProjectileProperty = "DetonateGraphic",
+				ChangeValue = "MineExplosionFadeDecalGunTrait",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+                WeaponNames = { "FistWeaponSpecialDash" },
+                ProjectileProperty = "DetonateSound",
+                ChangeValue = "/SFX/Explosion1",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+		},
+	},
+
+	FistDoubleSpecialTrait =
+	{
+		InheritFrom = { "WeaponTrait" },
+		Icon = "Weapon_Gun_11",
+		RequiredWeapon = "FistWeapon",
+		PropertyChanges =
+		{
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "NumProjectiles",
+				ChangeValue = 2,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "ProjectileInterval",
+				ChangeValue = 0.42,
+				ChangeType = "Absolute",
+			},
+		},
+	},
+
+	FistAreaSpecialTrait =
+	{
+		InheritFrom = { "WeaponTrait" },
+		Icon = "Weapon_Gun_11",
+		RequiredWeapon = "FistWeapon",
+		PropertyChanges =
+		{
+			{
+				WeaponNames = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+				ProjectileProperty = "Fuse",
+				ChangeValue = 0.1,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+				ProjectileProperty = "DamageRadius",
+				ChangeValue = 380,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+				ProjectileProperty = "DetonateGraphic",
+				ChangeValue = "FistFxUppercut",
+				ChangeType = "Absolute",
+			},
+		},
+	},
+
+	FistChargeSpecialTrait =
+	{
+		InheritFrom = { "WeaponTrait" },
+		Icon = "Weapon_Fist_11",
+		RequiredFalseTraits = { "FistTeleportSpecialTrait", "FistVacuumTrait", "FistSpecialFireballTrait" },
+		RequiredWeapon = "FistWeapon",
+		WeaponDataOverride =
+		{
+			FistWeaponSpecial =
+			{
+				Sounds =
+				{
+					ChargeSounds =
+					{
+						{
+							Name = "/SFX/Player Sounds/ZagreusWeaponChargeup",
+							StoppedBy = { "ChargeCancel", "TriggerRelease", "Fired" },
+						},
+						{
+							Name = "/VO/ZagreusEmotes/EmoteRangedCharging",
+							StoppedBy = { "ChargeCancel", "TriggerRelease", "Fired" },
+						}
+					},
+
+					FireSounds =
+					{
+						{ Name = "/VO/ZagreusEmotes/EmoteAttacking_Fist2" },
+						{ Name = "/SFX/Player Sounds/ZagreusFistWhoosh" },
+					},
+					ImpactSounds =
+					{
+						Invulnerable = "/SFX/FistImpactSmall",
+						Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
+						Bone = "/SFX/FistImpactSmall",
+						Brick = "/SFX/FistImpactSmall",
+						Stone = "/SFX/FistImpactSmall",
+						Organic = "/SFX/FistImpactSmall",
+						StoneObstacle = "/SFX/FistImpactSmall",
+						BrickObstacle = "/SFX/FistImpactSmall",
+						MetalObstacle = "/SFX/FistImpactSmall",
+						BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
+					},
+				},
+			},
+		},
+		PropertyChanges =
+		{
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "FireOnRelease",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "FullyAutomatic",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "LockTriggerForCharge",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "ChargeTime",
+				ChangeValue = 0.9,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			--[[
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusFistFlashKick_Start",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			]]
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "MinChargeToFire",
+				ChangeValue = 0.0,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "ChargeStartFx",
+				ChangeValue = "FistChargeUppercutTrait",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "ChargeDamageMultiplier",
+				ChangeValue = 2.0,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "ChargeVelocityMultiplier",
+				ChangeValue = 3.0,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "SelfVelocity",
+				ChangeValue = 400,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "SelfVelocityCap",
+				ChangeValue = 1200,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "AllowExternalForceRelease",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "AllowExternalForceReleaseIfAnyCharged",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "ShowFreeAimLine",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "AimLineAnimation",
+				ChangeValue = "AuraAimLineShield",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "MinChargeStartFx",
+				ChangeValue = "FistChargeFocusedFire",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				ProjectileProperty = "BlastDuration",
+				ChangeValue = 0.22,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				EffectName = "FistSpecialFireHalt",
+				EffectProperty = "Active",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+		},
+	},
+
+	FistSpecialFireballTrait =
+	{
+		InheritFrom = { "WeaponTrait" },
+		Icon = "Weapon_Fist_10",
+		RequiredFalseTraits = { "FistTeleportSpecialTrait", "FistChargeSpecialTrait", "FistVacuumTrait", "FistDoubleDashSpecialTrait" },
+		RequiredWeapon = "FistWeapon",
+		WeaponDataOverride =
+		{
+			FistWeaponSpecial =
+			{
+				HitSimSlowParameters =
+				{
+						{ ScreenPreWait = 0.02, Fraction = 0.01, LerpTime = 0 },
+						{ ScreenPreWait = 0.02, Fraction = 0.3, LerpTime = 0 },
+						{ ScreenPreWait = 0.02, Fraction = 1.0, LerpTime = 0.07 },
+				},
+				Sounds =
+				{
+					ChargeSounds =
+					{
+						{
+							Name = "/SFX/Player Sounds/ZagreusWeaponChargeup",
+							StoppedBy = { "ChargeCancel", "TriggerRelease", "Fired" },
+						},
+						{
+							Name = "/VO/ZagreusEmotes/EmoteHeavyCharging",
+							StoppedBy = { "ChargeCancel", "TriggerRelease", "Fired" },
+						}
+					},
+
+					FireSounds =
+					{
+						PerfectChargeSounds =
+						{
+							{ Name = "/Leftovers/SFX/AuraPerfectThrow" },
+						},
+						{ Name = "/Leftovers/SFX/AuraThrow" },
+						{ Name = "/SFX/Player Sounds/ZagreusSpearThrow" },
+						{
+							Name = "/VO/ZagreusEmotes/EmoteAttacking_FistKick",
+						},
+					},
+					ImpactSounds =
+					{
+						Invulnerable = "/SFX/SwordWallHitClank",
+						Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
+						Bone = "/SFX/ArrowMetalBoneSmash",
+						Brick = "/SFX/ArrowMetalStoneClang",
+						Stone = "/SFX/ArrowMetalStoneClang",
+						Organic = "/SFX/ArrowImpactSplatter",
+						StoneObstacle = "/SFX/SwordWallHitClankSmall",
+						BrickObstacle = "/SFX/SwordWallHitClankSmall",
+						MetalObstacle = "/SFX/SwordWallHitClankSmall",
+						BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
+					},
+				},
+			},
+		},
+		AddOutgoingDamageModifiers =
+		{
+			ValidWeapons = { "FistWeapon" },
+			PerfectChargeMultiplier = 1.2,
+			ExcludeLinked = true,
+			ExtractValues =
+			{
+				{
+					Key = "PerfectChargeMultiplier",
+					ExtractAs = "TooltipDamageIncrease",
+					Format = "PercentDelta",
+				}
+			},
+		},
+		PropertyChanges =
+		{
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "Projectile",
+				ChangeValue = "FistFireball",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				ProjectileProperty = "DamageLow",
+				ChangeValue = 40,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+				ExtractValue =
+				{
+					ExtractAs = "TooltipDamage",
+				},
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				ProjectileProperty = "DamageHigh",
+				DeriveValueFrom = "DamageLow",
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "FireOnRelease",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "AutoLockRange",
+				ChangeValue = 900,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "AutoLock",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "AutoLockArcDistance",
+				ChangeValue = 120,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "FullyAutomatic",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "LockTriggerForCharge",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "ChargeTime",
+				ChangeValue = 0.6,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			--[[
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "MaxCharge",
+				ChangeValue = 5.0,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			]]
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusFistGrab_Start",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusFistGrab_Fire",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "ChargeStartFx",
+				ChangeValue = "FistChargeSpecialTrait",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "MinChargeToFire",
+				ChangeValue = 0.0,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "NumProjectiles",
+				ChangeValue = -1,
+				ChangeType = "Add",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "PerfectChargeWindowDuration",
+				ChangeValue = 0.15,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "PerfectChargeSpeedMultiplier",
+				ChangeValue = 2.0,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "ChargeDamageMultiplier",
+				ChangeValue = 1.5,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "ChargeRangeMultiplier",
+				ChangeValue = 9,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "SelfVelocity",
+				ChangeValue = 0,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "SelfVelocityCap",
+				ChangeValue = 0,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				ProjectileProperty = "Range",
+				ChangeValue = 100,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "AllowExternalForceRelease",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "AllowExternalForceReleaseIfAnyCharged",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "ShowFreeAimLine",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "AimLineAnimation",
+				ChangeValue = "AuraAimLineShield",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "MinChargeStartFx",
+				ChangeValue = "FistChargeFocusedFire",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				ProjectileProperty = "BlastDuration",
+				ChangeValue = 0.22,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				EffectName = "FistSpecialFireHalt",
+				EffectProperty = "Active",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+		},
+	},
+
+
+	FistSpecialLandTrait =
+	{
+		InheritFrom = { "WeaponTrait" },
+		Icon = "Weapon_Fist_12",
+		RequiredWeapon = "FistWeapon",
+		RequiredFalseTraits = { "FistWeaveTrait" },
+		PreEquipWeapons = { "FistWeaponLandAreaAttack" },
+		AddOnFireWeapons = { "FistWeaponLandAreaAttack" },
+		LegalOnFireWeapons = { "FistWeaponSpecial" },
+		ExcludeLinked = true,
+		PropertyChanges =
+		{
+			{
+				WeaponNames = { "FistWeaponLandAreaAttack" },
+				ProjectileProperty = "DamageLow",
+				BaseValue = 80,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+				ExtractValue =
+				{
+					ExtractAs = "TooltipDamage",
+				},
+			},
+			{
+				WeaponNames = { "FistWeaponLandAreaAttack" },
+				ProjectileProperty = "DamageHigh",
+				DeriveValueFrom = "DamageLow",
+			},
+		},
+	},
+
+	FistSpecialWaveTrait =
+	{
+		InheritFrom = { "WeaponTrait" },
+		Icon = "Weapon_Gun_11",
+		RequiredWeapon = "FistWeapon",
+		PreEquipWeapons = { "FistNovaWave" },
+		AddOnFireWeapons = { "FistNovaWave" },
+		LegalOnFireWeapons = { "FistWeaponSpecial" },
+		PropertyChanges =
+		{
+			{
+				WeaponNames = { "FistNovaWave" },
+				ProjectileProperty = "DamageLow",
+				BaseValue = 80,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+				ExtractValue =
+				{
+					ExtractAs = "TooltipDamage",
+				},
+			},
+			{
+				WeaponNames = { "FistNovaWave" },
+				ProjectileProperty = "DamageHigh",
+				DeriveValueFrom = "DamageLow",
+			},
+		},
+	},
+
+
+	FistTeleportSpecialTrait =
+	{
+		InheritFrom = { "WeaponTrait" },
+		Icon = "Weapon_Fist_05",
+		PreEquipWeapons = {"FistSpecialMiniDash"},
+		RequiredWeapon = "FistWeapon",
+		RequiredFalseTraits = { "FistVacuumTrait", "FistChargeSpecialTrait" },
+		OnWeaponFiredFunctions =
+		{
+			ValidWeapons = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+			FunctionName = "CheckTeleportToNearbyEnemy",
+			FunctionArgs =
+			{
+				Range = 600,
+				AutoLockArc = 40,
+			},
+		},
+		PropertyChanges =
+		{
+			{
+				WeaponNames = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusFistFlashKick_Start",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusFistFlashKick_Fire",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+
+			{
+				WeaponNames = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+				WeaponProperty = "ChargeTime",
+				ChangeValue = 0.22,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+
+			{
+				WeaponNames = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+				ProjectileProperty = "DamageLow",
+				ChangeValue = 50,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+				ExtractValue =
+				{
+					ExtractAs = "TooltipDamage",
+				},
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+				ProjectileProperty = "DamageHigh",
+				DeriveValueFrom = "DamageLow",
+			},
+		},
+	},
+
+	FistVacuumTrait =
+	{
+		InheritFrom = { "WeaponEnchantmentTrait" },
+		Icon = "WeaponEnchantment_Fist03",
+		PostWeaponUpgradeScreenAnimation = "ZagreusFistAlt02Grab_ReturnToIdle",
+		PostWeaponUpgradeScreenAngle = 208,
+		PreEquipWeapons = { "FistSpecialVacuum" },
+		CustomTrayText = "FistVacuumTrait_Tray",
+		RequiredWeapon = "FistWeapon",
+		RequiredFalseTraits = { "FistVacuumTrait", "FistTeleportSpecialTrait" },
+		RequiredWeapons = { "FistWeapon", "FistWeaponSpecial" },
+		RarityLevels =
+		{
+			Common =
+			{
+				MinMultiplier = 1,
+				MaxMultiplier = 1,
+			},
+			Rare =
+			{
+				MinMultiplier = 2,
+				MaxMultiplier = 2,
+			},
+			Epic =
+			{
+				MinMultiplier = 3,
+				MaxMultiplier = 3,
+			},
+			Heroic =
+			{
+				MinMultiplier = 4,
+				MaxMultiplier = 4,
+			},
+			Legendary =
+			{
+				MinMultiplier = 5,
+				MaxMultiplier = 5,
+			},
+		},
+		WeaponBinks =
+		{
+			"ZagreusFistAlt02Idle_Bink",
+			"ZagreusFistAlt02Run_Bink",
+			"ZagreusFistAlt02RunStop_Bink",
+			"ZagreusFistAlt02FlurryPunch_Bink",
+			"ZagreusFistAlt02FlashKick_Bink",
+			"ZagreusFistAlt02Grab_Bink",
+			"ZagreusFistAlt02AerialUpperCut_Bink",
+			"ZagreusFistAlt02DashUpperCut_Bink",
+			"ZagreusFistAlt02DashHayMaker_Bink",
+		},
+		WeaponDataOverride =
+		{
+			FistWeapon =
+			{
+				WeaponBinks =
+				{
+					"ZagreusFistAlt02Idle_Bink",
+					"ZagreusFistAlt02Run_Bink",
+					"ZagreusFistAlt02RunStop_Bink",
+					"ZagreusFistAlt02FlurryPunch_Bink",
+					"ZagreusFistAlt02FlashKick_Bink",
+					"ZagreusFistAlt02Grab_Bink",
+					"ZagreusFistAlt02AerialUpperCut_Bink",
+					"ZagreusFistAlt02DashUpperCut_Bink",
+					"ZagreusFistAlt02DashHayMaker_Bink",
+				}
+			},
+		},
+		AddRush =
+		{
+			FunctionName = "FistVacuumRush",
+			FunctionArgs =
+			{
+				Duration = 0.2,
+			},
+			RunOnce = true,
+		},
+		OnWeaponChargeFunctions =
+		{
+			ValidWeapons = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+			FunctionName = "CheckVacuumNearbyEnemy",
+			FunctionArgs =
+			{
+				Range = 800,				-- Vacuum distance
+				DistanceBuffer = 130,		-- Space to leave between player and enemy
+				RushDistanceBuffer = 300,
+				AutoLockArc = 60,
+			},
+		},
+		PropertyChanges =
+		{
+			{
+				WeaponNames = { "FistSpecialVacuum" },
+				EffectName = "MarkTargetFist",
+				EffectProperty = "Active",
+				ChangeValue = true,
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistSpecialVacuum" },
+				EffectName = "MarkTargetFist",
+				EffectProperty = "Modifier",
+				BaseValue = 0.08,
+				ChangeType = "Add",
+				ExtractValue =
+				{
+					ExtractAs = "TooltipDamage",
+					Format = "Percent"
+				},
+				DeriveSource = "DeriveSource"
+			},
+
+			{
+				WeaponNames = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusFistAlt02Grab_Start",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+				WeaponProperty = "ChargeTime",
+				ChangeValue = 0.24,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "FistWeapon" },
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusFistAlt02FlurryPunch_Start",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon" },
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusFistAlt02FlurryPunch_Fire1",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon2" },
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusFistAlt02FlurryPunch_Charge2",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon2" },
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusFistAlt02FlurryPunch_Fire2",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon3" },
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusFistAlt02FlurryPunch_Charge3",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon3" },
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusFistAlt02FlurryPunch_Fire3",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon4" },
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusFistAlt02FlurryPunch_Charge4",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon4" },
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusFistAlt02FlurryPunch_Fire4",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon5" },
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusFistAlt02FlurryPunch_Charge5",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon5" },
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusFistAlt02FlurryPunch_Fire5",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponDash" },
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusFistAlt02DashHayMaker_Charge",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponDash" },
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusFistAlt02DashHayMaker_Fire",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusFistAlt02DashHayMaker_Fire",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusFistAlt02AerialUpperCut_Fire",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecialDash" },
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusFistAlt02DashUpperCut_Fire",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "FistTeleportSpecialTrait",
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusFistAlt02FlashKick_Start",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "FistTeleportSpecialTrait",
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusFistAlt02FlashKick_Fire",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "FistSpecialFireballTrait",
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusFistAlt02Grab_Start",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "FistSpecialFireballTrait",
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusFistAlt02Grab_Fire",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+		},
+	},
+
+	FistThrowSpecial =
+	{
+		InheritFrom = { "WeaponTrait" },
+		Icon = "Weapon_Gun_11",
+		PreEquipWeapons = {"FistSpecialMiniDash"},
+		RequiredWeapon = "FistWeapon",
+		OnWeaponChargeFunctions =
+		{
+			ValidWeapons = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+			FunctionName = "CheckGrappleToNearbyEnemy",
+			FunctionArgs =
+			{
+				Range = 200,					-- Finds a unit within this range to throw
+				ThrowRange = 800,				-- Seeks a unit within this range to throw to
+				OverThrowDistance = 250,		-- Additional impulse so the unit slams into the target unit
+				MinForce = 2000,					-- Minimum force to apply
+			},
+		},
+		PropertyChanges =
+		{
+			{
+				WeaponNames = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+				ProjectileProperty = "ImpactVelocity",
+				ChangeValue = 2200,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+				ProjectileProperty = "ImpactVelocityCap",
+				ChangeValue = 2200,
+				ChangeType = "Absolute",
+			},
+		},
+
+	},
+
 
 	-- Combo Traits
 	AutoRetaliateTrait =
@@ -22216,6 +25599,314 @@ TraitData =
 	},
 
 	-- Weapon Enchantments
+	FistBaseUpgradeTrait =
+	{
+		Icon = "WeaponEnchantment_Fist01",
+		InheritFrom = { "WeaponEnchantmentTrait" },
+		CustomTrayText = "FistBaseUpgradeTrait_Tray",
+		RarityLevels =
+		{
+			Common =
+			{
+				MinMultiplier = 1.000,
+				MaxMultiplier = 1.000,
+			},
+			Rare =
+			{
+				MinMultiplier = 1.50,
+				MaxMultiplier = 1.50,
+			},
+			Epic =
+			{
+				MinMultiplier = 2.0,
+				MaxMultiplier = 2.0,
+			},
+			Heroic =
+			{
+				MinMultiplier = 2.5,
+				MaxMultiplier = 2.5,
+			},
+			Legendary =
+			{
+				MinMultiplier = 3.0,
+				MaxMultiplier = 3.0,
+			},
+		},
+		PropertyChanges =
+		{
+			{
+				WeaponNames = { "FistWeapon", "FistWeaponSpecial" },
+				WeaponProperty = "ChargeTime",
+				BaseValue = 0.95,
+				SourceIsMultiplier = true,
+				ChangeType = "Multiply",
+			},
+			{
+				LifeProperty = "DodgeChance",
+				BaseValue = 0.05,
+				ChangeType = "Add",
+				DataValue = false,
+				ExtractValue =
+				{
+					ExtractAs = "TooltipChance",
+					Format = "Percent"
+				},
+			},
+		}
+	},
+
+	FistWeaveTrait =
+	{
+		Icon = "WeaponEnchantment_Fist02",
+		CustomTrayText = "FistWeaveTrait_Tray",
+		InheritFrom = { "WeaponEnchantmentTrait" },
+		PostWeaponUpgradeScreenAnimation = "ZagreusFistAlt01FlashKick_ReturnToIdle",
+		PostWeaponUpgradeScreenAngle = 208,
+		RequiredWeapons = { "FistWeapon", "FistWeaponSpecial" },
+		RequiredFalseTrait = "FistWeaveTrait",
+		RarityLevels =
+		{
+			Common =
+			{
+				MinMultiplier = 1,
+				MaxMultiplier = 1,
+			},
+			Rare =
+			{
+				MinMultiplier = 2,
+				MaxMultiplier = 2,
+			},
+			Epic =
+			{
+				MinMultiplier = 3,
+				MaxMultiplier = 3,
+			},
+			Heroic =
+			{
+				MinMultiplier = 4,
+				MaxMultiplier = 4,
+			},
+			Legendary =
+			{
+				MinMultiplier = 5,
+				MaxMultiplier = 5,
+			},
+		},
+		BonusSpecialHits = {
+			BaseValue = 1,
+		},
+		ExtractValues =
+		{
+			{
+                Key = "BonusSpecialHits",
+                ExtractAs = "TooltipHits",
+            },
+		},
+		WeaponBinks =
+		{
+			"ZagreusFistAlt01Idle_Bink",
+			"ZagreusFistAlt01Run_Bink",
+			"ZagreusFistAlt01RunStop_Bink",
+			"ZagreusFistAlt01FlurryPunch_Bink",
+			"ZagreusFistAlt01FlashKick_Bink",
+			"ZagreusFistAlt01Grab_Bink",
+			"ZagreusFistAlt01AerialUpperCut_Bink",
+			"ZagreusFistAlt01DashUpperCut_Bink",
+			"ZagreusFistAlt01DashHayMaker_Bink",
+		},
+		WeaponDataOverride =
+		{
+			FistWeapon =
+			{
+				WeaponBinks =
+				{
+					"ZagreusFistAlt01Idle_Bink",
+					"ZagreusFistAlt01Run_Bink",
+					"ZagreusFistAlt01RunStop_Bink",
+					"ZagreusFistAlt01FlurryPunch_Bink",
+					"ZagreusFistAlt01FlashKick_Bink",
+					"ZagreusFistAlt01Grab_Bink",
+					"ZagreusFistAlt01AerialUpperCut_Bink",
+					"ZagreusFistAlt01DashUpperCut_Bink",
+					"ZagreusFistAlt01DashHayMaker_Bink",
+				}
+			},
+
+			FistWeaponSpecial =
+			{
+				HitSimSlowCooldown = 0.02,
+				HitSimSlowParameters =
+				{
+
+					{ ScreenPreWait = 0.02, Fraction = 0.02, LerpTime = 0.0 },
+					--{ ScreenPreWait = 0.02, Fraction = 0.10, LerpTime = 0.03 },
+					{ ScreenPreWait = 0.04, Fraction = 1.0, LerpTime = 0 },
+				},
+
+			},
+
+			FistWeaponSpecialDash =
+			{
+				HitSimSlowCooldown = 0.02,
+				HitSimSlowParameters =
+				{
+
+					{ ScreenPreWait = 0.02, Fraction = 0.02, LerpTime = 0.0 },
+					--{ ScreenPreWait = 0.02, Fraction = 0.10, LerpTime = 0.03 },
+					{ ScreenPreWait = 0.04, Fraction = 1.0, LerpTime = 0 },
+				},
+			},
+		},
+		PropertyChanges =
+		{
+			{
+				WeaponNames = { "FistWeapon" },
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusFistAlt01FlurryPunch_Start",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon" },
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusFistAlt01FlurryPunch_Fire1",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon2" },
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusFistAlt01FlurryPunch_Charge2",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon2" },
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusFistAlt01FlurryPunch_Fire2",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon3" },
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusFistAlt01FlurryPunch_Charge3",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon3" },
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusFistAlt01FlurryPunch_Fire3",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon4" },
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusFistAlt01FlurryPunch_Charge4",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon4" },
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusFistAlt01FlurryPunch_Fire4",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon5" },
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusFistAlt01FlurryPunch_Charge5",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeapon5" },
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusFistAlt01FlurryPunch_Fire5",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponDash" },
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusFistAlt01DashHayMaker_Charge",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponDash" },
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusFistAlt01DashHayMaker_Fire",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusFistAlt01AerialUpperCut_Start",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusFistAlt01AerialUpperCut_Fire",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecialDash" },
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusFistAlt01DashUpperCut_Start",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "FistWeaponSpecialDash" },
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusFistAlt01DashUpperCut_Fire",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "FistTeleportSpecialTrait",
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusFistAlt01FlashKick_Start",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "FistTeleportSpecialTrait",
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusFistAlt01FlashKick_Fire",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "FistSpecialFireballTrait",
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusFistAlt01Grab_Start",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				TraitName = "FistSpecialFireballTrait",
+				WeaponNames = { "FistWeaponSpecial" },
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusFistAlt01Grab_Fire",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+		},
+	},
+
+
 	SwordBaseUpgradeTrait =
 	{
 		Icon = "WeaponEnchantment_Sword01",
@@ -22523,7 +26214,7 @@ TraitData =
 			ForceMax = 420
 		},
 		DroppedAmmoForceMultiplier = 5,
-		LoadBinks =
+		WeaponBinks =
 		{
 			"ZagreusSword02_Bink",
 			"ZagreusSword02ReturnToIdle_Bink",
@@ -22536,7 +26227,7 @@ TraitData =
 		{
 			SwordWeapon =
 			{
-				Binks =
+				WeaponBinks =
 				{
 					"ZagreusSword02_Bink",
 					"ZagreusSword02ReturnToIdle_Bink",
@@ -22717,7 +26408,7 @@ TraitData =
 		RequiredWeapon = "GunWeapon",
 		PreEquipWeapons = { "ManualReloadEffectApplicator", "SniperGunWeapon", "SniperGunWeaponDash" },
 
-		LoadBinks =
+		WeaponBinks =
 		{
 			"ZagreusGun01_Bink",
 			"ZagreusGun01Run_Bink",
@@ -22731,7 +26422,7 @@ TraitData =
 			{
 				IdleReloadAnimation = "ZagreusGunAlt01ReloadStart",
 				MovingReloadAnimation = "ZagreusGunAlt01RunReload",
-				Binks =
+				WeaponBinks =
 				{
 					"ZagreusGun01_Bink",
 					"ZagreusGun01Run_Bink",
@@ -23010,7 +26701,7 @@ TraitData =
 				MaxMultiplier = 2.333,
 			},
 		},
-		LoadBinks =
+		WeaponBinks =
 		{
 			"ZagreusBow01Dash_Bink",
 			"ZagreusBow01_Bink",
@@ -23022,7 +26713,7 @@ TraitData =
 		{
 			BowWeapon =
 			{
-				Binks =
+				WeaponBinks =
 				{
 					"ZagreusBow01Dash_Bink",
 					"ZagreusBow01_Bink",
@@ -23150,7 +26841,7 @@ TraitData =
 				MaxMultiplier = 3.66,
 			},
 		},
-		LoadBinks =
+		WeaponBinks =
 		{
 			"ZagreusBow02Dash_Bink",
 			"ZagreusBow02_Bink",
@@ -23162,7 +26853,7 @@ TraitData =
 		{
 			BowWeapon =
 			{
-				Binks =
+				WeaponBinks =
 				{
 					"ZagreusBow02Dash_Bink",
 					"ZagreusBow02_Bink",
@@ -23194,7 +26885,11 @@ TraitData =
 			BaseValue = 1.6,
 			SourceIsMultiplier = true,
 		},
-
+		OverrideWeaponFireNames =
+		{
+			RangedWeapon = "nil",
+			LoadAmmoApplicator = "RangedWeapon",
+		},
 		ExtractValues =
 		{
 			{
@@ -23337,6 +27032,705 @@ TraitData =
 		}
 	},
 
+	BowStoredChargeTrait =
+	{
+		Icon = "WeaponEnchantment_Bow03",
+		InheritFrom = { "WeaponEnchantmentTrait" },
+		RequiredWeapons = { "BowWeapon" },
+		RequiredFalseTrait = "BowStoredChargeTrait",
+		LoadPackages = "AresUpgrade",
+		PropertyChanges =
+		{
+			{
+				WeaponName = "MaxChargeBowWeapon",
+				ProjectileProperty = "DamageLow",
+				ChangeValue = 20,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "MaxChargeBowWeapon",
+				ProjectileProperty = "DamageHigh",
+				DeriveValueFrom = "DamageLow",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "ChargeBowWeapon1",
+				ProjectileProperty = "DamageLow",
+				ChangeValue = 20,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "ChargeBowWeapon1",
+				ProjectileProperty = "DamageHigh",
+				DeriveValueFrom = "DamageLow",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowWeapon" },
+				WeaponProperty = "ProjectileWaveInterval",
+				ChangeValue = 0,
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				WeaponProperty = "AllowExternalForceRelease",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				WeaponProperty = "AllowExternalForceReleaseIfAnyCharged",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				ProjectileProperty = "Range",
+				ChangeValue = 1.5,
+				ChangeType = "Multiply",
+				ExcludeLinked = true,
+			},
+				{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				WeaponProperty = "AutoLockRange",
+				ChangeValue = 1.5,
+				ChangeType = "Multiply",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				WeaponProperty = "AutoLockArcDistance",
+				ChangeValue = 360,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				ProjectileProperty = "Type",
+				ChangeValue = "SKY",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				ProjectileProperty = "DamageRadius",
+				ChangeValue = 230,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				ProjectileProperty = "UseStartLocation",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				WeaponProperty = "ProjectileAngleOffset",
+				ChangeValue = math.rad(20),
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				WeaponProperty = "ProjectileOffsetStartDistance",
+				ChangeValue = 180,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				WeaponProperty = "ProjectileOffset",
+				ChangeValue = 250,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				ProjectileProperty = "AscentEndZ",
+				ChangeValue = 1800,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				WeaponProperty = "ProjectileOffsetStart",
+				ChangeValue = "LEFT",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				WeaponProperty = "ProjectileAngleResetCount",
+				ChangeValue = 3,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				ProjectileProperty = "DetonateGraphic",
+				ChangeValue = "RadialNova",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				ProjectileProperty = "DamageRadiusScaleY",
+				ChangeValue =  0.5,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+		}
+	},
+
+
+	BowBeamTrait =
+	{
+		Icon = "WeaponEnchantment_Bow03",
+		InheritFrom = { "WeaponEnchantmentTrait" },
+		RequiredWeapons = { "BowWeapon" },
+		RequiredFalseTrait = "BowBeamTrait",
+		--LoadPackages = "AresUpgrade",
+		RequiredFalseTraits = { "BowTapFireTrait", "BowSlowChargeDamageTrait", "BowPowerShotTrait", "BowSecondaryFocusedFireTrait" },
+		PropertyChanges =
+		{
+
+			--[[
+			{
+				WeaponNames = { "BowSplitShot" },
+				ProjectileProperty = "Type",
+				ChangeValue = "BEAM",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			]]
+
+			--[[
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				WeaponProperty = "Projectile",
+				ChangeValue = "DemeterProjectile",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			]]
+			--[[
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				ProjectileProperty = "Type",
+				ChangeValue = "BEAM",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				ProjectileProperty = "MultiDetonate",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				ProjectileProperty = "DrawAsBeam",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				ProjectileProperty = "GroupName",
+				ChangeValue = "Standing",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				ProjectileProperty = "TipFx",
+				ChangeValue = "DemeterLaserTipFlare",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				ProjectileProperty = "Graphic",
+				ChangeValue = "DemeterLaser",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				ProjectileProperty = "Fuse",
+				ChangeValue = 0.2,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				ProjectileProperty = "TotalFuse",
+				ChangeValue = 0.4,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			]]
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				WeaponProperty = "ChargeRangeMultiplier",
+				ChangeValue = 1.0,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				ProjectileProperty = "Range",
+				ChangeValue = 1000,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				ProjectileProperty = "AttachToOwner",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				WeaponProperty = "ChargeTime",
+				ChangeValue = 0.5,
+				ChangeType = "Multiply",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				WeaponProperty = "MinChargeToFire",
+				ChangeValue = 1.0,
+				ChangeType = "Multiply",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				WeaponProperty = "ChargeDamageMultiplier",
+				ChangeValue = 0,
+				ChangeType = "Multiply",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				WeaponProperty = "LockTriggerForCharge",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				WeaponProperty = "OnlyChargeOnce",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				WeaponProperty = "FireOnRelease",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				WeaponProperty = "FullyAutomatic",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				WeaponProperty = "ForceReleaseOnFire",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				WeaponProperty = "AllowExternalForceRelease",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				WeaponProperty = "ForceReleaseWeaponOnFire",
+				ChangeValue = "null",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				WeaponProperty = "ShowFreeAimLine",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				WeaponProperty = "ReloadTime",
+				ChangeValue = 0.7,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				WeaponProperty = "ClipSize",
+				ChangeValue = 5,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				WeaponProperty = "FullClipRegen",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				WeaponProperty = "ClipRegenOnRelease",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				WeaponProperty = "Cooldown",
+				ChangeValue = 0.10,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				WeaponProperty = "PerfectChargeWindowDuration",
+				ChangeValue = 0.0,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusBowBeamFire",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				EffectName = "BowWeaponDisable",
+				EffectProperty = "Active",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				EffectName = "BowWeaponDisableCancelable",
+				EffectProperty = "Active",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				EffectName = "BowBeamDisable",
+				EffectProperty = "Active",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				ProjectileName = "BowWeapon",
+				EffectName = "OnHitStun",
+				EffectProperty = "Active",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				ProjectileProperty = "DamageLow",
+				ChangeValue = 1,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				ProjectileProperty = "DamageHigh",
+				ChangeValue = 1,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				ProjectileProperty = "ConsecutiveHitWindow",
+				ChangeValue = 0.35,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				ProjectileProperty = "DamagePerConescutiveHit",
+				ChangeValue = 0.4,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowSplitShot" },
+				ProjectileProperty = "Type",
+				ChangeValue = "SKY",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				ProjectileProperty = "DamageRadius",
+				ChangeValue = 250,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				ProjectileProperty = "UseStartLocation",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				ProjectileProperty = "AscentEndZ",
+				ChangeValue = 1800,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				WeaponProperty = "ReloadTime",
+				ChangeValue = 1.0,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				WeaponProperty = "NumProjectiles",
+				ChangeValue = 9,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				WeaponProperty = "ProjectileInterval",
+				ChangeValue = 0.1,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				ProjectileProperty = "SkipAscent",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusBowRun",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusBowRun",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				WeaponProperty = "ChargeCancelMovement",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				WeaponProperty = "RootOwnerWhileFiring",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				WeaponProperty = "BlockMoveInput",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				WeaponProperty = "CancelMovement",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				ProjectileProperty = "DetonateGraphic",
+				ChangeValue = "RadialNova",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				ProjectileProperty = "DamageRadiusScaleY",
+				ChangeValue =  0.5,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowSplitShot" },
+				EffectName = "SplitShotDisable",
+				EffectProperty = "Active",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowSplitShot" },
+				EffectName = "SplitShotDisableCancelable",
+				EffectProperty = "Active",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			--[[
+			{
+				WeaponNames = { "BowSplitShot" },
+				WeaponProperty = "ProjectileAngleOffset",
+				ChangeValue = math.rad(20),
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			]]
+			{
+				WeaponNames = { "BowSplitShot" },
+				WeaponProperty = "Spread",
+				ChangeValue = 0,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				WeaponProperty = "ProjectileOffsetStartDistance",
+				ChangeValue = 0,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				WeaponProperty = "ProjectileOffset",
+				ChangeValue = 250,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				WeaponProperty = "ProjectileOffsetStart",
+				ChangeValue = "LEFT",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				WeaponProperty = "ProjectileAngleResetCount",
+				ChangeValue = 2,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowSplitShot" },
+				ProjectileName = "BowWeapon",
+				EffectName = "OnHitStun",
+				EffectProperty = "Active",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowSplitShot" },
+				ProjectileName = "Spread",
+				ChangeValue = 0,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "BowSplitShot" },
+				ProjectileProperty = "DamageLow",
+				ChangeValue = 70,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+				ExtractValue =
+				{
+					ExtractAs = "TooltipDamage",
+				},
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				ProjectileProperty = "DamageHigh",
+				DeriveValueFrom = "DamageLow",
+			},
+		}
+	},
+
 	ShieldBlockEmpowerTrait =
 	{
 		Icon = "Weapon_Shield_08",
@@ -23371,7 +27765,7 @@ TraitData =
 		}
 	},
 
-	SpearWeaveTrait=
+	SpearWeaveTrait =
 	{
 		Icon = "WeaponEnchantment_Spear03",
 		CustomTrayText = "SpearWeaveTrait_Tray",
@@ -23407,7 +27801,7 @@ TraitData =
 				MaxMultiplier = 5,
 			},
 		},
-		LoadBinks =
+		WeaponBinks =
 		{
 			"ZagreusSpear02Run_Bink",
 			"ZagreusSpear02RunStop_Bink",
@@ -23422,7 +27816,7 @@ TraitData =
 		{
 			SpearWeapon =
 			{
-				Binks =
+				WeaponBinks =
 				{
 					"ZagreusSpear02Run_Bink",
 					"ZagreusSpear02RunStop_Bink",
@@ -23557,6 +27951,13 @@ TraitData =
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			  },
+			  {
+				WeaponName = "SpearWeaponThrowInvisibleReturn",
+				WeaponProperty = "FireFromObstacle",
+				ChangeValue = "SpearReturnPointAlt02",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			  },
 
 			{
 				WeaponNames = { "SpearWeaponSpin","SpearWeaponSpin2","SpearWeaponSpin3" },
@@ -23619,7 +28020,7 @@ TraitData =
 			},
 		},
 		PreEquipWeapons = { "SpearRushWeapon", "SpearWeaponThrowInvisibleReturn", },
-		LoadBinks =
+		WeaponBinks =
 		{
 			"ZagreusSpear01Run_Bink",
 			"ZagreusSpear01RunStop_Bink",
@@ -23635,7 +28036,7 @@ TraitData =
 		{
 			SpearWeapon =
 			{
-				Binks =
+				WeaponBinks =
 				{
 					"ZagreusSpear01Run_Bink",
 					"ZagreusSpear01RunStop_Bink",
@@ -23728,6 +28129,13 @@ TraitData =
 				ChangeValue = "SpearReturnPointAlt01",
 				ExcludeLinked = true,
 			},
+			  {
+				WeaponName = "SpearWeaponThrowInvisibleReturn",
+				WeaponProperty = "FireFromObstacle",
+				ChangeValue = "SpearReturnPointAlt01",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			  },
 			{
 				WeaponName = "SpearRushWeapon" ,
 				WeaponProperty = "BlinkDetonateAtOrigin",
@@ -23911,6 +28319,7 @@ TraitData =
 	{
 		InheritFrom = { "ChaosCurseTrait", "ChaosCurseRemainingEncounters" },
 		Icon = "Boon_Chaos_Curse_04",
+		RequiredInactiveMetaUpgrade = "ReloadAmmoMetaUpgrade",
 		AmmoDropUseDelay =
 		{
 			BaseMin = 10,
