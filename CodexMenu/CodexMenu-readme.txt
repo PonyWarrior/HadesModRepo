@@ -48,7 +48,7 @@ Added upgrade last added trait rarity to Eurydice
 1.3.3
 Updated to game version 0.26829
 
-1.3.4
+1.4.0
 Updated to game version 0.27008
 Removed feature "Remove last added trait (Orpheus)"
 Removed feature "Upgrade last added trait rarity (Eurydice)"
