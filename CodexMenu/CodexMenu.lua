@@ -1,5 +1,4 @@
 function RemoveAllTraits()
-	-- Remove all traits
 	local removedTraitData = {}
 	for i, traitData in pairs( CurrentRun.Hero.Traits ) do
 		table.insert(removedTraitData, { Name = traitData.Name, Rarity = traitData.Rarity })
@@ -8,11 +7,11 @@ function RemoveAllTraits()
 	for i, traitData in pairs(removedTraitData) do
 		RemoveTrait( CurrentRun.Hero, traitData.Name )
 	end
-	--Reload equipment
+end
+
+function ReloadEquipment()
 	EquipWeaponUpgrade(CurrentRun.Hero)
-	UnequipKeepsake(CurrentRun.Hero)
 	EquipKeepsake(CurrentRun.Hero)
-	UnequipAssist(CurrentRun.Hero)
 	EquipAssist(CurrentRun.Hero)
 end
 
@@ -25,8 +24,10 @@ function ModDebugPrint(text, delay)
 	Attach({ Id = ScreenAnchors.HoldDisplayId, DestinationId = CurrentRun.Hero.ObjectId })
 	CreateTextBox({ Id = ScreenAnchors.HoldDisplayId, Text = text, FontSize = 32, OffsetX = 0, OffsetY = -150, Color = Color.Yellow, Font = "AlegreyaSansSCBold", Justification = "Center" })
 	wait(delay, RoomThreadName)
-	Destroy({Ids = ScreenAnchors.HoldDisplayId})
-	ScreenAnchors.HoldDisplayId = nil
+	if delay > 0 then
+			Destroy({Ids = ScreenAnchors.HoldDisplayId})
+			ScreenAnchors.HoldDisplayId = nil
+	end
 end
 
 OnControlPressed{ "Codex",
@@ -93,6 +94,7 @@ OnControlPressed{ "Codex",
 			local weapon = CodexStatus.SelectedEntryNames[CodexStatus.SelectedChapterName]
 			EquipPlayerWeapon( WeaponData[weapon], { PreLoadBinks = true } )
 			RemoveAllTraits()
+			ReloadEquipment()
 			if debug then
 				ModDebugPrint("Trying to equip weapon : " .. weapon)
 			end
@@ -135,6 +137,7 @@ OnControlPressed{ "Codex",
 			{
 				["PlayerUnit"] = function()
 					RemoveAllTraits()
+					ReloadEquipment()
 				end,
 				["NPC_Achilles_01"] = function()
 					if IsSuperValid() then
@@ -163,14 +166,25 @@ OnControlPressed{ "Codex",
 					OpenSellTraitMenu()
 				end,
 				["NPC_Orpheus_01"] = function()
-					if CodexMenuData.LastAddedTrait ~= nil then
-						RemoveTrait(CurrentRun.Hero, CodexMenuData.LastAddedTrait)
+					if CurrentRun.Hero.Traits ~= nil then
+						GameState.CodexMenuSavedState = {}
+						for i, traitData in pairs( CurrentRun.Hero.Traits ) do
+							table.insert(GameState.CodexMenuSavedState, { Name = traitData.Name, Rarity = traitData.Rarity, })
+						end
+					end
+				end,
+				["NPC_Patroclus_01"] = function()
+					if GameState.CodexMenuSavedState ~= nil then
+						RemoveAllTraits()
+						for i, traitData in pairs( GameState.CodexMenuSavedState ) do
+							AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = traitData.Name, Rarity = traitData.Rarity }) })
+						end
 					end
 				end,
 				["NPC_Eurydice_01"] = function()
 					for i, traitData in pairs( CurrentRun.Hero.Traits ) do
-						if CodexMenuData.LastAddedTrait ~= nil and traitData.Name == CodexMenuData.LastAddedTrait and TraitData[traitData.Name] and traitData.Rarity ~= nil and GetUpgradedRarity(traitData.Rarity) ~= nil and traitData.RarityLevels[GetUpgradedRarity(traitData.Rarity)] ~= nil then
-							RemoveWeaponTrait( traitData.Name )
+						if IsGodTrait(traitData.Name) and TraitData[traitData.Name] and traitData.Rarity ~= nil and GetUpgradedRarity(traitData.Rarity) ~= nil and traitData.RarityLevels[GetUpgradedRarity(traitData.Rarity)] ~= nil then
+							RemoveTrait(CurrentRun.Hero, traitData.Name)
 							AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = traitData.Name, Rarity = GetUpgradedRarity(traitData.Rarity) }) })
 						end
 					end
@@ -205,4 +219,8 @@ OnControlPressed{ "Codex",
 			return
 		end
 	end
+}
+
+CodexMenuData =
+{
 }

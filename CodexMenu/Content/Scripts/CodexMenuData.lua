@@ -1,4 +1,0 @@
-CodexMenuData =
-{
-  LastAddedTrait = nil
-}
