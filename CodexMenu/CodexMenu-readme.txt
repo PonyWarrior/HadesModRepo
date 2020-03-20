@@ -52,6 +52,7 @@ Updated to game version 0.26829
 Updated to game version 0.27008
 Removed feature "Remove last added trait (Orpheus)"
 Removed feature "Upgrade last added trait rarity (Eurydice)"
+Added feature "Upgrade all boons rarity (Eurydice)"
 Added feature "Save state (Orpheus)"
 Added feature "Load saved state (Patroclus)"
 Merged all files into one and no longer modify original files
