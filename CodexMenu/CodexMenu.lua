@@ -1,8 +1,104 @@
 -- IMPORT @ DEFAULT
 
-CodexMenuData = {
+CodexMenuData =
+{
+	BoonSelector =
+	{
+		Components = {}
+	},
 
+	ZeusUpgrade =
+	{
+		Normal =
+		{ "ZeusWeaponTrait", "ZeusSecondaryTrait", "ZeusRushTrait", "ZeusRangedTrait",
+			"ZeusWeaponTrait", "ZeusRushTrait", "ZeusRangedTrait", "ZeusSecondaryTrait","ZeusShoutTrait",
+			"RetaliateWeaponTrait", "SuperGenerationTrait", "OnWrathDamageBuffTrait",
+		},
+		Linked =
+		{
+			"ZeusBonusBounceTrait", "ZeusLightningDebuff", "ZeusBoltAoETrait", "ZeusBonusBoltTrait",
+		},
+	},
+
+	Duos = {},
 }
+
+function OpenBoonSelector(godName)
+	OnScreenClosed({Flag = "Codex"})
+	wait(0.1)
+	if godName ~= nil and CodexMenuData[godName] then
+		local Boons = DeepCopyTable(CodexMenuData[godName])
+		if Boons == nil then
+			return
+		end
+		ScreenAnchors.BoonSelector = DeepCopyTable(CodexMenuData.BoonSelector)
+		local screen = ScreenAnchors.BoonSelector
+		local components = screen.Components
+		screen.Name = "BoonSelector"
+		screen.RowStartX = 100
+		screen.FirstRowY = 100
+		screen.SecondRowY = 200
+		screen.ThirdRowY = 300
+		OnScreenOpened({ Flag = screen.Name, PersistCombatUI = true })
+		FreezePlayerUnit()
+		EnableShopGamepadCursor()
+		SetConfigOption({ Name = "FreeFormSelectWrapY", Value = true })
+		--Background
+		components.LeftPart = CreateScreenComponent({ Name = "TraitTrayBackground", Group = "Combat_Menu_TraitTray_Backing", X = 830, Y = 400})
+		components.MiddlePart = CreateScreenComponent({ Name = "TraitTray_Center", Group = "Combat_Menu_TraitTray_Backing", X = 490, Y = 464 })
+		components.RightPart = CreateScreenComponent({ Name = "TraitTray_Right", Group = "Combat_Menu_TraitTray_Backing", X = 1710, Y = 423 })
+		components.BackgroundDim = CreateScreenComponent({ Name = "rectangle01", Group = "Combat_Menu" })
+		components.ShopLighting = CreateScreenComponent({ Name = "BoonSelectLighting", Group = "Combat_Menu_Additive" })
+		SetColor({ Id = components.ShopLighting.Id, Color = LootData[godName].LightingColor })
+		SetScaleY({Id = components.LeftPart.Id, Fraction = 1.3})
+		SetScaleY({Id = components.MiddlePart.Id, Fraction = 1.3})
+		SetScaleX({Id = components.MiddlePart.Id, Fraction = 10})
+		SetScaleY({Id = components.RightPart.Id, Fraction = 1.3})
+		SetScale({ Id = components.BackgroundDim.Id, Fraction = 4 })
+		SetColor({ Id = components.BackgroundDim.Id, Color = {0.090, 0.055, 0.157, 0.8} })
+		--Title
+		CreateTextBox({ Id = components.MiddlePart.Id, Text = "Codex Menu Boon Selector", FontSize = 34, OffsetX = 600, OffsetY = -300, Color = Color.White, Font = "SpectralSCLight", ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
+		CreateTextBox({ Id = components.MiddlePart.Id, Text = "Remember that some boons can't work without others", FontSize = 19, OffsetX = 600, OffsetY = -270, Width = 840, Color = Color.SubTitle, Font = "CrimsonTextItalic", ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
+		--Close button
+		components.CloseButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "Combat_Menu" })
+		Attach({ Id = components.CloseButton.Id, DestinationId = components.MiddlePart.Id, OffsetX = 600, OffsetY = ScreenCenterY })
+		components.CloseButton.OnPressedFunctionName = "CloseBoonSelector"
+		components.CloseButton.ControlHotkey = "Cancel"
+		--Display the boons
+		for index, boon in pairs (Boons) do
+			if boon == "ZeusWeaponTrait" then
+				local purchaseButtonKey = "PurchaseButton"..index
+				components[purchaseButtonKey] = CreateScreenComponent({ Name = "BoonSlot"..index, Group = "Combat_Menu", Scale = 1, X = 600, Y = 0 })
+				CreateTextBox({ Id = components[purchaseButtonKey].Id, Text = boon,
+					FontSize = 25,
+					OffsetX = textOffset + 600, OffsetY = -60,
+					Width = 720,
+					Color = color,
+					Font = "AlegreyaSansSCLight",
+					ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2},
+					Justification = "Right"
+				})
+			end
+		end
+
+
+
+		--End
+		screen.KeepOpen = true
+		--thread(HandleWASDInput, screen)
+		HandleScreenInput(screen)
+	end
+end
+
+function CloseBoonSelector(screen, button)
+	DisableShopGamepadCursor()
+	SetConfigOption({ Name = "FreeFormSelectWrapY", Value = false })
+	CloseScreen(GetAllIds(screen.Components), 0.1)
+	ScreenAnchors.BoonSelector = nil
+	UnfreezePlayerUnit()
+	screen.KeepOpen = false
+	OnScreenClosed({ Flag = screen.Name })
+end
 
 function CloseCustomMirror( screen, button )
 	if screen.PointsAddedThisTime > 0 then
@@ -21,7 +117,6 @@ function CloseCustomMirror( screen, button )
 	UnfreezePlayerUnit()
 	screen.KeepOpen = false
 	OnScreenClosed({ Flag = screen.Name })
-
 end
 
 function OpenCustomMirror( args )
@@ -361,11 +456,12 @@ OnControlPressed{ "Codex",
 		local debug = false
 		--Boons
 		if CodexStatus.SelectedChapterName == "OlympianGods" then
-			local boon = CodexStatus.SelectedEntryNames[CodexStatus.SelectedChapterName]
-			CreateLoot({ Name = boon, OffsetX = 100, SpawnPoint = CurrentRun.Hero.ObjectId })
-			if debug then
-				ModDebugPrint("Trying to spawn boon : " .. boon)
-			end
+			-- local boon = CodexStatus.SelectedEntryNames[CodexStatus.SelectedChapterName]
+			-- CreateLoot({ Name = boon, OffsetX = 100, SpawnPoint = CurrentRun.Hero.ObjectId })
+			-- if debug then
+			-- 	ModDebugPrint("Trying to spawn boon : " .. boon)
+			-- end
+			OpenBoonSelector("ZeusUpgrade")
 			return
 		end
 		--Chaos Boon
