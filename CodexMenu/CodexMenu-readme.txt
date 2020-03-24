@@ -1,8 +1,5 @@
 Files :
-Scripts\CodexMenuScripts.lua
-Scripts\CodexMenuData.lua
-Scripts\RoomManager.lua
-Scripts\TraitScripts.lua
+Content/Mods/CodexMenu_PonyWarrior/Scripts/CodexMenu.lua
 
 Change logs :
 
@@ -56,3 +53,10 @@ Added feature "Upgrade all boons rarity (Eurydice)"
 Added feature "Save state (Orpheus)"
 Added feature "Load saved state (Patroclus)"
 Merged all files into one and no longer modify original files
+
+1.4.1
+Feature "Save State (Orpheus)" now saves Weapon, Weapon aspect, Keepsake and Assist
+
+1.5.0
+Fixed "Upgrade all boons rarity (Eurydice)" not upgrading Hermes or Chaos boons
+Reworked feature "Open mirror of night (Nyx)" now opens a custom mirror with free upgrades, unlock and refund
