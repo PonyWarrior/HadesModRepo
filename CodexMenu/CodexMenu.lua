@@ -6,24 +6,118 @@ CodexMenuData =
 	{
 		Components = {}
 	},
-
 	ZeusUpgrade =
 	{
-		Normal =
-		{ "ZeusWeaponTrait", "ZeusSecondaryTrait", "ZeusRushTrait", "ZeusRangedTrait",
-			"ZeusWeaponTrait", "ZeusRushTrait", "ZeusRangedTrait", "ZeusSecondaryTrait","ZeusShoutTrait",
-			"RetaliateWeaponTrait", "SuperGenerationTrait", "OnWrathDamageBuffTrait",
-		},
-		Linked =
-		{
-			"ZeusBonusBounceTrait", "ZeusLightningDebuff", "ZeusBoltAoETrait", "ZeusBonusBoltTrait",
-		},
+	  "ZeusWeaponTrait", "ZeusRushTrait", "ZeusRangedTrait", "ZeusSecondaryTrait", "ZeusShoutTrait",
+		"RetaliateWeaponTrait", "SuperGenerationTrait", "OnWrathDamageBuffTrait", "ZeusBonusBounceTrait",
+		"ZeusLightningDebuff", "ZeusBoltAoETrait", "ZeusBonusBoltTrait", "ZeusChargedBoltTrait",
 	},
-
-	Duos = {},
+	PoseidonUpgrade =
+	{
+		"PoseidonWeaponTrait", "PoseidonSecondaryTrait", "PoseidonRushTrait", "PoseidonRangedTrait", "PoseidonShoutTrait",
+		"RoomRewardBonusTrait", "DefensiveSuperGenerationTrait", "BonusCollisionTrait", "SlamExplosionTrait", "SlipperyTrait", "BossDamageTrait",
+		"RandomMinorLootDrop", "DoubleCollisionTrait",
+	},
+	AthenaUpgrade =
+	{
+		"AthenaWeaponTrait", "AthenaSecondaryTrait", "AthenaRushTrait", "AthenaRangedTrait", "AthenaShoutTrait",
+		"TrapDamageTrait", "EnemyDamageTrait", "AthenaRetaliateTrait", "PreloadSuperGenerationTrait",
+		"AthenaBackstabDebuffTrait", "AthenaShieldTrait", "LastStandDurationDrop", "LastStandHealDrop", "ShieldHitTrait",
+	},
+	AphroditeUpgrade =
+	{
+		"AphroditeWeaponTrait", "AphroditeRushTrait", "AphroditeRangedTrait", "AphroditeSecondaryTrait", "AphroditeShoutTrait",
+		"AphroditeRetaliateTrait", "AphroditeDeathTrait", "ProximityArmorTrait", "HealthRewardBonusTrait",
+		"AphroditeDurationTrait", "AphroditeWeakenTrait", "AphroditePotencyTrait", "CharmTrait",
+	},
+	ArtemisUpgrade =
+	{
+		"ArtemisWeaponTrait", "ArtemisRushTrait", "ArtemisRangedTrait", "ArtemisSecondaryTrait", "ArtemisShoutTrait",
+		"CritBonusTrait", "ArtemisBonusProjectileTrait", "ArtemisSupportingFireTrait", "CritVulnerabilityTrait", "ArtemisCriticalTrait",
+		"CriticalBufferMultiplierTrait", "CriticalSuperGenerationTrait", "ArtemisAmmoExitTrait", "MoreAmmoTrait",
+	},
+	AresUpgrade =
+	{
+		"AresWeaponTrait", "AresRushTrait", "AresRangedTrait", "AresSecondaryTrait" , "AresShoutTrait",
+		"AresRetaliateTrait", "IncreasedDamageTrait", "OnEnemyDeathDamageInstanceBuffTrait", "AresLongCurseTrait",
+		"AresLoadCurseTrait", "AresDragTrait", "AresCursedRiftTrait",
+	},
+	DionysusUpgrade =
+	{
+		"DionysusWeaponTrait", "DionysusSecondaryTrait", "DionysusRushTrait", "DionysusRangedTrait", "DionysusShoutTrait",
+		"DoorHealTrait", "LowHealthDefenseTrait", "DionysusSpreadTrait", "DionysusSlowTrait", "DionysusPoisonPowerTrait",
+		"DionysusDefenseTrait", "DionysusGiftDrop", "DionysusComboVulnerability",
+	},
+	HermesUpgrade =
+	{
+		"AmmoReloadTrait", "HermesShoutDodge", "HermesWeaponTrait", "HermesSecondaryTrait", "RushRallyTrait", "MoveSpeedTrait",
+		"RushSpeedBoostTrait", "RapidCastTrait", "BonusDashTrait", "DodgeChanceTrait", "AmmoReclaimTrait", "MagnetismTrait", "UnstoredAmmoDamageTrait",
+	},
+	DemeterUpgrade =
+	{
+		"DemeterWeaponTrait", "DemeterSecondaryTrait", "DemeterRushTrait", "DemeterRangedTrait", "DemeterShoutTrait",
+		"CastNovaTrait", "ZeroAmmoBonusTrait", "MaximumChillBlast", "MaximumChillBonusSlow", "HealingPotencyDrop", "HarvestBoonDrop", "InstantChillKill",
+	},
+	Legendaries =
+	{
+		"ZeusChargedBoltTrait", "MoreAmmoTrait", "DionysusComboVulnerability", "InstantChillKill", "DoubleCollisionTrait",
+		"ShieldHitTrait", "CharmTrait", "AresCursedRiftTrait", "MagnetismTrait", "UnstoredAmmoDamageTrait",
+	},
+	Duos =
+	{
+		"LightningCloudTrait", "AutoRetaliateTrait", "AmmoBoltTrait", "ImpactBoltTrait", "ReboundingAthenaCastTrait", "JoltDurationTrait",
+		"FishingTrait", "ImprovedPomTrait", "RaritySuperBoost", "BlizzardOrbTrait",
+		"TriggerCurseTrait", "SlowProjectileTrait", "ArtemisReflectBuffTrait", "CurseSickTrait", "HeartsickCritDamageTrait",
+		"DionysusAphroditeStackIncreaseTrait", "AresHomingTrait", "HomingLaserTrait", "IceStrikeArrayTrait", "HomingLaserTrait",
+	},
+	Consumables =
+	{
+		"RandomMinorLootDrop", "LastStandDurationDrop", "LastStandHealDrop", "DionysusGiftDrop", "HealingPotencyDrop", "HarvestBoonDrop",
+	},
 }
 
-function OpenBoonSelector(godName)
+function ChangeBoonSelectorRarity(screen, button)
+	screen.Rarity = button.Rarity
+end
+
+function GiveSelectedBoonToPlayer(screen, button)
+	if not HeroHasTrait(button.Boon) then
+		local isLegendary = false
+		local isDuo = false
+		local isConsumable = false
+		for i, trait in pairs (CodexMenuData.Legendaries) do
+			if button.Boon == trait then
+				isLegendary = true
+			end
+		end
+		if isLegendary then
+			AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon, Rarity = "Legendary" }) })
+			return
+		end
+		for i, trait in pairs (CodexMenuData.Duos) do
+			if button.Boon == trait then
+				isDuo = true
+			end
+		end
+		if isDuo then
+			AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon, Rarity = "Duo" }) })
+			return
+		end
+		for i, trait in pairs (CodexMenuData.Consumables) do
+			if button.Boon == trait then
+				isConsumable = true
+			end
+		end
+		if isConsumable then
+			local consumableId = SpawnObstacle({ Name = button.Boon, DestinationId = CurrentRun.Hero.ObjectId, Group = "Standing" })
+			local consumable = CreateConsumableItemFromData( consumableId, ConsumableData[button.Boon], 0 )
+			return
+		end
+			AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon, Rarity = screen.Rarity }) })
+	end
+end
+
+function OpenBoonSelector(godName, spawnBoon)
 	OnScreenClosed({Flag = "Codex"})
 	wait(0.1)
 	if godName ~= nil and CodexMenuData[godName] then
@@ -35,58 +129,115 @@ function OpenBoonSelector(godName)
 		local screen = ScreenAnchors.BoonSelector
 		local components = screen.Components
 		screen.Name = "BoonSelector"
-		screen.RowStartX = 100
-		screen.FirstRowY = 100
-		screen.SecondRowY = 200
-		screen.ThirdRowY = 300
+		screen.Rarity = "Common"
+		screen.RowStartX = -350
+		screen.RowStartY = -270
 		OnScreenOpened({ Flag = screen.Name, PersistCombatUI = true })
 		FreezePlayerUnit()
 		EnableShopGamepadCursor()
-		SetConfigOption({ Name = "FreeFormSelectWrapY", Value = true })
 		--Background
-		components.LeftPart = CreateScreenComponent({ Name = "TraitTrayBackground", Group = "Combat_Menu_TraitTray_Backing", X = 830, Y = 400})
-		components.MiddlePart = CreateScreenComponent({ Name = "TraitTray_Center", Group = "Combat_Menu_TraitTray_Backing", X = 490, Y = 464 })
-		components.RightPart = CreateScreenComponent({ Name = "TraitTray_Right", Group = "Combat_Menu_TraitTray_Backing", X = 1710, Y = 423 })
-		components.BackgroundDim = CreateScreenComponent({ Name = "rectangle01", Group = "Combat_Menu" })
-		components.ShopLighting = CreateScreenComponent({ Name = "BoonSelectLighting", Group = "Combat_Menu_Additive" })
-		SetColor({ Id = components.ShopLighting.Id, Color = LootData[godName].LightingColor })
+		components.BackgroundDim = CreateScreenComponent({ Name = "rectangle01", Group = "BoonSelector" })
+		components.Background = CreateScreenComponent({ Name = "BlankObstacle", Group = "BoonSelector" })
+		components.ShopLighting = CreateScreenComponent({ Name = "BoonSelectLighting", Group = "BoonSelector" })
+		local lColor = Color.White
+		if godName == "Duos" then
+			lColor = Color.Green
+		else
+			lColor = LootData[godName].LightingColor
+		end
+		SetColor({ Id = components.ShopLighting.Id, Color = lColor })
+		SetScale({ Id = components.BackgroundDim.Id, Fraction = 4 })
+		SetColor({ Id = components.BackgroundDim.Id, Color = {0.090, 0.055, 0.157, 0.8} })
+		components.LeftPart = CreateScreenComponent({ Name = "TraitTrayBackground", Group = "BoonSelector", X = 830, Y = 400})
+		components.MiddlePart = CreateScreenComponent({ Name = "TraitTray_Center", Group = "BoonSelector", X = 490, Y = 464 })
+		components.RightPart = CreateScreenComponent({ Name = "TraitTray_Right", Group = "BoonSelector", X = 1710, Y = 423 })
 		SetScaleY({Id = components.LeftPart.Id, Fraction = 1.3})
 		SetScaleY({Id = components.MiddlePart.Id, Fraction = 1.3})
 		SetScaleX({Id = components.MiddlePart.Id, Fraction = 10})
 		SetScaleY({Id = components.RightPart.Id, Fraction = 1.3})
-		SetScale({ Id = components.BackgroundDim.Id, Fraction = 4 })
-		SetColor({ Id = components.BackgroundDim.Id, Color = {0.090, 0.055, 0.157, 0.8} })
 		--Title
-		CreateTextBox({ Id = components.MiddlePart.Id, Text = "Codex Menu Boon Selector", FontSize = 34, OffsetX = 600, OffsetY = -300, Color = Color.White, Font = "SpectralSCLight", ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
-		CreateTextBox({ Id = components.MiddlePart.Id, Text = "Remember that some boons can't work without others", FontSize = 19, OffsetX = 600, OffsetY = -270, Width = 840, Color = Color.SubTitle, Font = "CrimsonTextItalic", ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
+		CreateTextBox({ Id = components.Background.Id, Text = "Codex Menu Boon Selector", FontSize = 34,
+		OffsetX = 100, OffsetY = -370, Color = Color.White, Font = "SpectralSCLight",
+		ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
+		CreateTextBox({ Id = components.Background.Id, Text = "Remember that some boons can't work without others", FontSize = 19,
+		OffsetX = 100, OffsetY = -340, Width = 840, Color = Color.SubTitle, Font = "CrimsonTextItalic",
+		ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
 		--Close button
-		components.CloseButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "Combat_Menu" })
-		Attach({ Id = components.CloseButton.Id, DestinationId = components.MiddlePart.Id, OffsetX = 600, OffsetY = ScreenCenterY })
+		components.CloseButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "BoonSelector" })
+		Attach({ Id = components.CloseButton.Id, DestinationId = components.Background.Id, OffsetX = 100, OffsetY = ScreenCenterY - 70 })
 		components.CloseButton.OnPressedFunctionName = "CloseBoonSelector"
 		components.CloseButton.ControlHotkey = "Cancel"
 		--Display the boons
-		for index, boon in pairs (Boons) do
-			if boon == "ZeusWeaponTrait" then
+		for index, boon in ipairs (Boons) do
 				local purchaseButtonKey = "PurchaseButton"..index
-				components[purchaseButtonKey] = CreateScreenComponent({ Name = "BoonSlot"..index, Group = "Combat_Menu", Scale = 1, X = 600, Y = 0 })
+				local rowoffset = 100
+				local columnoffset = 300
+				local numperrow = 4
+				local offsetX = screen.RowStartX + columnoffset*((index-1) % numperrow)
+				local offsetY = screen.RowStartY + rowoffset*(math.floor((index-1)/numperrow))
+				components[purchaseButtonKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonSelector", Scale = 0.3, })
+				components[purchaseButtonKey].OnPressedFunctionName = "GiveSelectedBoonToPlayer"
+				components[purchaseButtonKey].Boon = boon
+				Attach({ Id = components[purchaseButtonKey].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
 				CreateTextBox({ Id = components[purchaseButtonKey].Id, Text = boon,
-					FontSize = 25,
-					OffsetX = textOffset + 600, OffsetY = -60,
-					Width = 720,
-					Color = color,
-					Font = "AlegreyaSansSCLight",
-					ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2},
-					Justification = "Right"
+					FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = lColor, Font = "AlegreyaSansSCLight",
+					ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
 				})
-			end
 		end
-
-
-
+		--Spawn boon object button
+		if spawnBoon then
+			components.SpawnButton = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonSelector", Scale = 0.3, })
+			components.SpawnButton.OnPressedFunctionName = "SpawnBoon"
+			components.SpawnButton.God = godName
+			Attach({ Id = components.SpawnButton.Id, DestinationId = components.Background.Id, OffsetX = 100, OffsetY = 200 })
+			CreateTextBox({ Id = components.SpawnButton.Id, Text = "Spawn regular boon",
+				FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = lColor, Font = "AlegreyaSansSCLight",
+				ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+			})
+		end
+		--Rarity Buttons
+		components.CommonButton = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonSelector", Scale = 0.3, })
+		components.CommonButton.OnPressedFunctionName = "ChangeBoonSelectorRarity"
+		components.CommonButton.Rarity = "Common"
+		Attach({ Id = components.CommonButton.Id, DestinationId = components.Background.Id, OffsetX = -350, OffsetY = 300 })
+		CreateTextBox({ Id = components.CommonButton.Id, Text = "Common",
+			FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = Color.BoonPatchCommon, Font = "AlegreyaSansSCLight",
+			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+		})
+		components.RareButton = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonSelector", Scale = 0.3, })
+		components.RareButton.OnPressedFunctionName = "ChangeBoonSelectorRarity"
+		components.RareButton.Rarity = "Rare"
+		Attach({ Id = components.RareButton.Id, DestinationId = components.Background.Id, OffsetX = -50, OffsetY = 300 })
+		CreateTextBox({ Id = components.RareButton.Id, Text = "Rare",
+			FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = Color.BoonPatchRare, Font = "AlegreyaSansSCLight",
+			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+		})
+		components.EpicButton = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonSelector", Scale = 0.3, })
+		components.EpicButton.OnPressedFunctionName = "ChangeBoonSelectorRarity"
+		components.EpicButton.Rarity = "Epic"
+		Attach({ Id = components.EpicButton.Id, DestinationId = components.Background.Id, OffsetX = 250, OffsetY = 300 })
+		CreateTextBox({ Id = components.EpicButton.Id, Text = "Epic",
+			FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = Color.BoonPatchEpic, Font = "AlegreyaSansSCLight",
+			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+		})
+		components.HeroicButton = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonSelector", Scale = 0.3, })
+		components.HeroicButton.OnPressedFunctionName = "ChangeBoonSelectorRarity"
+		components.HeroicButton.Rarity = "Heroic"
+		Attach({ Id = components.HeroicButton.Id, DestinationId = components.Background.Id, OffsetX = 550, OffsetY = 300 })
+		CreateTextBox({ Id = components.HeroicButton.Id, Text = "Heroic",
+			FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = Color.BoonPatchHeroic, Font = "AlegreyaSansSCLight",
+			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+		})
 		--End
 		screen.KeepOpen = true
 		--thread(HandleWASDInput, screen)
 		HandleScreenInput(screen)
+	end
+end
+
+function SpawnBoon(screen, button)
+	if button.God ~= nil then
+		CreateLoot({ Name = button.God, OffsetX = 100, SpawnPoint = CurrentRun.Hero.ObjectId })
 	end
 end
 
@@ -380,7 +531,7 @@ function IsChaosBoon(trait)
 	end
 end
 
-function CustomMirrorRefund( screen, button )
+function CustomMirrorRefund(screen, button)
 	CloseMetaUpgradeScreen( screen, button )
 	FreezePlayerUnit()
 	for i, setData in pairs( MetaUpgradeOrder ) do
@@ -456,12 +607,10 @@ OnControlPressed{ "Codex",
 		local debug = false
 		--Boons
 		if CodexStatus.SelectedChapterName == "OlympianGods" then
-			-- local boon = CodexStatus.SelectedEntryNames[CodexStatus.SelectedChapterName]
-			-- CreateLoot({ Name = boon, OffsetX = 100, SpawnPoint = CurrentRun.Hero.ObjectId })
-			-- if debug then
-			-- 	ModDebugPrint("Trying to spawn boon : " .. boon)
-			-- end
-			OpenBoonSelector("ZeusUpgrade")
+			if debug then
+				ModDebugPrint("Trying to open boon selector : " .. boon)
+			end
+			OpenBoonSelector(CodexStatus.SelectedEntryNames[CodexStatus.SelectedChapterName], true)
 			return
 		end
 		--Chaos Boon
@@ -610,12 +759,18 @@ OnControlPressed{ "Codex",
 					end
 				end,
 				["NPC_Eurydice_01"] = function()
-					for i, traitData in pairs( CurrentRun.Hero.Traits ) do
+					for i, traitData in pairs(CurrentRun.Hero.Traits) do
 						if traitData ~= nil and IsGodTrait(traitData.Name) or IsHermesBoon(traitData) or IsChaosBoon(traitData) and TraitData[traitData.Name] and traitData.Rarity ~= nil and GetUpgradedRarity(traitData.Rarity) ~= nil then
 							RemoveTrait(CurrentRun.Hero, traitData.Name)
 							AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = traitData.Name, Rarity = GetUpgradedRarity(traitData.Rarity) }) })
 						end
 					end
+				end,
+				["NPC_Dusa_01"] = function()
+					OpenBoonSelector("Duos")
+				end,
+				["NPC_Sisyphus_01"] = function()
+					OpenBoonSelector("Consumables")
 				end,
 			}
 			--Bosses
