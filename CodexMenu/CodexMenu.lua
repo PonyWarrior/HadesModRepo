@@ -58,6 +58,20 @@ CodexMenuData =
 		"DemeterWeaponTrait", "DemeterSecondaryTrait", "DemeterRushTrait", "DemeterRangedTrait", "DemeterShoutTrait",
 		"CastNovaTrait", "ZeroAmmoBonusTrait", "MaximumChillBlast", "MaximumChillBonusSlow", "HealingPotencyDrop", "HarvestBoonDrop", "InstantChillKill",
 	},
+	TrialUpgrade =
+	{
+		"ChaosBlessingMeleeTrait", "ChaosBlessingRangedTrait", "ChaosBlessingAmmoTrait", "ChaosBlessingMaxHealthTrait", "ChaosBlessingBoonRarityTrait",
+		"ChaosBlessingMoneyTrait", "ChaosBlessingMetapointTrait", "ChaosBlessingSecondaryTrait", "ChaosBlessingDashAttackTrait", "ChaosBlessingExtraChanceTrait"
+	},
+	WeaponUpgrade =
+	{
+		SwordWeapon = { "SwordTwoComboTrait", "SwordSecondaryAreaDamageTrait", "SwordHeavySecondStrikeTrait", "SwordThrustWaveTrait", "SwordSecondaryDoubleAttackTrait", "SwordHealthBufferDamageTrait", "SwordDoubleDashAttackTrait", "SwordCriticalTrait", "SwordBackstabTrait", "SwordCursedLifeStealTrait", },
+		BowWeapon = { "BowDoubleShotTrait", "BowLongRangeDamageTrait", "BowSlowChargeDamageTrait", "BowTapFireTrait", "BowPenetrationTrait", "BowPowerShotTrait", "BowSecondaryBarrageTrait", "BowTripleShotTrait", "BowSecondaryFocusedFireTrait", "BowChainShotTrait", },
+		ShieldWeapon = { "ShieldDashAOETrait", "ShieldRushProjectileTrait", "ShieldThrowFastTrait", "ShieldThrowCatchExplode", "ShieldChargeHealthBufferTrait", "ShieldChargeSpeedTrait", "ShieldBashDamageTrait", "ShieldPerfectRushTrait", "ShieldThrowElectiveCharge", "ShieldRushPunchTrait", },
+		SpearWeapon = { "SpearReachAttack", "SpearAutoAttack", "SpearThrowExplode", "SpearThrowBounce", "SpearThrowPenetrate", "SpearThrowCritical", "SpearSpinDamageRadius", "SpearSpinChargeLevelTime", "SpearDashMultiStrike", "SpearThrowElectiveCharge", },
+		GunWeapon = { "GunSlowGrenade", "GunMinigunTrait", "GunShotgunTrait", "GunExplodingSecondaryTrait", "GunGrenadeFastTrait", "GunArmorPenerationTrait", "GunInfiniteAmmoTrait", "GunConsecutiveFireTrait", "GunGrenadeClusterTrait", "GunGrenadeDropTrait", "GunHeavyBulletTrait", },
+		FistWeapon = { "FistReachAttackTrait", "FistDashAttackHealthBufferTrait", "FistTeleportSpecialTrait", "FistDoubleDashSpecialTrait", "FistChargeSpecialTrait", "FistKillTrait", "FistSpecialLandTrait", "FistAttackFinisherTrait", "FistConsecutiveAttackTrait" },
+	},
 	Legendaries =
 	{
 		"ZeusChargedBoltTrait", "MoreAmmoTrait", "DionysusComboVulnerability", "InstantChillKill", "DoubleCollisionTrait",
@@ -77,7 +91,12 @@ CodexMenuData =
 }
 
 function ChangeBoonSelectorRarity(screen, button)
+	if screen.LockedRarityButton ~= nil and screen.LockedRarityButton ~= button then
+		ModifyTextBox({ Id = screen.LockedRarityButton.Id, Text = screen.LockedRarityButton.Rarity })
+	end
 	screen.Rarity = button.Rarity
+	screen.LockedRarityButton = button
+	ModifyTextBox({ Id = button.Id, Text = ">>"..button.Rarity.."<<" })
 end
 
 function GiveSelectedBoonToPlayer(screen, button)
@@ -133,19 +152,24 @@ function OpenBoonSelector(godName, spawnBoon)
 		screen.RowStartX = -350
 		screen.RowStartY = -270
 		OnScreenOpened({ Flag = screen.Name, PersistCombatUI = true })
+		SetConfigOption({ Name = "UseOcclusion", Value = false })
 		FreezePlayerUnit()
 		EnableShopGamepadCursor()
+		PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
 		--Background
 		components.BackgroundDim = CreateScreenComponent({ Name = "rectangle01", Group = "BoonSelector" })
 		components.Background = CreateScreenComponent({ Name = "BlankObstacle", Group = "BoonSelector" })
-		components.ShopLighting = CreateScreenComponent({ Name = "BoonSelectLighting", Group = "BoonSelector" })
+		components.Lighting = CreateScreenComponent({ Name = "BoonSelectLighting", Group = "BoonSelector" })
+		components.FrontFx = CreateScreenComponent({ Name = "BoonSelectInFrontFx", Group = "BoonSelector" })
+		components.BoonIcon = CreateScreenComponent({ Name = "rectangle01", Group = "BoonSelector", X = 182, Y = 160 })
 		local lColor = Color.White
 		if godName == "Duos" then
 			lColor = Color.Green
 		else
-			lColor = LootData[godName].LightingColor
+			lColor = LootData[godName].LootColor
 		end
-		SetColor({ Id = components.ShopLighting.Id, Color = lColor })
+		SetAnimation({ DestinationId = components.BoonIcon.Id, Name = LootData[godName].Icon, Scale = 0.5 })
+		SetColor({ Id = components.Lighting.Id, Color = lColor })
 		SetScale({ Id = components.BackgroundDim.Id, Fraction = 4 })
 		SetColor({ Id = components.BackgroundDim.Id, Color = {0.090, 0.055, 0.157, 0.8} })
 		components.LeftPart = CreateScreenComponent({ Name = "TraitTrayBackground", Group = "BoonSelector", X = 830, Y = 400})
@@ -168,6 +192,10 @@ function OpenBoonSelector(godName, spawnBoon)
 		components.CloseButton.OnPressedFunctionName = "CloseBoonSelector"
 		components.CloseButton.ControlHotkey = "Cancel"
 		--Display the boons
+		if godName == "WeaponUpgrade" then
+			local wp = GetEquippedWeapon()
+			Boons = CodexMenuData.WeaponUpgrade[wp]
+		end
 		for index, boon in ipairs (Boons) do
 				local purchaseButtonKey = "PurchaseButton"..index
 				local rowoffset = 100
@@ -235,16 +263,191 @@ function OpenBoonSelector(godName, spawnBoon)
 	end
 end
 
+function ChangeBoonManagerMode(screen, button)
+	if button.Mode == "All" then
+		if screen.AllMode == nil or not screen.AllMode then
+			screen.AllMode = true
+			ModifyTextBox({ Id = button.Id, Text = "All Mode : ON", Color = Color.BoonPatchHeroic })
+		else
+			screen.AllMode = false
+			ModifyTextBox({ Id = button.Id, Text = "All Mode : OFF", Color = Color.BoonPatchEpic })
+		end
+		return
+	end
+	if screen.LockedModeButton ~= nil and screen.LockedModeButton ~= button then
+		ModifyTextBox({ Id = screen.LockedModeButton.Id, Text = screen.LockedModeButton.Mode.." Mode" })
+	end
+	screen.Mode = button.Mode
+	screen.LockedModeButton = button
+	ModifyTextBox({ Id = button.Id, Text = ">>"..button.Mode.." Mode<<" })
+end
+
+function HandleBoonManagerClick(screen, button)
+	if button.Boon == nil or screen.Mode == nil then
+		return
+	end
+	if screen.AllMode ~= nil and screen.AllMode then
+		ModDebugPrint("all mode",0)
+		if screen.Mode == "Level" then
+			return
+		elseif screen.Mode == "Rarity" then
+			AddRarityToTraits(CurrentRun.Hero, { NumTraits = #CurrentRun.Hero.Traits })
+			return
+		elseif screen.Mode == "Delete" then
+			return
+		end
+	else
+		if screen.Mode == "Level" then
+			AddTraitToHero({ TraitData = button.Boon })
+			return
+		elseif screen.Mode == "Rarity" then
+			if IsGodTrait(button.Boon.Name, { ForShop = true }) and TraitData[button.Boon.Name] and button.Boon.Rarity ~= nil and GetUpgradedRarity(button.Boon.Rarity) ~= nil and button.Boon.RarityLevels[GetUpgradedRarity(button.Boon.Rarity)] ~= nil then
+				RemoveWeaponTrait(button.Boon.Name)
+				button.Boon.Rarity = GetUpgradedRarity(button.Boon.Rarity)
+				AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon.Name, Rarity = button.Boon.Rarity }) })
+			end
+			return
+		elseif screen.Mode == "Delete" then
+			RemoveWeaponTrait(button.Boon.Name)
+			Destroy({ Id = button.Id })
+			return
+		end
+	end
+end
+
+function OpenBoonManager()
+	OnScreenClosed({Flag = "Codex"})
+	wait(0.1)
+	if CurrentRun.Hero.Traits ~= nil then
+		ScreenAnchors.BoonSelector = DeepCopyTable(CodexMenuData.BoonSelector)
+		local screen = ScreenAnchors.BoonSelector
+		local components = screen.Components
+		screen.Name = "BoonManager"
+		screen.DisplayedBoons = {}
+		screen.RowStartX = -350
+		screen.RowStartY = -270
+		OnScreenOpened({ Flag = screen.Name, PersistCombatUI = true })
+		SetConfigOption({ Name = "UseOcclusion", Value = false })
+		FreezePlayerUnit()
+		EnableShopGamepadCursor()
+		PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
+		--Background
+		components.BackgroundDim = CreateScreenComponent({ Name = "rectangle01", Group = "BoonManager" })
+		components.Background = CreateScreenComponent({ Name = "BlankObstacle", Group = "BoonManager" })
+		SetScale({ Id = components.BackgroundDim.Id, Fraction = 4 })
+		SetColor({ Id = components.BackgroundDim.Id, Color = {0.090, 0.055, 0.157, 0.8} })
+		components.LeftPart = CreateScreenComponent({ Name = "TraitTrayBackground", Group = "BoonManager", X = 830, Y = 400})
+		components.MiddlePart = CreateScreenComponent({ Name = "TraitTray_Center", Group = "BoonManager", X = 490, Y = 464 })
+		components.RightPart = CreateScreenComponent({ Name = "TraitTray_Right", Group = "BoonManager", X = 1710, Y = 423 })
+		SetScaleY({Id = components.LeftPart.Id, Fraction = 1.3})
+		SetScaleY({Id = components.MiddlePart.Id, Fraction = 1.3})
+		SetScaleX({Id = components.MiddlePart.Id, Fraction = 10})
+		SetScaleY({Id = components.RightPart.Id, Fraction = 1.3})
+		--Title
+		CreateTextBox({ Id = components.Background.Id, Text = "Codex Menu Boon Manager", FontSize = 34,
+		OffsetX = 100, OffsetY = -370, Color = Color.White, Font = "SpectralSCLight",
+		ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
+		CreateTextBox({ Id = components.Background.Id, Text = "Does not show Keepsakes, Assists and Weapon aspects", FontSize = 19,
+		OffsetX = 100, OffsetY = -340, Width = 840, Color = Color.SubTitle, Font = "CrimsonTextItalic",
+		ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
+		--Close button
+		components.CloseButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "BoonManager" })
+		Attach({ Id = components.CloseButton.Id, DestinationId = components.Background.Id, OffsetX = 100, OffsetY = ScreenCenterY - 70 })
+		components.CloseButton.OnPressedFunctionName = "CloseBoonManager"
+		components.CloseButton.ControlHotkey = "Cancel"
+		--Display the boons
+		for index, boon in ipairs (CurrentRun.Hero.Traits) do
+			if IsGodTrait(boon.Name) or IsHermesBoon(boon.Name) or IsChaosBoon(boon.Name) then
+				local purchaseButtonKey = "PurchaseButton"..index
+				local rowoffset = 100
+				local columnoffset = 300
+				local numperrow = 4
+				local offsetX = screen.RowStartX + columnoffset*((index-1) % numperrow)
+				local offsetY = screen.RowStartY + rowoffset*(math.floor((index-1)/numperrow))
+				local color = Color.White
+				components[purchaseButtonKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonManager", Scale = 0.3, })
+				components[purchaseButtonKey].OnPressedFunctionName = "HandleBoonManagerClick"
+				components[purchaseButtonKey].Boon = boon
+				Attach({ Id = components[purchaseButtonKey].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
+				CreateTextBox({ Id = components[purchaseButtonKey].Id, Text = boon.Name,
+					FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = color, Font = "AlegreyaSansSCLight",
+					ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+				})
+			else
+				index = index - 1
+			end
+		end
+		--Instructions
+		components.ModeDisplay = CreateScreenComponent({ Name = "BlankObstacle", Group = "BoonManager" })
+		Attach({ Id = components.ModeDisplay.Id, DestinationId = components.Background.Id, OffsetX = 100, OffsetY = 200 })
+		CreateTextBox({ Id = components.ModeDisplay.Id, Text = "Choose a mode",
+			FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = lColor, Font = "AlegreyaSansSCLight",
+			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+		})
+		--Mode Buttons
+		components.LevelModeButton = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonManager", Scale = 0.3, })
+		components.LevelModeButton.OnPressedFunctionName = "ChangeBoonManagerMode"
+		components.LevelModeButton.Mode = "Level"
+		Attach({ Id = components.LevelModeButton.Id, DestinationId = components.Background.Id, OffsetX = -350, OffsetY = 300 })
+		CreateTextBox({ Id = components.LevelModeButton.Id, Text = "Level Mode",
+			FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = Color.White, Font = "AlegreyaSansSCLight",
+			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+		})
+		components.RarityModeButton = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonManager", Scale = 0.3, })
+		components.RarityModeButton.OnPressedFunctionName = "ChangeBoonManagerMode"
+		components.RarityModeButton.Mode = "Rarity"
+		Attach({ Id = components.RarityModeButton.Id, DestinationId = components.Background.Id, OffsetX = -50, OffsetY = 300 })
+		CreateTextBox({ Id = components.RarityModeButton.Id, Text = "Rarity Mode",
+			FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = Color.White, Font = "AlegreyaSansSCLight",
+			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+		})
+		components.DeleteModeButton = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonManager", Scale = 0.3, })
+		components.DeleteModeButton.OnPressedFunctionName = "ChangeBoonManagerMode"
+		components.DeleteModeButton.Mode = "Delete"
+		Attach({ Id = components.DeleteModeButton.Id, DestinationId = components.Background.Id, OffsetX = 250, OffsetY = 300 })
+		CreateTextBox({ Id = components.DeleteModeButton.Id, Text = "Delete Mode",
+			FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = Color.White, Font = "AlegreyaSansSCLight",
+			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+		})
+		components.AllModeButton = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonManager", Scale = 0.3, })
+		components.AllModeButton.OnPressedFunctionName = "ChangeBoonManagerMode"
+		components.AllModeButton.Mode = "All"
+		Attach({ Id = components.AllModeButton.Id, DestinationId = components.Background.Id, OffsetX = 550, OffsetY = 300 })
+		CreateTextBox({ Id = components.AllModeButton.Id, Text = "All Mode : OFF",
+			FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = Color.BoonPatchEpic, Font = "AlegreyaSansSCLight",
+			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+		})
+		--End
+		screen.KeepOpen = true
+		--thread(HandleWASDInput, screen)
+		HandleScreenInput(screen)
+	end
+end
+
 function SpawnBoon(screen, button)
 	if button.God ~= nil then
 		CreateLoot({ Name = button.God, OffsetX = 100, SpawnPoint = CurrentRun.Hero.ObjectId })
 	end
 end
 
+function CloseBoonManager(screen, button)
+	DisableShopGamepadCursor()
+	SetConfigOption({ Name = "FreeFormSelectWrapY", Value = false })
+	SetConfigOption({ Name = "UseOcclusion", Value = true })
+	CloseScreen(GetAllIds(screen.Components), 0.1)
+	PlaySound({ Name = "/SFX/Menu Sounds/GeneralWhooshMENU" })
+	ScreenAnchors.BoonManager = nil
+	UnfreezePlayerUnit()
+	screen.KeepOpen = false
+	OnScreenClosed({ Flag = screen.Name })
+end
+
 function CloseBoonSelector(screen, button)
 	DisableShopGamepadCursor()
 	SetConfigOption({ Name = "FreeFormSelectWrapY", Value = false })
+	SetConfigOption({ Name = "UseOcclusion", Value = true })
 	CloseScreen(GetAllIds(screen.Components), 0.1)
+	PlaySound({ Name = "/SFX/Menu Sounds/GeneralWhooshMENU" })
 	ScreenAnchors.BoonSelector = nil
 	UnfreezePlayerUnit()
 	screen.KeepOpen = false
@@ -514,6 +717,8 @@ function IsHermesBoon(trait)
 		for i, loot in pairs (LootData) do
 			if loot.Icon == "BoonSymbolHermes" and loot.TraitIndex[trait.Name] then
 				return true
+			elseif loot.Icon == "BoonSymbolChaos" and loot.TraitIndex[trait.Name] then
+				return true
 			end
 		end
 		return false
@@ -614,13 +819,11 @@ OnControlPressed{ "Codex",
 			return
 		end
 		--Chaos Boon
-		if CodexStatus.SelectedChapterName == "ChthonicGods" and
-		 CodexStatus.SelectedEntryNames[CodexStatus.SelectedChapterName] == "TrialUpgrade" then
-			local boon = CodexStatus.SelectedEntryNames[CodexStatus.SelectedChapterName]
-			CreateLoot({ Name = boon, OffsetX = 100, SpawnPoint = CurrentRun.Hero.ObjectId })
+		if CodexStatus.SelectedChapterName == "ChthonicGods" and CodexStatus.SelectedEntryNames[CodexStatus.SelectedChapterName] == "TrialUpgrade" then
 			if debug then
-				ModDebugPrint("Trying to spawn boon : " .. boon)
+				ModDebugPrint("Trying to open boon selector : " .. boon)
 			end
+			OpenBoonSelector(CodexStatus.SelectedEntryNames[CodexStatus.SelectedChapterName], true)
 			return
 		end
 		--Items
@@ -646,6 +849,9 @@ OnControlPressed{ "Codex",
 					ModDebugPrint("Trying to spawn consumable : " .. item)
 				end
 				return
+			elseif item == "WeaponUpgrade" then
+				OpenBoonSelector(item, true)
+				return
 			end
 			CreateLoot({ Name = item, OffsetX = 100, SpawnPoint = CurrentRun.Hero.ObjectId })
 			if debug then
@@ -659,6 +865,7 @@ OnControlPressed{ "Codex",
 			EquipPlayerWeapon( WeaponData[weapon], { PreLoadBinks = true } )
 			RemoveAllTraits()
 			ReloadEquipment()
+			ShowWeaponUpgradeScreen({ WeaponName = weapon })
 			if debug then
 				ModDebugPrint("Trying to equip weapon : " .. weapon)
 			end
@@ -759,12 +966,16 @@ OnControlPressed{ "Codex",
 					end
 				end,
 				["NPC_Eurydice_01"] = function()
-					for i, traitData in pairs(CurrentRun.Hero.Traits) do
-						if traitData ~= nil and IsGodTrait(traitData.Name) or IsHermesBoon(traitData) or IsChaosBoon(traitData) and TraitData[traitData.Name] and traitData.Rarity ~= nil and GetUpgradedRarity(traitData.Rarity) ~= nil then
-							RemoveTrait(CurrentRun.Hero, traitData.Name)
-							AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = traitData.Name, Rarity = GetUpgradedRarity(traitData.Rarity) }) })
-						end
-					end
+					-- local numTraits = 0
+					-- for i, traitData in ipairs(CurrentRun.Hero.Traits) do
+					-- 	if traitData ~= nil and IsGodTrait(traitData.Name) or IsHermesBoon(traitData) or IsChaosBoon(traitData) and TraitData[traitData.Name] and traitData.Rarity ~= nil and GetUpgradedRarity(traitData.Rarity) ~= nil then
+					-- 		numTraits = numTraits + 1
+					-- 	end
+					-- end
+					-- if numTraits > 0 then
+					-- 	AddRarityToTraits(CurrentRun.Hero, { NumTraits = numTraits })
+					-- end
+					OpenBoonManager()
 				end,
 				["NPC_Dusa_01"] = function()
 					OpenBoonSelector("Duos")
