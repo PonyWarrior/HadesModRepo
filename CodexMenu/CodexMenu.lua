@@ -353,6 +353,7 @@ function HandleBoonManagerClick(screen, button)
 			end
 			return
 		elseif screen.Mode == "Delete" then
+			screen.BoonsList[screen.CurrentPage][button.Index]=nil
 			RemoveWeaponTrait(button.Boon.Name)
 			Destroy({ Id = button.Id })
 			ReloadAllTraits()
@@ -360,7 +361,6 @@ function HandleBoonManagerClick(screen, button)
 		end
 	end
 end
-
 function BoonManagerChangePage(screen, button)
 	if button.Direction == "Left" and screen.CurrentPage > screen.FirstPage then
 		screen.CurrentPage = screen.CurrentPage - 1
@@ -377,33 +377,23 @@ function BoonManagerChangePage(screen, button)
 	end
 	Destroy({ Ids = ids})
 	local displayedTraits = {}
-	local index = 0
-	for i, boon in ipairs (CurrentRun.Hero.Traits) do
-		if IsGodTrait(boon.Name) or IsHermesBoon(boon.Name) or IsChaosBoon(boon.Name) then
-			if Contains(displayedTraits, boon.Name) then
-			else
-				local rowOffset = 100
-				local columnOffset = 300
-				local boonsPerRow = 4
-				local rowsPerPage = 1
-				local rowIndex = math.floor(index/boonsPerRow)
-				local pageIndex = math.floor(rowIndex/rowsPerPage)
-				local offsetX = screen.RowStartX + columnOffset*(index % boonsPerRow)
-				local offsetY = screen.RowStartY + rowOffset*(rowIndex % rowsPerPage)
-				index = index + 1
-				local color = Color.White
-				table.insert(displayedTraits, boon.Name)
-				if pageIndex == screen.CurrentPage then
-					local purchaseButtonKey = "PurchaseButton"..index
-					screen.Components[purchaseButtonKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonManager", Scale = 0.3, })
-					screen.Components[purchaseButtonKey].OnPressedFunctionName = "HandleBoonManagerClick"
-					screen.Components[purchaseButtonKey].Boon = boon
-					Attach({ Id = screen.Components[purchaseButtonKey].Id, DestinationId = screen.Components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
-					CreateTextBox({ Id = screen.Components[purchaseButtonKey].Id, Text = boon.Name,
-						FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = color, Font = "AlegreyaSansSCLight",
-						ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
-					})
-				end
+	for i, boonData in ipairs (screen.BoonsList[screen.CurrentPage]) do
+		local boon = boonData.boon
+		if Contains(displayedTraits, boon.Name) then
+		else
+			local color = Color.White
+			table.insert(displayedTraits, boon.Name)
+			if pageIndex == screen.CurrentPage then
+				local purchaseButtonKey = "PurchaseButton"..boonData.index
+				screen.Components[purchaseButtonKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonManager", Scale = 0.3, })
+				screen.Components[purchaseButtonKey].OnPressedFunctionName = "HandleBoonManagerClick"
+				screen.Components[purchaseButtonKey].Boon = boon
+				screen.Components[purchaseButtonKey].Index = boonData.index
+				Attach({ Id = screen.Components[purchaseButtonKey].Id, DestinationId = screen.Components.Background.Id, OffsetX = boonData.offsetX, OffsetY = boonData.offsetY })
+				CreateTextBox({ Id = screen.Components[purchaseButtonKey].Id, Text = boon.Name,
+					FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = color, Font = "AlegreyaSansSCLight",
+					ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+				})
 			end
 		end
 	end
@@ -464,35 +454,48 @@ function OpenBoonManager()
 		--Display the boons
 		local displayedTraits = {}
 		local index = 0
-		for i, boon in ipairs (CurrentRun.Hero.Traits) do
-			if IsGodTrait(boon.Name) or IsHermesBoon(boon.Name) or IsChaosBoon(boon.Name) then
-				if Contains(displayedTraits, boon.Name) then
-				else
-					local rowOffset = 100
-					local columnOffset = 300
-					local boonsPerRow = 4
-					local rowsPerPage = 1
-					local rowIndex = math.floor(index/boonsPerRow)
-					local pageIndex = math.floor(rowIndex/rowsPerPage)
-					local offsetX = screen.RowStartX + columnOffset*(index % boonsPerRow)
-					local offsetY = screen.RowStartY + rowOffset*(rowIndex % rowsPerPage)
-					index = index + 1
-					local color = Color.White
-					table.insert(displayedTraits, boon.Name)
-					screen.LastPage = pageIndex
-					if pageIndex == screen.FirstPage then
-						--Only display first page when opening
-						local purchaseButtonKey = "PurchaseButton"..index
-						components[purchaseButtonKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonManager", Scale = 0.3, })
-						components[purchaseButtonKey].OnPressedFunctionName = "HandleBoonManagerClick"
-						components[purchaseButtonKey].Boon = boon
-						Attach({ Id = components[purchaseButtonKey].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
-						CreateTextBox({ Id = components[purchaseButtonKey].Id, Text = boon.Name,
-							FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = color, Font = "AlegreyaSansSCLight",
-							ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
-						})
-					end
-				end
+		screen.BoonsList = {}
+		for i,boon in ipairs(CurrentRun.Hero.Traits) do
+		  if IsGodTrait(boon.Name) or IsHermesBoon(boon.Name) or IsChaosBoon(boon.Name) then
+			local rowOffset = 100
+			local columnOffset = 300
+			local boonsPerRow = 4
+			local rowsPerPage = 2
+			local rowIndex = math.floor(index/boonsPerRow)
+			local pageIndex = math.floor(rowIndex/rowsPerPage)
+			local offsetX = screen.RowStartX + columnOffset*(index % boonsPerRow)
+			local offsetY = screen.RowStartY + rowOffset*(rowIndex % rowsPerPage)
+			index = index + 1
+			local boonData = {
+				index = index,
+				boon = boon,
+				pageIndex = pageIndex,
+				offsetX = offsetX,
+				offsetY = offsetY,
+			}
+			screen.LastPage = pageIndex
+			if screen.BoonsList[pageIndex] == nil then
+			   screen.BoonsList[pageIndex] = {}
+			end
+			table.insert(screen.BoonsList[pageIndex],boonData)
+		  end
+		end		
+		for i, boonData in ipairs (screen.BoonsList[screen.FirstPage]) do
+			local boon = boonData.boon
+			if Contains(displayedTraits, boon.Name) then
+			else
+				local color = Color.White
+				table.insert(displayedTraits, boon.Name)
+				local purchaseButtonKey = "PurchaseButton"..boonData.index
+				components[purchaseButtonKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonManager", Scale = 0.3, })
+				components[purchaseButtonKey].OnPressedFunctionName = "HandleBoonManagerClick"
+				components[purchaseButtonKey].Boon = boon
+				sComponents[purchaseButtonKey].Index = index
+				Attach({ Id = components[purchaseButtonKey].Id, DestinationId = components.Background.Id, OffsetX = boonData.offsetX, OffsetY = boonData.offsetY })
+				CreateTextBox({ Id = components[purchaseButtonKey].Id, Text = boon.Name,
+					FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = color, Font = "AlegreyaSansSCLight",
+					ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+				})
 			end
 		end
 		--Instructions
