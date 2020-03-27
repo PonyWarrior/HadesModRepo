@@ -55,8 +55,9 @@ CodexMenuData =
 	},
 	DemeterUpgrade =
 	{
+		--Removed "HarvestBoonDrop", causes crash
 		"DemeterWeaponTrait", "DemeterSecondaryTrait", "DemeterRushTrait", "DemeterRangedTrait", "DemeterShoutTrait",
-		"CastNovaTrait", "ZeroAmmoBonusTrait", "MaximumChillBlast", "MaximumChillBonusSlow", "HealingPotencyDrop", "HarvestBoonDrop", "InstantChillKill",
+		"CastNovaTrait", "ZeroAmmoBonusTrait", "MaximumChillBlast", "MaximumChillBonusSlow", "HealingPotencyDrop", "InstantChillKill",
 	},
 	TrialUpgrade =
 	{
@@ -139,6 +140,7 @@ end
 function OpenBoonSelector(godName, spawnBoon)
 	OnScreenClosed({Flag = "Codex"})
 	wait(0.1)
+	ReloadAllTraits()
 	if godName ~= nil and CodexMenuData[godName] then
 		local Boons = DeepCopyTable(CodexMenuData[godName])
 		if Boons == nil then
@@ -286,31 +288,123 @@ function HandleBoonManagerClick(screen, button)
 	if button.Boon == nil or screen.Mode == nil then
 		return
 	end
+	--All mode
 	if screen.AllMode ~= nil and screen.AllMode then
-		ModDebugPrint("all mode",0)
 		if screen.Mode == "Level" then
+			local upgradableTraits = {}
+			local upgradedTraits = {}
+			for i, traitData in pairs(CurrentRun.Hero.Traits) do
+				if IsGodTrait(traitData.Name) and GetTraitNameCount(CurrentRun.Hero, button.Boon.Name) < 10 and TraitData[traitData.Name] and IsGameStateEligible(CurrentRun, TraitData[traitData.Name]) and traitData.Rarity ~= "Legendary" then
+					upgradableTraits[traitData.Name] = true
+				end
+			end
+			while not IsEmpty(upgradableTraits) do
+				local name = RemoveRandomKey(upgradableTraits)
+				upgradedTraits[name] = true
+				AddTraitToHero({ TraitName = name, SkipUIUpdate = true })
+			end
+			ReloadAllTraits()
 			return
 		elseif screen.Mode == "Rarity" then
-			AddRarityToTraits(CurrentRun.Hero, { NumTraits = #CurrentRun.Hero.Traits })
+			local upgradableTraits = {}
+			local upgradedTraits = {}
+			for i, traitData in pairs( CurrentRun.Hero.Traits ) do
+				if IsGodTrait(traitData.Name, { ForShop = true }) or IsHermesBoon(traitData.Name) or IsChaosBoon(traitData.Name) and TraitData[traitData.Name] and traitData.Rarity ~= nil and GetUpgradedRarity(traitData.Rarity) ~= nil and traitData.RarityLevels[GetUpgradedRarity(traitData.Rarity)] ~= nil then
+					if Contains(upgradableTraits, traitData) or traitData.Rarity == "Legendary" then
+					else
+						table.insert(upgradableTraits, traitData )
+					end
+				end
+			end
+			while not IsEmpty(upgradableTraits) do
+				local traitData = RemoveRandomValue(upgradableTraits)
+				upgradedTraits[traitData.Name] = true
+				RemoveWeaponTrait(traitData.Name)
+				AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = traitData.Name, Rarity = "Heroic" }) })
+			end
+			ReloadAllTraits()
 			return
 		elseif screen.Mode == "Delete" then
+				RemoveAllTraits()
+				ReloadEquipment()
+				CloseBoonManager(screen, button)
 			return
 		end
 	else
+		--Individual mode
 		if screen.Mode == "Level" then
-			AddTraitToHero({ TraitData = button.Boon })
+			if GetTraitNameCount(CurrentRun.Hero, button.Boon.Name) < 10 then
+				AddTraitToHero({ TraitName = button.Boon.Name })
+			end
 			return
 		elseif screen.Mode == "Rarity" then
 			if IsGodTrait(button.Boon.Name, { ForShop = true }) and TraitData[button.Boon.Name] and button.Boon.Rarity ~= nil and GetUpgradedRarity(button.Boon.Rarity) ~= nil and button.Boon.RarityLevels[GetUpgradedRarity(button.Boon.Rarity)] ~= nil then
+				local numOldTrait = GetTraitNameCount(CurrentRun.Hero, button.Boon.Name)
+				if numOldTrait > 10 then
+					numOldTrait = 10
+				end
 				RemoveWeaponTrait(button.Boon.Name)
 				button.Boon.Rarity = GetUpgradedRarity(button.Boon.Rarity)
 				AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon.Name, Rarity = button.Boon.Rarity }) })
+				for i=1, numOldTrait-1 do
+					AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon.Name, Rarity = button.Boon.Rarity }) })
+				end
+				ReloadAllTraits()
 			end
 			return
 		elseif screen.Mode == "Delete" then
 			RemoveWeaponTrait(button.Boon.Name)
 			Destroy({ Id = button.Id })
+			ReloadAllTraits()
 			return
+		end
+	end
+end
+
+function BoonManagerChangePage(screen, button)
+	if button.Direction == "Left" and screen.CurrentPage > screen.FirstPage then
+		screen.CurrentPage = screen.CurrentPage - 1
+	elseif button.Direction == "Right" and screen.CurrentPage < screen.LastPage then
+		screen.CurrentPage = screen.CurrentPage + 1
+	else
+		return
+	end
+	local ids = {}
+	for i, component in pairs(screen.Components) do
+		if component.Boon ~= nil then
+			table.insert(ids, component.Id)
+		end
+	end
+	Destroy({ Ids = ids})
+	local displayedTraits = {}
+	local index = 0
+	for i, boon in ipairs (CurrentRun.Hero.Traits) do
+		if IsGodTrait(boon.Name) or IsHermesBoon(boon.Name) or IsChaosBoon(boon.Name) then
+			if Contains(displayedTraits, boon.Name) then
+			else
+				local rowOffset = 100
+				local columnOffset = 300
+				local boonsPerRow = 4
+				local rowsPerPage = 1
+				local rowIndex = math.floor(index/boonsPerRow)
+				local pageIndex = math.floor(rowIndex/rowsPerPage)
+				local offsetX = screen.RowStartX + columnOffset*(index % boonsPerRow)
+				local offsetY = screen.RowStartY + rowOffset*(rowIndex % rowsPerPage)
+				index = index + 1
+				local color = Color.White
+				table.insert(displayedTraits, boon.Name)
+				if pageIndex == screen.CurrentPage then
+					local purchaseButtonKey = "PurchaseButton"..index
+					screen.Components[purchaseButtonKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonManager", Scale = 0.3, })
+					screen.Components[purchaseButtonKey].OnPressedFunctionName = "HandleBoonManagerClick"
+					screen.Components[purchaseButtonKey].Boon = boon
+					Attach({ Id = screen.Components[purchaseButtonKey].Id, DestinationId = screen.Components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
+					CreateTextBox({ Id = screen.Components[purchaseButtonKey].Id, Text = boon.Name,
+						FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = color, Font = "AlegreyaSansSCLight",
+						ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+					})
+				end
+			end
 		end
 	end
 end
@@ -318,12 +412,15 @@ end
 function OpenBoonManager()
 	OnScreenClosed({Flag = "Codex"})
 	wait(0.1)
+	ReloadAllTraits()
 	if CurrentRun.Hero.Traits ~= nil then
 		ScreenAnchors.BoonSelector = DeepCopyTable(CodexMenuData.BoonSelector)
 		local screen = ScreenAnchors.BoonSelector
 		local components = screen.Components
 		screen.Name = "BoonManager"
-		screen.DisplayedBoons = {}
+		screen.FirstPage = 0
+		screen.LastPage = 2
+		screen.CurrentPage = screen.FirstPage
 		screen.RowStartX = -350
 		screen.RowStartY = -270
 		OnScreenOpened({ Flag = screen.Name, PersistCombatUI = true })
@@ -355,26 +452,47 @@ function OpenBoonManager()
 		Attach({ Id = components.CloseButton.Id, DestinationId = components.Background.Id, OffsetX = 100, OffsetY = ScreenCenterY - 70 })
 		components.CloseButton.OnPressedFunctionName = "CloseBoonManager"
 		components.CloseButton.ControlHotkey = "Cancel"
+		--Page buttons
+		components.LeftPageButton = CreateScreenComponent({ Name = "ButtonCodexLeft", Scale = 0.8, Sound = "/SFX/Menu Sounds/GeneralWhooshMENU", Group = "BoonManager" })
+		Attach({ Id = components.LeftPageButton.Id, DestinationId = components.Background.Id, OffsetX = -480, OffsetY = -350 })
+		components.LeftPageButton.OnPressedFunctionName = "BoonManagerChangePage"
+		components.LeftPageButton.Direction = "Left"
+		components.RightPageButton = CreateScreenComponent({ Name = "ButtonCodexRight", Scale = 0.8, Sound = "/SFX/Menu Sounds/GeneralWhooshMENU", Group = "BoonManager" })
+		Attach({ Id = components.RightPageButton.Id, DestinationId = components.Background.Id, OffsetX = 720, OffsetY = -350 })
+		components.RightPageButton.OnPressedFunctionName = "BoonManagerChangePage"
+		components.RightPageButton.Direction = "Right"
 		--Display the boons
-		for index, boon in ipairs (CurrentRun.Hero.Traits) do
+		local displayedTraits = {}
+		local index = 0
+		for i, boon in ipairs (CurrentRun.Hero.Traits) do
 			if IsGodTrait(boon.Name) or IsHermesBoon(boon.Name) or IsChaosBoon(boon.Name) then
-				local purchaseButtonKey = "PurchaseButton"..index
-				local rowoffset = 100
-				local columnoffset = 300
-				local numperrow = 4
-				local offsetX = screen.RowStartX + columnoffset*((index-1) % numperrow)
-				local offsetY = screen.RowStartY + rowoffset*(math.floor((index-1)/numperrow))
-				local color = Color.White
-				components[purchaseButtonKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonManager", Scale = 0.3, })
-				components[purchaseButtonKey].OnPressedFunctionName = "HandleBoonManagerClick"
-				components[purchaseButtonKey].Boon = boon
-				Attach({ Id = components[purchaseButtonKey].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
-				CreateTextBox({ Id = components[purchaseButtonKey].Id, Text = boon.Name,
-					FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = color, Font = "AlegreyaSansSCLight",
-					ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
-				})
-			else
-				index = index - 1
+				if Contains(displayedTraits, boon.Name) then
+				else
+					local rowOffset = 100
+					local columnOffset = 300
+					local boonsPerRow = 4
+					local rowsPerPage = 1
+					local rowIndex = math.floor(index/boonsPerRow)
+					local pageIndex = math.floor(rowIndex/rowsPerPage)
+					local offsetX = screen.RowStartX + columnOffset*(index % boonsPerRow)
+					local offsetY = screen.RowStartY + rowOffset*(rowIndex % rowsPerPage)
+					index = index + 1
+					local color = Color.White
+					table.insert(displayedTraits, boon.Name)
+					screen.LastPage = pageIndex
+					if pageIndex == screen.FirstPage then
+						--Only display first page when opening
+						local purchaseButtonKey = "PurchaseButton"..index
+						components[purchaseButtonKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonManager", Scale = 0.3, })
+						components[purchaseButtonKey].OnPressedFunctionName = "HandleBoonManagerClick"
+						components[purchaseButtonKey].Boon = boon
+						Attach({ Id = components[purchaseButtonKey].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
+						CreateTextBox({ Id = components[purchaseButtonKey].Id, Text = boon.Name,
+							FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = color, Font = "AlegreyaSansSCLight",
+							ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+						})
+					end
+				end
 			end
 		end
 		--Instructions
@@ -419,7 +537,7 @@ function OpenBoonManager()
 		})
 		--End
 		screen.KeepOpen = true
-		--thread(HandleWASDInput, screen)
+		thread(HandleWASDInput, screen)
 		HandleScreenInput(screen)
 	end
 end
@@ -434,7 +552,8 @@ function CloseBoonManager(screen, button)
 	DisableShopGamepadCursor()
 	SetConfigOption({ Name = "FreeFormSelectWrapY", Value = false })
 	SetConfigOption({ Name = "UseOcclusion", Value = true })
-	CloseScreen(GetAllIds(screen.Components), 0.1)
+	CloseScreen(GetAllIds(screen.Components), 0)
+	CloseScreen(GetAllIds(screen.Components), 0)
 	PlaySound({ Name = "/SFX/Menu Sounds/GeneralWhooshMENU" })
 	ScreenAnchors.BoonManager = nil
 	UnfreezePlayerUnit()
@@ -966,22 +1085,10 @@ OnControlPressed{ "Codex",
 					end
 				end,
 				["NPC_Eurydice_01"] = function()
-					-- local numTraits = 0
-					-- for i, traitData in ipairs(CurrentRun.Hero.Traits) do
-					-- 	if traitData ~= nil and IsGodTrait(traitData.Name) or IsHermesBoon(traitData) or IsChaosBoon(traitData) and TraitData[traitData.Name] and traitData.Rarity ~= nil and GetUpgradedRarity(traitData.Rarity) ~= nil then
-					-- 		numTraits = numTraits + 1
-					-- 	end
-					-- end
-					-- if numTraits > 0 then
-					-- 	AddRarityToTraits(CurrentRun.Hero, { NumTraits = numTraits })
-					-- end
 					OpenBoonManager()
 				end,
 				["NPC_Dusa_01"] = function()
 					OpenBoonSelector("Duos")
-				end,
-				["NPC_Sisyphus_01"] = function()
-					OpenBoonSelector("Consumables")
 				end,
 			}
 			--Bosses
