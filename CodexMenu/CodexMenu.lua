@@ -2,10 +2,6 @@
 
 CodexMenuData =
 {
-	BoonSelector =
-	{
-		Components = {}
-	},
 	ZeusUpgrade =
 	{
 	  "ZeusWeaponTrait", "ZeusRushTrait", "ZeusRangedTrait", "ZeusSecondaryTrait", "ZeusShoutTrait",
@@ -91,6 +87,25 @@ CodexMenuData =
 	},
 }
 
+CodexMenuData.GodNames = {}
+for key,_ in pairs(CodexMenuData) do
+    table.insert(CodexMenuData.GodNames,key)
+end
+
+function CustomInvertTable( tableArg )
+    local inverseTable = {}
+    for _,value in ipairs( tableArg ) do
+        inverseTable[value]=true
+    end
+    return inverseTable
+end
+
+for _,value in ipairs(CodexMenuData.GodNames) do
+    CodexMenuData[value.."Inverted"]=CustomInvertTable(CodexMenuData[value])
+end
+
+CodexMenuData.BoonSelector ={Components = {}}
+
 function ChangeBoonSelectorRarity(screen, button)
 	if screen.LockedRarityButton ~= nil and screen.LockedRarityButton ~= button then
 		ModifyTextBox({ Id = screen.LockedRarityButton.Id, Text = screen.LockedRarityButton.Rarity })
@@ -169,8 +184,8 @@ function OpenBoonSelector(godName, spawnBoon)
 			lColor = Color.Green
 		else
 			lColor = LootData[godName].LootColor
+			SetAnimation({ DestinationId = components.BoonIcon.Id, Name = LootData[godName].Icon, Scale = 0.5 })
 		end
-		SetAnimation({ DestinationId = components.BoonIcon.Id, Name = LootData[godName].Icon, Scale = 0.5 })
 		SetColor({ Id = components.Lighting.Id, Color = lColor })
 		SetScale({ Id = components.BackgroundDim.Id, Fraction = 4 })
 		SetColor({ Id = components.BackgroundDim.Id, Color = {0.090, 0.055, 0.157, 0.8} })
@@ -205,12 +220,18 @@ function OpenBoonSelector(godName, spawnBoon)
 				local numperrow = 4
 				local offsetX = screen.RowStartX + columnoffset*((index-1) % numperrow)
 				local offsetY = screen.RowStartY + rowoffset*(math.floor((index-1)/numperrow))
+				local color = lColor
+				if CodexMenuData.LegendariesInverted then 
+					if CodexMenuData.LegendariesInverted[boon] then
+						color = Color.BoonPatchLegendary
+					end
+				end
 				components[purchaseButtonKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonSelector", Scale = 0.3, })
 				components[purchaseButtonKey].OnPressedFunctionName = "GiveSelectedBoonToPlayer"
 				components[purchaseButtonKey].Boon = boon
 				Attach({ Id = components[purchaseButtonKey].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
 				CreateTextBox({ Id = components[purchaseButtonKey].Id, Text = boon,
-					FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = lColor, Font = "AlegreyaSansSCLight",
+					FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = color, Font = "AlegreyaSansSCLight",
 					ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
 				})
 		end
@@ -381,26 +402,66 @@ function BoonManagerChangePage(screen, button)
 end
 
 function BoonManagerLoadPage(screen)
-	local displayedTraits = {}
-	local pageBoons = screen.BoonsList[screen.CurrentPage]
-	if pageBoons then
-		for i, boonData in pairs(pageBoons) do
-			if displayedTraits[boonData.boon.Name] then
-			else
-				local color = Color.White
-				displayedTraits[boonData.boon.Name] = true
-				local purchaseButtonKey = "PurchaseButton"..boonData.index
-				screen.Components[purchaseButtonKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonManager", Scale = 0.3, })
-				screen.Components[purchaseButtonKey].OnPressedFunctionName = "HandleBoonManagerClick"
-				screen.Components[purchaseButtonKey].Boon = boonData.boon
-				screen.Components[purchaseButtonKey].Index = boonData.index
-				Attach({ Id = screen.Components[purchaseButtonKey].Id, DestinationId = screen.Components.Background.Id, OffsetX = boonData.offsetX, OffsetY = boonData.offsetY })
-				CreateTextBox({ Id = screen.Components[purchaseButtonKey].Id, Text = boonData.boon.Name,
-					FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = color, Font = "AlegreyaSansSCLight",
-					ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
-				})
-			end
-		end
+	BoonManagerPageButtons(screen)
+    local displayedTraits = {}
+    local pageBoons = screen.BoonsList[screen.CurrentPage]
+    if pageBoons then
+        for i, boonData in pairs(pageBoons) do
+            if displayedTraits[boonData.boon.Name] then
+            else
+                local color = Color.White
+                for _,godName in ipairs(CodexMenuData.GodNames) do
+                    if CodexMenuData[godName.."Inverted"] then
+                        if CodexMenuData[godName.."Inverted"][boonData.boon.Name] then
+                            if godName == "Duos" then
+                                color = Color.Green
+								break
+							elseif godName == "Legendaries" then
+                                color = Color.BoonPatchLegendary
+								break
+                            else
+								if LootData[godName] then
+									color = LootData[godName].LootColor
+								end
+                            end
+                        end
+                    end
+                end
+                displayedTraits[boonData.boon.Name] = true
+                local purchaseButtonKey = "PurchaseButton"..boonData.index
+                screen.Components[purchaseButtonKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonManager", Scale = 0.3, })
+                screen.Components[purchaseButtonKey].OnPressedFunctionName = "HandleBoonManagerClick"
+                screen.Components[purchaseButtonKey].Boon = boonData.boon
+                screen.Components[purchaseButtonKey].Index = boonData.index
+                Attach({ Id = screen.Components[purchaseButtonKey].Id, DestinationId = screen.Components.Background.Id, OffsetX = boonData.offsetX, OffsetY = boonData.offsetY })
+                CreateTextBox({ Id = screen.Components[purchaseButtonKey].Id, Text = boonData.boon.Name,
+                    FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = color, Font = "AlegreyaSansSCLight",
+                    ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+                })
+            end
+        end
+    end
+end
+
+function BoonManagerPageButtons(screen)
+	local components = screen.Components
+	if components.LeftPageButton then
+		Destroy({ Ids = {components.LeftPageButton.Id}})
+	end
+	if components.RightPageButton then
+		Destroy({ Ids = {components.RightPageButton.Id}})
+	end
+	if screen.CurrentPage ~= screen.FirstPage then
+		components.LeftPageButton = CreateScreenComponent({ Name = "ButtonCodexLeft", Scale = 0.8, Sound = "/SFX/Menu Sounds/GeneralWhooshMENU", Group = "BoonManager" })
+		Attach({ Id = components.LeftPageButton.Id, DestinationId = components.Background.Id, OffsetX = -480, OffsetY = -350 })
+		components.LeftPageButton.OnPressedFunctionName = "BoonManagerChangePage"
+		components.LeftPageButton.Direction = "Left"
+	end
+	if screen.CurrentPage ~= screen.LastPage then
+		components.RightPageButton = CreateScreenComponent({ Name = "ButtonCodexRight", Scale = 0.8, Sound = "/SFX/Menu Sounds/GeneralWhooshMENU", Group = "BoonManager" })
+		Attach({ Id = components.RightPageButton.Id, DestinationId = components.Background.Id, OffsetX = 720, OffsetY = -350 })
+		components.RightPageButton.OnPressedFunctionName = "BoonManagerChangePage"
+		components.RightPageButton.Direction = "Right"
 	end
 end
 
@@ -414,7 +475,7 @@ function OpenBoonManager()
 		local components = screen.Components
 		screen.Name = "BoonManager"
 		screen.FirstPage = 0
-		screen.LastPage = 2
+		screen.LastPage = 0
 		screen.CurrentPage = screen.FirstPage
 		screen.RowStartX = -350
 		screen.RowStartY = -270
@@ -447,15 +508,6 @@ function OpenBoonManager()
 		Attach({ Id = components.CloseButton.Id, DestinationId = components.Background.Id, OffsetX = 100, OffsetY = ScreenCenterY - 70 })
 		components.CloseButton.OnPressedFunctionName = "CloseBoonManager"
 		components.CloseButton.ControlHotkey = "Cancel"
-		--Page buttons
-		components.LeftPageButton = CreateScreenComponent({ Name = "ButtonCodexLeft", Scale = 0.8, Sound = "/SFX/Menu Sounds/GeneralWhooshMENU", Group = "BoonManager" })
-		Attach({ Id = components.LeftPageButton.Id, DestinationId = components.Background.Id, OffsetX = -480, OffsetY = -350 })
-		components.LeftPageButton.OnPressedFunctionName = "BoonManagerChangePage"
-		components.LeftPageButton.Direction = "Left"
-		components.RightPageButton = CreateScreenComponent({ Name = "ButtonCodexRight", Scale = 0.8, Sound = "/SFX/Menu Sounds/GeneralWhooshMENU", Group = "BoonManager" })
-		Attach({ Id = components.RightPageButton.Id, DestinationId = components.Background.Id, OffsetX = 720, OffsetY = -350 })
-		components.RightPageButton.OnPressedFunctionName = "BoonManagerChangePage"
-		components.RightPageButton.Direction = "Right"
 		--Display the boons
 		local displayedTraits = {}
 		local index = 0
