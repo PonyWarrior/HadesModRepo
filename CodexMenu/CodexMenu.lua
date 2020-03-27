@@ -92,9 +92,9 @@ for key,_ in pairs(CodexMenuData) do
     table.insert(CodexMenuData.GodNames,key)
 end
 
-function CustomInvertTable( tableArg )
+function CustomInvertTable(tableArg)
     local inverseTable = {}
-    for _,value in ipairs( tableArg ) do
+    for _,value in ipairs(tableArg) do
         inverseTable[value]=true
     end
     return inverseTable
@@ -104,7 +104,7 @@ for _,value in ipairs(CodexMenuData.GodNames) do
     CodexMenuData[value.."Inverted"]=CustomInvertTable(CodexMenuData[value])
 end
 
-CodexMenuData.BoonSelector ={Components = {}}
+CodexMenuData.BoonSelector = { Components = {} }
 
 function ChangeBoonSelectorRarity(screen, button)
 	if screen.LockedRarityButton ~= nil and screen.LockedRarityButton ~= button then
@@ -178,12 +178,12 @@ function OpenBoonSelector(godName, spawnBoon)
 		components.Background = CreateScreenComponent({ Name = "BlankObstacle", Group = "BoonSelector" })
 		components.Lighting = CreateScreenComponent({ Name = "BoonSelectLighting", Group = "BoonSelector" })
 		components.FrontFx = CreateScreenComponent({ Name = "BoonSelectInFrontFx", Group = "BoonSelector" })
-		components.BoonIcon = CreateScreenComponent({ Name = "rectangle01", Group = "BoonSelector", X = 182, Y = 160 })
 		local lColor = Color.White
 		if godName == "Duos" then
 			lColor = Color.Green
 		else
 			lColor = LootData[godName].LootColor
+			components.BoonIcon = CreateScreenComponent({ Name = "rectangle01", Group = "BoonSelector", X = 182, Y = 160 })
 			SetAnimation({ DestinationId = components.BoonIcon.Id, Name = LootData[godName].Icon, Scale = 0.5 })
 		end
 		SetColor({ Id = components.Lighting.Id, Color = lColor })
@@ -221,7 +221,7 @@ function OpenBoonSelector(godName, spawnBoon)
 				local offsetX = screen.RowStartX + columnoffset*((index-1) % numperrow)
 				local offsetY = screen.RowStartY + rowoffset*(math.floor((index-1)/numperrow))
 				local color = lColor
-				if CodexMenuData.LegendariesInverted then 
+				if CodexMenuData.LegendariesInverted then
 					if CodexMenuData.LegendariesInverted[boon] then
 						color = Color.BoonPatchLegendary
 					end
@@ -330,7 +330,7 @@ function HandleBoonManagerClick(screen, button)
 			local upgradableTraits = {}
 			local upgradedTraits = {}
 			for i, traitData in pairs( CurrentRun.Hero.Traits ) do
-				if IsGodTrait(traitData.Name, { ForShop = true }) or IsHermesBoon(traitData.Name) or IsChaosBoon(traitData.Name) and TraitData[traitData.Name] and traitData.Rarity ~= nil and GetUpgradedRarity(traitData.Rarity) ~= nil and traitData.RarityLevels[GetUpgradedRarity(traitData.Rarity)] ~= nil then
+				if IsGodTrait(traitData.Name, { ForShop = true }) or IsHermesChaosHammerCharonBoon(traitData.Name) and TraitData[traitData.Name] and traitData.Rarity ~= nil and GetUpgradedRarity(traitData.Rarity) ~= nil and traitData.RarityLevels[GetUpgradedRarity(traitData.Rarity)] ~= nil then
 					if Contains(upgradableTraits, traitData) or traitData.Rarity == "Legendary" then
 					else
 						table.insert(upgradableTraits, traitData )
@@ -403,44 +403,41 @@ end
 
 function BoonManagerLoadPage(screen)
 	BoonManagerPageButtons(screen)
-    local displayedTraits = {}
-    local pageBoons = screen.BoonsList[screen.CurrentPage]
-    if pageBoons then
-        for i, boonData in pairs(pageBoons) do
-            if displayedTraits[boonData.boon.Name] then
-            else
-                local color = Color.White
-                for _,godName in ipairs(CodexMenuData.GodNames) do
-                    if CodexMenuData[godName.."Inverted"] then
-                        if CodexMenuData[godName.."Inverted"][boonData.boon.Name] then
-                            if godName == "Duos" then
-                                color = Color.Green
-								break
+  local displayedTraits = {}
+  local pageBoons = screen.BoonsList[screen.CurrentPage]
+  if pageBoons then
+    for i, boonData in pairs(pageBoons) do
+      if displayedTraits[boonData.boon.Name] then
+      else
+        local color = Color.White
+        for _,godName in ipairs(CodexMenuData.GodNames) do
+          if CodexMenuData[godName.."Inverted"] then
+            if CodexMenuData[godName.."Inverted"][boonData.boon.Name] then
+              if godName == "Duos" then
+                color = Color.Green
 							elseif godName == "Legendaries" then
-                                color = Color.BoonPatchLegendary
-								break
-                            else
-								if LootData[godName] then
-									color = LootData[godName].LootColor
-								end
-                            end
-                        end
-                    end
-                end
-                displayedTraits[boonData.boon.Name] = true
-                local purchaseButtonKey = "PurchaseButton"..boonData.index
-                screen.Components[purchaseButtonKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonManager", Scale = 0.3, })
-                screen.Components[purchaseButtonKey].OnPressedFunctionName = "HandleBoonManagerClick"
-                screen.Components[purchaseButtonKey].Boon = boonData.boon
-                screen.Components[purchaseButtonKey].Index = boonData.index
-                Attach({ Id = screen.Components[purchaseButtonKey].Id, DestinationId = screen.Components.Background.Id, OffsetX = boonData.offsetX, OffsetY = boonData.offsetY })
-                CreateTextBox({ Id = screen.Components[purchaseButtonKey].Id, Text = boonData.boon.Name,
-                    FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = color, Font = "AlegreyaSansSCLight",
-                    ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
-                })
-            end
+	              color = Color.BoonPatchLegendary
+	            end
+						if LootData[godName] then
+							color = LootData[godName].LootColor
+						end
+          end
         end
+      end
+		  displayedTraits[boonData.boon.Name] = true
+		  local purchaseButtonKey = "PurchaseButton"..boonData.index
+		  screen.Components[purchaseButtonKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonManager", Scale = 0.3, })
+		  screen.Components[purchaseButtonKey].OnPressedFunctionName = "HandleBoonManagerClick"
+		  screen.Components[purchaseButtonKey].Boon = boonData.boon
+		  screen.Components[purchaseButtonKey].Index = boonData.index
+		  Attach({ Id = screen.Components[purchaseButtonKey].Id, DestinationId = screen.Components.Background.Id, OffsetX = boonData.offsetX, OffsetY = boonData.offsetY })
+		  CreateTextBox({ Id = screen.Components[purchaseButtonKey].Id, Text = boonData.boon.Name,
+		      FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = color, Font = "AlegreyaSansSCLight",
+		      ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+		  })
+      end
     end
+  end
 end
 
 function BoonManagerPageButtons(screen)
@@ -463,6 +460,11 @@ function BoonManagerPageButtons(screen)
 		components.RightPageButton.OnPressedFunctionName = "BoonManagerChangePage"
 		components.RightPageButton.Direction = "Right"
 	end
+end
+
+function RandomColor(rng)
+	local Color_Collapsed = CollapseTable(Color)
+   return Color_Collapsed[RandomInt(1, #Color_Collapsed, rng)]
 end
 
 function OpenBoonManager()
@@ -513,7 +515,7 @@ function OpenBoonManager()
 		local index = 0
 		screen.BoonsList = {}
 		for i,boon in ipairs(CurrentRun.Hero.Traits) do
-			if IsGodTrait(boon.Name) or IsHermesBoon(boon.Name) or IsChaosBoon(boon.Name) then
+			if IsGodTrait(boon.Name) or IsHermesChaosHammerCharonBoon(boon.Name) then
 				local rowOffset = 100
 				local columnOffset = 300
 				local boonsPerRow = 4
@@ -535,7 +537,7 @@ function OpenBoonManager()
 					offsetY = offsetY,
 				})
 			end
-		end		
+		end
 		BoonManagerLoadPage(screen)
 		--Instructions
 		components.ModeDisplay = CreateScreenComponent({ Name = "BlankObstacle", Group = "BoonManager" })
@@ -588,7 +590,6 @@ function CloseBoonManager(screen, button)
 	DisableShopGamepadCursor()
 	SetConfigOption({ Name = "FreeFormSelectWrapY", Value = false })
 	SetConfigOption({ Name = "UseOcclusion", Value = true })
-	CloseScreen(GetAllIds(screen.Components), 0)
 	CloseScreen(GetAllIds(screen.Components), 0)
 	PlaySound({ Name = "/SFX/Menu Sounds/GeneralWhooshMENU" })
 	ScreenAnchors.BoonManager = nil
@@ -874,12 +875,10 @@ function OpenCustomMirror( args )
 	HandleScreenInput( screen )
 end
 
-function IsHermesBoon(trait)
-	if trait ~= nil then
+function IsHermesBoon(traitName)
+	if traitName ~= nil then
 		for i, loot in pairs (LootData) do
-			if loot.Icon == "BoonSymbolHermes" and loot.TraitIndex[trait.Name] then
-				return true
-			elseif loot.Icon == "BoonSymbolChaos" and loot.TraitIndex[trait.Name] then
+			if loot.Icon == "BoonSymbolHermes" and loot.TraitIndex[traitName] then
 				return true
 			end
 		end
@@ -887,11 +886,68 @@ function IsHermesBoon(trait)
 	end
 end
 
-function IsChaosBoon(trait)
-	if trait ~= nil then
+function IsChaosBoon(traitName)
+	if traitName ~= nil then
 		for i, loot in pairs (LootData) do
-			if loot.Icon == "BoonSymbolChaos" and loot.TraitIndex[trait.Name] then
+			if loot.Icon == "BoonSymbolChaos" and Contains(loot.PermanentTraits, traitName) then
 				return true
+			elseif loot.Icon == "BoonSymbolChaos" and Contains(loot.TemporaryTraits, traitName) then
+				return true
+			end
+		return false
+	end
+end
+
+function IsHammerBoon(traitName)
+	if traitName ~= nil then
+		for i, loot in pairs (LootData) do
+			if loot.Icon == "WeaponUpgradeSymbol" and loot.TraitIndex[traitName] then
+				return true
+			end
+		end
+		return false
+	end
+end
+
+function IsCharonBoon(traitName)
+	if traitName ~= nil then
+		if Contains(StoreData.RoomShop.Traits, traitName) then
+			return true
+		else
+			for i, option in pairs (StoreData.RoomShop.HealingOffers.Options) do
+				if option.Name == traitName then
+					return true
+				end
+			end
+		end
+		return false
+	end
+end
+
+function IsHermesChaosHammerCharonBoon(traitName)
+	if traitName ~= nil then
+		for i, loot in pairs (LootData) do
+			--Hermes
+			if loot.Icon == "BoonSymbolHermes" and loot.TraitIndex[traitName] then
+				return true
+			--Chaos
+			elseif loot.Icon == "BoonSymbolChaos" and Contains(loot.PermanentTraits, traitName) then
+				return true
+			elseif loot.Icon == "BoonSymbolChaos" and Contains(loot.TemporaryTraits, traitName) then
+				return true
+			--Daedalus Hammer
+			elseif loot.Icon == "WeaponUpgradeSymbol" and loot.TraitIndex[traitName] then
+				return true
+			end
+		end
+		--Charon well
+		if Contains(StoreData.RoomShop.Traits, traitName) then
+			return true
+		else
+			for i, option in pairs (StoreData.RoomShop.HealingOffers.Options) do
+				if option.Name == traitName then
+					return true
+				end
 			end
 		end
 		return false
