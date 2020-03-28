@@ -36,7 +36,7 @@ CodexMenuData =
 	{
 		"AresWeaponTrait", "AresRushTrait", "AresRangedTrait", "AresSecondaryTrait" , "AresShoutTrait",
 		"AresRetaliateTrait", "IncreasedDamageTrait", "OnEnemyDeathDamageInstanceBuffTrait", "AresLongCurseTrait",
-		"AresLoadCurseTrait", "AresDragTrait", "AresCursedRiftTrait",
+		"AresLoadCurseTrait", "AresDragTrait", "AresAoETrait", "AresCursedRiftTrait",
 	},
 	DionysusUpgrade =
 	{
