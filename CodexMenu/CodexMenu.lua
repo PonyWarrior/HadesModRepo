@@ -894,6 +894,7 @@ function IsChaosBoon(traitName)
 			elseif loot.Icon == "BoonSymbolChaos" and Contains(loot.TemporaryTraits, traitName) then
 				return true
 			end
+		end
 		return false
 	end
 end
