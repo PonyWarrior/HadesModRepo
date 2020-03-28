@@ -60,15 +60,19 @@ CodexMenuData =
 		"ChaosBlessingMeleeTrait", "ChaosBlessingRangedTrait", "ChaosBlessingAmmoTrait", "ChaosBlessingMaxHealthTrait", "ChaosBlessingBoonRarityTrait",
 		"ChaosBlessingMoneyTrait", "ChaosBlessingMetapointTrait", "ChaosBlessingSecondaryTrait", "ChaosBlessingDashAttackTrait", "ChaosBlessingExtraChanceTrait"
 	},
-	WeaponUpgrade =
-	{
-		SwordWeapon = { "SwordTwoComboTrait", "SwordSecondaryAreaDamageTrait", "SwordHeavySecondStrikeTrait", "SwordThrustWaveTrait", "SwordSecondaryDoubleAttackTrait", "SwordHealthBufferDamageTrait", "SwordDoubleDashAttackTrait", "SwordCriticalTrait", "SwordBackstabTrait", "SwordCursedLifeStealTrait", },
-		BowWeapon = { "BowDoubleShotTrait", "BowLongRangeDamageTrait", "BowSlowChargeDamageTrait", "BowTapFireTrait", "BowPenetrationTrait", "BowPowerShotTrait", "BowSecondaryBarrageTrait", "BowTripleShotTrait", "BowSecondaryFocusedFireTrait", "BowChainShotTrait", },
-		ShieldWeapon = { "ShieldDashAOETrait", "ShieldRushProjectileTrait", "ShieldThrowFastTrait", "ShieldThrowCatchExplode", "ShieldChargeHealthBufferTrait", "ShieldChargeSpeedTrait", "ShieldBashDamageTrait", "ShieldPerfectRushTrait", "ShieldThrowElectiveCharge", "ShieldRushPunchTrait", },
-		SpearWeapon = { "SpearReachAttack", "SpearAutoAttack", "SpearThrowExplode", "SpearThrowBounce", "SpearThrowPenetrate", "SpearThrowCritical", "SpearSpinDamageRadius", "SpearSpinChargeLevelTime", "SpearDashMultiStrike", "SpearThrowElectiveCharge", },
-		GunWeapon = { "GunSlowGrenade", "GunMinigunTrait", "GunShotgunTrait", "GunExplodingSecondaryTrait", "GunGrenadeFastTrait", "GunArmorPenerationTrait", "GunInfiniteAmmoTrait", "GunConsecutiveFireTrait", "GunGrenadeClusterTrait", "GunGrenadeDropTrait", "GunHeavyBulletTrait", },
-		FistWeapon = { "FistReachAttackTrait", "FistDashAttackHealthBufferTrait", "FistTeleportSpecialTrait", "FistDoubleDashSpecialTrait", "FistChargeSpecialTrait", "FistKillTrait", "FistSpecialLandTrait", "FistAttackFinisherTrait", "FistConsecutiveAttackTrait" },
-	},
+	--Hammer boons
+	SwordWeapon = { "SwordTwoComboTrait", "SwordSecondaryAreaDamageTrait", "SwordHeavySecondStrikeTrait", "SwordThrustWaveTrait", "SwordSecondaryDoubleAttackTrait", "SwordHealthBufferDamageTrait", "SwordDoubleDashAttackTrait", "SwordCriticalTrait", "SwordBackstabTrait", "SwordCursedLifeStealTrait", },
+
+	BowWeapon = { "BowDoubleShotTrait", "BowLongRangeDamageTrait", "BowSlowChargeDamageTrait", "BowTapFireTrait", "BowPenetrationTrait", "BowPowerShotTrait", "BowSecondaryBarrageTrait", "BowTripleShotTrait", "BowSecondaryFocusedFireTrait", "BowChainShotTrait", },
+
+	ShieldWeapon = { "ShieldDashAOETrait", "ShieldRushProjectileTrait", "ShieldThrowFastTrait", "ShieldThrowCatchExplode", "ShieldChargeHealthBufferTrait", "ShieldChargeSpeedTrait", "ShieldBashDamageTrait", "ShieldPerfectRushTrait", "ShieldThrowElectiveCharge", "ShieldRushPunchTrait", },
+
+	SpearWeapon = { "SpearReachAttack", "SpearAutoAttack", "SpearThrowExplode", "SpearThrowBounce", "SpearThrowPenetrate", "SpearThrowCritical", "SpearSpinDamageRadius", "SpearSpinChargeLevelTime", "SpearDashMultiStrike", "SpearThrowElectiveCharge", },
+
+	GunWeapon = { "GunSlowGrenade", "GunMinigunTrait", "GunShotgunTrait", "GunExplodingSecondaryTrait", "GunGrenadeFastTrait", "GunArmorPenerationTrait", "GunInfiniteAmmoTrait", "GunConsecutiveFireTrait", "GunGrenadeClusterTrait", "GunGrenadeDropTrait", "GunHeavyBulletTrait", },
+
+	FistWeapon = { "FistReachAttackTrait", "FistDashAttackHealthBufferTrait", "FistTeleportSpecialTrait", "FistDoubleDashSpecialTrait", "FistChargeSpecialTrait", "FistKillTrait", "FistSpecialLandTrait", "FistAttackFinisherTrait", "FistConsecutiveAttackTrait" },
+
 	Legendaries =
 	{
 		"ZeusChargedBoltTrait", "MoreAmmoTrait", "DionysusComboVulnerability", "InstantChillKill", "DoubleCollisionTrait",
@@ -91,8 +95,15 @@ CodexMenuColors =
 {
 	Duos = {210, 255, 97, 255},
 	Legendaries = { 255, 144, 0, 255 },
-	WeaponUpgrade = { 176, 196, 222, 255 },
+	SwordWeapon = { 176, 196, 222, 255 },
+	BowWeapon = { 176, 196, 222, 255 },
+	ShieldWeapon = { 176, 196, 222, 255 },
+	SpearWeapon = { 176, 196, 222, 255 },
+	GunWeapon = { 176, 196, 222, 255 },
+	FistWeapon = { 176, 196, 222, 255 },
 }
+
+SaveIgnores["CodexMenuData"] = true
 
 CodexMenuData.GodNames = {}
 for key,_ in pairs(CodexMenuData) do
@@ -218,7 +229,7 @@ function OpenBoonSelector(godName, spawnBoon)
 		--Display the boons
 		if godName == "WeaponUpgrade" then
 			local wp = GetEquippedWeapon()
-			Boons = CodexMenuData.WeaponUpgrade[wp]
+			Boons = CodexMenuData[wp]
 		end
 		for index, boon in ipairs (Boons) do
 				local purchaseButtonKey = "PurchaseButton"..index
@@ -419,6 +430,7 @@ function BoonManagerLoadPage(screen)
 								color = CodexMenuColors[godName] or LootData[godName].LootColor
 							else
 								color = CodexMenuColors[godName]
+								break
 							end
           end
         end
