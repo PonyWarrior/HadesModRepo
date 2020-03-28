@@ -87,6 +87,13 @@ CodexMenuData =
 	},
 }
 
+CodexMenuColors =
+{
+	Duos = {210, 255, 97, 255},
+	Legendaries = { 255, 144, 0, 255 },
+	WeaponUpgrade = { 176, 196, 222, 255 },
+}
+
 CodexMenuData.GodNames = {}
 for key,_ in pairs(CodexMenuData) do
     table.insert(CodexMenuData.GodNames,key)
@@ -179,12 +186,12 @@ function OpenBoonSelector(godName, spawnBoon)
 		components.Lighting = CreateScreenComponent({ Name = "BoonSelectLighting", Group = "BoonSelector" })
 		components.FrontFx = CreateScreenComponent({ Name = "BoonSelectInFrontFx", Group = "BoonSelector" })
 		local lColor = Color.White
-		if godName == "Duos" then
-			lColor = Color.Green
-		else
-			lColor = LootData[godName].LootColor
+		if LootData[godName] then
+			lColor = LootData[godName].LootColor or CodexMenuColors[godName]
 			components.BoonIcon = CreateScreenComponent({ Name = "rectangle01", Group = "BoonSelector", X = 182, Y = 160 })
 			SetAnimation({ DestinationId = components.BoonIcon.Id, Name = LootData[godName].Icon, Scale = 0.5 })
+		else
+			lColor = CodexMenuColors[godName]
 		end
 		SetColor({ Id = components.Lighting.Id, Color = lColor })
 		SetScale({ Id = components.BackgroundDim.Id, Fraction = 4 })
@@ -221,11 +228,6 @@ function OpenBoonSelector(godName, spawnBoon)
 				local offsetX = screen.RowStartX + columnoffset*((index-1) % numperrow)
 				local offsetY = screen.RowStartY + rowoffset*(math.floor((index-1)/numperrow))
 				local color = lColor
-				if CodexMenuData.LegendariesInverted then
-					if CodexMenuData.LegendariesInverted[boon] then
-						color = Color.BoonPatchLegendary
-					end
-				end
 				components[purchaseButtonKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonSelector", Scale = 0.3, })
 				components[purchaseButtonKey].OnPressedFunctionName = "GiveSelectedBoonToPlayer"
 				components[purchaseButtonKey].Boon = boon
@@ -413,14 +415,11 @@ function BoonManagerLoadPage(screen)
         for _,godName in ipairs(CodexMenuData.GodNames) do
           if CodexMenuData[godName.."Inverted"] then
             if CodexMenuData[godName.."Inverted"][boonData.boon.Name] then
-              if godName == "Duos" then
-                color = Color.Green
-							elseif godName == "Legendaries" then
-	              color = Color.BoonPatchLegendary
-	            end
-						if LootData[godName] then
-							color = LootData[godName].LootColor
-						end
+							if LootData[godName] then
+								color = CodexMenuColors[godName] or LootData[godName].LootColor
+							else
+								color = CodexMenuColors[godName]
+							end
           end
         end
       end
