@@ -739,7 +739,7 @@ function OpenCustomMirror( args )
 		end
 	end
 	-- RefundButton
-	if GameState.Flags.SwapMetaupgradesEnabled then
+	if true then
 		local refundCost = 0
 		local yOffset = 385
 		if GameState.MetaUpgradeStagesUnlocked < 4 then
@@ -814,7 +814,7 @@ function OpenCustomMirror( args )
 			Attach({ Id = components[lockIconKey].Id, DestinationId = components[itemBackingKey].Id, OffsetX = 345, OffsetY = -35 })
 			SetAnimation({ Name = "LockedIcon", DestinationId = components[lockIconKey].Id, Scale = 1.0 })
 		else
-			CreateMetaUpgradeEntry( { Screen = screen, Components = components, Data = upgradeData, Index = k, OffsetY = itemLocationY, Swap = GameState.Flags.SwapMetaupgradesEnabled } )
+			CreateMetaUpgradeEntry( { Screen = screen, Components = components, Data = upgradeData, Index = k, OffsetY = itemLocationY, Swap = true } )
 
 			if not firstUseable and not screen.ReadOnly then
 				TeleportCursor({ OffsetX = itemLocationX + LevelUpUI.RightArrowOffsetX, OffsetY = itemLocationY + LevelUpUI.RightArrowOffsetY })
@@ -894,6 +894,7 @@ function IsChaosBoon(traitName)
 			elseif loot.Icon == "BoonSymbolChaos" and Contains(loot.TemporaryTraits, traitName) then
 				return true
 			end
+		end
 		return false
 	end
 end
@@ -1028,6 +1029,8 @@ OnControlPressed{ "Codex",
 		wait(0.5)
 		--set to false for public version
 		local debug = false
+		--Avoid early game crash
+		if not GameState.Resources.MetaPoints then GameState.Resources.MetaPoints = 0 end
 		--Boons
 		if CodexStatus.SelectedChapterName == "OlympianGods" then
 			if debug then
