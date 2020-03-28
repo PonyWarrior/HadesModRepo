@@ -61,6 +61,8 @@ CodexMenuData =
 		"ChaosBlessingMoneyTrait", "ChaosBlessingMetapointTrait", "ChaosBlessingSecondaryTrait", "ChaosBlessingDashAttackTrait", "ChaosBlessingExtraChanceTrait"
 	},
 	--Hammer boons
+	WeaponUpgrade = {},
+
 	SwordWeapon = { "SwordTwoComboTrait", "SwordSecondaryAreaDamageTrait", "SwordHeavySecondStrikeTrait", "SwordThrustWaveTrait", "SwordSecondaryDoubleAttackTrait", "SwordHealthBufferDamageTrait", "SwordDoubleDashAttackTrait", "SwordCriticalTrait", "SwordBackstabTrait", "SwordCursedLifeStealTrait", },
 
 	BowWeapon = { "BowDoubleShotTrait", "BowLongRangeDamageTrait", "BowSlowChargeDamageTrait", "BowTapFireTrait", "BowPenetrationTrait", "BowPowerShotTrait", "BowSecondaryBarrageTrait", "BowTripleShotTrait", "BowSecondaryFocusedFireTrait", "BowChainShotTrait", },
@@ -138,6 +140,9 @@ function GiveSelectedBoonToPlayer(screen, button)
 		local isLegendary = false
 		local isDuo = false
 		local isConsumable = false
+		if IsWeaponTrait(button.Boon) then
+			RemoveSameSlotWeapon(button.Boon)
+		end
 		for i, trait in pairs (CodexMenuData.Legendaries) do
 			if button.Boon == trait then
 				isLegendary = true
@@ -230,6 +235,7 @@ function OpenBoonSelector(godName, spawnBoon)
 		if godName == "WeaponUpgrade" then
 			local wp = GetEquippedWeapon()
 			Boons = CodexMenuData[wp]
+			lColor = CodexMenuColors[wp]
 		end
 		for index, boon in ipairs (Boons) do
 				local purchaseButtonKey = "PurchaseButton"..index
@@ -884,6 +890,46 @@ function OpenCustomMirror( args )
 	screen.KeepOpen = true
 	thread( HandleWASDInput, screen )
 	HandleScreenInput( screen )
+end
+
+function IsWeaponTrait(traitName)
+	if traitName ~= nil then
+		if string.match(traitName, "WeaponTrait") then
+			return true
+		elseif string.match(traitName, "RangedTrait") then
+			return true
+		elseif string.match(traitName, "SecondaryTrait") then
+			return true
+		elseif string.match(traitName, "RushTrait") then
+			return true
+		elseif string.match(traitName, "ShoutTrait") then
+			return true
+		else
+			return false
+		end
+	end
+end
+
+function RemoveSameSlotWeapon(traitName)
+	local weaponType
+	if string.match(traitName, "WeaponTrait") then
+		weaponType = "WeaponTrait"
+	elseif string.match(traitName, "RangedTrait") then
+		weaponType = "RangedTrait"
+	elseif string.match(traitName, "SecondaryTrait") then
+		weaponType = "SecondaryTrait"
+	elseif string.match(traitName, "RushTrait") then
+		weaponType = "RushTrait"
+	elseif string.match(traitName, "ShoutTrait") then
+		weaponType = "ShoutTrait"
+	else
+		return
+	end
+	for i, traitData in pairs (CurrentRun.Hero.Traits) do
+		if string.match(traitData.Name, weaponType) then
+			RemoveWeaponTrait(traitData.Name)
+		end
+	end
 end
 
 function IsHermesBoon(traitName)
