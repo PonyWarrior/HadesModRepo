@@ -60,3 +60,12 @@ Feature "Save State (Orpheus)" now saves Weapon, Weapon aspect, Keepsake and Ass
 1.5.0
 Fixed "Upgrade all boons rarity (Eurydice)" not upgrading Hermes or Chaos boons
 Reworked feature "Open mirror of night (Nyx)" now opens a custom mirror with free upgrades, unlock and refund
+
+2.0.0
+Massive overhaul, how many features work has been changed
+All (gods, chaos and hammer) entries now use the [Boon selector]
+Removed feature "Upgrade all boons rarity (Eurydice)"
+Added feature "Open Boon Manager (Eurydice)"
+Added feature "Show all duo boons (Dusa)"
+Added feature "Show all hammer upgrades for current weapon (Daedalus Hammer)"
+Switching weapon now also opens the aspect menu
