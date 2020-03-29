@@ -1228,7 +1228,12 @@ OnControlPressed{ "Codex",
 					--Save state
 					if CurrentRun.Hero.Traits ~= nil then
 						local wp = GetEquippedWeapon()
-						GameState.CodexMenuSavedState = { Traits = {}, Weapon = wp, Aspect = { Name = GetWeaponUpgradeTrait(wp, GameState.LastWeaponUpgradeData[wp].Index), Rarity = GetRarityKey(GetWeaponUpgradeLevel(wp, GetEquippedWeaponTraitIndex(wp))) }, Keepsake = GameState.LastAwardTrait, Assist = GameState.LastAssistTrait, }
+						if GameState.LastInteractedWeaponUpgrade ~= nil and GetWeaponUpgradeTrait( GameState.LastInteractedWeaponUpgrade.WeaponName, GameState.LastInteractedWeaponUpgrade.ItemIndex ) ~= nil then
+							GameState.CodexMenuSavedState = { Traits = {}, Weapon = wp, Aspect = { Name = GetWeaponUpgradeTrait(wp, GameState.LastWeaponUpgradeData[wp].Index), Rarity = GetRarityKey(GetWeaponUpgradeLevel(wp, GetEquippedWeaponTraitIndex(wp))) }, Keepsake = GameState.LastAwardTrait, Assist = GameState.LastAssistTrait, }
+						else
+							GameState.CodexMenuSavedState = { Traits = {}, Weapon = wp, Keepsake = GameState.LastAwardTrait, Assist = GameState.LastAssistTrait, }
+							GameState.CodexMenuSavedState.Aspect = { Name = nil, Rarity = nil}
+						end
 						for i, traitData in pairs( CurrentRun.Hero.Traits ) do
 							if traitData.Name ~= GameState.CodexMenuSavedState.Weapon and traitData.Name ~= GameState.CodexMenuSavedState.Aspect.Name
 							and traitData.Name ~= GameState.CodexMenuSavedState.Keepsake and traitData.Name ~= GameState.CodexMenuSavedState.Assist then
@@ -1247,7 +1252,9 @@ OnControlPressed{ "Codex",
 						EquipPlayerWeapon( WeaponData[GameState.CodexMenuSavedState.Weapon], { PreLoadBinks = true } )
 						EquipKeepsake(CurrentRun.Hero, GameState.CodexMenuSavedState.Keepsake)
 						EquipAssist(CurrentRun.Hero, GameState.CodexMenuSavedState.Assist)
-						AddTraitToHero({ TraitName = GameState.CodexMenuSavedState.Aspect.Name, Rarity = GameState.CodexMenuSavedState.Aspect.Rarity })
+						if GameState.CodexMenuSavedState.Aspect.Name ~= nil then
+							AddTraitToHero({ TraitName = GameState.CodexMenuSavedState.Aspect.Name, Rarity = GameState.CodexMenuSavedState.Aspect.Rarity })
+						end
 						for i, traitData in pairs( GameState.CodexMenuSavedState.Traits ) do
 							AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = traitData.Name, Rarity = traitData.Rarity }) })
 						end
