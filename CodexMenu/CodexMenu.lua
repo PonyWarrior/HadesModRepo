@@ -112,16 +112,6 @@ for key,_ in pairs(CodexMenuData) do
     table.insert(CodexMenuData.GodNames,key)
 end
 
-local function doIncreaseSkellyHealth()
-    ModUtil.MapSetTable( UnitSetData.Enemies.TrainingMelee, {
-            MaxHealth = 100000,
-    })
-    doIncreaseSkellyHealth = function() end
-end
-
-OnAnyLoad{
-     doIncreaseSkellyHealth
-}
 function CustomInvertTable(tableArg)
     local inverseTable = {}
     for _,value in ipairs(tableArg) do
