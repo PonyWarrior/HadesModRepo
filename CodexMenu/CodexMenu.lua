@@ -893,7 +893,7 @@ function OpenCustomMirror( args )
 end
 
 function IsWeaponTrait(traitName)
-	if traitName ~= nil then
+	if traitName ~= nil and not IsHermesChaosHammerCharonBoon(traitName) then
 		if string.match(traitName, "WeaponTrait") then
 			return true
 		elseif string.match(traitName, "RangedTrait") then
