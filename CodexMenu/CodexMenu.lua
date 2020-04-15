@@ -926,7 +926,7 @@ function RemoveSameSlotWeapon(traitName)
 		return
 	end
 	for i, traitData in pairs (CurrentRun.Hero.Traits) do
-		if string.match(traitData.Name, weaponType) then
+		if string.match(traitData.Name, weaponType) and not IsHermesChaosHammerCharonBoon(traitData.Name) then
 			RemoveWeaponTrait(traitData.Name)
 		end
 	end
