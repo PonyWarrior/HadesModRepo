@@ -69,3 +69,8 @@ Added feature "Open Boon Manager (Eurydice)"
 Added feature "Show all duo boons (Dusa)"
 Added feature "Show all hammer upgrades for current weapon (Daedalus Hammer)"
 Switching weapon now also opens the aspect menu
+
+2.0.1
+Fix a crash when trying to save a state without a weapon aspect
+Fix hchc boons removing equipped weapon boons
+Fix hchc boons removed when changing weapon boon
