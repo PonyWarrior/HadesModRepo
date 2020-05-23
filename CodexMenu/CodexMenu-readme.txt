@@ -74,3 +74,6 @@ Switching weapon now also opens the aspect menu
 Fix a crash when trying to save a state without a weapon aspect
 Fix hchc boons removing equipped weapon boons
 Fix hchc boons removed when changing weapon boon
+
+2.0.2
+Add modfile.txt for compatibility with modimporter
