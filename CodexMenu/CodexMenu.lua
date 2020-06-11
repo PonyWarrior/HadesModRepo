@@ -440,14 +440,27 @@ function BoonManagerLoadPage(screen)
         end
       end
 		  displayedTraits[boonData.boon.Name] = true
-		  local purchaseButtonKey = "PurchaseButton"..boonData.index
-		  screen.Components[purchaseButtonKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonManager", Scale = 0.3, })
+			local purchaseButtonKeyBG = "PurchaseButtonBG"..boonData.index
+			screen.Components[purchaseButtonKeyBG] = CreateScreenComponent({ Name = "rectangle01", Group = "BoonManager", Scale = 0.28, })
+			screen.Components[purchaseButtonKeyBG].IsBackground = true
+			screen.Components[purchaseButtonKeyBG].Boon = boonData.boon
+			boonData.boon.LevelButton = screen.Components[purchaseButtonKeyBG]
+			CreateTextBox({ Id = screen.Components[purchaseButtonKeyBG].Id, Text = boonData.boon.Level,
+					FontSize = 18, OffsetX = 110, OffsetY = 15, Width = 720, Color = Color.White, Font = "AlegreyaSansSCLight",
+					ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+			})
+			SetColor({ Id = screen.Components[purchaseButtonKeyBG].Id, Color = Color["BoonPatch"..boonData.boon.Rarity]})
+			SetScaleX({ Id = screen.Components[purchaseButtonKeyBG].Id, Fraction = 2})
+			Attach({ Id = screen.Components[purchaseButtonKeyBG].Id, DestinationId = screen.Components.Background.Id, OffsetX = boonData.offsetX, OffsetY = boonData.offsetY })
+			local purchaseButtonKey = "PurchaseButton"..boonData.index
+			screen.Components[purchaseButtonKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonManager", Scale = 0.3, })
 		  screen.Components[purchaseButtonKey].OnPressedFunctionName = "HandleBoonManagerClick"
 		  screen.Components[purchaseButtonKey].Boon = boonData.boon
 		  screen.Components[purchaseButtonKey].Index = boonData.index
+			screen.Components[purchaseButtonKey].Background = screen.Components[purchaseButtonKeyBG]
 		  Attach({ Id = screen.Components[purchaseButtonKey].Id, DestinationId = screen.Components.Background.Id, OffsetX = boonData.offsetX, OffsetY = boonData.offsetY })
 		  CreateTextBox({ Id = screen.Components[purchaseButtonKey].Id, Text = boonData.boon.Name,
-		      FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = color, Font = "AlegreyaSansSCLight",
+		      FontSize = 22, OffsetX = 0, OffsetY = -5, Width = 720, Color = color, Font = "AlegreyaSansSCLight",
 		      ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
 		  })
       end
