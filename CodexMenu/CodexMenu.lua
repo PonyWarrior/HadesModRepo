@@ -373,8 +373,8 @@ function HandleBoonManagerClick(screen, button)
 	else
 		--Individual mode
 		if screen.Mode == "Level" then
-			if GetTraitNameCount(CurrentRun.Hero, button.Boon.Name) < 10 then
-				AddTraitToHero({ TraitName = button.Boon.Name })
+			if GetTraitNameCount(CurrentRun.Hero, button.Boon.Name) < 10 and TraitData[button.Boon.Name] and IsGameStateEligible(CurrentRun, TraitData[button.Boon.Name]) then
+				AddTraitToHero({TraitName = button.Boon.Name})
 			end
 			return
 		elseif screen.Mode == "Rarity" then
