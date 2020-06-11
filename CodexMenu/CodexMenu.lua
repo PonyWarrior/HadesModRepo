@@ -624,6 +624,7 @@ function CloseBoonManager(screen, button)
 	UnfreezePlayerUnit()
 	screen.KeepOpen = false
 	screen.BoonsList = {}
+	ReloadAllTraits()
 	OnScreenClosed({ Flag = screen.Name })
 end
 
