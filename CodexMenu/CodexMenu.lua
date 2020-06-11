@@ -150,6 +150,7 @@ function GiveSelectedBoonToPlayer(screen, button)
 		end
 		if isLegendary then
 			AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon, Rarity = "Legendary" }) })
+			LockChoice(screen.Components, button)
 			return
 		end
 		for i, trait in pairs (CodexMenuData.Duos) do
@@ -159,6 +160,7 @@ function GiveSelectedBoonToPlayer(screen, button)
 		end
 		if isDuo then
 			AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon, Rarity = "Duo" }) })
+			LockChoice(screen.Components, button)
 			return
 		end
 		for i, trait in pairs (CodexMenuData.Consumables) do
@@ -169,10 +171,24 @@ function GiveSelectedBoonToPlayer(screen, button)
 		if isConsumable then
 			local consumableId = SpawnObstacle({ Name = button.Boon, DestinationId = CurrentRun.Hero.ObjectId, Group = "Standing" })
 			local consumable = CreateConsumableItemFromData( consumableId, ConsumableData[button.Boon], 0 )
+			LockChoice(screen.Components, button)
 			return
 		end
 			AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon, Rarity = screen.Rarity }) })
+			LockChoice(screen.Components, button)
 	end
+end
+
+function LockChoice(components, button)
+	local purchaseButtonKeyLock = tostring(button).."Lock"
+	components[purchaseButtonKeyLock] = CreateScreenComponent({ Name = "BlankObstacle", Group = "BoonSelector", Scale = 0.3 })
+	CreateTextBox({ Id = components[purchaseButtonKeyLock].Id, Text = button.Boon,
+		FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = Color.DarkGray, Font = "AlegreyaSansSCLight",
+		ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+	})
+	Attach({Id = components[purchaseButtonKeyLock].Id, DestinationId = components.Background.Id, OffsetX = button.X, OffsetY = button.Y })
+	Destroy({Id = button.Id})
+	SetAnimation({ DestinationId = components[purchaseButtonKeyLock].Id, Name = "BoonSlotLocked" })
 end
 
 function OpenBoonSelector(godName, spawnBoon)
@@ -245,14 +261,27 @@ function OpenBoonSelector(godName, spawnBoon)
 				local offsetX = screen.RowStartX + columnoffset*((index-1) % numperrow)
 				local offsetY = screen.RowStartY + rowoffset*(math.floor((index-1)/numperrow))
 				local color = lColor
-				components[purchaseButtonKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonSelector", Scale = 0.3, })
-				components[purchaseButtonKey].OnPressedFunctionName = "GiveSelectedBoonToPlayer"
-				components[purchaseButtonKey].Boon = boon
-				Attach({ Id = components[purchaseButtonKey].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
-				CreateTextBox({ Id = components[purchaseButtonKey].Id, Text = boon,
-					FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = color, Font = "AlegreyaSansSCLight",
-					ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
-				})
+				local lockColor = Color.White
+				if HeroHasTrait(boon) then
+					components[purchaseButtonKey] = CreateScreenComponent({ Name = "BlankObstacle", Group = "BoonSelector", Scale = 0.3, })
+					Attach({ Id = components[purchaseButtonKey].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
+					CreateTextBox({ Id = components[purchaseButtonKey].Id, Text = boon,
+						FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = Color.DarkGray, Font = "AlegreyaSansSCLight",
+						ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+					})
+					SetAnimation({DestinationId = components[purchaseButtonKey].Id, Name = "BoonSlotLocked" })
+				else
+					components[purchaseButtonKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonSelector", Scale = 0.3, })
+					components[purchaseButtonKey].OnPressedFunctionName = "GiveSelectedBoonToPlayer"
+					components[purchaseButtonKey].Boon = boon
+					components[purchaseButtonKey].X = offsetX
+					components[purchaseButtonKey].Y = offsetY
+					Attach({ Id = components[purchaseButtonKey].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
+					CreateTextBox({ Id = components[purchaseButtonKey].Id, Text = boon,
+						FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = color, Font = "AlegreyaSansSCLight",
+						ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+					})
+				end
 		end
 		--Spawn boon object button
 		if spawnBoon then
