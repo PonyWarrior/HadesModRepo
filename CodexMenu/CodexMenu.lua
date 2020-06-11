@@ -346,11 +346,32 @@ function ChangeBoonManagerMode(screen, button)
 		return
 	end
 	if screen.LockedModeButton ~= nil and screen.LockedModeButton ~= button then
-		ModifyTextBox({ Id = screen.LockedModeButton.Id, Text = screen.LockedModeButton.Mode.." Mode" })
+		ModifyTextBox({ Id = screen.LockedModeButton.Id, Text = screen.LockedModeButton.Mode.." Mode"..(screen.LockedModeButton.Icon or "") })
+	elseif screen.LockedModeButton ~= nil and screen.LockedModeButton == button then
+		-- Switch add or subtract submode (does nothing for Delete mode)
+		if button.Add == false then
+			button.Substract = false
+			button.Add = true
+			button.Icon = "(+)"
+		else
+			button.Add = false
+			button.Substract = true
+			button.Icon = "(-)"
+		end
 	end
 	screen.Mode = button.Mode
 	screen.LockedModeButton = button
-	ModifyTextBox({ Id = button.Id, Text = ">>"..button.Mode.." Mode<<" })
+	ModifyTextBox({ Id = button.Id, Text = ">>"..button.Mode.." Mode"..(button.Icon or "").."<<" })
+end
+
+function GetDowngradedRarity(baseRarity)
+	local rarityTable =
+	{
+		Rare = "Common",
+		Epic = "Rare",
+		Heroic = "Epic",
+	}
+	return rarityTable[baseRarity]
 end
 
 function HandleBoonManagerClick(screen, button)
@@ -359,7 +380,7 @@ function HandleBoonManagerClick(screen, button)
 	end
 	--All mode
 	if screen.AllMode ~= nil and screen.AllMode then
-		if screen.Mode == "Level" then
+		if screen.Mode == "Level" and screen.LockedModeButton.Add == true then
 			local upgradableTraits = {}
 			local upgradedTraits = {}
 			for i, traitData in pairs(CurrentRun.Hero.Traits) do
@@ -371,7 +392,7 @@ function HandleBoonManagerClick(screen, button)
 					for _, levelbutton in pairs(screen.Components) do
 						if levelbutton.IsBackground and levelbutton.Boon == traitData then
 							levelbutton.Boon.Level = levelbutton.Boon.Level + 1
-							ModifyTextBox({Id = levelbutton.Id, Text = levelbutton.Boon.Level})
+							ModifyTextBox({Id = levelbutton.Id, Text = "Lv. "..levelbutton.Boon.Level})
 						end
 					end
 				end
@@ -382,6 +403,26 @@ function HandleBoonManagerClick(screen, button)
 				AddTraitToHero({ TraitName = name })
 			end
 			return
+		-- elseif screen.Mode == "Level" and screen.LockedModeButton.Substract == true then
+		-- 	for i, traitData in pairs(CurrentRun.Hero.Traits) do
+		-- 		screen.Traits = CurrentRun.Hero.Traits
+		-- 		local numTraits = GetTraitNameCount(screen, traitData.Name)
+		-- 		if numTraits > 1 and IsGodTrait(traitData.Name) and TraitData[traitData.Name] and IsGameStateEligible(CurrentRun, TraitData[traitData.Name]) and traitData.Rarity ~= "Legendary" then
+		-- 			numTraits = numTraits - 1
+		-- 			RemoveWeaponTrait(traitData.Name)
+		-- 			AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = traitData.Name, Rarity = traitData.Rarity }) })
+		-- 			for i=1, numTraits-1 do
+		-- 				AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = traitData.Name, Rarity = traitData.Rarity }) })
+		-- 			end
+		-- 			for _, levelbutton in pairs(screen.Components) do
+		-- 				if levelbutton.IsBackground and levelbutton.Boon == traitData then
+		-- 					levelbutton.Boon.Level = levelbutton.Boon.Level - 1
+		-- 					ModifyTextBox({Id = levelbutton.Id, Text = "Lv. "..levelbutton.Boon.Level})
+		-- 				end
+		-- 			end
+		-- 		end
+		-- 	end
+		-- 	return
 		elseif screen.Mode == "Rarity" then
 			local upgradableTraits = {}
 			local upgradedTraits = {}
@@ -413,14 +454,30 @@ function HandleBoonManagerClick(screen, button)
 		end
 	else
 		--Individual mode
-		if screen.Mode == "Level" then
+		if screen.Mode == "Level" and screen.LockedModeButton.Add == true then
 			if GetTraitNameCount(CurrentRun.Hero, button.Boon.Name) < 10 and TraitData[button.Boon.Name] and IsGameStateEligible(CurrentRun, TraitData[button.Boon.Name]) then
 				AddTraitToHero({TraitName = button.Boon.Name})
 				button.Boon.Level = button.Boon.Level + 1
-				ModifyTextBox({Id = button.Background.Id, Text = button.Boon.Level})
+				ModifyTextBox({Id = button.Background.Id, Text = "Lv. "..button.Boon.Level})
 			end
 			return
-		elseif screen.Mode == "Rarity" then
+		elseif screen.Mode == "Level" and screen.LockedModeButton.Substract == true then
+			if GetTraitNameCount(CurrentRun.Hero, button.Boon.Name) > 1 and TraitData[button.Boon.Name] and IsGameStateEligible(CurrentRun, TraitData[button.Boon.Name]) then
+				local numOldTrait = GetTraitNameCount(CurrentRun.Hero, button.Boon.Name)
+				if numOldTrait > 10 then
+					numOldTrait = 10
+				end
+				numOldTrait = numOldTrait - 1
+				RemoveWeaponTrait(button.Boon.Name)
+				AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon.Name, Rarity = button.Boon.Rarity }) })
+				for i=1, numOldTrait-1 do
+					AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon.Name, Rarity = button.Boon.Rarity }) })
+				end
+				button.Boon.Level = button.Boon.Level - 1
+				ModifyTextBox({Id = button.Background.Id, Text = "Lv. "..button.Boon.Level})
+			end
+			return
+		elseif screen.Mode == "Rarity" and screen.LockedModeButton.Add == true then
 			if IsGodTrait(button.Boon.Name, { ForShop = true }) and TraitData[button.Boon.Name] and button.Boon.Rarity ~= nil and GetUpgradedRarity(button.Boon.Rarity) ~= nil and button.Boon.RarityLevels[GetUpgradedRarity(button.Boon.Rarity)] ~= nil then
 				local numOldTrait = GetTraitNameCount(CurrentRun.Hero, button.Boon.Name)
 				if numOldTrait > 10 then
@@ -428,6 +485,22 @@ function HandleBoonManagerClick(screen, button)
 				end
 				RemoveWeaponTrait(button.Boon.Name)
 				button.Boon.Rarity = GetUpgradedRarity(button.Boon.Rarity)
+				SetColor({Id = button.Background.Id, Color = Color["BoonPatch"..button.Boon.Rarity]})
+				AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon.Name, Rarity = button.Boon.Rarity }) })
+				for i=1, numOldTrait-1 do
+					AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon.Name, Rarity = button.Boon.Rarity }) })
+				end
+				ReloadAllTraits()
+			end
+			return
+		elseif screen.Mode == "Rarity" and screen.LockedModeButton.Substract == true then
+			if IsGodTrait(button.Boon.Name, { ForShop = true }) and TraitData[button.Boon.Name] and button.Boon.Rarity ~= nil and GetDowngradedRarity(button.Boon.Rarity) ~= nil and button.Boon.RarityLevels[GetDowngradedRarity(button.Boon.Rarity)] ~= nil then
+				local numOldTrait = GetTraitNameCount(CurrentRun.Hero, button.Boon.Name)
+				if numOldTrait > 10 then
+					numOldTrait = 10
+				end
+				RemoveWeaponTrait(button.Boon.Name)
+				button.Boon.Rarity = GetDowngradedRarity(button.Boon.Rarity)
 				SetColor({Id = button.Background.Id, Color = Color["BoonPatch"..button.Boon.Rarity]})
 				AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon.Name, Rarity = button.Boon.Rarity }) })
 				for i=1, numOldTrait-1 do
@@ -491,8 +564,8 @@ function BoonManagerLoadPage(screen)
 			screen.Components[purchaseButtonKeyBG].IsBackground = true
 			screen.Components[purchaseButtonKeyBG].Boon = boonData.boon
 			boonData.boon.LevelButton = screen.Components[purchaseButtonKeyBG]
-			CreateTextBox({ Id = screen.Components[purchaseButtonKeyBG].Id, Text = boonData.boon.Level,
-					FontSize = 18, OffsetX = 110, OffsetY = 15, Width = 720, Color = Color.White, Font = "AlegreyaSansSCLight",
+			CreateTextBox({ Id = screen.Components[purchaseButtonKeyBG].Id, Text = "Lv. "..boonData.boon.Level,
+					FontSize = 15, OffsetX = 95, OffsetY = 16, Width = 720, Color = Color.White, Font = "AlegreyaSansSCLight",
 					ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
 			})
 			SetColor({ Id = screen.Components[purchaseButtonKeyBG].Id, Color = Color["BoonPatch"..boonData.boon.Rarity]})
@@ -625,20 +698,29 @@ function OpenBoonManager()
 			FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = lColor, Font = "AlegreyaSansSCLight",
 			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
 		})
+		CreateTextBox({ Id = components.ModeDisplay.Id, Text = "Click Level Mode or Rarity Mode again to switch Add(+) and Substract(-) submodes",
+		FontSize = 19, OffsetX = 0, OffsetY = 30, Width = 840, Color = Color.SubTitle, Font = "CrimsonTextItalic",
+		ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
 		--Mode Buttons
 		components.LevelModeButton = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonManager", Scale = 0.3, })
 		components.LevelModeButton.OnPressedFunctionName = "ChangeBoonManagerMode"
 		components.LevelModeButton.Mode = "Level"
+		components.LevelModeButton.Add = true
+		components.LevelModeButton.Substract = false
+		components.LevelModeButton.Icon = "(+)"
 		Attach({ Id = components.LevelModeButton.Id, DestinationId = components.Background.Id, OffsetX = -350, OffsetY = 300 })
-		CreateTextBox({ Id = components.LevelModeButton.Id, Text = "Level Mode",
+		CreateTextBox({ Id = components.LevelModeButton.Id, Text = "Level Mode(+)",
 			FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = Color.White, Font = "AlegreyaSansSCLight",
 			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
 		})
 		components.RarityModeButton = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonManager", Scale = 0.3, })
 		components.RarityModeButton.OnPressedFunctionName = "ChangeBoonManagerMode"
 		components.RarityModeButton.Mode = "Rarity"
+		components.RarityModeButton.Add = true
+		components.RarityModeButton.Substract = false
+		components.RarityModeButton.Icon = "(+)"
 		Attach({ Id = components.RarityModeButton.Id, DestinationId = components.Background.Id, OffsetX = -50, OffsetY = 300 })
-		CreateTextBox({ Id = components.RarityModeButton.Id, Text = "Rarity Mode",
+		CreateTextBox({ Id = components.RarityModeButton.Id, Text = "Rarity Mode(+)",
 			FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = Color.White, Font = "AlegreyaSansSCLight",
 			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
 		})
