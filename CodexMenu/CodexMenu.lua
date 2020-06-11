@@ -343,7 +343,6 @@ function HandleBoonManagerClick(screen, button)
 				upgradedTraits[name] = true
 				AddTraitToHero({ TraitName = name, SkipUIUpdate = true })
 			end
-			ReloadAllTraits()
 			return
 		elseif screen.Mode == "Rarity" then
 			local upgradableTraits = {}
@@ -362,7 +361,6 @@ function HandleBoonManagerClick(screen, button)
 				RemoveWeaponTrait(traitData.Name)
 				AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = traitData.Name, Rarity = "Heroic" }) })
 			end
-			ReloadAllTraits()
 			return
 		elseif screen.Mode == "Delete" then
 				RemoveAllTraits()
