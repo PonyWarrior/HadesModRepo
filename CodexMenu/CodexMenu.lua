@@ -334,14 +334,23 @@ function HandleBoonManagerClick(screen, button)
 			local upgradableTraits = {}
 			local upgradedTraits = {}
 			for i, traitData in pairs(CurrentRun.Hero.Traits) do
-				if IsGodTrait(traitData.Name) and GetTraitNameCount(CurrentRun.Hero, button.Boon.Name) < 10 and TraitData[traitData.Name] and IsGameStateEligible(CurrentRun, TraitData[traitData.Name]) and traitData.Rarity ~= "Legendary" then
+				screen.Traits = CurrentRun.Hero.Traits
+				local numTraits = GetTraitNameCount(screen, traitData.Name)
+				--local totalNumTraits = GetTotalTraitCount(screen)
+				if numTraits < 10 and IsGodTrait(traitData.Name) and TraitData[traitData.Name] and IsGameStateEligible(CurrentRun, TraitData[traitData.Name]) and traitData.Rarity ~= "Legendary" then
 					upgradableTraits[traitData.Name] = true
+					for _, levelbutton in pairs(screen.Components) do
+						if levelbutton.IsBackground and levelbutton.Boon == traitData then
+							levelbutton.Boon.Level = levelbutton.Boon.Level + 1
+							ModifyTextBox({Id = levelbutton.Id, Text = levelbutton.Boon.Level})
+						end
+					end
 				end
 			end
 			while not IsEmpty(upgradableTraits) do
 				local name = RemoveRandomKey(upgradableTraits)
 				upgradedTraits[name] = true
-				AddTraitToHero({ TraitName = name, SkipUIUpdate = true })
+				AddTraitToHero({ TraitName = name })
 			end
 			return
 		elseif screen.Mode == "Rarity" then
@@ -353,6 +362,11 @@ function HandleBoonManagerClick(screen, button)
 					else
 						table.insert(upgradableTraits, traitData )
 					end
+				end
+			end
+			for _, colorButton in pairs(screen.Components) do
+				if colorButton.IsBackground == true and colorButton.Boon.Rarity ~= "Legendary" then
+					SetColor({Id = colorButton.Id, Color = Color.BoonPatchHeroic})
 				end
 			end
 			while not IsEmpty(upgradableTraits) do
@@ -373,6 +387,8 @@ function HandleBoonManagerClick(screen, button)
 		if screen.Mode == "Level" then
 			if GetTraitNameCount(CurrentRun.Hero, button.Boon.Name) < 10 and TraitData[button.Boon.Name] and IsGameStateEligible(CurrentRun, TraitData[button.Boon.Name]) then
 				AddTraitToHero({TraitName = button.Boon.Name})
+				button.Boon.Level = button.Boon.Level + 1
+				ModifyTextBox({Id = button.Background.Id, Text = button.Boon.Level})
 			end
 			return
 		elseif screen.Mode == "Rarity" then
@@ -383,6 +399,7 @@ function HandleBoonManagerClick(screen, button)
 				end
 				RemoveWeaponTrait(button.Boon.Name)
 				button.Boon.Rarity = GetUpgradedRarity(button.Boon.Rarity)
+				SetColor({Id = button.Background.Id, Color = Color["BoonPatch"..button.Boon.Rarity]})
 				AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon.Name, Rarity = button.Boon.Rarity }) })
 				for i=1, numOldTrait-1 do
 					AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon.Name, Rarity = button.Boon.Rarity }) })
@@ -543,27 +560,32 @@ function OpenBoonManager()
 		local index = 0
 		screen.BoonsList = {}
 		for i,boon in ipairs(CurrentRun.Hero.Traits) do
-			if IsGodTrait(boon.Name) or IsHermesChaosHammerCharonBoon(boon.Name) then
-				local rowOffset = 100
-				local columnOffset = 300
-				local boonsPerRow = 4
-				local rowsPerPage = 4
-				local rowIndex = math.floor(index/boonsPerRow)
-				local pageIndex = math.floor(rowIndex/rowsPerPage)
-				local offsetX = screen.RowStartX + columnOffset*(index % boonsPerRow)
-				local offsetY = screen.RowStartY + rowOffset*(rowIndex % rowsPerPage)
-				index = index + 1
-				screen.LastPage = pageIndex
-				if screen.BoonsList[pageIndex] == nil then
-				   screen.BoonsList[pageIndex] = {}
+			if Contains(displayedTraits, boon.Name) then
+			else
+				if IsGodTrait(boon.Name) or IsHermesChaosHammerCharonBoon(boon.Name) then
+					table.insert(displayedTraits, boon.Name)
+					local rowOffset = 100
+					local columnOffset = 300
+					local boonsPerRow = 4
+					local rowsPerPage = 4
+					local rowIndex = math.floor(index/boonsPerRow)
+					local pageIndex = math.floor(rowIndex/rowsPerPage)
+					local offsetX = screen.RowStartX + columnOffset*(index % boonsPerRow)
+					local offsetY = screen.RowStartY + rowOffset*(rowIndex % rowsPerPage)
+					boon.Level = GetTraitNameCount(CurrentRun.Hero, boon.Name)
+					index = index + 1
+					screen.LastPage = pageIndex
+					if screen.BoonsList[pageIndex] == nil then
+					   screen.BoonsList[pageIndex] = {}
+					end
+					table.insert(screen.BoonsList[pageIndex],{
+						index = index,
+						boon = boon,
+						pageIndex = pageIndex,
+						offsetX = offsetX,
+						offsetY = offsetY,
+					})
 				end
-				table.insert(screen.BoonsList[pageIndex],{
-					index = index,
-					boon = boon,
-					pageIndex = pageIndex,
-					offsetX = offsetX,
-					offsetY = offsetY,
-				})
 			end
 		end
 		BoonManagerLoadPage(screen)
