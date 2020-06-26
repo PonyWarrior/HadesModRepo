@@ -77,3 +77,6 @@ Fix hchc boons removed when changing weapon boon
 
 2.0.2
 Add modfile.txt for compatibility with modimporter
+
+2.0.3
+New game update fix
