@@ -1147,7 +1147,7 @@ function IsHermesChaosHammerCharonBoon(traitName)
 		if Contains(StoreData.RoomShop.Traits, traitName) then
 			return true
 		else
-			for i, option in pairs (StoreData.RoomShop.HealingOffers.Options) do
+			for i, option in pairs (StoreData.RoomShop.HealingOffers.WeightedList) do
 				if option.Name == traitName then
 					return true
 				end
