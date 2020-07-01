@@ -80,3 +80,11 @@ Add modfile.txt for compatibility with modimporter
 
 2.0.3
 New game update fix
+
+2.1.0
+Added all new boons
+Fixed a bug with the Boon Manager where daedalus hammer boons caused a crash
+Added rarity color codes to Boon Manager
+Added level display to Boon Manager
+Added decrease sub-mode for level and rarity modes in Boon Manager (all mode WIP)
+Already equipped boons are now grayed out in the Boon Selector
