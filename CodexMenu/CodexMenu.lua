@@ -7,12 +7,14 @@ CodexMenuData =
 	  "ZeusWeaponTrait", "ZeusRushTrait", "ZeusRangedTrait", "ZeusSecondaryTrait", "ZeusShoutTrait",
 		"RetaliateWeaponTrait", "SuperGenerationTrait", "OnWrathDamageBuffTrait", "ZeusBonusBounceTrait",
 		"ZeusLightningDebuff", "ZeusBoltAoETrait", "ZeusBonusBoltTrait", "ZeusChargedBoltTrait",
+		"PerfectDashBoltTrait",
 	},
 	PoseidonUpgrade =
 	{
 		"PoseidonWeaponTrait", "PoseidonSecondaryTrait", "PoseidonRushTrait", "PoseidonRangedTrait", "PoseidonShoutTrait",
 		"RoomRewardBonusTrait", "DefensiveSuperGenerationTrait", "BonusCollisionTrait", "SlamExplosionTrait", "SlipperyTrait", "BossDamageTrait",
 		"RandomMinorLootDrop", "DoubleCollisionTrait",
+		"PoseidonShoutDurationTrait", "EncounterStartOffenseBuffTrait",
 	},
 	AthenaUpgrade =
 	{
@@ -25,11 +27,12 @@ CodexMenuData =
 		"AphroditeWeaponTrait", "AphroditeRushTrait", "AphroditeRangedTrait", "AphroditeSecondaryTrait", "AphroditeShoutTrait",
 		"AphroditeRetaliateTrait", "AphroditeDeathTrait", "ProximityArmorTrait", "HealthRewardBonusTrait",
 		"AphroditeDurationTrait", "AphroditeWeakenTrait", "AphroditePotencyTrait", "CharmTrait",
+		"AphroditeRangedBonusTrait",
 	},
 	ArtemisUpgrade =
 	{
 		"ArtemisWeaponTrait", "ArtemisRushTrait", "ArtemisRangedTrait", "ArtemisSecondaryTrait", "ArtemisShoutTrait",
-		"CritBonusTrait", "ArtemisBonusProjectileTrait", "ArtemisSupportingFireTrait", "CritVulnerabilityTrait", "ArtemisCriticalTrait",
+		"CritBonusTrait", "ArtemisSupportingFireTrait", "CritVulnerabilityTrait", "ArtemisCriticalTrait",
 		"CriticalBufferMultiplierTrait", "CriticalSuperGenerationTrait", "ArtemisAmmoExitTrait", "MoreAmmoTrait",
 	},
 	AresUpgrade =
@@ -37,43 +40,48 @@ CodexMenuData =
 		"AresWeaponTrait", "AresRushTrait", "AresRangedTrait", "AresSecondaryTrait" , "AresShoutTrait",
 		"AresRetaliateTrait", "IncreasedDamageTrait", "OnEnemyDeathDamageInstanceBuffTrait", "AresLongCurseTrait",
 		"AresLoadCurseTrait", "AresDragTrait", "AresAoETrait", "AresCursedRiftTrait",
+		"LastStandDamageBonusTrait",
 	},
 	DionysusUpgrade =
 	{
 		"DionysusWeaponTrait", "DionysusSecondaryTrait", "DionysusRushTrait", "DionysusRangedTrait", "DionysusShoutTrait",
 		"DoorHealTrait", "LowHealthDefenseTrait", "DionysusSpreadTrait", "DionysusSlowTrait", "DionysusPoisonPowerTrait",
 		"DionysusDefenseTrait", "DionysusGiftDrop", "DionysusComboVulnerability",
+		"FountainDamageBonusTrait",
 	},
 	HermesUpgrade =
 	{
 		"AmmoReloadTrait", "HermesShoutDodge", "HermesWeaponTrait", "HermesSecondaryTrait", "RushRallyTrait", "MoveSpeedTrait",
 		"RushSpeedBoostTrait", "RapidCastTrait", "BonusDashTrait", "DodgeChanceTrait", "AmmoReclaimTrait", "MagnetismTrait", "UnstoredAmmoDamageTrait",
+		"RegeneratingSuperTrait", "ChamberGoldTrait", "SpeedDamageTrait",
 	},
 	DemeterUpgrade =
 	{
 		--Removed "HarvestBoonDrop", causes crash
 		"DemeterWeaponTrait", "DemeterSecondaryTrait", "DemeterRushTrait", "DemeterRangedTrait", "DemeterShoutTrait",
 		"CastNovaTrait", "ZeroAmmoBonusTrait", "MaximumChillBlast", "MaximumChillBonusSlow", "HealingPotencyDrop", "InstantChillKill",
+		"DemeterRangedBonusTrait", "DemeterRetaliateTrait",
 	},
 	TrialUpgrade =
 	{
 		"ChaosBlessingMeleeTrait", "ChaosBlessingRangedTrait", "ChaosBlessingAmmoTrait", "ChaosBlessingMaxHealthTrait", "ChaosBlessingBoonRarityTrait",
-		"ChaosBlessingMoneyTrait", "ChaosBlessingMetapointTrait", "ChaosBlessingSecondaryTrait", "ChaosBlessingDashAttackTrait", "ChaosBlessingExtraChanceTrait"
+		"ChaosBlessingMoneyTrait", "ChaosBlessingMetapointTrait", "ChaosBlessingSecondaryTrait", "ChaosBlessingDashAttackTrait", "ChaosBlessingExtraChanceTrait",
+		"ChaosCurseDashRangeTrait", "ChaosBlessingGemTrait", "ChaosBlessingAlphaStrikeTrait", "ChaosBlessingBackstabTrait", "ChaosBlessingTrapDamageTrait",
 	},
 	--Hammer boons
 	WeaponUpgrade = {},
 
-	SwordWeapon = { "SwordTwoComboTrait", "SwordSecondaryAreaDamageTrait", "SwordHeavySecondStrikeTrait", "SwordThrustWaveTrait", "SwordSecondaryDoubleAttackTrait", "SwordHealthBufferDamageTrait", "SwordDoubleDashAttackTrait", "SwordCriticalTrait", "SwordBackstabTrait", "SwordCursedLifeStealTrait", },
+	SwordWeapon = { "SwordTwoComboTrait", "SwordSecondaryAreaDamageTrait", "SwordHeavySecondStrikeTrait", "SwordThrustWaveTrait", "SwordSecondaryDoubleAttackTrait", "SwordHealthBufferDamageTrait", "SwordDoubleDashAttackTrait", "SwordCriticalTrait", "SwordBackstabTrait", "SwordCursedLifeStealTrait", "SwordGoldDamageTrait", "SwordBlinkTrait", "SwordConsecrationBoostTrait"},
 
-	BowWeapon = { "BowDoubleShotTrait", "BowLongRangeDamageTrait", "BowSlowChargeDamageTrait", "BowTapFireTrait", "BowPenetrationTrait", "BowPowerShotTrait", "BowSecondaryBarrageTrait", "BowTripleShotTrait", "BowSecondaryFocusedFireTrait", "BowChainShotTrait", },
+	BowWeapon = { "BowDoubleShotTrait", "BowLongRangeDamageTrait", "BowSlowChargeDamageTrait", "BowTapFireTrait", "BowPenetrationTrait", "BowPowerShotTrait", "BowSecondaryBarrageTrait", "BowTripleShotTrait", "BowSecondaryFocusedFireTrait", "BowChainShotTrait", "BowConsecutiveBarrageTrait", "BowCloseAttackTrait", "BowBondBoostTrait"},
 
-	ShieldWeapon = { "ShieldDashAOETrait", "ShieldRushProjectileTrait", "ShieldThrowFastTrait", "ShieldThrowCatchExplode", "ShieldChargeHealthBufferTrait", "ShieldChargeSpeedTrait", "ShieldBashDamageTrait", "ShieldPerfectRushTrait", "ShieldThrowElectiveCharge", "ShieldRushPunchTrait", },
+	ShieldWeapon = { "ShieldDashAOETrait", "ShieldRushProjectileTrait", "ShieldThrowFastTrait", "ShieldThrowCatchExplode", "ShieldChargeHealthBufferTrait", "ShieldChargeSpeedTrait", "ShieldBashDamageTrait", "ShieldPerfectRushTrait", "ShieldThrowElectiveCharge", "ShieldThrowEmpowerTrait", "ShieldBlockEmpowerTrait", "ShieldThrowRushTrait", "ShieldLoadAmmoBoostTrait"},
 
-	SpearWeapon = { "SpearReachAttack", "SpearAutoAttack", "SpearThrowExplode", "SpearThrowBounce", "SpearThrowPenetrate", "SpearThrowCritical", "SpearSpinDamageRadius", "SpearSpinChargeLevelTime", "SpearDashMultiStrike", "SpearThrowElectiveCharge", },
+	SpearWeapon = { "SpearReachAttack", "SpearAutoAttack", "SpearThrowExplode", "SpearThrowBounce", "SpearThrowPenetrate", "SpearThrowCritical", "SpearSpinDamageRadius", "SpearSpinChargeLevelTime", "SpearDashMultiStrike", "SpearThrowElectiveCharge", "SpearSpinChargeAreaDamageTrait", "SpearAttackPhalanxTrait", "SpearSpinTravelDurationTrait"},
 
-	GunWeapon = { "GunSlowGrenade", "GunMinigunTrait", "GunShotgunTrait", "GunExplodingSecondaryTrait", "GunGrenadeFastTrait", "GunArmorPenerationTrait", "GunInfiniteAmmoTrait", "GunConsecutiveFireTrait", "GunGrenadeClusterTrait", "GunGrenadeDropTrait", "GunHeavyBulletTrait", },
+	GunWeapon = { "GunSlowGrenade", "GunMinigunTrait", "GunShotgunTrait", "GunExplodingSecondaryTrait", "GunGrenadeFastTrait", "GunArmorPenerationTrait", "GunInfiniteAmmoTrait", "GunConsecutiveFireTrait", "GunGrenadeClusterTrait", "GunGrenadeDropTrait", "GunHeavyBulletTrait", "GunHomingBulletTrait"},
 
-	FistWeapon = { "FistReachAttackTrait", "FistDashAttackHealthBufferTrait", "FistTeleportSpecialTrait", "FistDoubleDashSpecialTrait", "FistChargeSpecialTrait", "FistKillTrait", "FistSpecialLandTrait", "FistAttackFinisherTrait", "FistConsecutiveAttackTrait" },
+	FistWeapon = { "FistReachAttackTrait", "FistDashAttackHealthBufferTrait", "FistTeleportSpecialTrait", "FistDoubleDashSpecialTrait", "FistChargeSpecialTrait", "FistKillTrait", "FistSpecialLandTrait", "FistAttackFinisherTrait", "FistConsecutiveAttackTrait", "FistSpecialFireballTrait", "FistHeavyAttackTrait", "FistAttackDefenseTrait"},
 
 	Legendaries =
 	{
@@ -86,6 +94,8 @@ CodexMenuData =
 		"FishingTrait", "ImprovedPomTrait", "RaritySuperBoost", "BlizzardOrbTrait",
 		"TriggerCurseTrait", "SlowProjectileTrait", "ArtemisReflectBuffTrait", "CurseSickTrait", "HeartsickCritDamageTrait",
 		"DionysusAphroditeStackIncreaseTrait", "AresHomingTrait", "HomingLaserTrait", "IceStrikeArrayTrait", "HomingLaserTrait",
+		"RegeneratingCappedSuperTrait", "StatusImmunityTrait", "PoseidonAresProjectileTrait", "CastBackstabTrait", "NoLastStandRegenerationTrait",
+		"PoisonTickRateTrait", "StationaryRiftTrait", "SelfLaserTrait", "CurseSickTrait", "ArtemisBonusProjectileTrait", "PoisonCritVulnerabilityTrait",
 	},
 	Consumables =
 	{
@@ -195,6 +205,7 @@ function OpenBoonSelector(godName, spawnBoon)
 	OnScreenClosed({Flag = "Codex"})
 	wait(0.1)
 	ReloadAllTraits()
+	ModDebugPrint(godName,0)
 	if godName ~= nil and CodexMenuData[godName] then
 		local Boons = DeepCopyTable(CodexMenuData[godName])
 		if Boons == nil then
