@@ -571,6 +571,9 @@ function BoonManagerLoadPage(screen)
           end
         end
       end
+			if boonData.boon.Rarity == nil then
+				boonData.boon.Rarity = "Common"
+			end
 		  displayedTraits[boonData.boon.Name] = true
 			local purchaseButtonKeyBG = "PurchaseButtonBG"..boonData.index
 			screen.Components[purchaseButtonKeyBG] = CreateScreenComponent({ Name = "rectangle01", Group = "BoonManager", Scale = 0.28, })
