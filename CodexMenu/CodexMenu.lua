@@ -93,7 +93,7 @@ CodexMenuData =
 		"LightningCloudTrait", "AutoRetaliateTrait", "AmmoBoltTrait", "ImpactBoltTrait", "ReboundingAthenaCastTrait", "JoltDurationTrait",
 		"FishingTrait", "ImprovedPomTrait", "RaritySuperBoost", "BlizzardOrbTrait",
 		"TriggerCurseTrait", "SlowProjectileTrait", "ArtemisReflectBuffTrait", "CurseSickTrait", "HeartsickCritDamageTrait",
-		"DionysusAphroditeStackIncreaseTrait", "AresHomingTrait", "HomingLaserTrait", "IceStrikeArrayTrait", "HomingLaserTrait",
+		"DionysusAphroditeStackIncreaseTrait", "AresHomingTrait", "IceStrikeArrayTrait", "HomingLaserTrait",
 		"RegeneratingCappedSuperTrait", "StatusImmunityTrait", "PoseidonAresProjectileTrait", "CastBackstabTrait", "NoLastStandRegenerationTrait",
 		"PoisonTickRateTrait", "StationaryRiftTrait", "SelfLaserTrait", "CurseSickTrait", "ArtemisBonusProjectileTrait", "PoisonCritVulnerabilityTrait",
 	},
