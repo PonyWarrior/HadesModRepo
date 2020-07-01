@@ -205,7 +205,6 @@ function OpenBoonSelector(godName, spawnBoon)
 	OnScreenClosed({Flag = "Codex"})
 	wait(0.1)
 	ReloadAllTraits()
-	ModDebugPrint(godName,0)
 	if godName ~= nil and CodexMenuData[godName] then
 		local Boons = DeepCopyTable(CodexMenuData[godName])
 		if Boons == nil then
@@ -267,6 +266,9 @@ function OpenBoonSelector(godName, spawnBoon)
 		for index, boon in ipairs (Boons) do
 				local purchaseButtonKey = "PurchaseButton"..index
 				local rowoffset = 100
+				if godName == "Duos" then
+					rowoffset = 70
+				end
 				local columnoffset = 300
 				local numperrow = 4
 				local offsetX = screen.RowStartX + columnoffset*((index-1) % numperrow)
