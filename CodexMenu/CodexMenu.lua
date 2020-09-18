@@ -1248,7 +1248,9 @@ OnControlPressed{ "Codex",
 		--set to false for public version
 		local debug = false
 		--Avoid early game crash
-		if not GameState.Resources.MetaPoints then GameState.Resources.MetaPoints = 0 end
+		if not GameState.Resources.MetaPoints then
+			GameState.Resources.MetaPoints = 0
+		end
 		--Boons
 		if CodexStatus.SelectedChapterName == "OlympianGods" then
 			if debug then
