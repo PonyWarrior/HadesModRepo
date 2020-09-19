@@ -1,4 +1,4 @@
--- IMPORT @ DEFAULT
+Import "../Mods/ModUtil/ModUtil.lua"
 
 CodexMenuData =
 {
@@ -202,7 +202,7 @@ function LockChoice(components, button)
 end
 
 function OpenBoonSelector(godName, spawnBoon)
-	OnScreenClosed({Flag = "Codex"})
+	CloseCodexScreen()
 	wait(0.1)
 	ReloadAllTraits()
 	if godName ~= nil and CodexMenuData[godName] then
@@ -631,7 +631,7 @@ function RandomColor(rng)
 end
 
 function OpenBoonManager()
-	OnScreenClosed({Flag = "Codex"})
+	CloseCodexScreen()
 	wait(0.1)
 	ReloadAllTraits()
 	if CurrentRun.Hero.Traits ~= nil then
