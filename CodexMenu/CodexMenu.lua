@@ -1240,7 +1240,16 @@ end
 
 OnControlPressed{ "Codex",
 	function( triggerArgs )
-		if CodexUI.Screen == nil then
+		ToggleControl({ Names = { "Gift", }, Enabled = true })
+		if CodexUI.Screen ~= nil and IsScreenOpen("Codex") then
+			CloseCodexScreen()
+		end
+	end
+}
+
+OnControlPressed{ "Gift",
+	function( triggerArgs )
+		if CodexUI.Screen == nil or not IsScreenOpen("Codex") then
 			return
 		end
 		-- prevent crash by pressing too early
