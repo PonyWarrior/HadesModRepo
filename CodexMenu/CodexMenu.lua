@@ -1302,6 +1302,8 @@ OnControlPressed{ "Gift",
 			elseif item == "WeaponUpgrade" then
 				OpenBoonSelector(item, true)
 				return
+			else
+				return
 			end
 			CreateLoot({ Name = item, OffsetX = 100, SpawnPoint = CurrentRun.Hero.ObjectId })
 			if debug then
