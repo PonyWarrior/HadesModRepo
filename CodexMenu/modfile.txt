@@ -1,1 +1,1 @@
-Import "Scripts"
+Import "CodexMenu.lua"
