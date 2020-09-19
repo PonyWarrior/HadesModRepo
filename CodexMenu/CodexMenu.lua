@@ -1239,20 +1239,29 @@ end
 
 OnControlPressed{ "Codex",
 	function( triggerArgs )
-		ToggleControl({ Names = { "Gift", }, Enabled = true })
-		if CodexUI.Screen ~= nil and IsScreenOpen("Codex") then
-			CloseCodexScreen()
+		local ticks = 0
+		wait(0.1)
+		while IsControlDown({ Name = "Codex" }) do
+			ticks = ticks + 1
+			if ticks > 3 then
+				ModDebugPrint('Executing Command!',1)
+				CodexMain()
+				return
+			end
+			if ticks > 0 then
+				ModDebugPrint(ticks,0)
+			end
+			wait(0.5)
 		end
+		Destroy({Ids = ScreenAnchors.HoldDisplayId})
+		ScreenAnchors.HoldDisplayId = nil
 	end
 }
 
-OnControlPressed{ "Gift",
-	function( triggerArgs )
+function CodexMain()
 		if CodexUI.Screen == nil or not IsScreenOpen("Codex") then
 			return
 		end
-		-- prevent crash by pressing too early
-		wait(0.5)
 		--set to false for public version
 		local debug = false
 		--Avoid early game crash
@@ -1459,4 +1468,3 @@ OnControlPressed{ "Gift",
 			return
 		end
 	end
-}
