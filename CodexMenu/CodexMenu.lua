@@ -1227,9 +1227,9 @@ function ModDebugPrint(text, delay)
 		delay = 5
 	end
 	Destroy({Ids = ScreenAnchors.HoldDisplayId})
-	ScreenAnchors.HoldDisplayId = SpawnObstacle({ Name = "BlankObstacle", Group = "Events", DestinationId = CurrentRun.Hero.ObjectId })
+	ScreenAnchors.HoldDisplayId = SpawnObstacle({ Name = "BlankObstacle", Group = "Combat_Menu_Overlay", DestinationId = CurrentRun.Hero.ObjectId })
 	Attach({ Id = ScreenAnchors.HoldDisplayId, DestinationId = CurrentRun.Hero.ObjectId })
-	CreateTextBox({ Id = ScreenAnchors.HoldDisplayId, Text = text, FontSize = 32, OffsetX = 0, OffsetY = -150, Color = Color.Yellow, Font = "AlegreyaSansSCBold", Justification = "Center" })
+	CreateTextBox({ Id = ScreenAnchors.HoldDisplayId, Text = text, FontSize = 38, OffsetX = 0, OffsetY = -150, Color = Color.Yellow, Font = "AlegreyaSansSCBold", Justification = "Center" })
 	wait(delay, RoomThreadName)
 	if delay > 0 then
 			Destroy({Ids = ScreenAnchors.HoldDisplayId})
