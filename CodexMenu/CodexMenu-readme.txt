@@ -88,3 +88,16 @@ Added rarity color codes to Boon Manager
 Added level display to Boon Manager
 Added decrease sub-mode for level and rarity modes in Boon Manager (all mode WIP)
 Already equipped boons are now grayed out in the Boon Selector
+
+2.2.0
+new issues :
+deleting a boon in the boon manager does not delete all related screen objects
+
+fixed issues :
+pressing the codex key immediately opens both the codex and executes the menu command
+can't close or use boon selector and manager
+fixed some artifacts not spawning or crashing the game
+
+new/changed features :
+menu key switched to 'Gift' (default = G)
+pressing the codex key (default = C) again after the codex is opened will close it
