@@ -1,4 +1,3 @@
-Import "../Mods/ModUtil/ModUtil.lua"
 
 CodexMenuData =
 {
