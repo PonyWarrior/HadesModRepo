@@ -1320,21 +1320,14 @@ function CodexMain()
 		end
 		--Items
 		if CodexStatus.SelectedChapterName == "Items" then
+			-- translates codex entry names to spawnable consumables
 			local consumableTable =
 			{
-				["RoomRewardMetaPointDrop"] = "RoomRewardMetaPointDrop",
-				["GemDrop"] = "GemDrop",
-				["LockKeyDrop"] = "LockKeyDrop",
-				["GiftDrop"] = "GiftDrop",
-				["RoomRewardMaxHealthDrop"] = "RoomRewardMaxHealthDrop",
-				["RoomRewardMoneyDrop"] = "RoomRewardMoneyDrop",
-				["SuperGemDrop"] = "SuperGemDrop",
-				["SuperLockKeyDrop"] = "SuperLockKeyDrop",
-				["SuperGiftDrop"] = "SuperGiftDrop",
-				["RoomRewardConsolationPrize"] = "RoomRewardConsolationPrize",
+				StackUpgrade = "StackUpgradeDrop",
 			}
 			local item = CodexStatus.SelectedEntryNames[CodexStatus.SelectedChapterName]
-			if item == consumableTable[item] then
+			if consumableTable[item] then item = consumableTable[item] end
+			if ConsumableData[item] ~= nil then
         local consumableId = SpawnObstacle({ Name = item, DestinationId = CurrentRun.Hero.ObjectId, Group = "Standing", OffsetX = 100 })
         local consumable = CreateConsumableItem( consumableId, item, 0 )
 				if debug then
