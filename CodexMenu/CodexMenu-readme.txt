@@ -101,3 +101,36 @@ fixed some artifacts not spawning or crashing the game
 new/changed features :
 menu key switched to 'Gift' (default = G)
 pressing the codex key (default = C) again after the codex is opened will close it
+
+2.3.0
+unfixed issues :
+deleting a boon in the boon manager does not delete all related screen objects
+
+new issues :
+
+fixed issues :
+many users cannot execute commands with the Gift key
+
+new/changed features :
+menu key switched back to Codex key (default = C)
+executing commands now requires holding down the key for 1.5s
+
+other :
+updated modfile.txt to work with new modimporter
+removed 'Scripts' folder
+
+2.3.1
+
+unfixed issues :
+deleting a boon in the boon manager does not delete all related screen objects
+
+new issues :
+some casts have bugged animations
+pom of power spawns in a random location in the room
+some users crash when opening the boon manager
+
+fixed issues :
+consumable-type boons don't work properly or cause crashes
+can't select rarity of consumable-type boons
+consumable-type boons not displayed in the boon manager
+pom of power doesn't spawn
