@@ -102,6 +102,15 @@ CodexMenuData =
 	},
 }
 
+ConsumableTraits = {
+	RandomMinorLootDrop = "PoseidonPickedUpMinorLootTrait",
+	LastStandDurationDrop = "LastStandDurationTrait",
+	LastStandHealDrop = "LastStandHealTrait",
+	DionysusGiftDrop = "GiftHealthTrait",
+	HealingPotencyDrop = "HealingPotencyTrait",
+	HarvestBoonDrop = "HarvestBoonTrait",
+}
+
 CodexMenuColors =
 {
 	Duos = {210, 255, 97, 255},
@@ -178,8 +187,27 @@ function GiveSelectedBoonToPlayer(screen, button)
 			end
 		end
 		if isConsumable then
+			local consumableData = GetRampedConsumableData(ConsumableData[button.Boon], screen.Rarity)
+
+			if consumableData.UseFunctionArgs ~= nil then
+				if consumableData.UseFunctionName ~= nil and consumableData.UseFunctionArgs.TraitName ~= nil then
+					local traitData =  GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = consumableData.UseFunctionArgs.TraitName, Rarity = screen.Rarity })
+					SetTraitTextData( traitData )
+					consumableData.UseFunctionArgs.TraitName = nil
+					consumableData.UseFunctionArgs.TraitData = traitData
+				elseif consumableData.UseFunctionNames ~= nil then
+					for i, args in pairs(consumableData.UseFunctionArgs) do
+						if args.TraitName ~= nil then
+							local processedTraitData =  GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = args.TraitName, Rarity = screen.Rarity })
+							SetTraitTextData( processedTraitData )
+							consumableData.UseFunctionArgs[i].TraitName = nil
+							consumableData.UseFunctionArgs[i].TraitData = processedTraitData
+						end
+					end
+				end
+			end
 			local consumableId = SpawnObstacle({ Name = button.Boon, DestinationId = CurrentRun.Hero.ObjectId, Group = "Standing" })
-			local consumable = CreateConsumableItemFromData( consumableId, ConsumableData[button.Boon], 0 )
+			local consumable = CreateConsumableItemFromData( consumableId, consumableData, 0 )
 			LockChoice(screen.Components, button)
 			return
 		end
@@ -439,7 +467,7 @@ function HandleBoonManagerClick(screen, button)
 			local upgradableTraits = {}
 			local upgradedTraits = {}
 			for i, traitData in pairs( CurrentRun.Hero.Traits ) do
-				if IsGodTrait(traitData.Name, { ForShop = true }) or IsHermesChaosHammerCharonBoon(traitData.Name) and TraitData[traitData.Name] and traitData.Rarity ~= nil and GetUpgradedRarity(traitData.Rarity) ~= nil and traitData.RarityLevels[GetUpgradedRarity(traitData.Rarity)] ~= nil then
+				if IsGodTrait(traitData.Name, { ForShop = true }) or Contains(ConsumableTraits, traitData.Name)  or IsHermesChaosHammerCharonBoon(traitData.Name) and TraitData[traitData.Name] and traitData.Rarity ~= nil and GetUpgradedRarity(traitData.Rarity) ~= nil and traitData.RarityLevels[GetUpgradedRarity(traitData.Rarity)] ~= nil then
 					if Contains(upgradableTraits, traitData) or traitData.Rarity == "Legendary" then
 					else
 						table.insert(upgradableTraits, traitData )
@@ -490,7 +518,7 @@ function HandleBoonManagerClick(screen, button)
 			end
 			return
 		elseif screen.Mode == "Rarity" and screen.LockedModeButton.Add == true then
-			if IsGodTrait(button.Boon.Name, { ForShop = true }) and TraitData[button.Boon.Name] and button.Boon.Rarity ~= nil and GetUpgradedRarity(button.Boon.Rarity) ~= nil and button.Boon.RarityLevels[GetUpgradedRarity(button.Boon.Rarity)] ~= nil then
+			if IsGodTrait(button.Boon.Name, { ForShop = true }) or Contains(ConsumableTraits, button.Boon.Name)  and TraitData[button.Boon.Name] and button.Boon.Rarity ~= nil and GetUpgradedRarity(button.Boon.Rarity) ~= nil and button.Boon.RarityLevels[GetUpgradedRarity(button.Boon.Rarity)] ~= nil then
 				local numOldTrait = GetTraitNameCount(CurrentRun.Hero, button.Boon.Name)
 				if numOldTrait > 10 then
 					numOldTrait = 10
@@ -506,7 +534,7 @@ function HandleBoonManagerClick(screen, button)
 			end
 			return
 		elseif screen.Mode == "Rarity" and screen.LockedModeButton.Substract == true then
-			if IsGodTrait(button.Boon.Name, { ForShop = true }) and TraitData[button.Boon.Name] and button.Boon.Rarity ~= nil and GetDowngradedRarity(button.Boon.Rarity) ~= nil and button.Boon.RarityLevels[GetDowngradedRarity(button.Boon.Rarity)] ~= nil then
+			if IsGodTrait(button.Boon.Name, { ForShop = true }) or Contains(ConsumableTraits, button.Boon.Name)  and TraitData[button.Boon.Name] and button.Boon.Rarity ~= nil and GetDowngradedRarity(button.Boon.Rarity) ~= nil and button.Boon.RarityLevels[GetDowngradedRarity(button.Boon.Rarity)] ~= nil then
 				local numOldTrait = GetTraitNameCount(CurrentRun.Hero, button.Boon.Name)
 				if numOldTrait > 10 then
 					numOldTrait = 10
@@ -679,7 +707,7 @@ function OpenBoonManager()
 		for i,boon in ipairs(CurrentRun.Hero.Traits) do
 			if Contains(displayedTraits, boon.Name) then
 			else
-				if IsGodTrait(boon.Name) or IsHermesChaosHammerCharonBoon(boon.Name) then
+				if IsGodTrait(boon.Name) or IsHermesChaosHammerCharonBoon(boon.Name) or Contains(ConsumableTraits, boon.Name) then
 					table.insert(displayedTraits, boon.Name)
 					local rowOffset = 100
 					local columnOffset = 300
