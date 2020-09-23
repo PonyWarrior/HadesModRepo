@@ -467,10 +467,12 @@ function HandleBoonManagerClick(screen, button)
 			local upgradableTraits = {}
 			local upgradedTraits = {}
 			for i, traitData in pairs( CurrentRun.Hero.Traits ) do
-				if IsGodTrait(traitData.Name, { ForShop = true }) or Contains(ConsumableTraits, traitData.Name)  or IsHermesChaosHammerCharonBoon(traitData.Name) and TraitData[traitData.Name] and traitData.Rarity ~= nil and GetUpgradedRarity(traitData.Rarity) ~= nil and traitData.RarityLevels[GetUpgradedRarity(traitData.Rarity)] ~= nil then
-					if Contains(upgradableTraits, traitData) or traitData.Rarity == "Legendary" then
-					else
-						table.insert(upgradableTraits, traitData )
+				if IsGodTrait(traitData.Name, { ForShop = true }) or Contains(ConsumableTraits, traitData.Name) or IsHermesChaosHammerCharonBoon(traitData.Name) then
+					if TraitData[traitData.Name] and traitData.Rarity ~= nil and GetUpgradedRarity(traitData.Rarity) ~= nil and traitData.RarityLevels[GetUpgradedRarity(traitData.Rarity)] ~= nil then
+						if Contains(upgradableTraits, traitData) or traitData.Rarity == "Legendary" then
+						else
+							table.insert(upgradableTraits, traitData )
+						end
 					end
 				end
 			end
@@ -518,35 +520,39 @@ function HandleBoonManagerClick(screen, button)
 			end
 			return
 		elseif screen.Mode == "Rarity" and screen.LockedModeButton.Add == true then
-			if IsGodTrait(button.Boon.Name, { ForShop = true }) or Contains(ConsumableTraits, button.Boon.Name)  and TraitData[button.Boon.Name] and button.Boon.Rarity ~= nil and GetUpgradedRarity(button.Boon.Rarity) ~= nil and button.Boon.RarityLevels[GetUpgradedRarity(button.Boon.Rarity)] ~= nil then
-				local numOldTrait = GetTraitNameCount(CurrentRun.Hero, button.Boon.Name)
-				if numOldTrait > 10 then
-					numOldTrait = 10
-				end
-				RemoveWeaponTrait(button.Boon.Name)
-				button.Boon.Rarity = GetUpgradedRarity(button.Boon.Rarity)
-				SetColor({Id = button.Background.Id, Color = Color["BoonPatch"..button.Boon.Rarity]})
-				AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon.Name, Rarity = button.Boon.Rarity }) })
-				for i=1, numOldTrait-1 do
+			if IsGodTrait(button.Boon.Name, { ForShop = true }) or Contains(ConsumableTraits, button.Boon.Name) then
+				if TraitData[button.Boon.Name] and button.Boon.Rarity ~= nil and GetUpgradedRarity(button.Boon.Rarity) ~= nil and button.Boon.RarityLevels[GetUpgradedRarity(button.Boon.Rarity)] ~= nil then
+					local numOldTrait = GetTraitNameCount(CurrentRun.Hero, button.Boon.Name)
+					if numOldTrait > 10 then
+						numOldTrait = 10
+					end
+					RemoveWeaponTrait(button.Boon.Name)
+					button.Boon.Rarity = GetUpgradedRarity(button.Boon.Rarity)
+					SetColor({Id = button.Background.Id, Color = Color["BoonPatch"..button.Boon.Rarity]})
 					AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon.Name, Rarity = button.Boon.Rarity }) })
+					for i=1, numOldTrait-1 do
+						AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon.Name, Rarity = button.Boon.Rarity }) })
+					end
+					ReloadAllTraits()
 				end
-				ReloadAllTraits()
 			end
 			return
 		elseif screen.Mode == "Rarity" and screen.LockedModeButton.Substract == true then
-			if IsGodTrait(button.Boon.Name, { ForShop = true }) or Contains(ConsumableTraits, button.Boon.Name)  and TraitData[button.Boon.Name] and button.Boon.Rarity ~= nil and GetDowngradedRarity(button.Boon.Rarity) ~= nil and button.Boon.RarityLevels[GetDowngradedRarity(button.Boon.Rarity)] ~= nil then
-				local numOldTrait = GetTraitNameCount(CurrentRun.Hero, button.Boon.Name)
-				if numOldTrait > 10 then
-					numOldTrait = 10
-				end
-				RemoveWeaponTrait(button.Boon.Name)
-				button.Boon.Rarity = GetDowngradedRarity(button.Boon.Rarity)
-				SetColor({Id = button.Background.Id, Color = Color["BoonPatch"..button.Boon.Rarity]})
-				AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon.Name, Rarity = button.Boon.Rarity }) })
-				for i=1, numOldTrait-1 do
+			if IsGodTrait(button.Boon.Name, { ForShop = true }) or Contains(ConsumableTraits, button.Boon.Name) then
+				if TraitData[button.Boon.Name] and button.Boon.Rarity ~= nil and GetDowngradedRarity(button.Boon.Rarity) ~= nil and button.Boon.RarityLevels[GetDowngradedRarity(button.Boon.Rarity)] ~= nil then
+					local numOldTrait = GetTraitNameCount(CurrentRun.Hero, button.Boon.Name)
+					if numOldTrait > 10 then
+						numOldTrait = 10
+					end
+					RemoveWeaponTrait(button.Boon.Name)
+					button.Boon.Rarity = GetDowngradedRarity(button.Boon.Rarity)
+					SetColor({Id = button.Background.Id, Color = Color["BoonPatch"..button.Boon.Rarity]})
 					AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon.Name, Rarity = button.Boon.Rarity }) })
+					for i=1, numOldTrait-1 do
+						AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon.Name, Rarity = button.Boon.Rarity }) })
+					end
+					ReloadAllTraits()
 				end
-				ReloadAllTraits()
 			end
 			return
 		elseif screen.Mode == "Delete" then
