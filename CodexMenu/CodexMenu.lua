@@ -100,15 +100,26 @@ CodexMenuData =
 	{
 		"RandomMinorLootDrop", "LastStandDurationDrop", "LastStandHealDrop", "DionysusGiftDrop", "HealingPotencyDrop", "HarvestBoonDrop",
 	},
-}
-
-ConsumableTraits = {
-	RandomMinorLootDrop = "PoseidonPickedUpMinorLootTrait",
-	LastStandDurationDrop = "LastStandDurationTrait",
-	LastStandHealDrop = "LastStandHealTrait",
-	DionysusGiftDrop = "GiftHealthTrait",
-	HealingPotencyDrop = "HealingPotencyTrait",
-	HarvestBoonDrop = "HarvestBoonTrait",
+	ConsumableTraits =
+	{
+		RandomMinorLootDrop = "PoseidonPickedUpMinorLootTrait",
+		LastStandDurationDrop = "LastStandDurationTrait",
+		LastStandHealDrop = "LastStandHealTrait",
+		DionysusGiftDrop = "GiftHealthTrait",
+		HealingPotencyDrop = "HealingPotencyTrait",
+		HarvestBoonDrop = "HarvestBoonTrait",
+	},
+	BeowulfTraits =
+	{
+		ZeusRangedTrait = "ShieldLoadAmmo_ZeusRangedTrait",
+		PoseidonRangedTrait = "ShieldLoadAmmo_PoseidonRangedTrait",
+		AthenaRangedTrait = "ShieldLoadAmmo_AthenaRangedTrait",
+		AphroditeRangedTrait = "ShieldLoadAmmo_AphroditeRangedTrait",
+		ArtemisRangedTrait = "ShieldLoadAmmo_ArtemisRangedTrait",
+		AresRangedTrait = "ShieldLoadAmmo_AresRangedTrait",
+		DionysusRangedTrait = "ShieldLoadAmmo_DionysusRangedTrait",
+		DemeterRangedTrait = "ShieldLoadAmmo_DemeterRangedTrait",
+	},
 }
 
 CodexMenuColors =
@@ -228,6 +239,15 @@ function LockChoice(components, button)
 	SetAnimation({ DestinationId = components[purchaseButtonKeyLock].Id, Name = "BoonSlotLocked" })
 end
 
+function HasBeowulf()
+	for i, traitData in pairs(CurrentRun.Hero.Traits) do
+		if traitData.Name == "ShieldLoadAmmoTrait" then
+			return true
+		end
+	end
+	return false
+end
+
 function OpenBoonSelector(godName, spawnBoon)
 	CloseCodexScreen()
 	wait(0.1)
@@ -302,6 +322,9 @@ function OpenBoonSelector(godName, spawnBoon)
 				local offsetY = screen.RowStartY + rowoffset*(math.floor((index-1)/numperrow))
 				local color = lColor
 				local lockColor = Color.White
+				if HasBeowulf() and CodexMenuData.BeowulfTraits[boon] ~= nil then
+					boon = CodexMenuData.BeowulfTraits[boon]
+				end
 				if HeroHasTrait(boon) then
 					components[purchaseButtonKey] = CreateScreenComponent({ Name = "BlankObstacle", Group = "BoonSelector", Scale = 0.3, })
 					Attach({ Id = components[purchaseButtonKey].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
@@ -467,7 +490,7 @@ function HandleBoonManagerClick(screen, button)
 			local upgradableTraits = {}
 			local upgradedTraits = {}
 			for i, traitData in pairs( CurrentRun.Hero.Traits ) do
-				if IsGodTrait(traitData.Name, { ForShop = true }) or Contains(ConsumableTraits, traitData.Name) or IsHermesChaosHammerCharonBoon(traitData.Name) then
+				if IsGodTrait(traitData.Name, { ForShop = true }) or Contains(CodexMenuData.ConsumableTraits, traitData.Name) or IsHermesChaosHammerCharonBoon(traitData.Name) then
 					if TraitData[traitData.Name] and traitData.Rarity ~= nil and GetUpgradedRarity(traitData.Rarity) ~= nil and traitData.RarityLevels[GetUpgradedRarity(traitData.Rarity)] ~= nil then
 						if Contains(upgradableTraits, traitData) or traitData.Rarity == "Legendary" then
 						else
@@ -520,7 +543,7 @@ function HandleBoonManagerClick(screen, button)
 			end
 			return
 		elseif screen.Mode == "Rarity" and screen.LockedModeButton.Add == true then
-			if IsGodTrait(button.Boon.Name, { ForShop = true }) or Contains(ConsumableTraits, button.Boon.Name) then
+			if IsGodTrait(button.Boon.Name, { ForShop = true }) or Contains(CodexMenuData.ConsumableTraits, button.Boon.Name) then
 				if TraitData[button.Boon.Name] and button.Boon.Rarity ~= nil and GetUpgradedRarity(button.Boon.Rarity) ~= nil and button.Boon.RarityLevels[GetUpgradedRarity(button.Boon.Rarity)] ~= nil then
 					local numOldTrait = GetTraitNameCount(CurrentRun.Hero, button.Boon.Name)
 					if numOldTrait > 10 then
@@ -538,7 +561,7 @@ function HandleBoonManagerClick(screen, button)
 			end
 			return
 		elseif screen.Mode == "Rarity" and screen.LockedModeButton.Substract == true then
-			if IsGodTrait(button.Boon.Name, { ForShop = true }) or Contains(ConsumableTraits, button.Boon.Name) then
+			if IsGodTrait(button.Boon.Name, { ForShop = true }) or Contains(CodexMenuData.ConsumableTraits, button.Boon.Name) then
 				if TraitData[button.Boon.Name] and button.Boon.Rarity ~= nil and GetDowngradedRarity(button.Boon.Rarity) ~= nil and button.Boon.RarityLevels[GetDowngradedRarity(button.Boon.Rarity)] ~= nil then
 					local numOldTrait = GetTraitNameCount(CurrentRun.Hero, button.Boon.Name)
 					if numOldTrait > 10 then
