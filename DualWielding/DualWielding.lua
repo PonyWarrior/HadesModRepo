@@ -110,7 +110,6 @@ function OpenDualwieldingConfigMenu()
   --Background
   components.BackgroundDim = CreateScreenComponent({ Name = "rectangle01", Group = "DualWielding" })
   components.Background = CreateScreenComponent({ Name = "BlankObstacle", Group = "DualWielding" })
-  --components.Lighting = CreateScreenComponent({ Name = "BoonSelectLighting", Group = "DualWielding" })
   SetScale({ Id = components.BackgroundDim.Id, Fraction = 4 })
   SetColor({ Id = components.BackgroundDim.Id, Color = {0.090, 0.055, 0.157, 0.8} })
   components.LeftPart = CreateScreenComponent({ Name = "TraitTrayBackground", Group = "DualWielding", X = 830, Y = 400})
@@ -124,14 +123,17 @@ function OpenDualwieldingConfigMenu()
   CreateTextBox({ Id = components.Background.Id, Text = "DualWielding Config Menu", FontSize = 34,
   OffsetX = 100, OffsetY = -370, Color = Color.White, Font = "SpectralSCLight",
   ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
-  -- CreateTextBox({ Id = components.Background.Id, Text = "", FontSize = 19,
-  -- OffsetX = 100, OffsetY = -340, Width = 840, Color = Color.SubTitle, Font = "CrimsonTextItalic",
-  -- ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
+  CreateTextBox({ Id = components.Background.Id, Text = "Instructions here", FontSize = 19,
+  OffsetX = 100, OffsetY = -340, Width = 840, Color = Color.SubTitle, Font = "CrimsonTextItalic",
+  ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
   --Close button
   components.CloseButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "DualWielding" })
   Attach({ Id = components.CloseButton.Id, DestinationId = components.Background.Id, OffsetX = 100, OffsetY = ScreenCenterY - 70 })
   components.CloseButton.OnPressedFunctionName = "CloseDualWieldingConfigMenu"
   components.CloseButton.ControlHotkey = "Cancel"
+  --End
+  screen.KeepOpen = true
+  HandleScreenInput(screen)
 end
 
 function CloseDualWieldingConfigMenu(screen, button)
@@ -174,7 +176,7 @@ OnControlPressed{ "Shout",
 				return
 			end
 			if ticks > 0 then
-        ModUtil.Hades.PrintStack(ticks,0)
+        ModUtil.Hades.PrintStack(ticks,0.5)
 			end
 			wait(0.5)
 		end
