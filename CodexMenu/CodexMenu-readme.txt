@@ -134,3 +134,18 @@ consumable-type boons don't work properly or cause crashes
 can't select rarity of consumable-type boons
 consumable-type boons not displayed in the boon manager
 pom of power doesn't spawn
+
+2.3.2
+
+ongoing issues :
+some casts have bugged animations
+pom of power spawns in a random location in the room
+some users crash when opening the boon manager
+
+new issues :
+various bugs with all mode in boon manager
+opening the boon manager during a run resets progress of stacking keepsakes
+
+fixed issues :
+beowulf shield specific boons not displayed correctly
+deleting a boon in the boon manager does not delete all related screen objects
