@@ -15,3 +15,8 @@ Update mod files to game version v0.25053
 
 1.0.2
 Updated mod files to game version v0.25129
+
+1.1.0
+
+Rewrote the entire mod to work through updates
+Added Modimporter compatibility
