@@ -581,7 +581,7 @@ function HandleBoonManagerClick(screen, button)
 		elseif screen.Mode == "Delete" then
 			screen.BoonsList[screen.CurrentPage][button.Index]=nil
 			RemoveWeaponTrait(button.Boon.Name)
-			Destroy({ Id = button.Id })
+			Destroy({ Ids = { button.Id, button.Background.Id } })
 			ReloadAllTraits()
 			return
 		end
@@ -642,7 +642,6 @@ function BoonManagerLoadPage(screen)
 			})
 			SetColor({ Id = screen.Components[purchaseButtonKeyBG].Id, Color = Color["BoonPatch"..boonData.boon.Rarity]})
 			SetScaleX({ Id = screen.Components[purchaseButtonKeyBG].Id, Fraction = 2})
-			Attach({ Id = screen.Components[purchaseButtonKeyBG].Id, DestinationId = screen.Components.Background.Id, OffsetX = boonData.offsetX, OffsetY = boonData.offsetY })
 			local purchaseButtonKey = "PurchaseButton"..boonData.index
 			screen.Components[purchaseButtonKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonManager", Scale = 0.3, })
 		  screen.Components[purchaseButtonKey].OnPressedFunctionName = "HandleBoonManagerClick"
@@ -650,6 +649,7 @@ function BoonManagerLoadPage(screen)
 		  screen.Components[purchaseButtonKey].Index = boonData.index
 			screen.Components[purchaseButtonKey].Background = screen.Components[purchaseButtonKeyBG]
 		  Attach({ Id = screen.Components[purchaseButtonKey].Id, DestinationId = screen.Components.Background.Id, OffsetX = boonData.offsetX, OffsetY = boonData.offsetY })
+			Attach({ Id = screen.Components[purchaseButtonKeyBG].Id, DestinationId = screen.Components[purchaseButtonKey].Id })
 		  CreateTextBox({ Id = screen.Components[purchaseButtonKey].Id, Text = boonData.boon.Name,
 		      FontSize = 22, OffsetX = 0, OffsetY = -5, Width = 720, Color = color, Font = "AlegreyaSansSCLight",
 		      ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
@@ -736,7 +736,7 @@ function OpenBoonManager()
 		for i,boon in ipairs(CurrentRun.Hero.Traits) do
 			if Contains(displayedTraits, boon.Name) then
 			else
-				if IsGodTrait(boon.Name) or IsHermesChaosHammerCharonBoon(boon.Name) or Contains(ConsumableTraits, boon.Name) then
+				if IsGodTrait(boon.Name) or IsHermesChaosHammerCharonBoon(boon.Name) or Contains(CodexMenuData.ConsumableTraits, boon.Name) then
 					table.insert(displayedTraits, boon.Name)
 					local rowOffset = 100
 					local columnOffset = 300
