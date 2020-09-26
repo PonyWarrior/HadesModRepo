@@ -87,15 +87,30 @@ WeaponList = {
   },
 }
 
+local DualWieldingConfig = { }
 local debug = false
+local announcementMsg = false
 OnAnyLoad{function(triggerArgs)
   if ModUtil ~= nil then
     debug = true
+    if not announcementMsg then
+      ModUtil.Hades.PrintStack("ModUtil is installed, DualWielding debug messages enabled!")
+      announcementMsg = true
+    end
   end
+  if GameState.DualWieldingConfig == nil then
+    GameState.DualWieldingConfig = {
+      weapon1 = "none",
+      weapon1aspect = "none",
+      weapon1aspectIndex = nil,
+      weapon2 = "none",
+      weapon2aspect = "none",
+      weapon2aspectIndex = nil,
+     }
+  end
+  DualWieldingConfig = GameState.DualWieldingConfig
 end
 }
-
-DualWieldingConfig = { }
 
 DualWieldingScreen = { Components = {} }
 
@@ -134,9 +149,9 @@ function SwapCounter()
 end
 
 function SwitchWeapon()
-  if DualWieldingConfig == nil or DualWieldingConfig.weapon1 == nil or DualWieldingConfig.weapon2 == nil then
+  if DualWieldingConfig == nil or DualWieldingConfig.weapon1 == "none" or DualWieldingConfig.weapon2 == "none" then
     if debug then
-      ModUtil.Hades.PrintStack("Config is empty or incomplete!")
+      ModUtil.Hades.PrintStack("Cannot swap, config is empty or incomplete!")
     end
     return
   end
@@ -155,15 +170,38 @@ function SwitchWeapon()
   ReloadAllTraits()
 end
 
+function SaveDualWieldingConfig(screen, button)
+  if DualWieldingConfig == nil or DualWieldingConfig.weapon1 == "none" or DualWieldingConfig.weapon2 == "none" then
+    if debug then
+      ModUtil.Hades.PrintStack("Cannot save, config is empty or incomplete!")
+    end
+    return
+  end
+  GameState.DualWieldingConfig = DualWieldingConfig
+  if GameState.DualWieldingConfig ~= nil and GameState.DualWieldingConfig == DualWieldingConfig and DualWieldingConfig.weapon1 ~= "none" and DualWieldingConfig.weapon2 ~= "none" then
+    if debug then
+      ModUtil.Hades.PrintStack("Config saved successfully!")
+    end
+  else
+    if debug then
+      ModUtil.Hades.PrintStack("Error with config, could not save!")
+    end
+  end
+end
+
 function SelectDualWieldingWeapon(screen, button)
   if button.Slot == 1 then
     DualWieldingConfig.weapon1 = button.Weapon
     DualWieldingConfig.weapon1aspect = button.Aspect
     DualWieldingConfig.weapon1aspectIndex = button.Index
+    ModifyTextBox({ Id = screen.Components.WeaponDisplay1.Id, Text = DualWieldingConfig.weapon1 })
+    ModifyTextBox({ Id = screen.Components.AspectDisplay1.Id, Text = DualWieldingConfig.weapon1aspect })
   else
     DualWieldingConfig.weapon2 = button.Weapon
     DualWieldingConfig.weapon2aspect = button.Aspect
     DualWieldingConfig.weapon2aspectIndex = button.Index
+    ModifyTextBox({ Id = screen.Components.WeaponDisplay2.Id, Text = DualWieldingConfig.weapon2 })
+    ModifyTextBox({ Id = screen.Components.AspectDisplay2.Id, Text = DualWieldingConfig.weapon2aspect })
   end
 end
 
@@ -242,7 +280,7 @@ function OpenDualwieldingConfigMenu()
   end
   --Weapon 2
   CreateTextBox({ Id = components.Background.Id, Text = "Weapon 2", FontSize = 19,
-  OffsetX = 100, OffsetY = -40, Width = 840, Color = Color.White, Font = "UbuntuMonoBold",
+  OffsetX = 100, OffsetY = -60, Width = 840, Color = Color.White, Font = "UbuntuMonoBold",
   ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
   for i, weapon in pairs (WeaponList) do
     local purchaseButtonKey = "PurchaseButton"..index
@@ -278,6 +316,35 @@ function OpenDualwieldingConfigMenu()
     end
     index = index + 1
   end
+  --Display selection
+  components.WeaponDisplay1 = CreateScreenComponent({ Name = "BlankObstacle", Group = "DualWielding", })
+  Attach({ Id = components.WeaponDisplay1.Id, DestinationId = components.Background.Id, OffsetX = -200, OffsetY = 200 })
+  CreateTextBox({ Id = components.WeaponDisplay1.Id, Text = DualWieldingConfig.weapon1, FontSize = 19,
+  OffsetX = 0, OffsetY = 0, Width = 840, Color = Color.White, Font = "AlegreyaSansSCLight",
+  ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
+  components.AspectDisplay1 = CreateScreenComponent({ Name = "BlankObstacle", Group = "DualWielding", })
+  Attach({ Id = components.AspectDisplay1.Id, DestinationId = components.Background.Id, OffsetX = -200, OffsetY = 240 })
+  CreateTextBox({ Id = components.AspectDisplay1.Id, Text = DualWieldingConfig.weapon1aspect, FontSize = 19,
+  OffsetX = 0, OffsetY = 0, Width = 840, Color = Color.White, Font = "AlegreyaSansSCLight",
+  ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
+
+  components.WeaponDisplay2 = CreateScreenComponent({ Name = "BlankObstacle", Group = "DualWielding", })
+  Attach({ Id = components.WeaponDisplay2.Id, DestinationId = components.Background.Id, OffsetX = 400, OffsetY = 200 })
+  CreateTextBox({ Id = components.WeaponDisplay2.Id, Text = DualWieldingConfig.weapon2, FontSize = 19,
+  OffsetX = 0, OffsetY = 0, Width = 840, Color = Color.White, Font = "AlegreyaSansSCLight",
+  ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
+  components.AspectDisplay2 = CreateScreenComponent({ Name = "BlankObstacle", Group = "DualWielding", })
+  Attach({ Id = components.AspectDisplay2.Id, DestinationId = components.Background.Id, OffsetX = 400, OffsetY = 240 })
+  CreateTextBox({ Id = components.AspectDisplay2.Id, Text = DualWieldingConfig.weapon2aspect, FontSize = 19,
+  OffsetX = 0, OffsetY = 0, Width = 840, Color = Color.White, Font = "AlegreyaSansSCLight",
+  ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
+  --Save button
+  -- components.SaveButton = CreateScreenComponent({ Name = "BoonSlot1", Group = "DualWielding", Scale = 0.28, })
+  -- components.SaveButton.OnPressedFunctionName = "SaveDualWieldingConfig"
+  -- Attach({ Id = components.SaveButton.Id, DestinationId = components.Background.Id, OffsetX = 80, OffsetY = 350 })
+  -- CreateTextBox({ Id = components.SaveButton.Id, Text = "Save Config", FontSize = 19,
+  -- OffsetX = 0, OffsetY = 0, Width = 840, Color = Color.White, Font = "AlegreyaSansSCLight",
+  -- ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
   --End
   screen.KeepOpen = true
   HandleScreenInput(screen)
@@ -322,7 +389,7 @@ OnControlPressed{ "Shout",
         OpenDualwieldingConfigMenu()
 				return
 			end
-			if ticks > 0 then
+			if ticks > 0 and debug then
         ModUtil.Hades.PrintStack(ticks,0.5)
 			end
 			wait(0.5)
