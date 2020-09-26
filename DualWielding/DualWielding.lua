@@ -30,19 +30,75 @@
 --   GunGrenadeSelfEmpowerTrait : Aspect of Eris
 --   GunLoadedGrenadeTrait : Aspect of Lucifer
 
-local config = {
-  weapon1 = "BowWeapon",
-  weapon1aspect = "BowLoadAmmoTrait",
-  weapon2 = "BowWeapon",
-  weapon2aspect = "BowMarkHomingTrait",
+WeaponList = {
+  SwordWeapon =
+  {
+    Name = "SwordWeapon",
+    Icon = "Codex_Portrait_Sword",
+    Aspects =
+    {
+      "SwordBaseUpgradeTrait", "SwordCriticalParryTrait", "DislodgeAmmoTrait", "SwordConsecrationTrait",
+    },
+  },
+  SpearWeapon =
+  {
+    Name = "SpearWeapon",
+    Icon = "Codex_Portrait_Spear",
+    Aspects =
+    {
+      "SpearBaseUpgradeTrait", "SpearTeleportTrait", "SpearWeaveTrait", "SpearSpinTravel",
+    },
+  },
+  ShieldWeapon =
+  {
+    Name = "ShieldWeapon",
+    Icon = "Codex_Portrait_Shield",
+    Aspects =
+    {
+      "ShieldBaseUpgradeTrait", "ShieldRushBonusProjectileTrait", "ShieldTwoShieldTrait", "ShieldLoadAmmoTrait",
+    },
+  },
+  BowWeapon =
+  {
+    Name = "BowWeapon",
+    Icon = "Codex_Portrait_Bow",
+    Aspects =
+    {
+      "BowBaseUpgradeTrait", "BowMarkHomingTrait", "BowLoadAmmoTrait", "BowBondTrait",
+    },
+  },
+  FistWeapon =
+  {
+    Name = "FistWeapon",
+    Icon = "Codex_Portrait_Fist",
+    Aspects =
+    {
+      "FistBaseUpgradeTrait", "FistVacuumTrait", "FistWeaveTrait", "FistDetonateTrait",
+    },
+  },
+  GunWeapon =
+  {
+    Name = "GunWeapon",
+    Icon = "Codex_Portrait_Gun",
+    Aspects =
+    {
+      "GunBaseUpgradeTrait", "GunGrenadeSelfEmpowerTrait", "GunManualReloadTrait", "GunLoadedGrenadeTrait",
+    },
+  },
 }
+
+local debug = false
+OnAnyLoad{function(triggerArgs)
+  if ModUtil ~= nil then
+    debug = true
+  end
+end
+}
+
+DualWieldingConfig = { }
 
 DualWieldingScreen = { Components = {} }
 
-local weapon1 = config.weapon1
-local weapon1aspect = config.weapon1aspect
-local weapon2 = config.weapon2
-local weapon2aspect = config.weapon2aspect
 local swapcd = _worldTime
 local atkcd = _worldTime
 local combo = 0
@@ -65,14 +121,12 @@ end
 
 function SwapCounter()
   if canSwap then
-    -- ModUtil.Hades.PrintStack('can swap', 3, Color.Yellow, Color.TransparentBlack, 25)
     CreateAnimation({ Name = "SkillProcFeedbackFx", DestinationId = CurrentRun.Hero.ObjectId, Scale = 1.2 })
     return
   end
   if combo >= 5 and ModCheckCooldown(swapcd, 5.0) then
     canSwap = true
     combo = 0
-    -- ModUtil.Hades.PrintStack('can swap', 3, Color.Yellow, Color.TransparentBlack, 25)
     CreateAnimation({ Name = "SkillProcFeedbackFx", DestinationId = CurrentRun.Hero.ObjectId, Scale = 1.2 })
   else
     combo = combo + 1
@@ -80,19 +134,37 @@ function SwapCounter()
 end
 
 function SwitchWeapon()
+  if DualWieldingConfig == nil or DualWieldingConfig.weapon1 == nil or DualWieldingConfig.weapon2 == nil then
+    if debug then
+      ModUtil.Hades.PrintStack("Config is empty or incomplete!")
+    end
+    return
+  end
   local weapon = GetEquippedWeapon()
-  if weapon == weapon1 and not HeroHasTrait(weapon2aspect) then
-    RemoveTrait(CurrentRun.Hero, weapon1aspect)
-    EquipPlayerWeapon(WeaponData[weapon2], { PreLoadBinks = true })
-    AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = weapon2aspect,
-    Rarity = GetRarityKey(GetWeaponUpgradeLevel( weapon2, 1 )) })})
+  if weapon == DualWieldingConfig.weapon1 and not HeroHasTrait(DualWieldingConfig.weapon2aspect) then
+    RemoveTrait(CurrentRun.Hero, DualWieldingConfig.weapon1aspect)
+    EquipPlayerWeapon(WeaponData[DualWieldingConfig.weapon2], { PreLoadBinks = true })
+    AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = DualWieldingConfig.weapon2aspect,
+    Rarity = GetRarityKey(GetWeaponUpgradeLevel( DualWieldingConfig.weapon2, DualWieldingConfig.weapon2aspectIndex )) })})
   else
-    RemoveTrait(CurrentRun.Hero, weapon2aspect)
-    EquipPlayerWeapon(WeaponData[weapon1], { PreLoadBinks = true })
-    AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = weapon1aspect,
-    Rarity = GetRarityKey(GetWeaponUpgradeLevel( weapon1, 1 )) })})
+    RemoveTrait(CurrentRun.Hero, DualWieldingConfig.weapon2aspect)
+    EquipPlayerWeapon(WeaponData[DualWieldingConfig.weapon1], { PreLoadBinks = true })
+    AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = DualWieldingConfig.weapon1aspect,
+    Rarity = GetRarityKey(GetWeaponUpgradeLevel( DualWieldingConfig.weapon1, DualWieldingConfig.weapon1aspectIndex )) })})
   end
   ReloadAllTraits()
+end
+
+function SelectDualWieldingWeapon(screen, button)
+  if button.Slot == 1 then
+    DualWieldingConfig.weapon1 = button.Weapon
+    DualWieldingConfig.weapon1aspect = button.Aspect
+    DualWieldingConfig.weapon1aspectIndex = button.Index
+  else
+    DualWieldingConfig.weapon2 = button.Weapon
+    DualWieldingConfig.weapon2aspect = button.Aspect
+    DualWieldingConfig.weapon2aspectIndex = button.Index
+  end
 end
 
 function OpenDualwieldingConfigMenu()
@@ -100,8 +172,8 @@ function OpenDualwieldingConfigMenu()
   local screen = ScreenAnchors.DualWieldingScreen
   local components = screen.Components
   screen.Name = "DualWieldingConfigMenu"
-  screen.RowStartX = -350
-  screen.RowStartY = -270
+  screen.RowStartX = -495
+  screen.RowStartY = -170
   OnScreenOpened({ Flag = screen.Name, PersistCombatUI = true })
   SetConfigOption({ Name = "UseOcclusion", Value = false })
   FreezePlayerUnit()
@@ -123,14 +195,89 @@ function OpenDualwieldingConfigMenu()
   CreateTextBox({ Id = components.Background.Id, Text = "DualWielding Config Menu", FontSize = 34,
   OffsetX = 100, OffsetY = -370, Color = Color.White, Font = "SpectralSCLight",
   ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
-  CreateTextBox({ Id = components.Background.Id, Text = "Instructions here", FontSize = 19,
-  OffsetX = 100, OffsetY = -340, Width = 840, Color = Color.SubTitle, Font = "CrimsonTextItalic",
-  ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
   --Close button
   components.CloseButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "DualWielding" })
   Attach({ Id = components.CloseButton.Id, DestinationId = components.Background.Id, OffsetX = 100, OffsetY = ScreenCenterY - 70 })
   components.CloseButton.OnPressedFunctionName = "CloseDualWieldingConfigMenu"
   components.CloseButton.ControlHotkey = "Cancel"
+  --Display weapon choice
+  --Weapon 1
+  CreateTextBox({ Id = components.Background.Id, Text = "Weapon 1", FontSize = 19,
+  OffsetX = 100, OffsetY = -300, Width = 840, Color = Color.White, Font = "UbuntuMonoBold",
+  ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
+  local index = 1
+  for i, weapon in pairs (WeaponList) do
+    local purchaseButtonKey = "PurchaseButton"..index
+    local index2 = 1
+    local rowoffset = 230
+    local columnoffset = 220
+    local numperrow = 6
+    local offsetX = screen.RowStartX + columnoffset * ((index - 1) % numperrow)
+    local offsetY = screen.RowStartY + rowoffset * (math.floor((index - 1) / numperrow))
+    components[purchaseButtonKey] = CreateScreenComponent({ Name = "rectangle01", Group = "DualWielding", Scale = 0.4, })
+    SetAnimation({ DestinationId = components[purchaseButtonKey].Id, Name = weapon.Icon })
+    SetAlpha({ Id = components[purchaseButtonKey].Id, Fraction = 1 })
+    SetThingProperty({ Property = "Ambient", Value = 0.0, DestinationId = components[purchaseButtonKey].Id })
+    Attach({ Id = components[purchaseButtonKey].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
+    offsetY = offsetY - 75
+    for t, aspect in pairs (weapon.Aspects) do
+      local aspectPurchaseButtonKey = "AspectPurchaseButton"..index..t
+      local aspectRowOffset = 45
+      local aspectOffsetX = offsetX + 110
+      local aspectOffsetY = offsetY + aspectRowOffset * (math.floor(t - 1))
+      components[aspectPurchaseButtonKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "DualWielding", Scale = 0.16, })
+      components[aspectPurchaseButtonKey].OnPressedFunctionName = "SelectDualWieldingWeapon"
+      components[aspectPurchaseButtonKey].Slot = 1
+      components[aspectPurchaseButtonKey].Index = t
+      components[aspectPurchaseButtonKey].Weapon = weapon.Name
+      components[aspectPurchaseButtonKey].Aspect = aspect
+      Attach({ Id = components[aspectPurchaseButtonKey].Id, DestinationId = components.Background.Id, OffsetX = aspectOffsetX, OffsetY = aspectOffsetY })
+      CreateTextBox({ Id = components[aspectPurchaseButtonKey].Id, Text = aspect,
+        FontSize = 15, OffsetX = 0, OffsetY = 0, Width = 720, Color = Color.White, Font = "AlegreyaSansSCLight",
+        ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset = {0, 2}, Justification = "Center"
+      })
+      index2 = index2 +1
+    end
+    index = index + 1
+  end
+  --Weapon 2
+  CreateTextBox({ Id = components.Background.Id, Text = "Weapon 2", FontSize = 19,
+  OffsetX = 100, OffsetY = -40, Width = 840, Color = Color.White, Font = "UbuntuMonoBold",
+  ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
+  for i, weapon in pairs (WeaponList) do
+    local purchaseButtonKey = "PurchaseButton"..index
+    local index2 = 1
+    local rowoffset = 230
+    local columnoffset = 220
+    local numperrow = 6
+    local offsetX = screen.RowStartX + columnoffset * ((index - 1) % numperrow)
+    local offsetY = screen.RowStartY + rowoffset * (math.floor((index - 1) / numperrow))
+    components[purchaseButtonKey] = CreateScreenComponent({ Name = "rectangle01", Group = "DualWielding", Scale = 0.4, })
+    SetAnimation({ DestinationId = components[purchaseButtonKey].Id, Name = weapon.Icon })
+    SetAlpha({ Id = components[purchaseButtonKey].Id, Fraction = 1 })
+    SetThingProperty({ Property = "Ambient", Value = 0.0, DestinationId = components[purchaseButtonKey].Id })
+    Attach({ Id = components[purchaseButtonKey].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
+    offsetY = offsetY - 75
+    for t, aspect in pairs (weapon.Aspects) do
+      local aspectPurchaseButtonKey = "AspectPurchaseButton"..index..t
+      local aspectRowOffset = 45
+      local aspectOffsetX = offsetX + 110
+      local aspectOffsetY = offsetY + aspectRowOffset * (math.floor(t - 1))
+      components[aspectPurchaseButtonKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "DualWielding", Scale = 0.16, })
+      components[aspectPurchaseButtonKey].OnPressedFunctionName = "SelectDualWieldingWeapon"
+      components[aspectPurchaseButtonKey].Slot = 2
+      components[aspectPurchaseButtonKey].Index = t
+      components[aspectPurchaseButtonKey].Weapon = weapon.Name
+      components[aspectPurchaseButtonKey].Aspect = aspect
+      Attach({ Id = components[aspectPurchaseButtonKey].Id, DestinationId = components.Background.Id, OffsetX = aspectOffsetX, OffsetY = aspectOffsetY })
+      CreateTextBox({ Id = components[aspectPurchaseButtonKey].Id, Text = aspect,
+        FontSize = 15, OffsetX = 0, OffsetY = 0, Width = 720, Color = Color.White, Font = "AlegreyaSansSCLight",
+        ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset = {0, 2}, Justification = "Center"
+      })
+      index2 = index2 +1
+    end
+    index = index + 1
+  end
   --End
   screen.KeepOpen = true
   HandleScreenInput(screen)
