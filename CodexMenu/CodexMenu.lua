@@ -1432,9 +1432,10 @@ function CodexMain()
 				["NPC_Nyx_01"] = function()
 					OpenCustomMirror()
 				end,
-				["NPC_Skelly_01"] = function()
-					OpenShrineUpgradeMenu({ BlockRunStartButton = true })
-				end,
+				-- disabled
+				-- ["NPC_Skelly_01"] = function()
+				-- 	OpenShrineUpgradeMenu({ BlockRunStartButton = true })
+				-- end,
 				["NPC_Cerberus_01"] = function()
 					StartUpAwardMenu(triggerArgs.TriggeredByTable)
 				end,

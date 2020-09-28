@@ -149,3 +149,23 @@ opening the boon manager during a run resets progress of stacking keepsakes
 fixed issues :
 beowulf shield specific boons not displayed correctly
 deleting a boon in the boon manager does not delete all related screen objects
+
+2.3.3
+
+ongoing issues :
+some casts have bugged animations
+pom of power spawns in a random location in the room
+some users crash when opening the boon manager
+various bugs with all mode in boon manager
+opening the boon manager during a run resets progress of stacking keepsakes
+
+new issues :
+opening the pact of punishment during a run and modifying any conditions will brick any condition previously enabled
+
+fixed issues :
+'ricochet fire' hammer boon was missing for exagryph
+
+removed feature :
+pact of punishment removed from Skelly. changing the pact options during a run bricks that option,
+and making it work during an ongoing run is too much work.
+unless many users request this feature it won't be added again.
