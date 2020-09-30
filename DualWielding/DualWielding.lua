@@ -87,6 +87,21 @@ WeaponList = {
   },
 }
 
+UpgradeList = {
+
+  SwordWeapon = { "SwordTwoComboTrait", "SwordSecondaryAreaDamageTrait", "SwordHeavySecondStrikeTrait", "SwordThrustWaveTrait", "SwordSecondaryDoubleAttackTrait", "SwordHealthBufferDamageTrait", "SwordDoubleDashAttackTrait", "SwordCriticalTrait", "SwordBackstabTrait", "SwordCursedLifeStealTrait", "SwordGoldDamageTrait", "SwordBlinkTrait", "SwordConsecrationBoostTrait"},
+
+  BowWeapon = { "BowDoubleShotTrait", "BowLongRangeDamageTrait", "BowSlowChargeDamageTrait", "BowTapFireTrait", "BowPenetrationTrait", "BowPowerShotTrait", "BowSecondaryBarrageTrait", "BowTripleShotTrait", "BowSecondaryFocusedFireTrait", "BowChainShotTrait", "BowConsecutiveBarrageTrait", "BowCloseAttackTrait", "BowBondBoostTrait"},
+
+  ShieldWeapon = { "ShieldDashAOETrait", "ShieldRushProjectileTrait", "ShieldThrowFastTrait", "ShieldThrowCatchExplode", "ShieldChargeHealthBufferTrait", "ShieldChargeSpeedTrait", "ShieldBashDamageTrait", "ShieldPerfectRushTrait", "ShieldThrowElectiveCharge", "ShieldThrowEmpowerTrait", "ShieldBlockEmpowerTrait", "ShieldThrowRushTrait", "ShieldLoadAmmoBoostTrait"},
+
+  SpearWeapon = { "SpearReachAttack", "SpearAutoAttack", "SpearThrowExplode", "SpearThrowBounce", "SpearThrowPenetrate", "SpearThrowCritical", "SpearSpinDamageRadius", "SpearSpinChargeLevelTime", "SpearDashMultiStrike", "SpearThrowElectiveCharge", "SpearSpinChargeAreaDamageTrait", "SpearAttackPhalanxTrait", "SpearSpinTravelDurationTrait"},
+
+  GunWeapon = { "GunSlowGrenade", "GunMinigunTrait", "GunShotgunTrait", "GunExplodingSecondaryTrait", "GunGrenadeFastTrait", "GunArmorPenerationTrait", "GunInfiniteAmmoTrait", "GunConsecutiveFireTrait", "GunGrenadeClusterTrait", "GunGrenadeDropTrait", "GunHeavyBulletTrait", "GunHomingBulletTrait", "GunChainShotTrait"},
+
+  FistWeapon = { "FistReachAttackTrait", "FistDashAttackHealthBufferTrait", "FistTeleportSpecialTrait", "FistDoubleDashSpecialTrait", "FistChargeSpecialTrait", "FistKillTrait", "FistSpecialLandTrait", "FistAttackFinisherTrait", "FistConsecutiveAttackTrait", "FistSpecialFireballTrait", "FistHeavyAttackTrait", "FistAttackDefenseTrait"},
+}
+
 local DualWieldingConfig = { }
 local debug = false
 local announcementMsg = false
@@ -106,6 +121,16 @@ OnAnyLoad{function(triggerArgs)
       weapon2 = "none",
       weapon2aspect = "none",
       weapon2aspectIndex = nil,
+      SavedHammerUpgrades1 = {
+        Weapon = "",
+        Aspect = "",
+        Upgrades = { },
+      },
+      SavedHammerUpgrades2 = {
+        Weapon = "",
+        Aspect = "",
+        Upgrades = { },
+      },
      }
   end
   DualWieldingConfig = GameState.DualWieldingConfig
@@ -118,6 +143,13 @@ local swapcd = _worldTime
 local atkcd = _worldTime
 local combo = 0
 local canSwap = false
+
+
+OnAnyLoad{ "DeathArea",
+	function( triggerArgs )
+    ResetSavedHammerUpgrades()
+  end
+}
 
 function ModCheckCooldown(name, time)
   if time == nil then
@@ -148,6 +180,99 @@ function SwapCounter()
   end
 end
 
+function CheckSpecialUnequip(aspect)
+  if aspect == "ShieldLoadAmmoTrait" then
+    RemoveSelfAmmoLoad(CurrentRun.Hero)
+  elseif aspect == "BowLoadAmmoTrait" then
+    RemoveAmmoLoad(CurrentRun.Hero)
+  elseif aspect == "SpearSpinTravel" then
+    RemoveSpearGuanYu(CurrentRun.Hero)
+  end
+end
+
+function CheckHadesShout(traits)
+  for i, traitData in pairs(traits) do
+    if traitData.Name == "HadesShoutTrait" then
+      RemoveTrait(CurrentRun.Hero, traitData.Name)
+    end
+  end
+end
+
+function ResetSavedHammerUpgrades()
+  DualWieldingConfig.SavedHammerUpgrades1 = {
+    Weapon = "",
+    Aspect = "",
+    Upgrades = { },
+   }
+  DualWieldingConfig.SavedHammerUpgrades2 = {
+    Weapon = "",
+    Aspect = "",
+    Upgrades = { },
+   }
+end
+
+function SaveHammerUpgrades(weapon, aspect, traits)
+  if DualWieldingConfig.SavedHammerUpgrades1 == nil or DualWieldingConfig.SavedHammerUpgrades2 == nil then
+    ResetSavedHammerUpgrades()
+  end
+  local upgrades = { }
+  for i, traitData in pairs(traits) do
+    if IsHammerBoon(traitData.Name) then
+      table.insert(upgrades, traitData)
+    end
+  end
+  if upgrades ~= nil then
+    if weapon == DualWieldingConfig.weapon1 and aspect == DualWieldingConfig.weapon1aspect then
+      DualWieldingConfig.SavedHammerUpgrades1.Weapon = DualWieldingConfig.weapon1
+      DualWieldingConfig.SavedHammerUpgrades1.Aspect = DualWieldingConfig.weapon1aspect
+      DualWieldingConfig.SavedHammerUpgrades1.Upgrades = upgrades
+    elseif weapon == DualWieldingConfig.weapon2 and aspect == DualWieldingConfig.weapon2aspect then
+      DualWieldingConfig.SavedHammerUpgrades2.Weapon = DualWieldingConfig.weapon2
+      DualWieldingConfig.SavedHammerUpgrades2.Aspect = DualWieldingConfig.weapon2aspect
+      DualWieldingConfig.SavedHammerUpgrades2.Upgrades = upgrades
+    end
+  end
+end
+
+function RestoreSavedHammerUpgrades(weapon, aspect)
+  if weapon == DualWieldingConfig.weapon1 and aspect == DualWieldingConfig.weapon1aspect then
+    if DualWieldingConfig.SavedHammerUpgrades1.Weapon == weapon and DualWieldingConfig.SavedHammerUpgrades1.Aspect and DualWieldingConfig.SavedHammerUpgrades1.Upgrades ~= nil then
+      for i, traitData in pairs(DualWieldingConfig.SavedHammerUpgrades1.Upgrades) do
+        if not HeroHasTrait(traitData.Name) then
+          AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = traitData.Name, })})
+        end
+      end
+    end
+  elseif weapon == DualWieldingConfig.weapon2 and aspect == DualWieldingConfig.weapon2aspect then
+    if DualWieldingConfig.SavedHammerUpgrades2.Weapon == weapon and DualWieldingConfig.SavedHammerUpgrades2.Aspect and DualWieldingConfig.SavedHammerUpgrades2.Upgrades ~= nil then
+      for i, traitData in pairs(DualWieldingConfig.SavedHammerUpgrades2.Upgrades) do
+        if not HeroHasTrait(traitData.Name) then
+          AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = traitData.Name, })})
+        end
+      end
+    end
+  end
+end
+
+function RemoveAllHammerUpgrades(traits)
+  for i, traitData in pairs(traits) do
+    if IsHammerBoon(traitData.Name) then
+      RemoveTrait(CurrentRun.Hero, traitData.Name)
+    end
+  end
+end
+
+function IsHammerBoon(traitName)
+	if traitName ~= nil then
+		for i, loot in pairs (LootData) do
+			if loot.Icon == "WeaponUpgradeSymbol" and loot.TraitIndex[traitName] then
+				return true
+			end
+		end
+		return false
+	end
+end
+
 function SwitchWeapon()
   if DualWieldingConfig == nil or DualWieldingConfig.weapon1 == "none" or DualWieldingConfig.weapon2 == "none" then
     if debug then
@@ -156,17 +281,27 @@ function SwitchWeapon()
     return
   end
   local weapon = GetEquippedWeapon()
+  UnequipWeapon({ DestinationId = CurrentRun.Hero.ObjectId, Name = weapon })
   if weapon == DualWieldingConfig.weapon1 and not HeroHasTrait(DualWieldingConfig.weapon2aspect) then
+    SaveHammerUpgrades(DualWieldingConfig.weapon1, DualWieldingConfig.weapon1aspect, CurrentRun.Hero.Traits)
+    RemoveAllHammerUpgrades(CurrentRun.Hero.Traits)
+    CheckSpecialUnequip(DualWieldingConfig.weapon1aspect)
     RemoveTrait(CurrentRun.Hero, DualWieldingConfig.weapon1aspect)
     EquipPlayerWeapon(WeaponData[DualWieldingConfig.weapon2], { PreLoadBinks = true })
     AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = DualWieldingConfig.weapon2aspect,
     Rarity = GetRarityKey(GetWeaponUpgradeLevel( DualWieldingConfig.weapon2, DualWieldingConfig.weapon2aspectIndex )) })})
+    RestoreSavedHammerUpgrades(DualWieldingConfig.weapon2, DualWieldingConfig.weapon2aspect)
   else
+    SaveHammerUpgrades(DualWieldingConfig.weapon2, DualWieldingConfig.weapon2aspect, CurrentRun.Hero.Traits)
+    RemoveAllHammerUpgrades(CurrentRun.Hero.Traits)
+    CheckSpecialUnequip(DualWieldingConfig.weapon2aspect)
     RemoveTrait(CurrentRun.Hero, DualWieldingConfig.weapon2aspect)
     EquipPlayerWeapon(WeaponData[DualWieldingConfig.weapon1], { PreLoadBinks = true })
     AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = DualWieldingConfig.weapon1aspect,
     Rarity = GetRarityKey(GetWeaponUpgradeLevel( DualWieldingConfig.weapon1, DualWieldingConfig.weapon1aspectIndex )) })})
+    RestoreSavedHammerUpgrades(DualWieldingConfig.weapon1, DualWieldingConfig.weapon1aspect)
   end
+  CheckHadesShout(CurrentRun.Hero.Traits)
   ReloadAllTraits()
 end
 
