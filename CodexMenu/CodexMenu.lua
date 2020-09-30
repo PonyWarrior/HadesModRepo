@@ -248,9 +248,18 @@ function HasBeowulf()
 	return false
 end
 
+function CheckHadesShout(traits)
+  for i, traitData in pairs(traits) do
+    if traitData.Name == "HadesShoutTrait" then
+      RemoveTrait(CurrentRun.Hero, traitData.Name)
+    end
+  end
+end
+
 function OpenBoonSelector(godName, spawnBoon)
 	CloseCodexScreen()
 	wait(0.1)
+	CheckHadesShout(CurrentRun.Hero.Traits)
 	ReloadAllTraits()
 	if godName ~= nil and CodexMenuData[godName] then
 		local Boons = DeepCopyTable(CodexMenuData[godName])
@@ -556,6 +565,7 @@ function HandleBoonManagerClick(screen, button)
 					for i=1, numOldTrait-1 do
 						AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon.Name, Rarity = button.Boon.Rarity }) })
 					end
+					CheckHadesShout(CurrentRun.Hero.Traits)
 					ReloadAllTraits()
 				end
 			end
@@ -574,6 +584,7 @@ function HandleBoonManagerClick(screen, button)
 					for i=1, numOldTrait-1 do
 						AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon.Name, Rarity = button.Boon.Rarity }) })
 					end
+					CheckHadesShout(CurrentRun.Hero.Traits)
 					ReloadAllTraits()
 				end
 			end
@@ -582,6 +593,7 @@ function HandleBoonManagerClick(screen, button)
 			screen.BoonsList[screen.CurrentPage][button.Index]=nil
 			RemoveWeaponTrait(button.Boon.Name)
 			Destroy({ Ids = { button.Id, button.Background.Id } })
+			CheckHadesShout(CurrentRun.Hero.Traits)
 			ReloadAllTraits()
 			return
 		end
@@ -689,6 +701,7 @@ end
 function OpenBoonManager()
 	CloseCodexScreen()
 	wait(0.1)
+	CheckHadesShout(CurrentRun.Hero.Traits)
 	ReloadAllTraits()
 	if CurrentRun.Hero.Traits ~= nil then
 		ScreenAnchors.BoonSelector = DeepCopyTable(CodexMenuData.BoonSelector)
@@ -829,6 +842,7 @@ function CloseBoonManager(screen, button)
 	UnfreezePlayerUnit()
 	screen.KeepOpen = false
 	screen.BoonsList = {}
+	CheckHadesShout(CurrentRun.Hero.Traits)
 	ReloadAllTraits()
 	OnScreenClosed({ Flag = screen.Name })
 end
