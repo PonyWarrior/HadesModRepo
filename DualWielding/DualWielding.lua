@@ -151,16 +151,17 @@ OnAnyLoad{ "DeathArea",
   end
 }
 
-function ModCheckCooldown(name, time)
+function ModCheckCooldown(time)
+  --only checks swapcd
   if time == nil then
     return
   end
-  if name == nil then
-    name = _worldTime
+  if swapcd == nil then
+    swapcd = _worldTime
     return false
   end
-  if _worldTime > name + time then
-    name = _worldTime
+  if _worldTime > swapcd + time then
+    swapcd = _worldTime
     return true
   end
   return false
@@ -171,7 +172,7 @@ function SwapCounter()
     CreateAnimation({ Name = "SkillProcFeedbackFx", DestinationId = CurrentRun.Hero.ObjectId, Scale = 1.2 })
     return
   end
-  if combo >= 5 and ModCheckCooldown(swapcd, 5.0) then
+  if combo >= 5 and ModCheckCooldown(5.0) then
     canSwap = true
     combo = 0
     CreateAnimation({ Name = "SkillProcFeedbackFx", DestinationId = CurrentRun.Hero.ObjectId, Scale = 1.2 })
@@ -281,7 +282,6 @@ function SwitchWeapon()
     return
   end
   local weapon = GetEquippedWeapon()
-  UnequipWeapon({ DestinationId = CurrentRun.Hero.ObjectId, Name = weapon })
   if weapon == DualWieldingConfig.weapon1 and not HeroHasTrait(DualWieldingConfig.weapon2aspect) then
     SaveHammerUpgrades(DualWieldingConfig.weapon1, DualWieldingConfig.weapon1aspect, CurrentRun.Hero.Traits)
     RemoveAllHammerUpgrades(CurrentRun.Hero.Traits)
