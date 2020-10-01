@@ -1316,7 +1316,7 @@ OnControlPressed{ "Codex",
 			ticks = ticks + 1
 			if ticks > 3 then
 				ModDebugPrint('Executing Command!',1)
-				CodexMain()
+				CodexMain(triggerArgs)
 				return
 			end
 			if ticks > 0 then
@@ -1329,7 +1329,7 @@ OnControlPressed{ "Codex",
 	end
 }
 
-function CodexMain()
+function CodexMain(triggerArgs)
 		if CodexUI.Screen == nil or not IsScreenOpen("Codex") then
 			return
 		end
@@ -1451,6 +1451,7 @@ function CodexMain()
 				-- 	OpenShrineUpgradeMenu({ BlockRunStartButton = true })
 				-- end,
 				["NPC_Cerberus_01"] = function()
+					CloseCodexScreen()
 					StartUpAwardMenu(triggerArgs.TriggeredByTable)
 				end,
 				["NPC_Charon_01"] = function()

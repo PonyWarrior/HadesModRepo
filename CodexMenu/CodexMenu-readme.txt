@@ -163,7 +163,9 @@ new issues :
 opening the pact of punishment during a run and modifying any conditions will brick any condition previously enabled
 
 fixed issues :
-'ricochet fire' hammer boon was missing for exagryph
+'ricochet fire' hammer boon missing for gun
+hades keepsake increase call level when some menus are opened or closed
+crash on opening cerberus entry
 
 removed feature :
 pact of punishment removed from Skelly. changing the pact options during a run bricks that option,
