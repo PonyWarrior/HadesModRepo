@@ -159,9 +159,6 @@ some users crash when opening the boon manager
 various bugs with all mode in boon manager
 opening the boon manager during a run resets progress of stacking keepsakes
 
-new issues :
-opening the pact of punishment during a run and modifying any conditions will brick any condition previously enabled
-
 fixed issues :
 'ricochet fire' hammer boon missing for gun
 hades keepsake increase call level when some menus are opened or closed
@@ -171,3 +168,18 @@ removed feature :
 pact of punishment removed from Skelly. changing the pact options during a run bricks that option,
 and making it work during an ongoing run is too much work.
 unless many users request this feature it won't be added again.
+
+2.3.4
+
+ongoing issues :
+some casts have bugged animations
+pom of power spawns in a random location in the room
+some users crash when opening the boon manager
+various bugs with all mode in boon manager
+opening the boon manager during a run resets progress of stacking keepsakes
+
+fixed issues :
+codex not closing when opening certain screens
+
+changed feature :
+command key changed to 'Confirm' (default = Enter) and no longer needs to be held down

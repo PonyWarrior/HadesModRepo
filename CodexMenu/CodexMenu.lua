@@ -1308,24 +1308,9 @@ function ModDebugPrint(text, delay)
 	end
 end
 
-OnControlPressed{ "Codex",
+OnControlPressed{ "Confirm",
 	function( triggerArgs )
-		local ticks = 0
-		wait(0.1)
-		while IsControlDown({ Name = "Codex" }) do
-			ticks = ticks + 1
-			if ticks > 3 then
-				ModDebugPrint('Executing Command!',1)
-				CodexMain(triggerArgs)
-				return
-			end
-			if ticks > 0 then
-				ModDebugPrint(ticks,0)
-			end
-			wait(0.5)
-		end
-		Destroy({Ids = ScreenAnchors.HoldDisplayId})
-		ScreenAnchors.HoldDisplayId = nil
+		CodexMain(triggerArgs)
 	end
 }
 
@@ -1385,6 +1370,7 @@ function CodexMain(triggerArgs)
 		end
 		--Weapons
 		if CodexStatus.SelectedChapterName == "Weapons" then
+			CloseCodexScreen()
 			local weapon = CodexStatus.SelectedEntryNames[CodexStatus.SelectedChapterName]
 			EquipPlayerWeapon( WeaponData[weapon], { PreLoadBinks = true } )
 			RemoveAllTraits()
@@ -1444,6 +1430,7 @@ function CodexMain(triggerArgs)
 					end
 				end,
 				["NPC_Nyx_01"] = function()
+					CloseCodexScreen()
 					OpenCustomMirror()
 				end,
 				-- disabled
@@ -1455,15 +1442,18 @@ function CodexMain(triggerArgs)
 					StartUpAwardMenu(triggerArgs.TriggeredByTable)
 				end,
 				["NPC_Charon_01"] = function()
+					CloseCodexScreen()
 					CurrentRun.CurrentRoom.Store = nil
 					StartUpStore()
 				end,
 				["NPC_Hypnos_01"] = function()
+					CloseCodexScreen()
 					GenerateSellTraitShop(CurrentRun, CurrentRun.CurrentRoom)
 					OpenSellTraitMenu()
 				end,
 				["NPC_Orpheus_01"] = function()
 					--Save state
+					CloseCodexScreen()
 					if CurrentRun.Hero.Traits ~= nil then
 						local wp = GetEquippedWeapon()
 						if GameState.LastInteractedWeaponUpgrade ~= nil and GetWeaponUpgradeTrait( GameState.LastInteractedWeaponUpgrade.WeaponName, GameState.LastInteractedWeaponUpgrade.ItemIndex ) ~= nil then
@@ -1481,6 +1471,7 @@ function CodexMain(triggerArgs)
 					end
 				end,
 				["NPC_Patroclus_01"] = function()
+					CloseCodexScreen()
 					if GameState.CodexMenuSavedState ~= nil then
 						RemoveAllTraits()
 						if GameState.LastAwardTrait == "ReincarnationTrait" then
