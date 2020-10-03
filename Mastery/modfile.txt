@@ -1,1 +1,3 @@
 Import "Mastery.lua"
+To "/Content/Game/Obstacles/Obstacles.sjson"
+SJSON "Mastery.sjson"

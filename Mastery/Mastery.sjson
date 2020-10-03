@@ -1,0 +1,17 @@
+{
+  Obstacles = [
+
+    {
+      Name = "VictoryBG"
+      InheritFrom = "1_BaseTerrainTile"
+      DisplayInEditor = true
+    NeedsLife = false
+      Thing =
+      {
+        EditorOutlineDrawBounds = false
+        Graphic = "GUI\VictoryBG\VictoryBG0023"
+        TriggerOnSpawn = false
+      }
+    }
+  ]
+}
