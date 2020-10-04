@@ -104,7 +104,7 @@ local EnabledConfigMaps = {
 
 local Mastery = { }
 local loaded = false
-local tempExp = 0
+tempExp = 0
 MasteryScreen = { Components = {} }
 
 OnAnyLoad{function(triggerArgs)
@@ -120,102 +120,16 @@ end}
 OnControlPressed{"Shout",
   function(triggerArgs)
     if Contains(EnabledConfigMaps, CurrentRun.CurrentRoom.Name) then
+      -- MasteryInit()
+      -- Mastery = GameState.Mastery
+      --ShowRunClearScreen()
+      --OpenProgressionPanel()
       OpenMasteryPanel()
+      --OpenLevelUpPanel(Mastery.GunWeapon)
+      --  /SFX/ZeusWrathThunder  /SFX/ThanatosAttackBell /SFX/SurvivalChallengeStart
       return
     end
 end}
-
--- function OpenMasteryPanel()
---   ScreenAnchors.MasteryScreen = DeepCopyTable(MasteryScreen)
---   local screen = ScreenAnchors.MasteryScreen
---   local components = screen.Components
---   local title = "Weapon Mastery"
---   local subtitle = "Your mastery over each weapon"
---   screen.Name = "MasteryPanel"
---   screen.RowStartX = -550
---   screen.RowStartY = -150
---   OnScreenOpened({ Flag = screen.Name, PersistCombatUI = true })
---   SetConfigOption({ Name = "UseOcclusion", Value = false })
---   FreezePlayerUnit()
---   EnableShopGamepadCursor()
---   PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
---   --Background
---   components.BackgroundDim = CreateScreenComponent({ Name = "rectangle01", Group = "Mastery_Backing" })
---   components.Background = CreateScreenComponent({ Name = "BlankObstacle", Group = "Mastery_Backing" })
---   SetScale({ Id = components.BackgroundDim.Id, Fraction = 4 })
---   SetColor({ Id = components.BackgroundDim.Id, Color = {0.090, 0.055, 0.157, 0.8} })
---   components.LeftPart = CreateScreenComponent({ Name = "TraitTrayBackground", Group = "Mastery_Backing", X = 830, Y = 400})
---   components.MiddlePart = CreateScreenComponent({ Name = "TraitTray_Center", Group = "Mastery_Backing", X = 490, Y = 464 })
---   components.RightPart = CreateScreenComponent({ Name = "TraitTray_Right", Group = "Mastery_Backing", X = 1710, Y = 423 })
---   SetScaleY({Id = components.LeftPart.Id, Fraction = 1.3})
---   SetScaleY({Id = components.MiddlePart.Id, Fraction = 1.3})
---   SetScaleX({Id = components.MiddlePart.Id, Fraction = 10})
---   SetScaleY({Id = components.RightPart.Id, Fraction = 1.3})
---   --Title
---   CreateTextBox({ Id = components.Background.Id, Text = title, FontSize = 34,
---   OffsetX = 100, OffsetY = -370, Color = Color.White, Font = "SpectralSCLight",
---   ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
---   --SubTitle
---   CreateTextBox({ Id = components.Background.Id, Text = subtitle, FontSize = 19,
---   OffsetX = 100, OffsetY = -340, Width = 840, Color = Color.SubTitle, Font = "CrimsonTextItalic",
---   ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
---   --Close button
---   components.CloseButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "Mastery" })
---   Attach({ Id = components.CloseButton.Id, DestinationId = components.Background.Id, OffsetX = 100, OffsetY = ScreenCenterY - 70 })
---   components.CloseButton.OnPressedFunctionName = "CloseMasteryPanel"
---   components.CloseButton.ControlHotkey = "Cancel"
---   --Display
---   local index = 1
---   for i, weapon in pairs(Mastery) do
---     weapon.Level = math.random(0, 8)
---     weapon.Exp = math.random(0, GetNextLevelExp(weapon.Name))
---     local weaponKey = "WeaponKey"..index
---     local backingKey = "BackingKey"..index
---     local buttonKey = "ButtonKey"..index
---     local textoffsetX = 50
---     local rowoffset = 330
---     local columnoffset = 440
---     local numperrow = 3
---     local offsetX = screen.RowStartX + columnoffset*((index-1) % numperrow)
---     local offsetY = screen.RowStartY + rowoffset*(math.floor((index-1)/numperrow))
---     local wptitle = GetLevelTitle(weapon.Name)
---     local color = LevelColorTable[weapon.Level]
---     local lvl = "Level : "..weapon.Level
---     local frameTarget = 1 - (weapon.Exp / GetNextLevelExp(weapon.Name))
---     components[weaponKey] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Mastery" })
---     components[backingKey] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Mastery_Backing" })
---     components[buttonKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "Mastery_Backing", Scale = 0.37, })
---     components[buttonKey].OnPressedFunctionName = "OpenDetailedMasteryPanel"
---     components[buttonKey].Data = weapon
---     Attach({ Id = components[weaponKey].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
---     Attach({ Id = components[buttonKey].Id, DestinationId = components.Background.Id, OffsetX = offsetX + 200, OffsetY = offsetY + 25 })
---     Attach({ Id = components[backingKey].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
---     SetScaleY({Id = components[buttonKey].Id, Fraction = 0.5})
---     SetAnimation({ Name = "HealthBar", DestinationId = components[backingKey].Id })
---     SetAnimation({ Name = "HealthBarFill", DestinationId = components[weaponKey].Id, FrameTarget = frameTarget, Instant = true, Color = color })
---     --weapon
---     CreateTextBox({ Id = components[weaponKey].Id, Text = weapon.Name, FontSize = 18,
---     OffsetX = textoffsetX, OffsetY = -115, Color = color, Font = "SpectralSCBold",
---     ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Left" })
---     --level
---     CreateTextBox({ Id = components[weaponKey].Id, Text = lvl, FontSize = 18,
---     OffsetX = textoffsetX, OffsetY = -85, Color = color, Font = "SpectralSCBold",
---     ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Left" })
---     --leveltitle
---     CreateTextBox({ Id = components[weaponKey].Id, Text = wptitle, FontSize = 18,
---     OffsetX = textoffsetX, OffsetY = -55, Color = color, Font = "SpectralSCBold",
---     ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Left" })
---     --button
---     CreateTextBox({ Id = components[buttonKey].Id, Text = "Details", FontSize = 16,
---     OffsetX = 0, OffsetY = 0, Color = Color.White, Font = "SpectralSCLight",
---     ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
---
---     index = index + 1
---   end
---   --End
---   screen.KeepOpen = true
---   HandleScreenInput(screen)
--- end
 
 function OpenMasteryPanel()
   ScreenAnchors.MasteryScreen = DeepCopyTable(MasteryScreen)
@@ -225,7 +139,7 @@ function OpenMasteryPanel()
   local subtitle = "Your mastery over each weapon"
   screen.Name = "MasteryPanel"
   screen.RowStartX = (ScreenCenterX - 1560) - 120
-  screen.RowStartY = 490
+  screen.RowStartY = 535
   OnScreenOpened({ Flag = screen.Name, PersistCombatUI = true })
   SetConfigOption({ Name = "UseOcclusion", Value = false })
   FreezePlayerUnit()
@@ -236,10 +150,11 @@ function OpenMasteryPanel()
   components.Background = CreateScreenComponent({ Name = "BlankObstacle", Group = "Mastery_Backing" })
   SetScale({ Id = components.BackgroundDim.Id, Fraction = 4 })
   SetColor({ Id = components.BackgroundDim.Id, Color = Color.Black })
-  components.BoxRank1 = CreateScreenComponent({ Name = "EndPanelBox", Group = "Mastery_Backing", X = ScreenCenterX, Y = ScreenCenterY - 40, Scale = 0.7 })
-  components.BoxRank2 = CreateScreenComponent({ Name = "EndPanelBox", Group = "Mastery_Backing", X = ScreenCenterX - 520, Y = ScreenCenterY + 20, Scale = 0.7 })
-  components.BoxRank3 = CreateScreenComponent({ Name = "EndPanelBox", Group = "Mastery_Backing", X = ScreenCenterX + 520, Y = ScreenCenterY + 20, Scale = 0.7 })
-  components.TitleBackground = CreateScreenComponent({ Name = "VictoryBG", Group = "Mastery_Backing", X = ScreenCenterX, Y = ScreenCenterY - 430 })
+  components.BoxRank1 = CreateScreenComponent({ Name = "EndPanelBox", Group = "Mastery_Backing", X = ScreenCenterX, Y = ScreenCenterY - 10, Scale = 0.7 })
+  components.BoxRank2 = CreateScreenComponent({ Name = "EndPanelBox", Group = "Mastery_Backing", X = ScreenCenterX - 520, Y = ScreenCenterY + 30, Scale = 0.7 })
+  components.BoxRank3 = CreateScreenComponent({ Name = "EndPanelBox", Group = "Mastery_Backing", X = ScreenCenterX + 520, Y = ScreenCenterY + 30, Scale = 0.7 })
+  components.TitleBackground = CreateScreenComponent({ Name = "VictoryBG", Group = "Mastery_Backing", X = ScreenCenterX, Y = ScreenCenterY - 450 })
+  SetScaleY({ Id = components.TitleBackground.Id, Fraction = 0.9 })
   SetAlpha({ Id = components.TitleBackground.Id, Fraction = 1 })
   SetThingProperty({ Property = "Ambient", Value = 0.0, DestinationId = components.TitleBackground.Id })
   --Title
@@ -253,10 +168,11 @@ function OpenMasteryPanel()
   components.CloseButton.ControlHotkey = "Cancel"
   --Display
   local index = 1
-  for i, weapon in pairs(Mastery) do
-    weapon.Level = math.random(0, 8)
-    weapon.Exp = math.random(0, GetNextLevelExp(weapon.Name))
-  end
+  --debug random exp
+  -- for i, weapon in pairs(Mastery) do
+  --   weapon.Level = math.random(0, 8)
+  --   weapon.Exp = math.random(0, GetNextLevelExp(weapon.Name))
+  -- end
   for i, weapon in pairs(Mastery) do
     local rank = GetWeaponRank(weapon)
     if rank > 3 then
@@ -272,16 +188,20 @@ function OpenMasteryPanel()
       local wptitle = GetLevelTitle(weapon.Name)
       local color = LevelColorTable[weapon.Level]
       local lvl = "Level : "..weapon.Level
-      local frameTarget = 1 - (weapon.Exp / GetNextLevelExp(weapon.Name))
+      local frameTarget = 0
+      if weapon.Exp < GetNextLevelExp(weapon.Name) then
+        frameTarget = 1 - (weapon.Exp / GetNextLevelExp(weapon.Name))
+      end
       components[weaponKey] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Mastery" })
       components[backingKey] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Mastery_Backing" })
       components[buttonKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "Mastery_Backing", Scale = 0.37, })
       components[buttonKey].OnPressedFunctionName = "OpenDetailedMasteryPanel"
       components[buttonKey].Data = weapon
       Attach({ Id = components[weaponKey].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
-      Attach({ Id = components[buttonKey].Id, DestinationId = components.Background.Id, OffsetX = offsetX + 200, OffsetY = offsetY + 25 })
+      Attach({ Id = components[buttonKey].Id, DestinationId = components.Background.Id, OffsetX = offsetX + 450, OffsetY = offsetY - 10})
       Attach({ Id = components[backingKey].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
       SetScaleY({Id = components[buttonKey].Id, Fraction = 0.5})
+      SetScaleX({Id = components[buttonKey].Id, Fraction = 0.5})
       SetAnimation({ Name = "HealthBar", DestinationId = components[backingKey].Id })
       SetAnimation({ Name = "HealthBarFill", DestinationId = components[weaponKey].Id, FrameTarget = frameTarget, Instant = false, Color = color })
       --weapon
@@ -298,7 +218,7 @@ function OpenMasteryPanel()
       ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Left" })
       --button
       CreateTextBox({ Id = components[buttonKey].Id, Text = "Details", FontSize = 16,
-      OffsetX = 0, OffsetY = 0, Color = Color.White, Font = "SpectralSCLight",
+      OffsetX = 0, OffsetY = 0, Color = color, Font = "SpectralSCLight",
       ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
 
       index = index + 1
@@ -306,37 +226,53 @@ function OpenMasteryPanel()
       local weaponKey = "RankedWeaponKey"..rank
       local backingKey = "RankedBackingKey"..rank
       local buttonKey = "RankedButtonKey"..rank
+      local box = 0
+      local specialAnim = ""
       local titleOffsetX = 200
       local textoffsetX = 50
       local wptitle = GetLevelTitle(weapon.Name)
       local color = LevelColorTable[weapon.Level]
       local lvl = "Level : "..weapon.Level
-      local frameTarget = 1 - (weapon.Exp / GetNextLevelExp(weapon.Name))
+      local frameTarget = 0
       local offsetX = -200
       local offsetY = -100
+      if weapon.Exp < GetNextLevelExp(weapon.Name) then
+        frameTarget = 1 - (weapon.Exp / GetNextLevelExp(weapon.Name))
+      end
       components[weaponKey] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Mastery" })
       components[backingKey] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Mastery_Backing" })
       components[buttonKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "Mastery_Backing", Scale = 0.37, })
       components[buttonKey].OnPressedFunctionName = "OpenDetailedMasteryPanel"
       components[buttonKey].Data = weapon
+      SetScaleY({Id = components[buttonKey].Id, Fraction = 0.5})
       --I have the power of god and hardcode on my side
       if rank == 1 then
         Attach({ Id = components[weaponKey].Id, DestinationId = components.BoxRank1.Id, OffsetX = offsetX, OffsetY = offsetY })
-        Attach({ Id = components[buttonKey].Id, DestinationId = components.BoxRank1.Id, OffsetX = offsetX + 200, OffsetY = offsetY + 340 })
+        Attach({ Id = components[buttonKey].Id, DestinationId = components.BoxRank1.Id, OffsetX = offsetX + 200, OffsetY = offsetY + 320 })
         Attach({ Id = components[backingKey].Id, DestinationId = components.BoxRank1.Id, OffsetX = offsetX, OffsetY = offsetY })
+        box = components.BoxRank1.Id
       elseif rank == 2 then
         Attach({ Id = components[weaponKey].Id, DestinationId = components.BoxRank2.Id, OffsetX = offsetX, OffsetY = offsetY })
-        Attach({ Id = components[buttonKey].Id, DestinationId = components.BoxRank2.Id, OffsetX = offsetX + 200, OffsetY = offsetY + 340 })
+        Attach({ Id = components[buttonKey].Id, DestinationId = components.BoxRank2.Id, OffsetX = offsetX + 200, OffsetY = offsetY + 320 })
         Attach({ Id = components[backingKey].Id, DestinationId = components.BoxRank2.Id, OffsetX = offsetX, OffsetY = offsetY })
+        box = components.BoxRank2.Id
       elseif rank == 3 then
         Attach({ Id = components[weaponKey].Id, DestinationId = components.BoxRank3.Id, OffsetX = offsetX, OffsetY = offsetY })
-        Attach({ Id = components[buttonKey].Id, DestinationId = components.BoxRank3.Id, OffsetX = offsetX + 200, OffsetY = offsetY + 340 })
+        Attach({ Id = components[buttonKey].Id, DestinationId = components.BoxRank3.Id, OffsetX = offsetX + 200, OffsetY = offsetY + 320 })
         Attach({ Id = components[backingKey].Id, DestinationId = components.BoxRank3.Id, OffsetX = offsetX, OffsetY = offsetY })
+        box = components.BoxRank3.Id
       end
-      SetAnimation({ Name = "HealthBar", DestinationId = components[backingKey].Id })
       if weapon.Level > 5 then
         if weapon.Level == 8 then
-          frameTarget = 1
+          specialAnim = "BoonOrbFront"
+          frameTarget = 0
+          SetAnimation({ Name = "EndPanelBox_Hades", DestinationId = box, Color = color })
+        elseif weapon.Level == 7 then
+          specialAnim = "WeaponTitanBlood"
+          SetAnimation({ Name = "EndPanelBox_Chthonic", DestinationId = box, Color = color })
+        elseif weapon.Level == 6 then
+          specialAnim = "RiverWater"
+          SetAnimation({ Name = "EndPanelBox_Stone", DestinationId = box, Color = color })
         end
         local specialKey = "Special"..rank
         local specialKey2 = "Special2"..rank
@@ -347,17 +283,22 @@ function OpenMasteryPanel()
         Attach({ Id = components[specialKey].Id, DestinationId = components[weaponKey].Id, })
         Attach({ Id = components[specialKey2].Id, DestinationId = components[weaponKey].Id, })
         Attach({ Id = components[specialKey3].Id, DestinationId = components[weaponKey].Id, })
-        SetAnimation({ Name = "TrophySparkleEmitter", DestinationId = components[specialKey].Id, Color = color, OffsetX = 150 })
-        --SetAnimation({ Name = "WrathBarFullFx", DestinationId = components[specialKey2].Id, Color = color })
-        --SetAnimation({ Name = "WrathBarFullFx", DestinationId = components[specialKey].Id, Color = color })
-        --ProjectileShieldMirageLight
+        SetAnimation({ Name = "WrathBarFullFx", DestinationId = components[specialKey].Id, Color = color })
+        SetAnimation({ Name = "ProjectileShieldMirageLight", DestinationId = components[specialKey2].Id, Color = color, OffsetX = 210, OffsetY = -30 })
+        SetScaleY({Id = components[specialKey2].Id, Fraction = 3.6})
+        SetAnimation({ Name = specialAnim, DestinationId = components[specialKey3].Id, Color = color, OffsetX = 202, OffsetY = 385, Scale = 1 })
+        --ProjectileShieldMirageLight RiverWater  GhostParticles  TorchFlame  SmokeRising InspectPointLoopFx  ElysiumBallistaLoop
+        --RailgunLineSpear  SecretDoor_RevealedFx Shielded  HadesFlameAura  PoseidonAresProjectileLoop  PoseidonEncounterStartBuffFloor
+        --LightningBoltEnemy  ArtemisCritSparkles FuryBeamEmitter BoonOrbFront
+        SetAnimation({ Name = "WrathBar", DestinationId = components[backingKey].Id, Color = color })
         SetAnimation({ Name = "HealthBarFill", DestinationId = components[weaponKey].Id, FrameTarget = frameTarget, Instant = false, Color = color })
       else
+        SetAnimation({ Name = "HealthBar", DestinationId = components[backingKey].Id })
         SetAnimation({ Name = "HealthBarFill", DestinationId = components[weaponKey].Id, FrameTarget = frameTarget, Instant = false, Color = color })
       end
       --weapon
       CreateTextBox({ Id = components[weaponKey].Id, Text = weapon.Name, FontSize = 24,
-      OffsetX = titleOffsetX, OffsetY = -155, Color = color, Font = "SpectralSCBold",
+      OffsetX = titleOffsetX, OffsetY = -145, Color = color, Font = "SpectralSCBold",
       OutlineThickness = 2, OutlineColor = Color.Black,
       ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
       --level
@@ -370,7 +311,7 @@ function OpenMasteryPanel()
       ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Left" })
       --button
       CreateTextBox({ Id = components[buttonKey].Id, Text = "Details", FontSize = 20,
-      OffsetX = 0, OffsetY = 0, Color = Color.LocationTextGold, Font = "SpectralSCLight",
+      OffsetX = 0, OffsetY = 0, Color = color, Font = "SpectralSCLight",
       ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
     end
   end
@@ -399,6 +340,26 @@ function OpenDetailedMasteryPanel(screen, button)
   local components = screen.Components
   local title = weapon.Name
   local subtitle = ""
+  local lvl = "Level : "..weapon.Level
+  local totalExp = "Total Experience : "..weapon.Exp
+  local nextlvlExp = "Next Level : "..GetNextLevelExp(weapon.Name)
+  local nextlvlTitle = ""
+  local rank = GetWeaponRank(weapon)
+  local wptitle = GetLevelTitle(weapon.Name)
+  local bestclear = GetFastestRunClearTimeWithWeapon(CurrentRun, weapon.Name)
+  local numclears = "Times Cleared : "..GetNumRunsClearedWithWeapon(weapon.Name)
+  local weaponKills = "Foes Slain : "..GameState.WeaponKills[weapon.Name]
+  local color = LevelColorTable[weapon.Level]
+  local boxOverlay = ""
+  local specialAnim = ""
+  local frameTarget = 0
+  if weapon.Exp < GetNextLevelExp(weapon.Name) then
+    frameTarget = 1 - (weapon.Exp / GetNextLevelExp(weapon.Name))
+  end
+  local textoffsetX = -250
+  local titleOffsetX = 0
+  local weaponKey = "RankedWeaponKey"..rank
+  local backingKey = "RankedBackingKey"..rank
   screen.Name = "DetailedMasteryPanel"
   screen.RowStartX = -550
   screen.RowStartY = -150
@@ -411,18 +372,11 @@ function OpenDetailedMasteryPanel(screen, button)
   components.BackgroundDim = CreateScreenComponent({ Name = "rectangle01", Group = "Mastery_Backing" })
   components.Background = CreateScreenComponent({ Name = "BlankObstacle", Group = "Mastery_Backing" })
   SetScale({ Id = components.BackgroundDim.Id, Fraction = 4 })
-  SetColor({ Id = components.BackgroundDim.Id, Color = {0.090, 0.055, 0.157, 0.8} })
-  -- components.LeftPart = CreateScreenComponent({ Name = "TraitTrayBackground", Group = "Mastery_Backing", X = 830, Y = 400})
-  -- components.MiddlePart = CreateScreenComponent({ Name = "TraitTray_Center", Group = "Mastery_Backing", X = 490, Y = 464 })
-  -- components.RightPart = CreateScreenComponent({ Name = "TraitTray_Right", Group = "Mastery_Backing", X = 1710, Y = 423 })
-  -- SetScaleY({Id = components.LeftPart.Id, Fraction = 1.3})
-  -- SetScaleY({Id = components.MiddlePart.Id, Fraction = 1.3})
-  -- SetScaleX({Id = components.MiddlePart.Id, Fraction = 10})
-  -- SetScaleY({Id = components.RightPart.Id, Fraction = 1.3})
+  SetColor({ Id = components.BackgroundDim.Id, Color = Color.Black })
   components.ShopBackground = CreateScreenComponent({ Name = "EndPanelBox", Group = "Mastery_Backing", X = ScreenCenterX, Y = ScreenCenterY - 30 })
   --Title
-  CreateTextBox({ Id = components.Background.Id, Text = title, FontSize = 34,
-  OffsetX = 0, OffsetY = -410, Color = Color.White, Font = "SpectralSCLight",
+  CreateTextBox({ Id = components.ShopBackground.Id, Text = title, FontSize = 32,
+  OffsetX = 0, OffsetY = -580, Color = Color.LocationTextGold, Font = "SpectralSCBold",
   ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
   --SubTitle
   CreateTextBox({ Id = components.Background.Id, Text = subtitle, FontSize = 19,
@@ -430,11 +384,78 @@ function OpenDetailedMasteryPanel(screen, button)
   ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
   --Close button
   components.CloseButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "Mastery" })
-  Attach({ Id = components.CloseButton.Id, DestinationId = components.Background.Id, OffsetX = 0, OffsetY = ScreenCenterY - 70 })
+  Attach({ Id = components.CloseButton.Id, DestinationId = components.Background.Id, OffsetX = -850, OffsetY = ScreenCenterY - 70 })
   components.CloseButton.OnPressedFunctionName = "CloseMasteryPanel"
   components.CloseButton.ControlHotkey = "Cancel"
   --Display
-
+  components[weaponKey] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Mastery" })
+  components[backingKey] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Mastery_Backing" })
+  if weapon.Level > 5 then
+    if weapon.Level == 8 then
+      specialAnim = "BoonOrbFront"
+      boxOverlay = "EndPanelBox_Hades"
+      nextlvlExp = "Next Level : 0"
+      frameTarget = 0
+    elseif weapon.Level == 7 then
+      specialAnim = "WeaponTitanBlood"
+      boxOverlay = "EndPanelBox_Chthonic"
+    elseif weapon.Level == 6 then
+      specialAnim = "RiverWater"
+      boxOverlay = "EndPanelBox_Stone"
+    end
+    SetAnimation({ Name = boxOverlay, DestinationId = components.ShopBackground.Id, Color = color })
+    local specialKey = "Special"..rank
+    local specialKey2 = "Special2"..rank
+    local specialKey3 = "Special3"..rank
+    components[specialKey] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Mastery" })
+    components[specialKey2] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Mastery" })
+    components[specialKey3] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Mastery" })
+    Attach({ Id = components[specialKey].Id, DestinationId = components[weaponKey].Id, })
+    Attach({ Id = components[specialKey2].Id, DestinationId = components[weaponKey].Id, })
+    Attach({ Id = components[specialKey3].Id, DestinationId = components[weaponKey].Id, })
+    SetAnimation({ Name = "WrathBarFullFx", DestinationId = components[specialKey].Id, Color = color })
+    SetAnimation({ Name = "ProjectileShieldMirageLight", DestinationId = components[specialKey2].Id, Color = color, OffsetX = 195, OffsetY = 80, Scale = 2 })
+    SetScaleY({Id = components[specialKey2].Id, Fraction = 5})
+    SetAnimation({ Name = specialAnim, DestinationId = components[specialKey3].Id, Color = color, OffsetX = 195, OffsetY = 610, Scale = 1 })
+    SetAnimation({ Name = "WrathBar", DestinationId = components[backingKey].Id, Color = color })
+    SetAnimation({ Name = "HealthBarFill", DestinationId = components[weaponKey].Id, FrameTarget = frameTarget, Instant = false, Color = color })
+  else
+    SetAnimation({ Name = "HealthBar", DestinationId = components[backingKey].Id })
+    SetAnimation({ Name = "HealthBarFill", DestinationId = components[weaponKey].Id, FrameTarget = frameTarget, Instant = false, Color = color })
+  end
+  --weapon
+  CreateTextBox({ Id = components.ShopBackground.Id, Text = weapon.Name, FontSize = 32,
+  OffsetX = titleOffsetX, OffsetY = -350, Color = color, Font = "SpectralSCBold",
+  OutlineThickness = 2, OutlineColor = Color.Black,
+  ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
+  --level
+  CreateTextBox({ Id = components.ShopBackground.Id, Text = lvl, FontSize = 22,
+  OffsetX = titleOffsetX, OffsetY = -275, Color = color, Font = "SpectralSCBold",
+  ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
+  --leveltitle
+  CreateTextBox({ Id = components.ShopBackground.Id, Text = wptitle, FontSize = 22,
+  OffsetX = titleOffsetX, OffsetY = -235, Color = color, Font = "SpectralSCBold",
+  ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
+  --bars
+  Attach({ Id = components[weaponKey].Id, DestinationId = components.ShopBackground.Id, OffsetX = -195, OffsetY = -145 })
+  Attach({ Id = components[backingKey].Id, DestinationId = components.ShopBackground.Id, OffsetX = -195, OffsetY = -145 })
+  --Data
+  bestclear = "Best Time : "..GetTimerString( bestclear, 2 )
+  CreateTextBox({ Id = components.ShopBackground.Id, Text = totalExp, FontSize = 18,
+  OffsetX = textoffsetX, OffsetY = -65, Color = color, Font = "SpectralSCBold",
+  ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Left" })
+  CreateTextBox({ Id = components.ShopBackground.Id, Text = nextlvlExp, FontSize = 18,
+  OffsetX = textoffsetX, OffsetY = -35, Color = color, Font = "SpectralSCBold",
+  ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Left" })
+  CreateTextBox({ Id = components.ShopBackground.Id, Text = bestclear, FontSize = 18,
+  OffsetX = textoffsetX, OffsetY = -5, Color = color, Font = "SpectralSCBold",
+  ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Left" })
+  CreateTextBox({ Id = components.ShopBackground.Id, Text = numclears, FontSize = 18,
+  OffsetX = textoffsetX, OffsetY = 25, Color = color, Font = "SpectralSCBold",
+  ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Left" })
+  CreateTextBox({ Id = components.ShopBackground.Id, Text = weaponKills, FontSize = 18,
+  OffsetX = textoffsetX, OffsetY = 55, Color = color, Font = "SpectralSCBold",
+  ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Left" })
   --End
   screen.KeepOpen = true
   HandleScreenInput(screen)
@@ -444,35 +465,396 @@ function MasteryInit()
   GameState.Mastery = {
     SwordWeapon = {
       Level = 0,
-      Exp = 0,
+      Exp = 1,
       Name = "SwordWeapon",
     },
     SpearWeapon = {
       Level = 0,
-      Exp = 0,
+      Exp = 2,
       Name = "SpearWeapon",
     },
     ShieldWeapon = {
       Level = 0,
-      Exp = 0,
+      Exp = 3,
       Name = "ShieldWeapon",
     },
     BowWeapon = {
       Level = 0,
-      Exp = 0,
+      Exp = 4,
       Name = "BowWeapon",
     },
     FistWeapon = {
       Level = 0,
-      Exp = 0,
+      Exp = 5,
       Name = "FistWeapon",
     },
     GunWeapon = {
       Level = 0,
-      Exp = 0,
+      Exp = 6,
       Name = "GunWeapon",
     },
   }
+end
+
+function OpenLevelUpPanel(weapon)
+  if weapon.Level == 8 then
+    return
+  end
+  AdjustColorGrading({ Name = "Alert", Duration = 0 })
+  AdjustFullscreenBloom({ Name = "NewType10", Duration = 1.4 })
+	PlaySound({ Name = "/SFX/SurvivalChallengeStart" })
+	thread( DoRumble, { { ScreenPreWait = 0.02, Fraction = 0.17, Duration = 0.4 }, } )
+  wait(1.0)
+  ScreenAnchors.MasteryScreen = DeepCopyTable(MasteryScreen)
+  local screen = ScreenAnchors.MasteryScreen
+  local components = screen.Components
+  local title = "Level up !"
+  screen.Name = "MasteryLevelUpScreen"
+  OnScreenOpened({ Flag = screen.Name, PersistCombatUI = true })
+  SetConfigOption({ Name = "UseOcclusion", Value = false })
+  FreezePlayerUnit()
+  EnableShopGamepadCursor()
+  PlaySound({ Name = "/SFX/TheseusCrowdChant" })
+  --Background
+  components.BackgroundDim = CreateScreenComponent({ Name = "rectangle01", Group = "MasteryLevelUp_Backing" })
+  components.Background = CreateScreenComponent({ Name = "BlankObstacle", Group = "MasteryLevelUp_Backing" })
+  components.WeaponBG = CreateScreenComponent({ Name = "EndPanelBox", Group = "MasteryLevelUp_Backing", X = ScreenCenterX, Y = ScreenCenterY + 30, Scale = 0.7 })
+  components.Banner = CreateScreenComponent({ Name = "VictoryBG", Group = "MasteryLevelUp_Backing", X = ScreenCenterX, Y = 115 })
+  SetAlpha({ Id = components.Banner.Id, Fraction = 1 })
+  SetThingProperty({ Property = "Ambient", Value = 0.0, DestinationId = components.Banner.Id })
+  SetScale({ Id = components.BackgroundDim.Id, Fraction = 4 })
+  SetColor({ Id = components.BackgroundDim.Id, Color = Color.Black })
+  --Title
+  CreateTextBox({ Id = components.Banner.Id, Text = title, FontSize = 42,
+  OffsetX = 0, OffsetY = 0, Color = Color.LocationTextGold, Font = "SpectralSCLightTitling",
+  ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
+  --Display
+  --weapon.Level = 4
+    if 1 == 1 then
+      local weaponKey = "RankedWeaponKey"
+      local backingKey = "RankedBackingKey"
+      local buttonKey = "RankedButtonKey"
+      local specialAnim = ""
+      local titleOffsetX = 200
+      local textoffsetX = 50
+      local wptitle = GetLevelTitle(weapon.Name)
+      local color = LevelColorTable[weapon.Level]
+      local lvl = "Level : "..weapon.Level
+      local frameTarget = 0
+      if weapon.Exp < GetNextLevelExp(weapon.Name) then
+        frameTarget = 1 - (weapon.Exp / GetNextLevelExp(weapon.Name))
+      end
+      local offsetX = -200
+      local offsetY = -100
+      components[weaponKey] = CreateScreenComponent({ Name = "BlankObstacle", Group = "MasteryLevelUp" })
+      components[backingKey] = CreateScreenComponent({ Name = "BlankObstacle", Group = "MasteryLevelUp_Backing" })
+      --I have the power of god and hardcode on my side
+      Attach({ Id = components[weaponKey].Id, DestinationId = components.WeaponBG.Id, OffsetX = offsetX, OffsetY = offsetY })
+      Attach({ Id = components[backingKey].Id, DestinationId = components.WeaponBG.Id, OffsetX = offsetX, OffsetY = offsetY })
+      if weapon.Level > 5 then
+        if weapon.Level == 8 then
+          specialAnim = "BoonOrbFront"
+          frameTarget = 0
+          SetAnimation({ Name = "EndPanelBox_Hades", DestinationId = components.WeaponBG.Id, Color = color })
+        elseif weapon.Level == 7 then
+          specialAnim = "WeaponTitanBlood"
+          SetAnimation({ Name = "EndPanelBox_Chthonic", DestinationId = components.WeaponBG.Id, Color = color })
+        elseif weapon.Level == 6 then
+          specialAnim = "RiverWater"
+          SetAnimation({ Name = "EndPanelBox_Stone", DestinationId = components.WeaponBG.Id, Color = color })
+        end
+        local specialKey = "Special"
+        local specialKey2 = "Special2"
+        local specialKey3 = "Special3"
+        components[specialKey] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Mastery" })
+        components[specialKey2] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Mastery" })
+        components[specialKey3] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Mastery" })
+        Attach({ Id = components[specialKey].Id, DestinationId = components[weaponKey].Id, })
+        Attach({ Id = components[specialKey2].Id, DestinationId = components[weaponKey].Id, })
+        Attach({ Id = components[specialKey3].Id, DestinationId = components[weaponKey].Id, })
+        SetAnimation({ Name = "WrathBarFullFx", DestinationId = components[specialKey].Id, Color = color })
+        SetAnimation({ Name = "ProjectileShieldMirageLight", DestinationId = components[specialKey2].Id, Color = color, OffsetX = 210, OffsetY = -30 })
+        SetScaleY({Id = components[specialKey2].Id, Fraction = 3.6})
+        SetAnimation({ Name = specialAnim, DestinationId = components[specialKey3].Id, Color = color, OffsetX = 202, OffsetY = 385, Scale = 1 })
+        SetAnimation({ Name = "WrathBar", DestinationId = components[backingKey].Id, Color = color })
+        SetAnimation({ Name = "HealthBarFill", DestinationId = components[weaponKey].Id, FrameTarget = frameTarget, Instant = false, Color = color })
+      else
+        SetAnimation({ Name = "HealthBar", DestinationId = components[backingKey].Id })
+        SetAnimation({ Name = "HealthBarFill", DestinationId = components[weaponKey].Id, FrameTarget = frameTarget, Instant = false, Color = color })
+      end
+      --weapon
+      CreateTextBox({ Id = components[weaponKey].Id, Text = weapon.Name, FontSize = 24,
+      OffsetX = titleOffsetX, OffsetY = -145, Color = color, Font = "SpectralSCBold",
+      OutlineThickness = 2, OutlineColor = Color.Black,
+      ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
+      --level
+      CreateTextBox({ Id = components[weaponKey].Id, Text = lvl, FontSize = 18,
+      OffsetX = textoffsetX, OffsetY = -85, Color = color, Font = "SpectralSCBold",
+      ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Left" })
+      --leveltitle
+      CreateTextBox({ Id = components[weaponKey].Id, Text = wptitle, FontSize = 18,
+      OffsetX = textoffsetX, OffsetY = -55, Color = color, Font = "SpectralSCBold",
+      ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Left" })
+
+      LevelUpPresentation(screen, weapon)
+    else
+
+    end
+  --End
+  screen.KeepOpen = true
+  HandleScreenInput(screen)
+end
+
+function LevelUpPresentation(screen, weapon)
+  PlaySound({ Name = "/SFX/ThanatosAttackBell" })
+  wait(1.0)
+  PlaySound({ Name = "/SFX/ThanatosAttackBell" })
+  wait(1.0)
+  PlaySound({ Name = "/SFX/ThanatosAttackBell" })
+  wait(1.0)
+  CloseMasteryPanel(screen)
+  ScreenAnchors.MasteryScreen = DeepCopyTable(MasteryScreen)
+  local screen = ScreenAnchors.MasteryScreen
+  local components = screen.Components
+  local title = "Level up !"
+  screen.Name = "MasteryLevelUpScreen"
+  OnScreenOpened({ Flag = screen.Name, PersistCombatUI = true })
+  SetConfigOption({ Name = "UseOcclusion", Value = false })
+  FreezePlayerUnit()
+  EnableShopGamepadCursor()
+  --Background
+  components.BackgroundDim = CreateScreenComponent({ Name = "rectangle01", Group = "MasteryLevelUp_Backing" })
+  components.Background = CreateScreenComponent({ Name = "BlankObstacle", Group = "MasteryLevelUp_Backing" })
+  components.WeaponBG = CreateScreenComponent({ Name = "EndPanelBox", Group = "MasteryLevelUp_Backing", X = ScreenCenterX, Y = ScreenCenterY + 30, Scale = 0.7 })
+  components.Banner = CreateScreenComponent({ Name = "VictoryBG", Group = "MasteryLevelUp_Backing", X = ScreenCenterX, Y = 115 })
+  SetAlpha({ Id = components.Banner.Id, Fraction = 1 })
+  SetThingProperty({ Property = "Ambient", Value = 0.0, DestinationId = components.Banner.Id })
+  SetScale({ Id = components.BackgroundDim.Id, Fraction = 4 })
+  SetColor({ Id = components.BackgroundDim.Id, Color = Color.Transparent })
+  --Title
+  CreateTextBox({ Id = components.Banner.Id, Text = title, FontSize = 42,
+  OffsetX = 0, OffsetY = 0, Color = Color.LocationTextGold, Font = "SpectralSCLightTitling",
+  ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
+  --Close button
+  components.CloseButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "MasteryLevelUp" })
+  Attach({ Id = components.CloseButton.Id, DestinationId = components.Background.Id, OffsetX = 0, OffsetY = ScreenCenterY - 70 })
+  components.CloseButton.OnPressedFunctionName = "CloseMasteryPanel"
+  components.CloseButton.ControlHotkey = "Cancel"
+  --Special Fx
+  components.SpecialDisplay = CreateScreenComponent({ Name = "BlankObstacle", Group = "MasteryLevelUp" })
+  Attach({ Id = components.SpecialDisplay.Id, DestinationId = components.Background.Id })
+  PlaySound({ Name = "/SFX/ZeusWrathThunder" })
+
+  if weapon.Level > 5 then
+    if weapon.Level == 6 then
+
+    elseif weapon.Level == 7 then
+
+    else
+      --no level ups for 8
+      CloseMasteryPanel(screen)
+      return
+    end
+  else
+  end
+  --Display
+  weapon.Level = weapon.Level + 1
+  local weaponKey = "RankedWeaponKey"
+  local backingKey = "RankedBackingKey"
+  local buttonKey = "RankedButtonKey"
+  local specialAnim = ""
+  local titleOffsetX = 200
+  local textoffsetX = 50
+  local wptitle = GetLevelTitle(weapon.Name)
+  local color = LevelColorTable[weapon.Level]
+  local lvl = "Level : "..weapon.Level
+  local frameTarget = 0
+  if weapon.Exp < GetNextLevelExp(weapon.Name) then
+    frameTarget = 1 - (weapon.Exp / GetNextLevelExp(weapon.Name))
+  end
+  local offsetX = -200
+  local offsetY = -100
+  components[weaponKey] = CreateScreenComponent({ Name = "BlankObstacle", Group = "MasteryLevelUp" })
+  components[backingKey] = CreateScreenComponent({ Name = "BlankObstacle", Group = "MasteryLevelUp_Backing" })
+  --I have the power of god and hardcode on my side
+  Attach({ Id = components[weaponKey].Id, DestinationId = components.WeaponBG.Id, OffsetX = offsetX, OffsetY = offsetY })
+  Attach({ Id = components[backingKey].Id, DestinationId = components.WeaponBG.Id, OffsetX = offsetX, OffsetY = offsetY })
+  if weapon.Level > 5 then
+    if weapon.Level == 8 then
+      specialAnim = "BoonOrbFront"
+      frameTarget = 0
+      SetAnimation({ Name = "EndPanelBox_Hades", DestinationId = components.WeaponBG.Id, Color = color })
+    elseif weapon.Level == 7 then
+      specialAnim = "WeaponTitanBlood"
+      SetAnimation({ Name = "EndPanelBox_Chthonic", DestinationId = components.WeaponBG.Id, Color = color })
+    elseif weapon.Level == 6 then
+      specialAnim = "RiverWater"
+      SetAnimation({ Name = "EndPanelBox_Stone", DestinationId = components.WeaponBG.Id, Color = color })
+    end
+    local specialKey = "Special"
+    local specialKey2 = "Special2"
+    local specialKey3 = "Special3"
+    components[specialKey] = CreateScreenComponent({ Name = "BlankObstacle", Group = "MasteryLevelUp" })
+    components[specialKey2] = CreateScreenComponent({ Name = "BlankObstacle", Group = "MasteryLevelUp" })
+    components[specialKey3] = CreateScreenComponent({ Name = "BlankObstacle", Group = "MasteryLevelUp" })
+    Attach({ Id = components[specialKey].Id, DestinationId = components[weaponKey].Id, })
+    Attach({ Id = components[specialKey2].Id, DestinationId = components[weaponKey].Id, })
+    Attach({ Id = components[specialKey3].Id, DestinationId = components[weaponKey].Id, })
+    SetAnimation({ Name = "WrathBarFullFx", DestinationId = components[specialKey].Id, Color = color })
+    SetAnimation({ Name = "ProjectileShieldMirageLight", DestinationId = components[specialKey2].Id, Color = color, OffsetX = 210, OffsetY = -30 })
+    SetScaleY({Id = components[specialKey2].Id, Fraction = 3.6})
+    SetAnimation({ Name = specialAnim, DestinationId = components[specialKey3].Id, Color = color, OffsetX = 202, OffsetY = 385, Scale = 1 })
+    SetAnimation({ Name = "WrathBar", DestinationId = components[backingKey].Id, Color = color })
+    SetAnimation({ Name = "HealthBarFill", DestinationId = components[weaponKey].Id, FrameTarget = frameTarget, Instant = false, Color = color })
+  else
+    SetAnimation({ Name = "HealthBar", DestinationId = components[backingKey].Id })
+    SetAnimation({ Name = "HealthBarFill", DestinationId = components[weaponKey].Id, FrameTarget = frameTarget, Instant = false, Color = color })
+  end
+  --SetAnimation({ Name = "LightningBoltEnemy", Id = components[weaponKey].Id, Color = color })
+  --weapon
+  CreateTextBox({ Id = components[weaponKey].Id, Text = weapon.Name, FontSize = 24,
+  OffsetX = titleOffsetX, OffsetY = -145, Color = color, Font = "SpectralSCBold",
+  OutlineThickness = 2, OutlineColor = Color.Black,
+  ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
+  --level
+  CreateTextBox({ Id = components[weaponKey].Id, Text = lvl, FontSize = 18,
+  OffsetX = textoffsetX, OffsetY = -85, Color = color, Font = "SpectralSCBold",
+  ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Left" })
+  --leveltitle
+  CreateTextBox({ Id = components[weaponKey].Id, Text = wptitle, FontSize = 18,
+  OffsetX = textoffsetX, OffsetY = -55, Color = color, Font = "SpectralSCBold",
+  ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Left" })
+  --
+  -- CreateAnimation({ Name = "LightningBoltZeus", DestinationId = components.SpecialDisplay.Id, Color = color, OffsetX = -200 })
+  -- wait(0.1)
+  -- CreateAnimation({ Name = "LightningBoltZeus", DestinationId = components.SpecialDisplay.Id, Color = color, OffsetX = -200 })
+  -- wait(0.1)
+  -- CreateAnimation({ Name = "LightningBoltZeus", DestinationId = components.SpecialDisplay.Id, Color = color, OffsetX = 200 })
+  -- wait(0.1)
+  -- CreateAnimation({ Name = "LightningBoltZeus", DestinationId = components.SpecialDisplay.Id, Color = color, OffsetX = -200 })
+  -- wait(0.1)
+
+  --End
+  AdjustColorGrading({ Name = "Off", Duration = 0.45 })
+  AdjustFullscreenBloom({ Name = "Off", Duration = 0.45 })
+  screen.KeepOpen = true
+  HandleScreenInput(screen)
+end
+
+function OpenProgressionPanel()
+  local wp = GetEquippedWeapon()
+  local weapon = Mastery[wp]
+  if tempExp == 0 or weapon == nil or weapon.Level == 8 then
+    return
+  end
+  ScreenAnchors.MasteryScreen = DeepCopyTable(MasteryScreen)
+  local screen = ScreenAnchors.MasteryScreen
+  local components = screen.Components
+  screen.Name = "MasteryProgressionScreen"
+  OnScreenOpened({ Flag = screen.Name, PersistCombatUI = true })
+  SetConfigOption({ Name = "UseOcclusion", Value = false })
+  FreezePlayerUnit()
+  EnableShopGamepadCursor()
+  PlaySound({ Name = "/SFX/TheseusCrowdChant" })
+  --Background
+  components.BackgroundDim = CreateScreenComponent({ Name = "rectangle01", Group = "MasteryProgression_Backing" })
+  components.Background = CreateScreenComponent({ Name = "BlankObstacle", Group = "MasteryProgression_Backing" })
+  components.WeaponBG = CreateScreenComponent({ Name = "EndPanelBox", Group = "MasteryProgression_Backing", X = ScreenCenterX, Y = ScreenCenterY + 30, Scale = 0.7 })
+  SetScale({ Id = components.BackgroundDim.Id, Fraction = 4 })
+  SetColor({ Id = components.BackgroundDim.Id, Color = {0.090, 0.055, 0.157, 0.8} })
+  --Close button
+  components.CloseButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "MasteryProgression" })
+  Attach({ Id = components.CloseButton.Id, DestinationId = components.Background.Id, OffsetX = 0, OffsetY = ScreenCenterY - 70 })
+  components.CloseButton.OnPressedFunctionName = "CloseMasteryPanel"
+  components.CloseButton.ControlHotkey = "Cancel"
+  --Display
+    if 1 == 1 then
+      local weaponKey = "RankedWeaponKey"
+      local backingKey = "RankedBackingKey"
+      local buttonKey = "RankedButtonKey"
+      local specialAnim = ""
+      local titleOffsetX = 200
+      local textoffsetX = 50
+      local wptitle = GetLevelTitle(weapon.Name)
+      local color = LevelColorTable[weapon.Level]
+      local lvl = "Level : "..weapon.Level
+      local frameTarget = 0
+      if weapon.Exp < GetNextLevelExp(weapon.Name) then
+        frameTarget = 1 - (weapon.Exp / GetNextLevelExp(weapon.Name))
+      end
+      local offsetX = -200
+      local offsetY = -100
+      components[weaponKey] = CreateScreenComponent({ Name = "BlankObstacle", Group = "MasteryProgression" })
+      components[backingKey] = CreateScreenComponent({ Name = "BlankObstacle", Group = "MasteryProgression_Backing" })
+      --I have the power of god and hardcode on my side
+      Attach({ Id = components[weaponKey].Id, DestinationId = components.WeaponBG.Id, OffsetX = offsetX, OffsetY = offsetY })
+      Attach({ Id = components[backingKey].Id, DestinationId = components.WeaponBG.Id, OffsetX = offsetX, OffsetY = offsetY })
+      if weapon.Level > 5 then
+        if weapon.Level == 8 then
+          specialAnim = "BoonOrbFront"
+          frameTarget = 0
+          SetAnimation({ Name = "EndPanelBox_Hades", DestinationId = components.WeaponBG.Id, Color = color })
+        elseif weapon.Level == 7 then
+          specialAnim = "WeaponTitanBlood"
+          SetAnimation({ Name = "EndPanelBox_Chthonic", DestinationId = components.WeaponBG.Id, Color = color })
+        elseif weapon.Level == 6 then
+          specialAnim = "RiverWater"
+          SetAnimation({ Name = "EndPanelBox_Stone", DestinationId = components.WeaponBG.Id, Color = color })
+        end
+        local specialKey = "Special"
+        local specialKey2 = "Special2"
+        local specialKey3 = "Special3"
+        components[specialKey] = CreateScreenComponent({ Name = "BlankObstacle", Group = "MasteryProgression" })
+        components[specialKey2] = CreateScreenComponent({ Name = "BlankObstacle", Group = "MasteryProgression" })
+        components[specialKey3] = CreateScreenComponent({ Name = "BlankObstacle", Group = "MasteryProgression" })
+        Attach({ Id = components[specialKey].Id, DestinationId = components[weaponKey].Id, })
+        Attach({ Id = components[specialKey2].Id, DestinationId = components[weaponKey].Id, })
+        Attach({ Id = components[specialKey3].Id, DestinationId = components[weaponKey].Id, })
+        SetAnimation({ Name = "WrathBarFullFx", DestinationId = components[specialKey].Id, Color = color })
+        SetAnimation({ Name = "ProjectileShieldMirageLight", DestinationId = components[specialKey2].Id, Color = color, OffsetX = 210, OffsetY = -30 })
+        SetScaleY({Id = components[specialKey2].Id, Fraction = 3.6})
+        SetAnimation({ Name = specialAnim, DestinationId = components[specialKey3].Id, Color = color, OffsetX = 202, OffsetY = 385, Scale = 1 })
+        SetAnimation({ Name = "WrathBar", DestinationId = components[backingKey].Id, Color = color })
+        SetAnimation({ Name = "HealthBarFill", DestinationId = components[weaponKey].Id, FrameTarget = frameTarget, Instant = false, Color = color })
+      else
+        SetAnimation({ Name = "HealthBar", DestinationId = components[backingKey].Id })
+        SetAnimation({ Name = "HealthBarFill", DestinationId = components[weaponKey].Id, FrameTarget = frameTarget, Instant = false, Color = color })
+      end
+      --weapon
+      CreateTextBox({ Id = components[weaponKey].Id, Text = weapon.Name, FontSize = 24,
+      OffsetX = titleOffsetX, OffsetY = -145, Color = color, Font = "SpectralSCBold",
+      OutlineThickness = 2, OutlineColor = Color.Black,
+      ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
+      --level
+      CreateTextBox({ Id = components[weaponKey].Id, Text = lvl, FontSize = 18,
+      OffsetX = textoffsetX, OffsetY = -85, Color = color, Font = "SpectralSCBold",
+      ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Left" })
+      --leveltitle
+      CreateTextBox({ Id = components[weaponKey].Id, Text = wptitle, FontSize = 18,
+      OffsetX = textoffsetX, OffsetY = -55, Color = color, Font = "SpectralSCBold",
+      ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Left" })
+
+      wait(2.0)
+      weapon.Exp = weapon.Exp + tempExp
+      ModUtil.Hades.PrintStack(weapon.Exp)
+      tempExp = 0
+      local nextlvlexp = GetNextLevelExp(weapon.Name)
+      if weapon.Exp >= nextlvlexp then
+        frameTarget = 0
+        SetAnimation({ Name = "HealthBarFill", DestinationId = components[weaponKey].Id, FrameTarget = frameTarget, Instant = false, Color = color })
+        wait(1.0)
+        CloseMasteryPanel(screen)
+        wait(0.2)
+        OpenLevelUpPanel(weapon)
+      else
+        frameTarget = 1 - (weapon.Exp / GetNextLevelExp(weapon.Name))
+        SetAnimation({ Name = "HealthBarFill", DestinationId = components[weaponKey].Id, FrameTarget = frameTarget, Instant = false, Color = color })
+      end
+    else
+    end
+  --End
+  screen.KeepOpen = true
+  HandleScreenInput(screen)
 end
 
 function GetLevelTitle(weapon)
@@ -542,8 +924,23 @@ function Kill(victim, triggerArgs)
   if triggerArgs.AttackerId == CurrentRun.Hero.ObjectId and victim.Name ~= "TrainingMelee" then
     local wp = GetEquippedWeapon()
     local multiplier = GetTotalSpentShrinePoints() + 1
-    Mastery[wp].Exp = Mastery[wp].Exp + (1*multiplier)
-    ModUtil.Hades.PrintStack("Mastery experience : "..Mastery[wp].Exp)
+    tempExp = tempExp + (1*multiplier)
+    ModUtil.Hades.PrintStack("Mastery experience : "..tempExp)
   end
   baseKill(victim, triggerArgs)
 end
+
+local baseCloseRunClearScreen = CloseRunClearScreen
+function CloseRunClearScreen()
+  baseCloseRunClearScreen()
+  OpenProgressionPanel()
+end
+
+OnAnyLoad{ "DeathArea",
+function(triggerArgs)
+  wait(3.0)
+  if tempExp > 0 then
+    tempExp = tempExp * 0.4
+    OpenProgressionPanel()
+  end
+end}
