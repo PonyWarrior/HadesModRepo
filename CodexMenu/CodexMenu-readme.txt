@@ -169,7 +169,7 @@ pact of punishment removed from Skelly. changing the pact options during a run b
 and making it work during an ongoing run is too much work.
 unless many users request this feature it won't be added again.
 
-2.3.4
+2.4.0
 
 ongoing issues :
 some casts have bugged animations
@@ -180,6 +180,14 @@ opening the boon manager during a run resets progress of stacking keepsakes
 
 fixed issues :
 codex not closing when opening certain screens
+fixed some boons not having god colors in the boon manager
 
 changed feature :
 command key changed to 'Confirm' (default = Enter) and no longer needs to be held down
+
+removed feature :
+spawn boss removed
+
+new feature :
+load boss fight - opening a boss entry teleports you in a room to fight them
+your saved state is restored when entering the room

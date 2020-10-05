@@ -20,6 +20,7 @@ CodexMenuData =
 		"AthenaWeaponTrait", "AthenaSecondaryTrait", "AthenaRushTrait", "AthenaRangedTrait", "AthenaShoutTrait",
 		"TrapDamageTrait", "EnemyDamageTrait", "AthenaRetaliateTrait", "PreloadSuperGenerationTrait",
 		"AthenaBackstabDebuffTrait", "AthenaShieldTrait", "LastStandDurationDrop", "LastStandHealDrop", "ShieldHitTrait",
+		"LastStandDurationTrait", "LastStandHealTrait"
 	},
 	AphroditeUpgrade =
 	{
@@ -47,6 +48,7 @@ CodexMenuData =
 		"DoorHealTrait", "LowHealthDefenseTrait", "DionysusSpreadTrait", "DionysusSlowTrait", "DionysusPoisonPowerTrait",
 		"DionysusDefenseTrait", "DionysusGiftDrop", "DionysusComboVulnerability",
 		"FountainDamageBonusTrait",
+		"GiftHealthTrait",
 	},
 	HermesUpgrade =
 	{
@@ -60,6 +62,7 @@ CodexMenuData =
 		"DemeterWeaponTrait", "DemeterSecondaryTrait", "DemeterRushTrait", "DemeterRangedTrait", "DemeterShoutTrait",
 		"CastNovaTrait", "ZeroAmmoBonusTrait", "MaximumChillBlast", "MaximumChillBonusSlow", "HealingPotencyDrop", "InstantChillKill",
 		"DemeterRangedBonusTrait", "DemeterRetaliateTrait",
+		"HealingPotencyTrait",
 	},
 	TrialUpgrade =
 	{
@@ -320,39 +323,42 @@ function OpenBoonSelector(godName, spawnBoon)
 			lColor = CodexMenuColors[wp]
 		end
 		for index, boon in ipairs (Boons) do
-				local purchaseButtonKey = "PurchaseButton"..index
-				local rowoffset = 100
-				if godName == "Duos" then
-					rowoffset = 70
-				end
-				local columnoffset = 300
-				local numperrow = 4
-				local offsetX = screen.RowStartX + columnoffset*((index-1) % numperrow)
-				local offsetY = screen.RowStartY + rowoffset*(math.floor((index-1)/numperrow))
-				local color = lColor
-				local lockColor = Color.White
-				if HasBeowulf() and CodexMenuData.BeowulfTraits[boon] ~= nil then
-					boon = CodexMenuData.BeowulfTraits[boon]
-				end
-				if HeroHasTrait(boon) then
-					components[purchaseButtonKey] = CreateScreenComponent({ Name = "BlankObstacle", Group = "BoonSelector", Scale = 0.3, })
-					Attach({ Id = components[purchaseButtonKey].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
-					CreateTextBox({ Id = components[purchaseButtonKey].Id, Text = boon,
-						FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = Color.DarkGray, Font = "AlegreyaSansSCLight",
-						ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
-					})
-					SetAnimation({DestinationId = components[purchaseButtonKey].Id, Name = "BoonSlotLocked" })
+				if boon == "LastStandDurationTrait" or boon == "LastStandHealTrait" or boon == "GiftHealthTrait" or boon == "HealingPotencyTrait" then
 				else
-					components[purchaseButtonKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonSelector", Scale = 0.3, })
-					components[purchaseButtonKey].OnPressedFunctionName = "GiveSelectedBoonToPlayer"
-					components[purchaseButtonKey].Boon = boon
-					components[purchaseButtonKey].X = offsetX
-					components[purchaseButtonKey].Y = offsetY
-					Attach({ Id = components[purchaseButtonKey].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
-					CreateTextBox({ Id = components[purchaseButtonKey].Id, Text = boon,
-						FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = color, Font = "AlegreyaSansSCLight",
-						ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
-					})
+					local purchaseButtonKey = "PurchaseButton"..index
+					local rowoffset = 100
+					if godName == "Duos" then
+						rowoffset = 70
+					end
+					local columnoffset = 300
+					local numperrow = 4
+					local offsetX = screen.RowStartX + columnoffset*((index-1) % numperrow)
+					local offsetY = screen.RowStartY + rowoffset*(math.floor((index-1)/numperrow))
+					local color = lColor
+					local lockColor = Color.White
+					if HasBeowulf() and CodexMenuData.BeowulfTraits[boon] ~= nil then
+						boon = CodexMenuData.BeowulfTraits[boon]
+					end
+					if HeroHasTrait(boon) then
+						components[purchaseButtonKey] = CreateScreenComponent({ Name = "BlankObstacle", Group = "BoonSelector", Scale = 0.3, })
+						Attach({ Id = components[purchaseButtonKey].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
+						CreateTextBox({ Id = components[purchaseButtonKey].Id, Text = boon,
+							FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = Color.DarkGray, Font = "AlegreyaSansSCLight",
+							ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+						})
+						SetAnimation({DestinationId = components[purchaseButtonKey].Id, Name = "BoonSlotLocked" })
+					else
+						components[purchaseButtonKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonSelector", Scale = 0.3, })
+						components[purchaseButtonKey].OnPressedFunctionName = "GiveSelectedBoonToPlayer"
+						components[purchaseButtonKey].Boon = boon
+						components[purchaseButtonKey].X = offsetX
+						components[purchaseButtonKey].Y = offsetY
+						Attach({ Id = components[purchaseButtonKey].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
+						CreateTextBox({ Id = components[purchaseButtonKey].Id, Text = boon,
+							FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = color, Font = "AlegreyaSansSCLight",
+							ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+						})
+					end
 				end
 		end
 		--Spawn boon object button
@@ -500,6 +506,7 @@ function HandleBoonManagerClick(screen, button)
 			local upgradedTraits = {}
 			for i, traitData in pairs( CurrentRun.Hero.Traits ) do
 				if IsGodTrait(traitData.Name, { ForShop = true }) or Contains(CodexMenuData.ConsumableTraits, traitData.Name) or IsHermesChaosHammerCharonBoon(traitData.Name) then
+					--crash
 					if TraitData[traitData.Name] and traitData.Rarity ~= nil and GetUpgradedRarity(traitData.Rarity) ~= nil and traitData.RarityLevels[GetUpgradedRarity(traitData.Rarity)] ~= nil then
 						if Contains(upgradableTraits, traitData) or traitData.Rarity == "Legendary" then
 						else
@@ -1384,41 +1391,46 @@ function CodexMain(triggerArgs)
 		--Enemies
 		if CodexStatus.SelectedChapterName == "Enemies" then
 			local enemy = CodexStatus.SelectedEntryNames[CodexStatus.SelectedChapterName]
-			local enemyData = EnemyData[enemy]
-			local newEnemy = DeepCopyTable( enemyData )
-			newEnemy.AIOptions = enemyData.AIOptions
-			newEnemy.BlocksLootInteraction = false
-			local invaderSpawnPoint = 40000
-			newEnemy.ObjectId = SpawnUnit({
-					Name = enemyData.Name,
-					Group = "Standing",
-					DestinationId = invaderSpawnPoint, OffsetX = 400, OffsetY = 200 })
-			SetupEnemyObject( newEnemy, CurrentRun )
-			if debug then
-				ModDebugPrint("Trying to spawn enemy : " .. enemy)
+			if enemy == "HydraHeadImmortal" then
+			else
+				local enemyData = EnemyData[enemy]
+				local newEnemy = DeepCopyTable( enemyData )
+				newEnemy.AIOptions = enemyData.AIOptions
+				newEnemy.BlocksLootInteraction = false
+				local invaderSpawnPoint = 40000
+				newEnemy.ObjectId = SpawnUnit({
+						Name = enemyData.Name,
+						Group = "Standing",
+						DestinationId = invaderSpawnPoint, OffsetX = 400, OffsetY = 200 })
+				SetupEnemyObject( newEnemy, CurrentRun )
+				if debug then
+					ModDebugPrint("Trying to spawn enemy : " .. enemy)
+				end
+				return
 			end
-			return
 		end
 		--Bosses and Commands
 		if CodexStatus.SelectedChapterName == "ChthonicGods" or
-		CodexStatus.SelectedChapterName == "OtherDenizens" then
+		CodexStatus.SelectedChapterName == "OtherDenizens" or
+		CodexStatus.SelectedChapterName == "Enemies" then
 			local debugTicks = 0
 			local entry = CodexStatus.SelectedEntryNames[CodexStatus.SelectedChapterName]
 			local bossTable =
 			{
-				["NPC_Hades_01"] = "Hades",
-				["NPC_FurySister_01"] = "Harpy",
-				["Harpy2"] = "Harpy2",
-				["Harpy3"] = "Harpy3",
-				["Theseus"] = "Theseus",
-				["Minotaur"] = "Minotaur",
-				["NPC_Thanatos_01"] = "NPC_Thanatos_Field_01"
+				NPC_FurySister_01 = RoomSetData.Tartarus.A_Boss01,
+				Harpy2 = RoomSetData.Tartarus.A_Boss02,
+				Harpy3 = RoomSetData.Tartarus.A_Boss03,
+				HydraHeadImmortal = RoomSetData.Asphodel.B_Boss01,
+				Theseus = RoomSetData.Elysium.C_Boss01,
+				Minotaur = RoomSetData.Elysium.C_MiniBoss01,
+				NPC_Hades_01 = RoomSetData.Styx.D_Boss01,
 			}
 			local commandTable =
 			{
 				["PlayerUnit"] = function()
 					RemoveAllTraits()
 					ReloadEquipment()
+					CloseCodexScreen()
 				end,
 				["NPC_Achilles_01"] = function()
 					if IsSuperValid() then
@@ -1427,16 +1439,17 @@ function CodexMain(triggerArgs)
 						CommenceSuperMove()
 						UpdateSuperDamageBonus()
 						thread( MarkObjectiveComplete, "EXMove" )
+						CloseCodexScreen()
 					end
 				end,
 				["NPC_Nyx_01"] = function()
 					CloseCodexScreen()
 					OpenCustomMirror()
 				end,
-				-- disabled
-				-- ["NPC_Skelly_01"] = function()
-				-- 	OpenShrineUpgradeMenu({ BlockRunStartButton = true })
-				-- end,
+				["NPC_Skelly_01"] = function()
+					CloseCodexScreen()
+					KillHero(CurrentRun.Hero, triggerArgs)
+				end,
 				["NPC_Cerberus_01"] = function()
 					CloseCodexScreen()
 					StartUpAwardMenu(triggerArgs.TriggeredByTable)
@@ -1498,24 +1511,11 @@ function CodexMain(triggerArgs)
 			}
 			--Bosses
 			if bossTable[entry] then
-				if entry == "NPC_Hades_01" then entry = "Hades"
-				elseif entry == "NPC_FurySister_01" then entry = "Harpy"
-				elseif entry == "NPC_Thanatos_01" then entry = "NPC_Thanatos_Field_01"
-				end
-				local enemyData = EnemyData[entry]
-				local newEnemy = DeepCopyTable( enemyData )
-				newEnemy.AIOptions = enemyData.AIOptions
-				newEnemy.BlocksLootInteraction = false
-				local invaderSpawnPoint = 40000
-				newEnemy.ObjectId = SpawnUnit({
-						Name = enemyData.Name,
-						Group = "Standing",
-						DestinationId = invaderSpawnPoint, OffsetX = 400, OffsetY = 200 })
-				SetupEnemyObject( newEnemy, CurrentRun )
-				if debug then
-					ModDebugPrint("Trying to spawn boss : " .. entry)
-				end
-				--Commands
+				local bossRoom = bossTable[entry]
+				CloseCodexScreen()
+				StartNewCustomRun(bossRoom)
+				LoadMap({ Name = CurrentRun.CurrentRoom.Name, ResetBinks = true, ResetWeaponBinks = true })
+			--Commands
 			elseif commandTable[entry] then
 				commandTable[entry]()
 				if debug then
@@ -1524,4 +1524,89 @@ function CodexMain(triggerArgs)
 			end
 			return
 		end
+	end
+
+	function StartNewCustomRun(bossRoom)
+		SetupRunData()
+		--ResetUI()
+		SessionState.NeedWeaponPickupBinkLoad = false
+		CurrentRun = {}
+		CurrentRun.DamageRecord = {}
+		CurrentRun.HealthRecord = {}
+		CurrentRun.ConsumableRecord = {}
+		CurrentRun.ActualHealthRecord = {}
+		CurrentRun.BlockTimerFlags = {}
+		CurrentRun.WeaponsFiredRecord = {}
+		CurrentRun.Hero = CreateNewHero( prevRun, args )
+		EquipKeepsake( CurrentRun.Hero, GameState.LastAwardTrait, { SkipNewTraitHighlight = true })
+		EquipAssist( CurrentRun.Hero, GameState.LastAssistTrait, { SkipNewTraitHighlight = true } )
+		EquipWeaponUpgrade( CurrentRun.Hero, { SkipTraitHighlight = true } )
+		CurrentRun.RoomHistory = {}
+		UpdateRunHistoryCache( CurrentRun )
+		CheckRunStartFlags( CurrentRun )
+		BuildMetaupgradeCache()
+		CurrentRun.RoomCreations = {}
+		CurrentRun.LootTypeHistory = {}
+		CurrentRun.NPCInteractions = {}
+		CurrentRun.AnimationState = {}
+		CurrentRun.EventState = {}
+		CurrentRun.ActivationRecord = {}
+		CurrentRun.SpeechRecord = {}
+		CurrentRun.TextLinesRecord = {}
+		CurrentRun.TriggerRecord = {}
+		CurrentRun.UseRecord = {}
+		CurrentRun.GiftRecord = {}
+		CurrentRun.HintRecord = {}
+		CurrentRun.EnemyUpgrades = {}
+		CurrentRun.BlockedEncounters = {}
+		CurrentRun.InvulnerableFlags = {}
+		CurrentRun.PhasingFlags = {}
+		CurrentRun.Money = CalculateStartingMoney()
+		CurrentRun.MoneySpent = 0
+		CurrentRun.MoneyRecord = {}
+		CurrentRun.BonusDarknessWeapon = GetRandomUnequippedWeapon()
+		CurrentRun.ActiveObjectives = {}
+		CurrentRun.RunDepthCache = 11
+		CurrentRun.GameplayTime = 0
+		CurrentRun.BiomeTime = 0
+		CurrentRun.ActiveBiomeTimer = GetNumMetaUpgrades("BiomeSpeedShrineUpgrade") > 0
+		CurrentRun.NumRerolls = GetNumMetaUpgrades( "RerollMetaUpgrade" ) + GetNumMetaUpgrades("RerollPanelMetaUpgrade")
+		CurrentRun.ThanatosSpawns = 0
+		CurrentRun.SupportAINames = {}
+		CurrentRun.Hero.TargetMetaRewardsAdjustSpeed = 10.0
+		CurrentRun.ClosedDoors = {}
+		CurrentRun.CompletedStyxWings = 0
+		CurrentRun.TargetShrinePointThreshold = GetCurrentRunClearedShrinePointThreshold( GetEquippedWeapon() )
+		CurrentRun.BannedEliteAttributes = {}
+		if ConfigOptionCache.EasyMode then
+			CurrentRun.EasyModeLevel = GameState.EasyModeLevel
+		end
+		InitHeroLastStands( CurrentRun.Hero )
+
+		InitializeRewardStores( CurrentRun )
+		SelectBannedEliteAttributes( CurrentRun )
+
+		if bossRoom ~= nil then
+			CurrentRun.CurrentRoom = CreateRoom( bossRoom )
+		else
+			CurrentRun.CurrentRoom = ChooseStartingRoom( CurrentRun, "Tartarus" )
+		end
+
+		if GameState.CodexMenuSavedState ~= nil then
+			RemoveAllTraits()
+			if GameState.LastAwardTrait == "ReincarnationTrait" then
+					RemoveLastStand( CurrentRun.Hero, "ReincarnationTrait" )
+					CurrentRun.Hero.MaxLastStands = CurrentRun.Hero.MaxLastStands - 1
+			end
+			EquipPlayerWeapon( WeaponData[GameState.CodexMenuSavedState.Weapon], { PreLoadBinks = true } )
+			EquipKeepsake(CurrentRun.Hero, GameState.CodexMenuSavedState.Keepsake)
+			EquipAssist(CurrentRun.Hero, GameState.CodexMenuSavedState.Assist)
+			if GameState.CodexMenuSavedState.Aspect.Name ~= nil then
+				AddTraitToHero({ TraitName = GameState.CodexMenuSavedState.Aspect.Name, Rarity = GameState.CodexMenuSavedState.Aspect.Rarity })
+			end
+			for i, traitData in pairs( GameState.CodexMenuSavedState.Traits ) do
+				AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = traitData.Name, Rarity = traitData.Rarity }) })
+			end
+		end
+		return CurrentRun
 	end
