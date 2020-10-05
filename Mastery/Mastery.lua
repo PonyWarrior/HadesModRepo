@@ -1,15 +1,27 @@
 
 local ExpTable = {
   [0] = 0,
-  [1] = 3000,
-  [2] = 7500,
-  [3] = 18750,
-  [4] = 46875,
-  [5] = 117187,
-  [6] = 292968,
-  [7] = 732421,
-  [8] = 1831052,
+  [1] = 15000,
+  [2] = 37500,
+  [3] = 93750,
+  [4] = 234375,
+  [5] = 585935,
+  [6] = 1463490,
+  [7] = 3662105,
+  [8] = 9155260,
 }
+
+-- local ExpTable = {
+--   [0] = 0,
+--   [1] = 3000,
+--   [2] = 7500,
+--   [3] = 18750,
+--   [4] = 46875,
+--   [5] = 117187,
+--   [6] = 292968,
+--   [7] = 732421,
+--   [8] = 1831052,
+-- }
 
 local LevelTable = {
   SwordWeapon =
@@ -99,7 +111,7 @@ local LevelColorTable = {
 }
 
 local EnabledConfigMaps = {
-  "DeathAreaBedroom", "DeathAreaBedroomHades", "DeathAreaOffice", "RoomPreRun", "RoomOpening",
+  "DeathAreaBedroom", "DeathAreaBedroomHades", "DeathAreaOffice", "RoomPreRun",
 }
 
 local Mastery = { }
@@ -108,6 +120,7 @@ tempExp = 0
 MasteryScreen = { Components = {} }
 
 OnAnyLoad{function(triggerArgs)
+
   if GameState.Mastery == nil then
     MasteryInit()
   end
@@ -119,15 +132,19 @@ end}
 
 OnControlPressed{"Shout",
   function(triggerArgs)
-    if Contains(EnabledConfigMaps, CurrentRun.CurrentRoom.Name) then
-      -- MasteryInit()
-      -- Mastery = GameState.Mastery
-      --ShowRunClearScreen()
-      --OpenProgressionPanel()
-      OpenMasteryPanel()
-      --OpenLevelUpPanel(Mastery.GunWeapon)
-      --  /SFX/ZeusWrathThunder  /SFX/ThanatosAttackBell /SFX/SurvivalChallengeStart
-      return
+    while IsControlDown({ Name = "Shout" }) do
+      if IsControlDown({ Name = "Confirm" }) and Contains(EnabledConfigMaps, CurrentDeathAreaRoom.Name) then
+        SetColor({ Id = CurrentRun.Hero.ObjectId, Color = Color.MediumPurple})
+        CreateAnimation({ Name = "CharonAura", DestinationId = CurrentRun.Hero.ObjectId, Color = Color.VioletPurple})
+        CreateAnimation({ Name = "WeaponBonusGlow", DestinationId = CurrentRun.Hero.ObjectId, Color = Color.VioletPurple})
+        CreateAnimation({ Name = "ThanatosIdle", DestinationId = CurrentRun.Hero.ObjectId, OffsetX = 50, OffsetY = -50})
+        --ProjectileShieldMirageLight RiverWater  GhostParticles  TorchFlame  SmokeRising InspectPointLoopFx  ElysiumBallistaLoop
+        --RailgunLineSpear  SecretDoor_RevealedFx Shielded  HadesFlameAura  PoseidonAresProjectileLoop  PoseidonEncounterStartBuffFloor
+        --LightningBoltEnemy  ArtemisCritSparkles FuryBeamEmitter BoonOrbFront  WeaponTitanBlood  CharonAura
+        --OpenMasteryPanel()
+        return
+      end
+      wait(0.1)
     end
 end}
 
@@ -168,11 +185,6 @@ function OpenMasteryPanel()
   components.CloseButton.ControlHotkey = "Cancel"
   --Display
   local index = 1
-  --debug random exp
-  -- for i, weapon in pairs(Mastery) do
-  --   weapon.Level = math.random(0, 8)
-  --   weapon.Exp = math.random(0, GetNextLevelExp(weapon.Name))
-  -- end
   for i, weapon in pairs(Mastery) do
     local rank = GetWeaponRank(weapon)
     if rank > 3 then
@@ -330,6 +342,9 @@ function CloseMasteryPanel(screen, button)
   UnfreezePlayerUnit()
   screen.KeepOpen = false
   OnScreenClosed({ Flag = screen.Name })
+  if screen.Name == "MasteryLevelUpPresentation" and not Contains(EnabledConfigMaps, CurrentDeathAreaRoom.Name) then
+    EndEarlyAccessPresentation()
+  end
 end
 
 function OpenDetailedMasteryPanel(screen, button)
@@ -519,17 +534,10 @@ function OpenLevelUpPanel(weapon)
   components.BackgroundDim = CreateScreenComponent({ Name = "rectangle01", Group = "MasteryLevelUp_Backing" })
   components.Background = CreateScreenComponent({ Name = "BlankObstacle", Group = "MasteryLevelUp_Backing" })
   components.WeaponBG = CreateScreenComponent({ Name = "EndPanelBox", Group = "MasteryLevelUp_Backing", X = ScreenCenterX, Y = ScreenCenterY + 30, Scale = 0.7 })
-  components.Banner = CreateScreenComponent({ Name = "VictoryBG", Group = "MasteryLevelUp_Backing", X = ScreenCenterX, Y = 115 })
-  SetAlpha({ Id = components.Banner.Id, Fraction = 1 })
-  SetThingProperty({ Property = "Ambient", Value = 0.0, DestinationId = components.Banner.Id })
   SetScale({ Id = components.BackgroundDim.Id, Fraction = 4 })
-  SetColor({ Id = components.BackgroundDim.Id, Color = Color.Black })
-  --Title
-  CreateTextBox({ Id = components.Banner.Id, Text = title, FontSize = 42,
-  OffsetX = 0, OffsetY = 0, Color = Color.LocationTextGold, Font = "SpectralSCLightTitling",
-  ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
+  SetColor({ Id = components.BackgroundDim.Id, Color = { 0, 0, 0, 255 }, })
+  SetAlpha({ Id = components.BackgroundDim.Id, Fraction = 0 })
   --Display
-  --weapon.Level = 4
     if 1 == 1 then
       local weaponKey = "RankedWeaponKey"
       local backingKey = "RankedBackingKey"
@@ -595,10 +603,21 @@ function OpenLevelUpPanel(weapon)
       CreateTextBox({ Id = components[weaponKey].Id, Text = wptitle, FontSize = 18,
       OffsetX = textoffsetX, OffsetY = -55, Color = color, Font = "SpectralSCBold",
       ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Left" })
-
+      --Presentation
+      thread( DisplayLocationText, nil, { Text = "3", Delay = 0.0, Color = Color.LocationTextGold, FadeColor = Color.LocationTextGold, Layer = "MasteryLevelUp_Backing", Duration = 1.0, AnimationName = "LocationTextBGVictoryIn", AnimationOutName = "LocationTextBGVictoryOut", FontScale = 0.85 } )
+      PlaySound({ Name = "/SFX/ThanatosAttackBell" })
+      wait(1.0)
+      SetAlpha({ Id = components.BackgroundDim.Id, Fraction = 0.33, Duration = 0.5 })
+      thread( DisplayLocationText, nil, { Text = "2", Delay = 0.0, Color = Color.LocationTextGold, FadeColor = Color.LocationTextGold, Layer = "MasteryLevelUp_Backing", Duration = 1.0, AnimationName = "LocationTextBGVictoryIn", AnimationOutName = "LocationTextBGVictoryOut", FontScale = 0.85 } )
+      PlaySound({ Name = "/SFX/ThanatosAttackBell" })
+      wait(1.0)
+      SetAlpha({ Id = components.BackgroundDim.Id, Fraction = 0.66, Duration = 0.5 })
+      thread( DisplayLocationText, nil, { Text = "1", Delay = 0.0, Color = Color.LocationTextGold, FadeColor = Color.LocationTextGold, Layer = "MasteryLevelUp_Backing", Duration = 1.0, AnimationName = "LocationTextBGVictoryIn", AnimationOutName = "LocationTextBGVictoryOut", FontScale = 0.85 } )
+      PlaySound({ Name = "/SFX/ThanatosAttackBell" })
+      wait(1.0)
+      SetAlpha({ Id = components.BackgroundDim.Id, Fraction = 1.0, Duration = 0.5 })
       LevelUpPresentation(screen, weapon)
     else
-
     end
   --End
   screen.KeepOpen = true
@@ -606,18 +625,12 @@ function OpenLevelUpPanel(weapon)
 end
 
 function LevelUpPresentation(screen, weapon)
-  PlaySound({ Name = "/SFX/ThanatosAttackBell" })
-  wait(1.0)
-  PlaySound({ Name = "/SFX/ThanatosAttackBell" })
-  wait(1.0)
-  PlaySound({ Name = "/SFX/ThanatosAttackBell" })
-  wait(1.0)
   CloseMasteryPanel(screen)
   ScreenAnchors.MasteryScreen = DeepCopyTable(MasteryScreen)
   local screen = ScreenAnchors.MasteryScreen
   local components = screen.Components
   local title = "Level up !"
-  screen.Name = "MasteryLevelUpScreen"
+  screen.Name = "MasteryLevelUpPresentation"
   OnScreenOpened({ Flag = screen.Name, PersistCombatUI = true })
   SetConfigOption({ Name = "UseOcclusion", Value = false })
   FreezePlayerUnit()
@@ -644,7 +657,16 @@ function LevelUpPresentation(screen, weapon)
   components.SpecialDisplay = CreateScreenComponent({ Name = "BlankObstacle", Group = "MasteryLevelUp" })
   Attach({ Id = components.SpecialDisplay.Id, DestinationId = components.Background.Id })
   PlaySound({ Name = "/SFX/ZeusWrathThunder" })
-
+  local vos = {
+    --Very nice.
+    [1] = "/VO/ZagreusField_0228",
+    --Excellent.
+    [2] = "/VO/ZagreusField_0230",
+    --Oh, yes!
+    [3] = "/VO/ZagreusField_4097",
+  }
+  local vo = vos[math.random(1, 3)]
+  PlaySound({ Name = vo })
   if weapon.Level > 5 then
     if weapon.Level == 6 then
 
@@ -710,7 +732,6 @@ function LevelUpPresentation(screen, weapon)
     SetAnimation({ Name = "HealthBar", DestinationId = components[backingKey].Id })
     SetAnimation({ Name = "HealthBarFill", DestinationId = components[weaponKey].Id, FrameTarget = frameTarget, Instant = false, Color = color })
   end
-  --SetAnimation({ Name = "LightningBoltEnemy", Id = components[weaponKey].Id, Color = color })
   --weapon
   CreateTextBox({ Id = components[weaponKey].Id, Text = weapon.Name, FontSize = 24,
   OffsetX = titleOffsetX, OffsetY = -145, Color = color, Font = "SpectralSCBold",
@@ -724,16 +745,6 @@ function LevelUpPresentation(screen, weapon)
   CreateTextBox({ Id = components[weaponKey].Id, Text = wptitle, FontSize = 18,
   OffsetX = textoffsetX, OffsetY = -55, Color = color, Font = "SpectralSCBold",
   ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Left" })
-  --
-  -- CreateAnimation({ Name = "LightningBoltZeus", DestinationId = components.SpecialDisplay.Id, Color = color, OffsetX = -200 })
-  -- wait(0.1)
-  -- CreateAnimation({ Name = "LightningBoltZeus", DestinationId = components.SpecialDisplay.Id, Color = color, OffsetX = -200 })
-  -- wait(0.1)
-  -- CreateAnimation({ Name = "LightningBoltZeus", DestinationId = components.SpecialDisplay.Id, Color = color, OffsetX = 200 })
-  -- wait(0.1)
-  -- CreateAnimation({ Name = "LightningBoltZeus", DestinationId = components.SpecialDisplay.Id, Color = color, OffsetX = -200 })
-  -- wait(0.1)
-
   --End
   AdjustColorGrading({ Name = "Off", Duration = 0.45 })
   AdjustFullscreenBloom({ Name = "Off", Duration = 0.45 })
@@ -755,7 +766,6 @@ function OpenProgressionPanel()
   SetConfigOption({ Name = "UseOcclusion", Value = false })
   FreezePlayerUnit()
   EnableShopGamepadCursor()
-  PlaySound({ Name = "/SFX/TheseusCrowdChant" })
   --Background
   components.BackgroundDim = CreateScreenComponent({ Name = "rectangle01", Group = "MasteryProgression_Backing" })
   components.Background = CreateScreenComponent({ Name = "BlankObstacle", Group = "MasteryProgression_Backing" })
@@ -836,10 +846,8 @@ function OpenProgressionPanel()
 
       wait(2.0)
       weapon.Exp = weapon.Exp + tempExp
-      ModUtil.Hades.PrintStack(weapon.Exp)
       tempExp = 0
-      local nextlvlexp = GetNextLevelExp(weapon.Name)
-      if weapon.Exp >= nextlvlexp then
+      if weapon.Exp >= GetNextLevelExp(weapon.Name) then
         frameTarget = 0
         SetAnimation({ Name = "HealthBarFill", DestinationId = components[weaponKey].Id, FrameTarget = frameTarget, Instant = false, Color = color })
         wait(1.0)
@@ -921,14 +929,26 @@ end
 
 local baseKill = Kill
 function Kill(victim, triggerArgs)
-  if triggerArgs.AttackerId == CurrentRun.Hero.ObjectId and victim.Name ~= "TrainingMelee" then
-    local wp = GetEquippedWeapon()
+  if triggerArgs ~= nil and triggerArgs.AttackerId ~= nil and triggerArgs.AttackerId == CurrentRun.Hero.ObjectId and victim.Name ~= "TrainingMelee" then
     local multiplier = GetTotalSpentShrinePoints() + 1
     tempExp = tempExp + (1*multiplier)
-    ModUtil.Hades.PrintStack("Mastery experience : "..tempExp)
   end
+  CreateAnimation({ Name = "ThanatosAoE", DestinationId = triggerArgs.triggeredById, Color = Color.VioletPurple})
+  PlaySound({ Name = "/SFX/ThanatosAttackBell" })
   baseKill(victim, triggerArgs)
 end
+
+OnHit{function(triggerArgs)
+  local victim = triggerArgs.TriggeredByTable
+  if triggerArgs.TriggeredByTable == nil or triggerArgs.IsInvulnerable or triggerArgs.AttackerId ~= CurrentRun.Hero.ObjectId or
+  triggerArgs.triggeredById == CurrentRun.Hero.ObjectId or victim.CosmeticApplied == true then
+    return
+  end
+  victim.CosmeticApplied = true
+  PlaySound({ Name = "/SFX/HellFireImpact" })
+  SetColor({ Id = triggerArgs.triggeredById, Color = Color.Purple})
+  CreateAnimation({ Name = "HadesConsumeHealFxLoop", DestinationId = triggerArgs.triggeredById, Color = Color.VioletPurple})
+end}
 
 local baseCloseRunClearScreen = CloseRunClearScreen
 function CloseRunClearScreen()
