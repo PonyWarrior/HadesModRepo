@@ -110,6 +110,64 @@ local LevelColorTable = {
   [8] = Color.LocationTextGold,
 }
 
+local CosmeticTable = {
+  [6] = {
+    OnHit = {
+      Sound = "/SFX/Player Sounds/PoseidonWaterImpactDetonate",
+      Color = Color.Turquoise,
+      Animation = { Name = "PoseidonEncounterStartBuffFloor", },
+    },
+    OnKill = {
+      Sound = "/SFX/PoseidonWrathWaveCrash",
+      Animation = { Name = "PoseidonDashTrailEmitter" },
+      Animation2 = { Name = "PoseidonCollisionBlastFx", Scale = 3.0 },
+    },
+    Aura = {
+      Color = Color.LightBlue,
+      Animation = { Name = "ConsecrationBuffedFront" },
+      Animation2 = { Name = "ConsecrationBuffedBack" },
+    },
+  },
+  [7] = {
+    OnHit = {
+      Sound = "/SFX/HellFireImpact",
+      Color = Color.VioletPurple,
+      Animation = { Name = "HadesConsumeHealFxLoop" },
+    },
+    OnKill = {
+      Sound = "/SFX/ThanatosAttackBell",
+      Animation = { Name = "ThanatosAoE" },
+    },
+    Aura = {
+      Color = Color.MediumPurple,
+      Animation = { Name = "CharonAura" },
+      Animation2 = { Name = "WeaponBonusGlow" },
+    },
+    Extra = { Name = "ThanatosIdle", OffsetX = 50, OffsetY = -50 },
+  },
+  [8] = {
+    OnHit = {
+      Sound = "/SFX/ZeusWrathThunder",
+      Color = Color.Red,
+      Animation = { Name = "CharonAura", Scale = 1.0 },
+      Animation2 = { Name = "ThanatosDeathsHead", Scale = 1.0 },
+      Animation3 = { Name = "LightningBolt", Scale = 2.0 },
+    },
+    OnKill = {
+      Sound = "/SFX/WeaponUpgradeHammerDrop",
+      Animation = { Name = "LightningBolt", Scale = 2.0 },
+      Animation2 = { Name = "HephHammerLand", Angle = 90 },
+    },
+    Aura = {
+      Color = Color.LocationTextGold,
+      Animation = { Name = "Shielded" },
+      Animation2 = { Name = "RadialNovaThanatosDecal", Scale = 0.4 },
+      Animation3 = { Name = "ProjectileShieldMirageLight" },
+    },
+    Extra = { Name = "", OffsetX = 150, OffsetY = 150, Angle = 0 },
+  },
+}
+
 local EnabledConfigMaps = {
   "DeathAreaBedroom", "DeathAreaBedroomHades", "DeathAreaOffice", "RoomPreRun",
 }
@@ -120,7 +178,6 @@ tempExp = 0
 MasteryScreen = { Components = {} }
 
 OnAnyLoad{function(triggerArgs)
-
   if GameState.Mastery == nil then
     MasteryInit()
   end
@@ -128,25 +185,80 @@ OnAnyLoad{function(triggerArgs)
     loaded = true
     Mastery = GameState.Mastery
   end
+  ApplyHeroCosmetics()
 end}
 
 OnControlPressed{"Shout",
   function(triggerArgs)
     while IsControlDown({ Name = "Shout" }) do
       if IsControlDown({ Name = "Confirm" }) and Contains(EnabledConfigMaps, CurrentDeathAreaRoom.Name) then
-        SetColor({ Id = CurrentRun.Hero.ObjectId, Color = Color.MediumPurple})
-        CreateAnimation({ Name = "CharonAura", DestinationId = CurrentRun.Hero.ObjectId, Color = Color.VioletPurple})
-        CreateAnimation({ Name = "WeaponBonusGlow", DestinationId = CurrentRun.Hero.ObjectId, Color = Color.VioletPurple})
-        CreateAnimation({ Name = "ThanatosIdle", DestinationId = CurrentRun.Hero.ObjectId, OffsetX = 50, OffsetY = -50})
-        --ProjectileShieldMirageLight RiverWater  GhostParticles  TorchFlame  SmokeRising InspectPointLoopFx  ElysiumBallistaLoop
-        --RailgunLineSpear  SecretDoor_RevealedFx Shielded  HadesFlameAura  PoseidonAresProjectileLoop  PoseidonEncounterStartBuffFloor
-        --LightningBoltEnemy  ArtemisCritSparkles FuryBeamEmitter BoonOrbFront  WeaponTitanBlood  CharonAura
-        --OpenMasteryPanel()
+        OpenMasteryPanel()
         return
       end
       wait(0.1)
     end
 end}
+
+function ApplyHeroCosmetics()
+  local wp = GetEquippedWeapon()
+  if Mastery[wp].Level < 6 then
+    return
+  end
+  local cosmetics = CosmeticTable[Mastery[wp].Level]
+  if cosmetics.Aura ~= nil then
+    SetColor({ Id = CurrentRun.Hero.ObjectId, Color = cosmetics.Aura.Color})
+    CreateAnimation({ Name = cosmetics.Aura.Animation.Name, DestinationId = CurrentRun.Hero.ObjectId, Scale = cosmetics.Aura.Animation.Scale or 1.0, Color = cosmetics.Aura.Animation.Color or LevelColorTable[Mastery[wp].Level]})
+    if cosmetics.Aura.Animation2 ~= nil then
+      CreateAnimation({ Name = cosmetics.Aura.Animation2.Name, DestinationId = CurrentRun.Hero.ObjectId, Scale = cosmetics.Aura.Animation2.Scale or 1.0, Color = cosmetics.Aura.Animation.Color or LevelColorTable[Mastery[wp].Level]})
+    end
+    if cosmetics.Aura.Animation3 ~= nil then
+      CreateAnimation({ Name = cosmetics.Aura.Animation3.Name, DestinationId = CurrentRun.Hero.ObjectId, Scale = cosmetics.Aura.Animation3.Scale or 1.0, Color = cosmetics.Aura.Animation.Color or LevelColorTable[Mastery[wp].Level]})
+    end
+  end
+  if cosmetics.Extra ~= nil then
+    CreateAnimation({ Angle = cosmetics.Extra.Angle or 0, Name = cosmetics.Extra.Name, DestinationId = CurrentRun.Hero.ObjectId, OffsetX = cosmetics.Extra.OffsetX or 0, OffsetY = cosmetics.Extra.OffsetY or 0 })
+  end
+end
+
+function ApplyOnHitCosmetics(triggerArgs)
+  local wp = GetEquippedWeapon()
+  if Mastery[wp].Level < 6 then
+    return
+  end
+  local cosmetics = CosmeticTable[Mastery[wp].Level]
+  local victim = triggerArgs.TriggeredByTable
+  if cosmetics.OnHit == nil then
+    return
+  else
+    PlaySound({ Name = cosmetics.OnHit.Sound })
+    SetColor({ Id = triggerArgs.triggeredById, Color = cosmetics.OnHit.Color })
+    CreateAnimation({ Name = cosmetics.OnHit.Animation.Name, DestinationId = triggerArgs.triggeredById, Scale = cosmetics.OnHit.Animation.Scale or 1.0, Color = cosmetics.OnHit.Animation.Color or cosmetics.OnHit.Color})
+    if cosmetics.OnHit.Animation2 ~= nil then
+      CreateAnimation({ Angle = cosmetics.OnHit.Animation2.Angle or 0, Name = cosmetics.OnHit.Animation2.Name, DestinationId = triggerArgs.triggeredById, Scale = cosmetics.OnHit.Animation2.Scale or 1.0, Color = cosmetics.OnHit.Animation2.Color or cosmetics.OnHit.Color  })
+    end
+    if cosmetics.OnHit.Animation3 ~= nil then
+      CreateAnimation({ Angle = cosmetics.OnHit.Animation3.Angle or 0, Name = cosmetics.OnHit.Animation3.Name, DestinationId = triggerArgs.triggeredById, Scale = cosmetics.OnHit.Animation3.Scale or 1.0, Color = cosmetics.OnHit.Animation3.Color or cosmetics.OnHit.Color  })
+    end
+  end
+end
+
+function ApplyOnKillCosmetics(triggerArgs)
+  local wp = GetEquippedWeapon()
+  if Mastery[wp].Level < 6 then
+    return
+  end
+  local cosmetics = CosmeticTable[Mastery[wp].Level]
+  local victim = triggerArgs.TriggeredByTable
+  if cosmetics.OnKill == nil then
+    return
+  else
+    PlaySound({ Name = cosmetics.OnKill.Sound })
+    CreateAnimation({ Name = cosmetics.OnKill.Animation.Name, DestinationId = triggerArgs.triggeredById, Scale = cosmetics.OnKill.Animation.Scale or 1.0, Color = cosmetics.OnKill.Animation.Color or cosmetics.OnHit.Color  })
+    if cosmetics.OnKill.Animation2 ~= nil then
+      CreateAnimation({ Angle = cosmetics.OnKill.Animation2.Angle or 0, Name = cosmetics.OnKill.Animation2.Name, DestinationId = triggerArgs.triggeredById, Scale = cosmetics.OnKill.Animation2.Scale or 1.0, Color = cosmetics.OnKill.Animation2.Color or cosmetics.OnHit.Color  })
+    end
+  end
+end
 
 function OpenMasteryPanel()
   ScreenAnchors.MasteryScreen = DeepCopyTable(MasteryScreen)
@@ -755,7 +867,7 @@ end
 function OpenProgressionPanel()
   local wp = GetEquippedWeapon()
   local weapon = Mastery[wp]
-  if tempExp == 0 or weapon == nil or weapon.Level == 8 then
+  if tempExp == 0 or weapon == nil then
     return
   end
   ScreenAnchors.MasteryScreen = DeepCopyTable(MasteryScreen)
@@ -772,11 +884,6 @@ function OpenProgressionPanel()
   components.WeaponBG = CreateScreenComponent({ Name = "EndPanelBox", Group = "MasteryProgression_Backing", X = ScreenCenterX, Y = ScreenCenterY + 30, Scale = 0.7 })
   SetScale({ Id = components.BackgroundDim.Id, Fraction = 4 })
   SetColor({ Id = components.BackgroundDim.Id, Color = {0.090, 0.055, 0.157, 0.8} })
-  --Close button
-  components.CloseButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "MasteryProgression" })
-  Attach({ Id = components.CloseButton.Id, DestinationId = components.Background.Id, OffsetX = 0, OffsetY = ScreenCenterY - 70 })
-  components.CloseButton.OnPressedFunctionName = "CloseMasteryPanel"
-  components.CloseButton.ControlHotkey = "Cancel"
   --Display
     if 1 == 1 then
       local weaponKey = "RankedWeaponKey"
@@ -788,6 +895,7 @@ function OpenProgressionPanel()
       local wptitle = GetLevelTitle(weapon.Name)
       local color = LevelColorTable[weapon.Level]
       local lvl = "Level : "..weapon.Level
+      local expinfo = "Experience gained this run"
       local frameTarget = 0
       if weapon.Exp < GetNextLevelExp(weapon.Name) then
         frameTarget = 1 - (weapon.Exp / GetNextLevelExp(weapon.Name))
@@ -843,7 +951,14 @@ function OpenProgressionPanel()
       CreateTextBox({ Id = components[weaponKey].Id, Text = wptitle, FontSize = 18,
       OffsetX = textoffsetX, OffsetY = -55, Color = color, Font = "SpectralSCBold",
       ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Left" })
-
+      --Exp
+      CreateTextBox({ Id = components.WeaponBG.Id, Text = expinfo, FontSize = 18,
+      OffsetX = 0, OffsetY = 25, Color = color, Font = "SpectralSCBold",
+      ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
+      CreateTextBox({ Id = components.WeaponBG.Id, Text = tempExp, FontSize = 22,
+      OffsetX = 0, OffsetY = 65, Color = color, Font = "SpectralSCBold",
+      ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
+      --Exp handling
       wait(2.0)
       weapon.Exp = weapon.Exp + tempExp
       tempExp = 0
@@ -855,6 +970,11 @@ function OpenProgressionPanel()
         wait(0.2)
         OpenLevelUpPanel(weapon)
       else
+        --Close button
+        components.CloseButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "MasteryProgression" })
+        Attach({ Id = components.CloseButton.Id, DestinationId = components.Background.Id, OffsetX = 0, OffsetY = ScreenCenterY - 70 })
+        components.CloseButton.OnPressedFunctionName = "CloseMasteryPanel"
+        components.CloseButton.ControlHotkey = "Cancel"
         frameTarget = 1 - (weapon.Exp / GetNextLevelExp(weapon.Name))
         SetAnimation({ Name = "HealthBarFill", DestinationId = components[weaponKey].Id, FrameTarget = frameTarget, Instant = false, Color = color })
       end
@@ -933,21 +1053,20 @@ function Kill(victim, triggerArgs)
     local multiplier = GetTotalSpentShrinePoints() + 1
     tempExp = tempExp + (1*multiplier)
   end
-  CreateAnimation({ Name = "ThanatosAoE", DestinationId = triggerArgs.triggeredById, Color = Color.VioletPurple})
-  PlaySound({ Name = "/SFX/ThanatosAttackBell" })
+  if triggerArgs ~= nil and triggerArgs.AttackerId ~= nil and triggerArgs.AttackerId == CurrentRun.Hero.ObjectId and victim.MaxHealth > 10 then
+    ApplyOnKillCosmetics(triggerArgs)
+  end
   baseKill(victim, triggerArgs)
 end
 
 OnHit{function(triggerArgs)
   local victim = triggerArgs.TriggeredByTable
   if triggerArgs.TriggeredByTable == nil or triggerArgs.IsInvulnerable or triggerArgs.AttackerId ~= CurrentRun.Hero.ObjectId or
-  triggerArgs.triggeredById == CurrentRun.Hero.ObjectId or victim.CosmeticApplied == true then
+  triggerArgs.triggeredById == CurrentRun.Hero.ObjectId or victim.AppliedOnHitCosmetics or victim.Health == 0 then
     return
   end
-  victim.CosmeticApplied = true
-  PlaySound({ Name = "/SFX/HellFireImpact" })
-  SetColor({ Id = triggerArgs.triggeredById, Color = Color.Purple})
-  CreateAnimation({ Name = "HadesConsumeHealFxLoop", DestinationId = triggerArgs.triggeredById, Color = Color.VioletPurple})
+  victim.AppliedOnHitCosmetics = true
+  ApplyOnHitCosmetics(triggerArgs)
 end}
 
 local baseCloseRunClearScreen = CloseRunClearScreen
