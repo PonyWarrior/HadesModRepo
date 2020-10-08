@@ -1,6 +1,6 @@
 {
   Obstacles = [
-
+    "_append"
     {
       Name = "VictoryBG"
       InheritFrom = "1_BaseTerrainTile"

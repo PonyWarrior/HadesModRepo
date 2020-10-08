@@ -454,8 +454,8 @@ function CloseMasteryPanel(screen, button)
   UnfreezePlayerUnit()
   screen.KeepOpen = false
   OnScreenClosed({ Flag = screen.Name })
-  if screen.Name == "MasteryLevelUpPresentation" and not Contains(EnabledConfigMaps, CurrentDeathAreaRoom.Name) then
-    EndEarlyAccessPresentation()
+  if screen.Name == "MasteryLevelUpPresentation" then
+    CurrentRun.CurrentRoom.SoftlockPrevention = true
   end
 end
 
@@ -1057,6 +1057,16 @@ function Kill(victim, triggerArgs)
     ApplyOnKillCosmetics(triggerArgs)
   end
   baseKill(victim, triggerArgs)
+end
+
+local baseAttemptUseDoor = AttemptUseDoor
+function AttemptUseDoor(door)
+  if CurrentRun.CurrentRoom.SoftlockPrevention ~= nil then
+    door.ReadyToUse = true
+    UnlockRoomExits( CurrentRun, CurrentRun.CurrentRoom )
+    CurrentRun.CurrentRoom.Encounter.Completed = true
+  end
+  baseAttemptUseDoor(door)
 end
 
 OnHit{function(triggerArgs)
