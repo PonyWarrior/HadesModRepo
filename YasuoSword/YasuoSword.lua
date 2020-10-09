@@ -4,26 +4,69 @@
 -- custom boons
 -- change all the calls
 
+OnWeaponFired{ "SwordParry",
+	function( triggerArgs )
+		if HeroHasTrait("YasuoSwordTrait") then
+			FireWeaponFromUnit({ Weapon = "YasuoSwordStackApplicator", Id = CurrentRun.Hero.ObjectId, DestinationId = CurrentRun.Hero.ObjectId })
+		end
+	end
+}
+
+OnControlPressed{"Shout",
+  function(triggerArgs)
+    while IsControlDown({ Name = "Shout" }) do
+      if IsControlDown({ Name = "Confirm" }) then
+
+        return
+      end
+      wait(0.1)
+    end
+end}
+
+function YasuoSwordStackApply(triggerArgs)
+  WeaponData.SwordWeapon.YasuoStack = WeaponData.SwordWeapon.YasuoStack + 1
+  if WeaponData.SwordWeapon.YasuoStack >= 2 then
+    ModUtil.Hades.PrintStack('test')
+    FireWeaponFromUnit({ Weapon = "YasuoSwordTornadoBuffApplicator", Id = CurrentRun.Hero.ObjectId, DestinationId = CurrentRun.Hero.ObjectId })
+  end
+end
+
+function YasuoSwordStackClear(triggerArgs)
+  WeaponData.SwordWeapon.YasuoStack = 0
+end
+
+function YasuoSwordTornadoBuffApply(triggerArgs)
+
+end
+
+function YasuoSwordTornadoBuffClear(triggerArgs)
+
+end
+
 local loaded = false
 OnAnyLoad{function(triggerArgs)
   if not loaded then
     loaded = true
-    ModUtil.Hades.PrintStack('yolo')
+    -- GameState.LastWeaponUpgradeData["SwordWeapon"] = { Index = 5 }
+    EffectData.YasuoSwordStack = {
+      OnApplyFunctionName = "YasuoSwordStackApply",
+      OnClearFunctionName = "YasuoSwordStackClear",
+    }
+    EffectData.YasuoSwordTornadoBuff = {
+      OnApplyFunctionName = "YasuoSwordTornadoBuffApply",
+      OnClearFunctionName = "YasuoSwordTornadoBuffClear",
+    }
+    WeaponData.SwordWeapon.YasuoStack = 0
     TraitData.YasuoSwordTrait =
     {
       Name = "YasuoSwordTrait",
       Icon = "WeaponEnchantment_Sword04",
       InheritFrom = { "WeaponEnchantmentTrait" },
       RequiredWeapon = "SwordWeapon",
-      AddOnFireWeapons = { "AresProjectile" },
-      LegalOnFireWeapons = { "SwordParry" },
       CustomTrayText = "SwordConsecrationTrait_Tray",
       PostWeaponUpgradeScreenAnimation = "ZagreusSwordAlt03ParryReturnToIdle",
       PostWeaponUpgradeScreenAngle = 300,
-      OnProjectileDeathFunction =
-      {
-        Name = "ConsecrationFieldDeath",
-      },
+      PreEquipWeapons = { "YasuoSwordStackApplicator", "SwordThrustWave" },
       RarityLevels =
       {
         Common =
@@ -50,6 +93,187 @@ OnAnyLoad{function(triggerArgs)
         {
           MinMultiplier = 2.00,
           MaxMultiplier = 2.00,
+        },
+      },
+      WeaponBinks =
+      {
+        "ZagreusSwordArthurIdle_Bink",
+        "ZagreusSwordArthurRun_Bink",
+        "ZagreusSwordArthurRunStop_Bink",
+        "ZagreusSwordArthurAttack1_Bink",
+        "ZagreusSwordArthurAttack2_Bink",
+        "ZagreusSwordArthurAttack3_Bink",
+        "ZagreusSwordArthurAttackParry_Bink",
+      },
+      WeaponDataOverride =
+      {
+        SwordWeapon =
+        {
+          WeaponBinks =
+          {
+            "ZagreusSwordArthurIdle_Bink",
+            "ZagreusSwordArthurRun_Bink",
+            "ZagreusSwordArthurRunStop_Bink",
+            "ZagreusSwordArthurAttack1_Bink",
+            "ZagreusSwordArthurAttack2_Bink",
+            "ZagreusSwordArthurAttack3_Bink",
+            "ZagreusSwordArthurAttackParry_Bink",
+          },
+
+          HitSimSlowCooldown = 0.3,
+          HitSimSlowParameters =
+          {
+            { ScreenPreWait = 0.04, Fraction = 0.03, LerpTime = 0.0 },
+            { ScreenPreWait = 0.02, Fraction = 0.20, LerpTime = 0.06 },
+            { ScreenPreWait = 0.02, Fraction = 1.00, LerpTime = 0.07 },
+
+            --{ ScreenPreWait = 0.01, Fraction = 0.01, LerpTime = 0 },
+            --{ ScreenPreWait = 0.06, Fraction = 0.3, LerpTime = 0.07 },
+            --{ ScreenPreWait = 0.08, Fraction = 1.0, LerpTime = 0.07 },
+          },
+        },
+
+        SwordWeapon2 =
+        {
+          HitSimSlowCooldown = 0.3,
+          HitSimSlowParameters =
+          {
+            { ScreenPreWait = 0.02, Fraction = 0.05, LerpTime = 0.0 },
+            { ScreenPreWait = 0.03, Fraction = 0.20, LerpTime = 0.06 },
+            { ScreenPreWait = 0.03, Fraction = 1.00, LerpTime = 0.07 },
+
+            --{ ScreenPreWait = 0.01, Fraction = 0.01, LerpTime = 0 },
+            --{ ScreenPreWait = 0.06, Fraction = 0.3, LerpTime = 0.07 },
+            --{ ScreenPreWait = 0.08, Fraction = 1.0, LerpTime = 0.07 },
+          },
+          Sounds =
+          {
+            FireSounds =
+            {
+              { Name = "/VO/ZagreusEmotes/EmoteAttacking_Sword" },
+              { Name = "/SFX/Player Sounds/ZagreusSwordSwipe" },
+            },
+            ChargeSounds =
+            {
+              { Name = "/VO/ZagreusEmotes/EmoteCharging" },
+              {
+                Name = "/SFX/Player Sounds/ZagreusWeaponChargeup" ,
+                StoppedBy = { "ChargeCancel", "TriggerRelease", "Fired" },
+              },
+            },
+            ImpactSounds =
+            {
+              Invulnerable = "/SFX/SwordWallHitClank",
+              Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
+              Bone = "/SFX/MetalBoneSmash",
+              Brick = "/SFX/MetalStoneClang",
+              Stone = "/SFX/MetalStoneClang",
+              Organic = "/SFX/StabSplatterSmall",
+              StoneObstacle = "/SFX/SwordWallHitClank",
+              BrickObstacle = "/SFX/SwordWallHitClank",
+              MetalObstacle = "/SFX/SwordWallHitClank",
+              BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
+            },
+          },
+
+        },
+
+        SwordWeapon3 =
+        {
+          HitSimSlowCooldown = 0.3,
+          HitSimSlowParameters =
+          {
+            { ScreenPreWait = 0.04, Fraction = 0.01, LerpTime = 0.0 },
+            { ScreenPreWait = 0.02, Fraction = 0.15, LerpTime = 0.06 },
+            { ScreenPreWait = 0.06, Fraction = 1.0, LerpTime = 0.07 },
+
+            --{ ScreenPreWait = 0.01, Fraction = 0.01, LerpTime = 0 },
+            --{ ScreenPreWait = 0.06, Fraction = 0.3, LerpTime = 0.07 },
+            --{ ScreenPreWait = 0.08, Fraction = 1.0, LerpTime = 0.07 },
+          },
+          Sounds =
+          {
+            FireSounds =
+            {
+              { Name = "/VO/ZagreusEmotes/EmoteHeavyAttacking" },
+              { Name = "/SFX/Enemy Sounds/Minotaur/HugeAxeSwing" }
+            },
+            ChargeSounds =
+            {
+              { Name = "/VO/ZagreusEmotes/EmoteHeavyCharging" },
+              {
+                Name = "/Leftovers/SFX/AuraCharge" ,
+                StoppedBy = { "TriggerRelease" }
+              },
+            },
+            ImpactSounds =
+            {
+              Invulnerable = "/SFX/SwordWallHitClank",
+              Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
+              Bone = "/SFX/MetalBoneSmash",
+              Brick = "/SFX/MetalStoneClang",
+              Stone = "/SFX/MetalStoneClang",
+              Organic = "/SFX/StabSplatterSmall",
+              StoneObstacle = "/SFX/SwordWallHitClank",
+              BrickObstacle = "/SFX/SwordWallHitClank",
+              MetalObstacle = "/SFX/SwordWallHitClank",
+              BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
+            },
+          },
+        },
+        SwordWeaponDash =
+        {
+          HitSimSlowCooldown = 0.2,
+          Sounds =
+          {
+            FireSounds =
+            {
+              { Name = "/VO/ZagreusEmotes/EmoteSpearThrow" },
+              { Name = "/SFX/Player Sounds/ZagreusSwordSwipe" },
+            },
+            ImpactSounds =
+            {
+              Invulnerable = "/SFX/SwordWallHitClank",
+              Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
+              Bone = "/SFX/MetalBoneSmash",
+              Brick = "/SFX/MetalStoneClang",
+              Stone = "/SFX/MetalStoneClang",
+              Organic = "/SFX/StabSplatterSmall",
+              StoneObstacle = "/SFX/SwordWallHitClank",
+              BrickObstacle = "/SFX/SwordWallHitClank",
+              MetalObstacle = "/SFX/SwordWallHitClank",
+              BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
+            },
+          },
+        },
+        SwordParry =
+        {
+          HitSimSlowCooldown = 0.2,
+          Sounds =
+          {
+            FireSounds =
+            {
+              { Name = "/VO/ZagreusEmotes/EmoteHeavyAttacking" },
+            },
+            ChargeSounds =
+            {
+              { Name = "/VO/ZagreusEmotes/EmoteCharging" },
+              { Name = "/SFX/Player Sounds/ZagreusSwordSwipe" },
+            },
+            ImpactSounds =
+            {
+              Invulnerable = "/SFX/SwordWallHitClank",
+              Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
+              Bone = "/SFX/MetalBoneSmash",
+              Brick = "/SFX/MetalStoneClang",
+              Stone = "/SFX/MetalStoneClang",
+              Organic = "/SFX/StabSplatterSmall",
+              StoneObstacle = "/SFX/SwordWallHitClank",
+              BrickObstacle = "/SFX/SwordWallHitClank",
+              MetalObstacle = "/SFX/SwordWallHitClank",
+              BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
+            },
+          },
         },
       },
       PropertyChanges =
@@ -128,15 +352,7 @@ OnAnyLoad{function(triggerArgs)
           ChangeType = "Absolute",
           ExcludeLinked = true,
         },
-
-        -- SwordWeapon
-        -- {
-        --   WeaponNames = { "SwordWeapon" },
-        --   WeaponProperty = "ChargeTime",
-        --   ChangeValue = 0.25,
-        --   ChangeType = "Absolute",
-        --   ExcludeLinked = true,
-        -- },
+        -- Attack 1
         {
           WeaponNames = { "SwordWeapon" },
           WeaponProperty = "ChargeStartAnimation",
@@ -210,16 +426,7 @@ OnAnyLoad{function(triggerArgs)
           ChangeType = "Absolute",
           ExcludeLinked = true,
         },
-
-
-        -- SwordWeapon2
-        -- {
-        --   WeaponNames = { "SwordWeapon2" },
-        --   WeaponProperty = "ChargeTime",
-        --   ChangeValue = 0.35,
-        --   ChangeType = "Absolute",
-        --   ExcludeLinked = true,
-        -- },
+        -- Attack 2
         {
           WeaponNames = { "SwordWeapon2" },
           WeaponProperty = "ChargeStartAnimation",
@@ -293,16 +500,7 @@ OnAnyLoad{function(triggerArgs)
           ChangeType = "Absolute",
           ExcludeLinked = true,
         },
-
-
-        -- SwordWeapon3
-        -- {
-        --   WeaponNames = { "SwordWeapon3" },
-        --   WeaponProperty = "ChargeTime",
-        --   ChangeValue = 0.50,
-        --   ChangeType = "Absolute",
-        --   ExcludeLinked = true,
-        -- },
+        -- Attack 3
         {
           WeaponNames = { "SwordWeapon3" },
           WeaponProperty = "ChargeStartAnimation",
@@ -388,13 +586,13 @@ OnAnyLoad{function(triggerArgs)
         --   ExcludeLinked = true,
         -- },
         --
-        -- {
-        --   WeaponNames = { "SwordParry" },
-        --   WeaponProperty = "FireGraphic",
-        --   ChangeValue = "ZagreusSwordAlt03ParryFire",
-        --   ChangeType = "Absolute",
-        --   ExcludeLinked = true,
-        -- },
+        {
+          WeaponNames = { "SwordParry" },
+          WeaponProperty = "FireGraphic",
+          ChangeValue = "ZagreusSwordAlt03ParryFire",
+          ChangeType = "Absolute",
+          ExcludeLinked = true,
+        },
         --
         -- {
         --   WeaponName = "SwordParry",
@@ -485,6 +683,12 @@ OnAnyLoad{function(triggerArgs)
         --   ChangeType = "Absolute",
         --   ExcludeLinked = true,
         -- },
+        {
+            WeaponNames = { "SwordParry" },
+            WeaponProperty = "Projectile",
+            ChangeValue = "SpearWeapon",
+            ChangeType = "Absolute",
+        },
 
         {
           WeaponNames = { "SwordParry" },
@@ -501,27 +705,39 @@ OnAnyLoad{function(triggerArgs)
           ExcludeLinked = true,
         },
 
-        -- Ares Projectile
+        -- Consecration
         {
-            WeaponNames = { "AresProjectile" },
-            ProjectileName = "AresProjectile",
+            WeaponNames = { "SwordThrustWave" },
+            WeaponProperty = "Projectile",
+            ChangeValue = "DevotionDemeter",
+            ChangeType = "Absolute",
+        },
+        {
+            WeaponNames = { "SwordThrustWave" },
+            ProjectileName = "DevotionDemeter",
             ProjectileProperty = "DamageRadius",
             ChangeValue = 270,
             ChangeType = "Absolute",
         },
         {
-            WeaponNames = { "AresProjectile" },
-            ProjectileName = "AresProjectile",
+            WeaponNames = { "SwordThrustWave" },
+            ProjectileName = "DevotionDemeter",
             ProjectileProperty = "Fuse",
             ChangeValue = 0.2,
             ChangeType = "Absolute",
         },
         {
-            WeaponNames = { "AresProjectile" },
-            ProjectileName = "AresProjectile",
+            WeaponNames = { "SwordThrustWave" },
+            ProjectileName = "DevotionDemeter",
             ProjectileProperty = "TotalFuse",
             ChangeValue = 0.8,
             ChangeType = "Absolute",
+        },
+        {
+          WeaponNames = { "SwordThrustWave" },
+          ProjectileProperty = "Speed",
+          BaseValue = 1000,
+          ChangeType = "Add",
         },
 
         -- {
