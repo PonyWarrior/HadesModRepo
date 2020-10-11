@@ -4,9 +4,28 @@
 -- custom boons
 -- change all the calls
 
+-- local baseShowWeaponUpgradeScreen = ShowWeaponUpgradeScreen
+-- function ShowWeaponUpgradeScreen(args)
+-- 	baseShowWeaponUpgradeScreen(args)
+-- 	local screen = ScreenAnchors.WeaponUpgradeScreen
+-- 	local components = screen.Components
+-- 	components.ExtendedMenuButton = CreateScreenComponent({ Name = "BoonSlot1", Scale = 0.2, Group = "Combat_Menu" })
+-- 	Attach({ Id = components.ExtendedMenuButton.Id, DestinationId = components.ShopBackground.Id, OffsetX = 100, OffsetY = ScreenCenterY - 70 })
+-- 	CreateTextBox({ Id = components.ExtendedMenuButton.Id, Text = "Open More Aspects Menu",
+-- 		FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = Color.White, Font = "AlegreyaSansSCLight",
+-- 		ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+-- 	})
+-- 	components.ExtendedMenuButton.OnPressedFunctionName = "OpenExtendedAspectMenu"
+-- 	components.ExtendedMenuButton.Data = args
+-- end
+
+function OpenExtendedAspectMenu(screen, button)
+
+end
+
 OnWeaponFired{ "SwordParry",
 	function( triggerArgs )
-		if HeroHasTrait("YasuoSwordTrait") then
+		if HeroHasTrait("SwordYasuoTrait") then
 			FireWeaponFromUnit({ Weapon = "YasuoSwordStackApplicator", Id = CurrentRun.Hero.ObjectId, DestinationId = CurrentRun.Hero.ObjectId })
 		end
 	end
@@ -24,9 +43,12 @@ OnControlPressed{"Shout",
 end}
 
 function YasuoSwordStackApply(triggerArgs)
+	if HasEffect({ Id = CurrentRun.Hero.ObjectId, EffectName = "YasuoSwordTornadoBuff" }) then
+		return
+	end
   WeaponData.SwordWeapon.YasuoStack = WeaponData.SwordWeapon.YasuoStack + 1
   if WeaponData.SwordWeapon.YasuoStack >= 2 then
-    ModUtil.Hades.PrintStack('test')
+		WeaponData.SwordWeapon.YasuoStack = 0
     FireWeaponFromUnit({ Weapon = "YasuoSwordTornadoBuffApplicator", Id = CurrentRun.Hero.ObjectId, DestinationId = CurrentRun.Hero.ObjectId })
   end
 end
@@ -36,18 +58,537 @@ function YasuoSwordStackClear(triggerArgs)
 end
 
 function YasuoSwordTornadoBuffApply(triggerArgs)
-
+	SetWeaponProperty({ WeaponName = "SwordParry", DestinationId = CurrentRun.Hero.ObjectId,
+	Property = "ChargeTime",
+	Value = 0.5,
+	ChangeType = "Absolute", ExcludeLinked = true, })
+	SetWeaponProperty({ WeaponName = "SwordParry", DestinationId = CurrentRun.Hero.ObjectId,
+	Property = "ChargeStartAnimation",
+	Value = "ZagreusSwordArthurAttack3_Charge",
+	ChangeType = "Absolute", ExcludeLinked = true, })
+	SetWeaponProperty({ WeaponName = "SwordParry", DestinationId = CurrentRun.Hero.ObjectId,
+	Property = "ChargeFx",
+	Value = "ChargeAttack-Arthur",
+	ChangeType = "Absolute", ExcludeLinked = true, })
+	SetWeaponProperty({ WeaponName = "SwordParry", DestinationId = CurrentRun.Hero.ObjectId,
+	Property = "FireGraphic",
+	Value = "ZagreusSwordArthurAttack3_Fire",
+	ChangeType = "Absolute", ExcludeLinked = true, })
+	SetWeaponProperty({ WeaponName = "SwordParry", DestinationId = CurrentRun.Hero.ObjectId,
+	Property = "FireFx",
+	Value = "SwordSwipeAFlipped-Arthur",
+	ChangeType = "Absolute", ExcludeLinked = true, })
+	AddOnFireWeapons( CurrentRun.Hero, "SwordParry" , { LegalOnFireWeapons = {"SwordParry" }, AddOnFireWeapons = { "SwordThrustWave" }} )
+	AddLimitedWeaponBonus({ AsMultiplier = true, EffectName = triggerArgs.EffectName, Amount = 1, DamageBonus = 0, WeaponNames = { "SwordParry" } } )
+	WeaponData.SwordWeapon.YasuoStack = 0
 end
 
 function YasuoSwordTornadoBuffClear(triggerArgs)
-
+	SetWeaponProperty({ WeaponName = "SwordParry", DestinationId = CurrentRun.Hero.ObjectId,
+	Property = "ChargeTime",
+	Value = 0.3,
+	ChangeType = "Absolute", ExcludeLinked = true, })
+	SetWeaponProperty({ WeaponName = "SwordParry", DestinationId = CurrentRun.Hero.ObjectId,
+	Property = "ChargeStartAnimation",
+	Value = "ZagreusSwordArthurAttack1_Charge",
+	ChangeType = "Absolute", ExcludeLinked = true, })
+	SetWeaponProperty({ WeaponName = "SwordParry", DestinationId = CurrentRun.Hero.ObjectId,
+	Property = "ChargeFx",
+	Value = nil,
+	ChangeType = "Absolute", ExcludeLinked = true, })
+	SetWeaponProperty({ WeaponName = "SwordParry", DestinationId = CurrentRun.Hero.ObjectId,
+	Property = "FireGraphic",
+	Value = "ZagreusSwordArthurAttack1_Fire",
+	ChangeType = "Absolute", ExcludeLinked = true, })
+	SetWeaponProperty({ WeaponName = "SwordParry", DestinationId = CurrentRun.Hero.ObjectId,
+	Property = "FireFx",
+	Value = "SwordSwipeC-Arthur",
+	ChangeType = "Absolute", ExcludeLinked = true, })
+	RemoveOnFireWeapons( CurrentRun.Hero, { LegalOnFireWeapons = {"SwordParry" }, AddOnFireWeapons = { "SwordThrustWave" }} )
+	WeaponData.SwordWeapon.YasuoStack = 0
 end
 
 local loaded = false
 OnAnyLoad{function(triggerArgs)
   if not loaded then
     loaded = true
+		--Menu
+
+		--Weapons
     -- GameState.LastWeaponUpgradeData["SwordWeapon"] = { Index = 5 }
+		local YasuoData = {
+			ZeusWeaponTrait = {
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon" },
+					WeaponProperty = "ChargeFx",
+					ChangeValue = "ChargeAttack-Zeus",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon" },
+					WeaponProperty = "FireFx",
+					ChangeValue = "SwordSwipeAFlipped-Zeus-Arthur",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon2" },
+					WeaponProperty = "ChargeFx",
+					ChangeValue = "ChargeAttack-Zeus",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon2" },
+					WeaponProperty = "FireFx",
+					ChangeValue = "SwordSwipeA-Zeus-Arthur",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon3" },
+					WeaponProperty = "FireFx",
+					ChangeValue = "SwordSwipeAFlipped-Zeus-Arthur",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon3" },
+					WeaponProperty = "ChargeFx",
+					ChangeValue = "ChargeAttack-Zeus",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeaponDash" },
+					WeaponProperty = "FireFx",
+					ChangeValue = "SwordSwipeC-Zeus-Arthur",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+			},
+			PoseidonWeaponTrait = {
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon" },
+					WeaponProperty = "ChargeFx",
+					ChangeValue = "ChargeAttack-Poseidon",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon" },
+					WeaponProperty = "FireFx",
+					ChangeValue = "SwordSwipeAFlipped-Poseidon-Arthur",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon2" },
+					WeaponProperty = "ChargeFx",
+					ChangeValue = "ChargeAttack-Poseidon",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon2" },
+					WeaponProperty = "FireFx",
+					ChangeValue = "SwordSwipeA-Poseidon-Arthur",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon3" },
+					WeaponProperty = "FireFx",
+					ChangeValue = "SwordSwipeAFlipped-Poseidon-Arthur",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon3" },
+					WeaponProperty = "ChargeFx",
+					ChangeValue = "ChargeAttack-Poseidon",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeaponDash" },
+					WeaponProperty = "FireFx",
+					ChangeValue = "SwordSwipeC-Poseidon-Arthur",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+			},
+			AthenaWeaponTrait = {
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon" },
+					WeaponProperty = "ChargeFx",
+					ChangeValue = "ChargeAttack-Athena",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon" },
+					WeaponProperty = "FireFx",
+					ChangeValue = "SwordSwipeAFlipped-Athena-Arthur",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon2" },
+					WeaponProperty = "ChargeFx",
+					ChangeValue = "ChargeAttack-Athena",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon2" },
+					WeaponProperty = "FireFx",
+					ChangeValue = "SwordSwipeA-Athena-Arthur",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon3" },
+					WeaponProperty = "FireFx",
+					ChangeValue = "SwordSwipeAFlipped-Athena-Arthur",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon3" },
+					WeaponProperty = "ChargeFx",
+					ChangeValue = "ChargeAttack-Athena",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeaponDash" },
+					WeaponProperty = "FireFx",
+					ChangeValue = "SwordSwipeC-Athena-Arthur",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+			},
+			AphroditeWeaponTrait = {
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon" },
+					WeaponProperty = "ChargeFx",
+					ChangeValue = "ChargeAttack-Aphrodite",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon" },
+					WeaponProperty = "FireFx",
+					ChangeValue = "SwordSwipeAFlipped-Aphrodite-Arthur",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon2" },
+					WeaponProperty = "ChargeFx",
+					ChangeValue = "ChargeAttack-Aphrodite",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon2" },
+					WeaponProperty = "FireFx",
+					ChangeValue = "SwordSwipeA-Aphrodite-Arthur",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon3" },
+					WeaponProperty = "FireFx",
+					ChangeValue = "SwordSwipeAFlipped-Aphrodite-Arthur",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon3" },
+					WeaponProperty = "ChargeFx",
+					ChangeValue = "ChargeAttack-Aphrodite",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeaponDash" },
+					WeaponProperty = "FireFx",
+					ChangeValue = "SwordSwipeC-Aphrodite-Arthur",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+			},
+			ArtemisWeaponTrait = {
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon" },
+					WeaponProperty = "ChargeFx",
+					ChangeValue = "ChargeAttack-Artemis",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon" },
+					WeaponProperty = "FireFx",
+					ChangeValue = "SwordSwipeAFlipped-Artemis-Arthur",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon2" },
+					WeaponProperty = "ChargeFx",
+					ChangeValue = "ChargeAttack-Artemis",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon2" },
+					WeaponProperty = "FireFx",
+					ChangeValue = "SwordSwipeA-Artemis-Arthur",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon3" },
+					WeaponProperty = "FireFx",
+					ChangeValue = "SwordSwipeAFlipped-Artemis-Arthur",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon3" },
+					WeaponProperty = "ChargeFx",
+					ChangeValue = "ChargeAttack-Artemis",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeaponDash" },
+					WeaponProperty = "FireFx",
+					ChangeValue = "SwordSwipeC-Artemis-Arthur",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+			},
+			AresWeaponTrait = {
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon" },
+					WeaponProperty = "ChargeFx",
+					ChangeValue = "ChargeAttack-Ares",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon" },
+					WeaponProperty = "FireFx",
+					ChangeValue = "SwordSwipeAFlipped-Ares-Arthur",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon2" },
+					WeaponProperty = "ChargeFx",
+					ChangeValue = "ChargeAttack-Ares",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon2" },
+					WeaponProperty = "FireFx",
+					ChangeValue = "SwordSwipeA-Ares-Arthur",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon3" },
+					WeaponProperty = "FireFx",
+					ChangeValue = "SwordSwipeAFlipped-Ares-Arthur",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon3" },
+					WeaponProperty = "ChargeFx",
+					ChangeValue = "ChargeAttack-Ares",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeaponDash" },
+					WeaponProperty = "FireFx",
+					ChangeValue = "SwordSwipeC-Ares-Arthur",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+			},
+			DionysusWeaponTrait = {
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon" },
+					WeaponProperty = "ChargeFx",
+					ChangeValue = "ChargeAttack-Dionysus",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon" },
+					WeaponProperty = "FireFx",
+					ChangeValue = "SwordSwipeAFlipped-Dionysus-Arthur",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon2" },
+					WeaponProperty = "ChargeFx",
+					ChangeValue = "ChargeAttack-Dionysus",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon2" },
+					WeaponProperty = "FireFx",
+					ChangeValue = "SwordSwipeA-Dionysus-Arthur",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon3" },
+					WeaponProperty = "FireFx",
+					ChangeValue = "SwordSwipeAFlipped-Dionysus-Arthur",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon3" },
+					WeaponProperty = "ChargeFx",
+					ChangeValue = "ChargeAttack-Dionysus",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeaponDash" },
+					WeaponProperty = "FireFx",
+					ChangeValue = "SwordSwipeC-Dionysus-Arthur",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+			},
+			DemeterWeaponTrait = {
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon" },
+					WeaponProperty = "ChargeFx",
+					ChangeValue = "ChargeAttack-Demeter",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon" },
+					WeaponProperty = "FireFx",
+					ChangeValue = "SwordSwipeAFlipped-Demeter-Arthur",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon2" },
+					WeaponProperty = "ChargeFx",
+					ChangeValue = "ChargeAttack-Demeter",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon2" },
+					WeaponProperty = "FireFx",
+					ChangeValue = "SwordSwipeA-Demeter-Arthur",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon3" },
+					WeaponProperty = "FireFx",
+					ChangeValue = "SwordSwipeAFlipped-Demeter-Arthur",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeapon3" },
+					WeaponProperty = "ChargeFx",
+					ChangeValue = "ChargeAttack-Demeter",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					TraitName = "SwordYasuoTrait",
+					WeaponNames = { "SwordWeaponDash" },
+					WeaponProperty = "FireFx",
+					ChangeValue = "SwordSwipeC-Demeter-Arthur",
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+			},
+		}
+		for _, traitData in pairs(TraitData) do
+			if YasuoData[traitData.Name] ~= nil then
+				for _, property in pairs(YasuoData[traitData.Name]) do
+					table.insert(traitData.PropertyChanges, property)
+				end
+			end
+		end
     EffectData.YasuoSwordStack = {
       OnApplyFunctionName = "YasuoSwordStackApply",
       OnClearFunctionName = "YasuoSwordStackClear",
@@ -57,16 +598,16 @@ OnAnyLoad{function(triggerArgs)
       OnClearFunctionName = "YasuoSwordTornadoBuffClear",
     }
     WeaponData.SwordWeapon.YasuoStack = 0
-    TraitData.YasuoSwordTrait =
+    TraitData.SwordYasuoTrait =
     {
-      Name = "YasuoSwordTrait",
-      Icon = "WeaponEnchantment_Sword04",
+      Name = "SwordYasuoTrait",
+      Icon = "WeaponEnchantment_Sword05",
       InheritFrom = { "WeaponEnchantmentTrait" },
       RequiredWeapon = "SwordWeapon",
-      CustomTrayText = "SwordConsecrationTrait_Tray",
+      CustomTrayText = "SwordYasuoTrait_Tray",
       PostWeaponUpgradeScreenAnimation = "ZagreusSwordAlt03ParryReturnToIdle",
       PostWeaponUpgradeScreenAngle = 300,
-      PreEquipWeapons = { "YasuoSwordStackApplicator", "SwordThrustWave" },
+      PreEquipWeapons = { "YasuoSwordStackApplicator", "SwordThrustWave", "YasuoSwordTornadoBuffApplicator" },
       RarityLevels =
       {
         Common =
@@ -76,23 +617,23 @@ OnAnyLoad{function(triggerArgs)
         },
         Rare =
         {
-          MinMultiplier = 1.25,
-          MaxMultiplier = 1.25,
+					MinMultiplier = 2.00,
+          MaxMultiplier = 2.00,
         },
         Epic =
         {
-          MinMultiplier = 1.50,
-          MaxMultiplier = 1.50,
+					MinMultiplier = 3.00,
+          MaxMultiplier = 3.00,
         },
         Heroic =
         {
-          MinMultiplier = 1.75,
-          MaxMultiplier = 1.75,
+					MinMultiplier = 4.00,
+          MaxMultiplier = 4.00,
         },
         Legendary =
         {
-          MinMultiplier = 2.00,
-          MaxMultiplier = 2.00,
+					MinMultiplier = 5.00,
+          MaxMultiplier = 5.00,
         },
       },
       WeaponBinks =
@@ -156,10 +697,6 @@ OnAnyLoad{function(triggerArgs)
             ChargeSounds =
             {
               { Name = "/VO/ZagreusEmotes/EmoteCharging" },
-              {
-                Name = "/SFX/Player Sounds/ZagreusWeaponChargeup" ,
-                StoppedBy = { "ChargeCancel", "TriggerRelease", "Fired" },
-              },
             },
             ImpactSounds =
             {
@@ -296,6 +833,7 @@ OnAnyLoad{function(triggerArgs)
         --   ChangeType = "Absolute",
         --   ExcludeLinked = true,
         -- },
+				-- Sword Dash
         {
           WeaponNames = { "SwordWeaponDash" },
           WeaponProperty = "ChargeCancelMovement",
@@ -341,14 +879,14 @@ OnAnyLoad{function(triggerArgs)
         {
           WeaponNames = { "SwordWeaponDash" },
           ProjectileProperty = "DamageLow",
-          ChangeValue = 50,
+          ChangeValue = 30,
           ChangeType = "Absolute",
           ExcludeLinked = true,
         },
         {
           WeaponNames = { "SwordWeaponDash" },
           ProjectileProperty = "DamageHigh",
-          ChangeValue = 50,
+          ChangeValue = 30,
           ChangeType = "Absolute",
           ExcludeLinked = true,
         },
@@ -394,6 +932,20 @@ OnAnyLoad{function(triggerArgs)
           ChangeValue = "SwordWeaponArthur2",
           ExcludeLinked = true,
         },
+				{
+					WeaponNames = { "SwordWeapon" },
+					ProjectileProperty = "DamageLow",
+					ChangeValue = 25,
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					WeaponNames = { "SwordWeapon" },
+					ProjectileProperty = "DamageHigh",
+					ChangeValue = 25,
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
         {
           WeaponNames = { "SwordWeapon" },
           EffectName = "SwordDisableArthur",
@@ -468,6 +1020,20 @@ OnAnyLoad{function(triggerArgs)
           ChangeValue = "SwordWeaponArthur2",
           ExcludeLinked = true,
         },
+				{
+					WeaponNames = { "SwordWeapon2" },
+					ProjectileProperty = "DamageLow",
+					ChangeValue = 25,
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					WeaponNames = { "SwordWeapon2" },
+					ProjectileProperty = "DamageHigh",
+					ChangeValue = 25,
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
         {
           WeaponNames = { "SwordWeapon2" },
           EffectName = "SwordDisableArthur",
@@ -539,9 +1105,23 @@ OnAnyLoad{function(triggerArgs)
         {
           WeaponNames = { "SwordWeapon3" },
           WeaponProperty = "Projectile",
-          ChangeValue = "SwordWeaponArthur2",
+          ChangeValue = "SwordWeaponArthur3",
           ExcludeLinked = true,
         },
+				{
+					WeaponNames = { "SwordWeapon3" },
+					ProjectileProperty = "DamageLow",
+					ChangeValue = 35,
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					WeaponNames = { "SwordWeapon3" },
+					ProjectileProperty = "DamageHigh",
+					ChangeValue = 35,
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
         {
           WeaponNames = { "SwordWeapon3" },
           EffectName = "SwordDisableArthur",
@@ -676,91 +1256,114 @@ OnAnyLoad{function(triggerArgs)
           ExcludeLinked = true,
         },
 
-        -- {
-        --   WeaponNames = { "SwordParry" },
-        --   WeaponProperty = "ChargeTime",
-        --   ChangeValue = 0.5,
-        --   ChangeType = "Absolute",
-        --   ExcludeLinked = true,
-        -- },
         {
-            WeaponNames = { "SwordParry" },
-            WeaponProperty = "Projectile",
-            ChangeValue = "SpearWeapon",
-            ChangeType = "Absolute",
+          WeaponNames = { "SwordParry" },
+          WeaponProperty = "ChargeTime",
+          ChangeValue = 0.3,
+          ChangeType = "Absolute",
+          ExcludeLinked = true,
+        },
+        {
+          WeaponNames = { "SwordParry" },
+          WeaponProperty = "Projectile",
+          ChangeValue = "SpearWeapon",
+          ChangeType = "Absolute",
         },
 
         {
           WeaponNames = { "SwordParry" },
           ProjectileProperty = "DamageLow",
-          ChangeValue = 100,
+          ChangeValue = 50,
           ChangeType = "Absolute",
           ExcludeLinked = true,
         },
         {
           WeaponNames = { "SwordParry" },
           ProjectileProperty = "DamageHigh",
-          ChangeValue = 100,
+          ChangeValue = 50,
           ChangeType = "Absolute",
           ExcludeLinked = true,
         },
 
-        -- Consecration
+				{
+					WeaponName = "SwordParry",
+					WeaponProperty = "Cooldown",
+					ChangeValue = 3.0,
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+
+        -- Tornado
         {
             WeaponNames = { "SwordThrustWave" },
             WeaponProperty = "Projectile",
-            ChangeValue = "DevotionDemeter",
+            ChangeValue = "YasuoSwordTornado",
             ChangeType = "Absolute",
         },
-        {
-            WeaponNames = { "SwordThrustWave" },
-            ProjectileName = "DevotionDemeter",
-            ProjectileProperty = "DamageRadius",
-            ChangeValue = 270,
-            ChangeType = "Absolute",
-        },
-        {
-            WeaponNames = { "SwordThrustWave" },
-            ProjectileName = "DevotionDemeter",
-            ProjectileProperty = "Fuse",
-            ChangeValue = 0.2,
-            ChangeType = "Absolute",
-        },
-        {
-            WeaponNames = { "SwordThrustWave" },
-            ProjectileName = "DevotionDemeter",
-            ProjectileProperty = "TotalFuse",
-            ChangeValue = 0.8,
-            ChangeType = "Absolute",
-        },
-        {
-          WeaponNames = { "SwordThrustWave" },
-          ProjectileProperty = "Speed",
-          BaseValue = 1000,
-          ChangeType = "Add",
-        },
-
+				{
+					WeaponNames = { "SwordThrustWave" },
+					ProjectileProperty = "DamageLow",
+					ChangeValue = 0,
+					ChangeType = "Absolute",
+					ExcludeLinked = true,
+				},
+				{
+					WeaponNames = { "SwordThrustWave" },
+					ProjectileProperty = "DamageLow",
+					BaseValue = 1,
+					ChangeType = "Add",
+					ExcludeLinked = true,
+					ExtractValue =
+					{
+						ExtractAs = "TooltipDamage",
+					}
+				},
+				{
+					WeaponNames = { "SwordThrustWave" },
+					ProjectileProperty = "DamageHigh",
+					DeriveValueFrom = "DamageLow",
+				},
         -- {
-        --   LuaProperty = "MaxHealth",
-        --   ChangeValue = 50,
-        --   AsInt = true,
-        --   ChangeType = "Add",
-        --   ExtractValue =
-        --   {
-        --     ExtractAs = "TooltipHealth",
-        --   }
+        --   WeaponNames = { "SwordThrustWave" },
+        --   ProjectileProperty = "Speed",
+        --   ChangeValue = 750,
+        --   ChangeType = "Absolute",
         -- },
+				-- {
+				-- 	WeaponNames = { "SwordThrustWave" },
+				-- 	ProjectileName = "YasuoSwordTornado",
+				-- 	ProjectileProperty = "NumPenetrations",
+				-- 	ChangeValue = 10,
+				-- 	ChangeType = "Absolute",
+				-- },
+				-- {
+				-- 	WeaponNames = { "SwordThrustWave" },
+				-- 	ProjectileName = "YasuoSwordTornado",
+				-- 	ProjectileProperty = "UnlimitedUnitPenetration",
+				-- 	ChangeValue = false,
+				-- 	ChangeType = "Absolute",
+				-- },
+				{
+					UnitProperty = "CritAddition",
+					BaseValue = 0.02,
+					ChangeType = "Add",
+					ExtractValue =
+					{
+						ExtractAs = "TooltipCritBonus",
+						Format = "Percent",
+					},
+				},
       },
     }
     WeaponUpgradeData.SwordWeapon[5] = {
       Costs = { 0, 0, 0, 0, 0 },
       MaxUpgradeLevel = 5,
-      TraitName = "YasuoSwordTrait",
+      TraitName = "SwordYasuoTrait",
       EquippedKitAnimation = "WeaponSwordAlt03FloatingIdleOff",
       UnequippedKitAnimation = "WeaponSwordAlt03FloatingIdle",
       BonusUnequippedKitAnimation = "WeaponSwordAlt03FloatingIdleBonus",
       BonusEquippedKitAnimation = "WeaponSwordAlt03FloatingIdleOffBonus",
-      Image = "Codex_Portrait_SwordAlt03"
+      Image = "WeaponEnchantment_Sword05"
     }
   end
 end}
