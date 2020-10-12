@@ -169,7 +169,7 @@ local CosmeticTable = {
 }
 
 local EnabledConfigMaps = {
-  "DeathAreaBedroom", "DeathAreaBedroomHades", "DeathAreaOffice", "RoomPreRun",
+  "DeathArea", "DeathAreaBedroom", "DeathAreaBedroomHades", "DeathAreaOffice", "RoomPreRun",
 }
 
 local Mastery = { }
@@ -185,13 +185,18 @@ OnAnyLoad{function(triggerArgs)
     loaded = true
     Mastery = GameState.Mastery
   end
+  local wp = GetEquippedWeapon()
+  if Mastery[wp].Level < 6 then
+    return
+  end
   ApplyHeroCosmetics()
 end}
+
 
 OnControlPressed{"Shout",
   function(triggerArgs)
     while IsControlDown({ Name = "Shout" }) do
-      if IsControlDown({ Name = "Confirm" }) and Contains(EnabledConfigMaps, CurrentDeathAreaRoom.Name) then
+      if CurrentDeathAreaRoom ~= nil and IsControlDown({ Name = "Confirm" }) and Contains(EnabledConfigMaps, CurrentDeathAreaRoom.Name) then
         OpenMasteryPanel()
         return
       end
@@ -199,12 +204,10 @@ OnControlPressed{"Shout",
     end
 end}
 
+local cosmetics = { }
 function ApplyHeroCosmetics()
   local wp = GetEquippedWeapon()
-  if Mastery[wp].Level < 6 then
-    return
-  end
-  local cosmetics = CosmeticTable[Mastery[wp].Level]
+  cosmetics = CosmeticTable[Mastery[wp].Level]
   if cosmetics.Aura ~= nil then
     SetColor({ Id = CurrentRun.Hero.ObjectId, Color = cosmetics.Aura.Color})
     CreateAnimation({ Name = cosmetics.Aura.Animation.Name, DestinationId = CurrentRun.Hero.ObjectId, Scale = cosmetics.Aura.Animation.Scale or 1.0, Color = cosmetics.Aura.Animation.Color or LevelColorTable[Mastery[wp].Level]})
