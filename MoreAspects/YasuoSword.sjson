@@ -1,0 +1,170 @@
+PlayerProjectile
+{
+  Name = "YasuoSwordTornado"
+  InheritFrom = "1_BasePlayerSmallProjectile"
+  Type = "INSTANT"
+  DetonateSound = "/SFX/Player Sounds/DemeterBlizzardShardComponent"
+  DetonateGraphic = "DemeterDevotionDetonateFx"
+  AffectsEnemies = true
+  AffectsFriends = false
+  AffectsSelf = false
+  CheckUnitImpact = true
+  CheckObstacleImpact = false
+  UnlimitedUnitPenetration = false
+  NumPenetrations = 10
+  DamageRadiusScaleY = 0.6
+  DamageRadiusScaleX = 1.1
+  DamageLow = 5
+  DamageHigh = 5
+  DamageRadius = 125.0
+  BlastSpeed = 100
+  MultiDetonate = true
+  ExpandBlastDuringDetonation = true
+  ImpactVelocity = 0
+  Range = 1.0
+  Fuse = 0
+  TotalFuse = 1.8
+  SpawnRadius = 125.0
+  Speed = 750
+  DieWithOwner = true
+  InheritOwnerElapsedTimeMultiplier = false
+  CanBeReflected = false
+  CanBeProjectileDefenseDestroyed = false
+  GroupName = "FX_Standing_Top"
+  DangerDistance = 0
+  Thing = {
+    Graphic = "DemeterWrathIn-Devotion"
+    RotateGeometry = false
+    Scale = 1.0
+    Color = {
+      Red = 1.0
+      Green = 1.0
+      Blue = 1.0
+      Opacity = 1.0
+    }
+    Points = [
+      {
+        X = 0
+        Y = 8
+      }
+      {
+        X = 32
+        Y = 0
+      }
+      {
+        X = 0
+        Y = -8
+      }
+      {
+        X = -32
+        Y = 0
+      }
+    ]
+  }
+  Effects = [
+   {
+      Name = "ZagreusDemeterSpeedPenalty"
+      Duration = 1.0
+      Type = "SPEED"
+      Modifier = 0.30
+      Active = true
+      Stacks = false
+      MaxStacks = 1
+      Cancelable = true
+      OnlyAffectName = "_PlayerUnit"
+      BlinkRangeMultiplier = 0.30
+      StopSoundOnFinishFade = 0.5
+      StartFx = "DemeterSlowImpact"
+      FrontFx = "DemeterSlowFront"
+      BackFx = "DemeterSlowBack"
+      FlashFrontFxWhenExpiring = true
+      FlashBackFxWhenExpiring = true
+    }
+  ]
+}
+
+HelpText
+{
+  Id = "SwordYasuoTrait"
+  DisplayName = "Aspect of Yasuo"
+  Description = "You have {$Keywords.YasuoSpecial} and follow the {$Keywords.YasuoAspect}. \n {!Icons.Bullet}{#PropertyFormat}Tornado damage per tick: \Column 380 {#UpgradeFormat}{#AltUpgradeFormat}{$TooltipData.TooltipDamage} \n {!Icons.Bullet}{#PropertyFormat}Bonus {$Keywords.Crit} Chance: \Column 380 {#UpgradeFormat}{$TooltipData.TooltipCritBonus:P} \n {#ItalicFormatDark}Follow the wind, but watch your back. No one is promised tomorrows."
+  OverwriteLocalization = true
+}
+{
+  Id = "SwordYasuoTrait_Delta"
+  InheritFrom = "SwordYasuoTrait"
+  Description = "You have {$Keywords.YasuoSpecial} and follow the {$Keywords.YasuoAspect}. \n {!Icons.Bullet}{#PropertyFormat}Tornado damage per tick: \Column 380 {#UpgradeFormat}{#AltUpgradeFormat}{$TooltipData.TooltipDamage} \n {!Icons.Bullet}{#PropertyFormat}Bonus {$Keywords.Crit} Chance: \Column 380 {#UpgradeFormat}{$TooltipData.TooltipCritBonus:P} \n {#ItalicFormatDark}Follow the wind, but watch your back. No one is promised tomorrows."
+  OverwriteLocalization = true
+}
+{
+  Id = "SwordYasuoTrait_Tray"
+  InheritFrom = "SwordYasuoTrait"
+  Description = "You have {$Keywords.YasuoSpecial} and follow the {$Keywords.YasuoAspect}. \n {!Icons.Bullet}{#PropertyFormat}Tornado damage per tick: \Column 380 {#UpgradeFormat}{#AltUpgradeFormat}{$TooltipData.TooltipDamage} \n {!Icons.Bullet}{#PropertyFormat}Bonus {$Keywords.Crit} Chance: \Column 380 {#UpgradeFormat}{$TooltipData.TooltipCritBonus:P}"
+  OverwriteLocalization = true
+}
+
+{
+  Id = "YasuoAspect"
+  DisplayName = "Way of the Wanderer"
+  Description = "{#ItalicFormat}Alternate Move Set{#PreviousFormat}: Fast and Large {$Keywords.Attack}, {$Keywords.Special} is a long thrust and you can launch a tornado after two hits."
+}
+{
+  Id = "YasuoSpecial"
+  DisplayName = "Steel Tempest"
+  Description = "{#ItalicFormat}Aspect of Yasuo{#PreviousFormat}: Press {A3} to do a long thrust attack with a {#BoldFormatGraft}3 Sec{#PreviousFormat} cooldown. Hitting enemies twice in a row lets you throw a tornado the next time."
+}
+
+PlayerWeapons
+{
+    Name = "YasuoSwordStackApplicator"
+    InheritFrom = "1_BaseMagicWeapon"
+    Type = "GUN"
+    Projectile = "null"
+    FullyAutomatic = true
+    AutoLock = true
+    FireFx = "null"
+    IgnoreOwnerAttackDisabled = true
+  Effect = {
+      Name = "YasuoSwordStack"
+  Modifier = 0
+  Duration = 5
+      CanAffectInvulnerable = true
+      FrontFx = null
+      BackFx = null
+      OnlyAffectName = "_PlayerUnit"
+    }
+  }
+    {
+        Name = "YasuoSwordTornadoBuffApplicator"
+        InheritFrom = "1_BaseMagicWeapon"
+        Type = "GUN"
+        Projectile = "null"
+        FullyAutomatic = true
+        AutoLock = true
+        FireFx = "null"
+        IgnoreOwnerAttackDisabled = true
+      Effect = {
+          Name = "YasuoSwordTornadoBuff"
+      Modifier = 0
+      Duration = 5
+          CanAffectInvulnerable = true
+          FrontFx = "ConsecrationBuffedFront"
+          FlashFrontFxWhenExpiring = true
+          BackFx = "ConsecrationBuffedBack"
+          FlashBackFxWhenExpiring = true
+          OnlyAffectName = "_PlayerUnit"
+          Sound = "/Leftovers/Ambience/WhippingWindLoop"
+        }
+  }
+
+GUIAnimations
+{
+  Name = "WeaponEnchantment_Sword05_Large"
+  InheritFrom = "BoonIcon"
+    FilePath = "GUI\Screens\WeaponIcons\sword_arthur_15"
+}
+{
+  Name = "WeaponEnchantment_Sword05_Small"
+  InheritFrom = "BoonTrayIcon"
+    FilePath = "GUI\Screens\WeaponIcons\sword_arthur_15"
+}
