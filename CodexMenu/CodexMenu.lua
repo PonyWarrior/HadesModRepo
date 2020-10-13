@@ -13,7 +13,7 @@ CodexMenuData =
 		"PoseidonWeaponTrait", "PoseidonSecondaryTrait", "PoseidonRushTrait", "PoseidonRangedTrait", "PoseidonShoutTrait",
 		"RoomRewardBonusTrait", "DefensiveSuperGenerationTrait", "BonusCollisionTrait", "SlamExplosionTrait", "SlipperyTrait", "BossDamageTrait",
 		"RandomMinorLootDrop", "DoubleCollisionTrait",
-		"PoseidonShoutDurationTrait", "EncounterStartOffenseBuffTrait",
+		"PoseidonShoutDurationTrait", "EncounterStartOffenseBuffTrait", "FishingTrait"
 	},
 	AthenaUpgrade =
 	{
@@ -66,9 +66,9 @@ CodexMenuData =
 	},
 	TrialUpgrade =
 	{
-		"ChaosBlessingMeleeTrait", "ChaosBlessingRangedTrait", "ChaosBlessingAmmoTrait", "ChaosBlessingMaxHealthTrait", "ChaosBlessingBoonRarityTrait",
-		"ChaosBlessingMoneyTrait", "ChaosBlessingMetapointTrait", "ChaosBlessingSecondaryTrait", "ChaosBlessingDashAttackTrait", "ChaosBlessingExtraChanceTrait",
-		"ChaosCurseDashRangeTrait", "ChaosBlessingGemTrait", "ChaosBlessingAlphaStrikeTrait", "ChaosBlessingBackstabTrait", "ChaosBlessingTrapDamageTrait",
+		"ChaosBlessingMeleeTrait", "ChaosBlessingRangedTrait", "ChaosBlessingAmmoTrait", "ChaosBlessingMaxHealthTrait",
+		"ChaosBlessingBoonRarityTrait", "ChaosBlessingMoneyTrait", "ChaosBlessingMetapointTrait", "ChaosBlessingSecondaryTrait",
+		"ChaosBlessingDashAttackTrait", "ChaosBlessingExtraChanceTrait", "ChaosBlessingBackstabTrait", "ChaosBlessingAlphaStrikeTrait",
 	},
 	--Hammer boons
 	WeaponUpgrade = {},
@@ -81,9 +81,9 @@ CodexMenuData =
 
 	SpearWeapon = { "SpearReachAttack", "SpearAutoAttack", "SpearThrowExplode", "SpearThrowBounce", "SpearThrowPenetrate", "SpearThrowCritical", "SpearSpinDamageRadius", "SpearSpinChargeLevelTime", "SpearDashMultiStrike", "SpearThrowElectiveCharge", "SpearSpinChargeAreaDamageTrait", "SpearAttackPhalanxTrait", "SpearSpinTravelDurationTrait"},
 
-	GunWeapon = { "GunSlowGrenade", "GunMinigunTrait", "GunShotgunTrait", "GunExplodingSecondaryTrait", "GunGrenadeFastTrait", "GunArmorPenerationTrait", "GunInfiniteAmmoTrait", "GunConsecutiveFireTrait", "GunGrenadeClusterTrait", "GunGrenadeDropTrait", "GunHeavyBulletTrait", "GunHomingBulletTrait", "GunChainShotTrait"},
+	GunWeapon = { "GunSlowGrenade", "GunMinigunTrait", "GunShotgunTrait", "GunExplodingSecondaryTrait", "GunGrenadeFastTrait", "GunArmorPenerationTrait", "GunInfiniteAmmoTrait", "GunConsecutiveFireTrait", "GunGrenadeClusterTrait", "GunGrenadeDropTrait", "GunHeavyBulletTrait", "GunHomingBulletTrait", "GunChainShotTrait", "GunLoadedGrenadeBoostTrait", "GunLoadedGrenadeLaserTrait", "GunLoadedGrenadeSpeedTrait", "GunLoadedGrenadeWideTrait", "GunLoadedGrenadeInfiniteAmmoTrait"},
 
-	FistWeapon = { "FistReachAttackTrait", "FistDashAttackHealthBufferTrait", "FistTeleportSpecialTrait", "FistDoubleDashSpecialTrait", "FistChargeSpecialTrait", "FistKillTrait", "FistSpecialLandTrait", "FistAttackFinisherTrait", "FistConsecutiveAttackTrait", "FistSpecialFireballTrait", "FistHeavyAttackTrait", "FistAttackDefenseTrait"},
+	FistWeapon = { "FistReachAttackTrait", "FistDashAttackHealthBufferTrait", "FistTeleportSpecialTrait", "FistDoubleDashSpecialTrait", "FistChargeSpecialTrait", "FistKillTrait", "FistSpecialLandTrait", "FistAttackFinisherTrait", "FistConsecutiveAttackTrait", "FistSpecialFireballTrait", "FistHeavyAttackTrait", "FistAttackDefenseTrait", "FistDetonateBoostTrait"},
 
 	Legendaries =
 	{
@@ -93,7 +93,7 @@ CodexMenuData =
 	Duos =
 	{
 		"LightningCloudTrait", "AutoRetaliateTrait", "AmmoBoltTrait", "ImpactBoltTrait", "ReboundingAthenaCastTrait", "JoltDurationTrait",
-		"FishingTrait", "ImprovedPomTrait", "RaritySuperBoost", "BlizzardOrbTrait",
+		"ImprovedPomTrait", "RaritySuperBoost", "BlizzardOrbTrait",
 		"TriggerCurseTrait", "SlowProjectileTrait", "ArtemisReflectBuffTrait", "CurseSickTrait", "HeartsickCritDamageTrait",
 		"DionysusAphroditeStackIncreaseTrait", "AresHomingTrait", "IceStrikeArrayTrait", "HomingLaserTrait",
 		"RegeneratingCappedSuperTrait", "StatusImmunityTrait", "PoseidonAresProjectileTrait", "CastBackstabTrait", "NoLastStandRegenerationTrait",
@@ -559,7 +559,7 @@ function HandleBoonManagerClick(screen, button)
 			end
 			return
 		elseif screen.Mode == "Rarity" and screen.LockedModeButton.Add == true then
-			if IsGodTrait(button.Boon.Name, { ForShop = true }) or Contains(CodexMenuData.ConsumableTraits, button.Boon.Name) then
+			if IsGodTrait(button.Boon.Name, { ForShop = true }) or Contains(CodexMenuData.ConsumableTraits, button.Boon.Name) or IsChaosBoon(button.Boon.Name) or IsHermesBoon(button.Boon.Name) then
 				if TraitData[button.Boon.Name] and button.Boon.Rarity ~= nil and GetUpgradedRarity(button.Boon.Rarity) ~= nil and button.Boon.RarityLevels[GetUpgradedRarity(button.Boon.Rarity)] ~= nil then
 					local numOldTrait = GetTraitNameCount(CurrentRun.Hero, button.Boon.Name)
 					if numOldTrait > 10 then
@@ -578,7 +578,7 @@ function HandleBoonManagerClick(screen, button)
 			end
 			return
 		elseif screen.Mode == "Rarity" and screen.LockedModeButton.Substract == true then
-			if IsGodTrait(button.Boon.Name, { ForShop = true }) or Contains(CodexMenuData.ConsumableTraits, button.Boon.Name) then
+			if IsGodTrait(button.Boon.Name, { ForShop = true }) or Contains(CodexMenuData.ConsumableTraits, button.Boon.Name) or IsChaosBoon(button.Boon.Name) or IsHermesBoon(button.Boon.Name) then
 				if TraitData[button.Boon.Name] and button.Boon.Rarity ~= nil and GetDowngradedRarity(button.Boon.Rarity) ~= nil and button.Boon.RarityLevels[GetDowngradedRarity(button.Boon.Rarity)] ~= nil then
 					local numOldTrait = GetTraitNameCount(CurrentRun.Hero, button.Boon.Name)
 					if numOldTrait > 10 then
@@ -598,7 +598,7 @@ function HandleBoonManagerClick(screen, button)
 			return
 		elseif screen.Mode == "Delete" then
 			screen.BoonsList[screen.CurrentPage][button.Index]=nil
-			RemoveWeaponTrait(button.Boon.Name)
+			RemoveTrait(CurrentRun.Hero, button.Boon.Name)
 			Destroy({ Ids = { button.Id, button.Background.Id } })
 			CheckHadesShout(CurrentRun.Hero.Traits)
 			ReloadAllTraits()
@@ -1352,7 +1352,7 @@ function CodexMain(triggerArgs)
 			-- translates codex entry names to spawnable consumables
 			local consumableTable =
 			{
-				StackUpgrade = "StackUpgradeDrop",
+				-- StackUpgrade = "StackUpgradeDrop",
 			}
 			local item = CodexStatus.SelectedEntryNames[CodexStatus.SelectedChapterName]
 			if consumableTable[item] then item = consumableTable[item] end
@@ -1367,9 +1367,9 @@ function CodexMain(triggerArgs)
 				OpenBoonSelector(item, true)
 				return
 			else
+				CreateLoot({ Name = item, OffsetX = 100, SpawnPoint = CurrentRun.Hero.ObjectId })
 				return
 			end
-			CreateLoot({ Name = item, OffsetX = 100, SpawnPoint = CurrentRun.Hero.ObjectId })
 			if debug then
 				ModDebugPrint("Trying to spawn item : " .. item)
 			end
@@ -1410,9 +1410,7 @@ function CodexMain(triggerArgs)
 			end
 		end
 		--Bosses and Commands
-		if CodexStatus.SelectedChapterName == "ChthonicGods" or
-		CodexStatus.SelectedChapterName == "OtherDenizens" or
-		CodexStatus.SelectedChapterName == "Enemies" then
+		if CodexStatus.SelectedChapterName == "ChthonicGods" or CodexStatus.SelectedChapterName == "OtherDenizens" or CodexStatus.SelectedChapterName == "Enemies" then
 			local debugTicks = 0
 			local entry = CodexStatus.SelectedEntryNames[CodexStatus.SelectedChapterName]
 			local bossTable =

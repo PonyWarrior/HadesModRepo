@@ -191,3 +191,20 @@ spawn boss removed
 new feature :
 load boss fight - opening a boss entry teleports you in a room to fight them
 your saved state is restored when entering the room
+suicide added to Skelly entry
+
+2.4.1
+
+ongoing issues :
+some casts have bugged animations
+some users crash when opening the boon manager
+various bugs with all mode in boon manager
+opening the boon manager during a run resets progress of stacking keepsakes
+
+fixed issues :
+getting boons normally and then deleting them individually in the boon manager causes a crash for some of them
+some 4th aspect specific hammer boons not added
+poseidon huge catch missing
+chaos and hermes boons not able to have their rarity upgraded
+one missing chaos boon
+pom of power spawns in a random location in the room
