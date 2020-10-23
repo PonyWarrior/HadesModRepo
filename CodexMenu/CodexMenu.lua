@@ -97,7 +97,7 @@ CodexMenuData =
 		"TriggerCurseTrait", "SlowProjectileTrait", "ArtemisReflectBuffTrait", "CurseSickTrait", "HeartsickCritDamageTrait",
 		"DionysusAphroditeStackIncreaseTrait", "AresHomingTrait", "IceStrikeArrayTrait", "HomingLaserTrait",
 		"RegeneratingCappedSuperTrait", "StatusImmunityTrait", "PoseidonAresProjectileTrait", "CastBackstabTrait", "NoLastStandRegenerationTrait",
-		"PoisonTickRateTrait", "StationaryRiftTrait", "SelfLaserTrait", "CurseSickTrait", "ArtemisBonusProjectileTrait", "PoisonCritVulnerabilityTrait",
+		"PoisonTickRateTrait", "StationaryRiftTrait", "SelfLaserTrait", "ArtemisBonusProjectileTrait", "PoisonCritVulnerabilityTrait",
 	},
 	Consumables =
 	{
@@ -120,7 +120,7 @@ CodexMenuData =
 		AphroditeRangedTrait = "ShieldLoadAmmo_AphroditeRangedTrait",
 		ArtemisRangedTrait = "ShieldLoadAmmo_ArtemisRangedTrait",
 		AresRangedTrait = "ShieldLoadAmmo_AresRangedTrait",
-		DionysusRangedTrait = "ShieldLoadAmmo_DionysusRangedTrait",
+		-- DionysusRangedTrait = "ShieldLoadAmmo_DionysusRangedTrait",
 		DemeterRangedTrait = "ShieldLoadAmmo_DemeterRangedTrait",
 	},
 }
@@ -135,6 +135,11 @@ CodexMenuColors =
 	SpearWeapon = { 176, 196, 222, 255 },
 	GunWeapon = { 176, 196, 222, 255 },
 	FistWeapon = { 176, 196, 222, 255 },
+}
+
+local RealGodNames = {
+	"Zeus", "Athena", "Poseidon", "Artemis",
+	"Aphrodite", "Ares", "Dionysus", "Demeter"
 }
 
 SaveIgnores["CodexMenuData"] = true
@@ -464,13 +469,12 @@ function HandleBoonManagerClick(screen, button)
 			for i, traitData in pairs(CurrentRun.Hero.Traits) do
 				screen.Traits = CurrentRun.Hero.Traits
 				local numTraits = GetTraitNameCount(screen, traitData.Name)
-				--local totalNumTraits = GetTotalTraitCount(screen)
 				if numTraits < 10 and IsGodTrait(traitData.Name) and TraitData[traitData.Name] and IsGameStateEligible(CurrentRun, TraitData[traitData.Name]) and traitData.Rarity ~= "Legendary" then
 					upgradableTraits[traitData.Name] = true
 					for _, levelbutton in pairs(screen.Components) do
-						if levelbutton.IsBackground and levelbutton.Boon == traitData then
+						if not levelbutton.IsBackground and levelbutton.Boon == traitData then
 							levelbutton.Boon.Level = levelbutton.Boon.Level + 1
-							ModifyTextBox({Id = levelbutton.Id, Text = "Lv. "..levelbutton.Boon.Level})
+							ModifyTextBox({Id = levelbutton.Background.Id, Text = "Lv. "..levelbutton.Boon.Level})
 						end
 					end
 				end
@@ -506,8 +510,7 @@ function HandleBoonManagerClick(screen, button)
 			local upgradedTraits = {}
 			for i, traitData in pairs( CurrentRun.Hero.Traits ) do
 				if IsGodTrait(traitData.Name, { ForShop = true }) or Contains(CodexMenuData.ConsumableTraits, traitData.Name) or IsHermesChaosHammerCharonBoon(traitData.Name) then
-					--crash
-					if TraitData[traitData.Name] and traitData.Rarity ~= nil and GetUpgradedRarity(traitData.Rarity) ~= nil and traitData.RarityLevels[GetUpgradedRarity(traitData.Rarity)] ~= nil then
+					if TraitData[traitData.Name] and traitData.Rarity ~= nil and GetUpgradedRarity(traitData.Rarity) ~= nil and traitData.RarityLevels ~= nil and traitData.RarityLevels[GetUpgradedRarity(traitData.Rarity)] ~= nil then
 						if Contains(upgradableTraits, traitData) or traitData.Rarity == "Legendary" then
 						else
 							table.insert(upgradableTraits, traitData )
@@ -523,7 +526,7 @@ function HandleBoonManagerClick(screen, button)
 			while not IsEmpty(upgradableTraits) do
 				local traitData = RemoveRandomValue(upgradableTraits)
 				upgradedTraits[traitData.Name] = true
-				RemoveWeaponTrait(traitData.Name)
+				RemoveTrait(CurrentRun.Hero, traitData.Name)
 				AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = traitData.Name, Rarity = "Heroic" }) })
 			end
 			return
@@ -549,7 +552,9 @@ function HandleBoonManagerClick(screen, button)
 					numOldTrait = 10
 				end
 				numOldTrait = numOldTrait - 1
-				RemoveWeaponTrait(button.Boon.Name)
+				while HeroHasTrait(button.Boon.Name) do
+					RemoveTrait(CurrentRun.Hero, button.Boon.Name)
+				end
 				AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon.Name, Rarity = button.Boon.Rarity }) })
 				for i=1, numOldTrait-1 do
 					AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon.Name, Rarity = button.Boon.Rarity }) })
@@ -565,7 +570,7 @@ function HandleBoonManagerClick(screen, button)
 					if numOldTrait > 10 then
 						numOldTrait = 10
 					end
-					RemoveWeaponTrait(button.Boon.Name)
+					RemoveTrait(CurrentRun.Hero, button.Boon.Name)
 					button.Boon.Rarity = GetUpgradedRarity(button.Boon.Rarity)
 					SetColor({Id = button.Background.Id, Color = Color["BoonPatch"..button.Boon.Rarity]})
 					AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon.Name, Rarity = button.Boon.Rarity }) })
@@ -584,7 +589,7 @@ function HandleBoonManagerClick(screen, button)
 					if numOldTrait > 10 then
 						numOldTrait = 10
 					end
-					RemoveWeaponTrait(button.Boon.Name)
+					RemoveTrait(CurrentRun.Hero, button.Boon.Name)
 					button.Boon.Rarity = GetDowngradedRarity(button.Boon.Rarity)
 					SetColor({Id = button.Background.Id, Color = Color["BoonPatch"..button.Boon.Rarity]})
 					AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon.Name, Rarity = button.Boon.Rarity }) })
@@ -1150,22 +1155,33 @@ end
 
 function RemoveSameSlotWeapon(traitName)
 	local weaponType
-	if string.match(traitName, "WeaponTrait") then
-		weaponType = "WeaponTrait"
-	elseif string.match(traitName, "RangedTrait") then
-		weaponType = "RangedTrait"
-	elseif string.match(traitName, "SecondaryTrait") then
-		weaponType = "SecondaryTrait"
-	elseif string.match(traitName, "RushTrait") then
-		weaponType = "RushTrait"
-	elseif string.match(traitName, "ShoutTrait") then
-		weaponType = "ShoutTrait"
-	else
-		return
+	for _, god in pairs(RealGodNames) do
+		if string.match(traitName, god) then
+			if string.match(traitName, "WeaponTrait") then
+				weaponType = "WeaponTrait"
+			end
+		end
+	end
+	if weaponType == nil then
+		if string.match(traitName, "RangedTrait") then
+			weaponType = "RangedTrait"
+		elseif string.match(traitName, "SecondaryTrait") then
+			weaponType = "SecondaryTrait"
+		elseif string.match(traitName, "RushTrait") then
+			weaponType = "RushTrait"
+		elseif string.match(traitName, "ShoutTrait") then
+			weaponType = "ShoutTrait"
+		else
+			return
+		end
 	end
 	for i, traitData in pairs (CurrentRun.Hero.Traits) do
 		if string.match(traitData.Name, weaponType) and not IsHermesChaosHammerCharonBoon(traitData.Name) then
-			RemoveWeaponTrait(traitData.Name)
+			for _, god in pairs(RealGodNames) do
+				if string.match(traitData.Name, god) then
+					RemoveWeaponTrait(traitData.Name)
+				end
+			end
 		end
 	end
 end

@@ -208,3 +208,16 @@ poseidon huge catch missing
 chaos and hermes boons not able to have their rarity upgraded
 one missing chaos boon
 pom of power spawns in a random location in the room
+
+2.4.2
+
+fixed issues :
+(Boon Selector)
+dionysus trippy flare caused a crash
+curse of longing was listed twice
+adding weapon-slot boons or retaliation boons removed each other
+(Boon Manager)
+all mode + rarity mode crashed with some boons
+all mode + level mode did not update the on-screen level display
+rarity mode crash with some boons
+level mode crash with some boons
