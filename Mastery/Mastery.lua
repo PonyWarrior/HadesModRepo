@@ -476,9 +476,18 @@ function OpenDetailedMasteryPanel(screen, button)
   local nextlvlTitle = ""
   local rank = GetWeaponRank(weapon)
   local wptitle = GetLevelTitle(weapon.Name)
-  local bestclear = GetFastestRunClearTimeWithWeapon(CurrentRun, weapon.Name)
-  local numclears = "Times Cleared : "..GetNumRunsClearedWithWeapon(weapon.Name)
-  local weaponKills = "Foes Slain : "..GameState.WeaponKills[weapon.Name]
+  local bestclear = 0
+  if GetFastestRunClearTimeWithWeapon(CurrentRun, weapon.Name) ~= nil then
+    bestclear = GetFastestRunClearTimeWithWeapon(CurrentRun, weapon.Name)
+  end
+  local numclears = "Times Cleared : 0"
+  if GetNumRunsClearedWithWeapon(weapon.Name) ~= nil then
+    numclears = "Times Cleared : "..GetNumRunsClearedWithWeapon(weapon.Name)
+  end
+  local weaponKills = "Foes Slain : 0"
+  if GameState.WeaponKills[weapon.Name] ~= nil then
+    weaponKills = "Foes Slain : "..GameState.WeaponKills[weapon.Name]
+  end
   local color = LevelColorTable[weapon.Level]
   local boxOverlay = ""
   local specialAnim = ""
@@ -1003,6 +1012,8 @@ function GetExpMultiplier()
     heatMultiplier = 0.2
   elseif heat <= 20 then
     heatMultiplier = 0.5
+  elseif heat <= 30 then
+    heatMultiplier = 0.8
   elseif heat > 30 then
     heatMultiplier = 1
   end
