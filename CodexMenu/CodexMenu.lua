@@ -1627,14 +1627,13 @@ function CodexMain(triggerArgs)
 
 --[[
 Duplicate the ReloadAllTraits function because the default implementation will reset the bonuses for keepsakes from Thanatos and Hermes.
-It will also give bonus max health from the RoomRewardMaxHealthTrait trait.
+It will also give bonus max health from the RoomRewardMaxHealthTrait trait, but that is more difficult to fix.
 ]]--
 function CodexMenuReloadAllTraits()
 	-- Remove all traits, then readd them in order
 	local shouldSkip = {
 		FastClearDodgeBonusTrait = true,
-		PerfectClearDamageBonusTrait = true,
-		RoomRewardMaxHealthTrait = true
+		PerfectClearDamageBonusTrait = true
 	}
 	local weaponName = GetEquippedWeapon()
 	local removedTraitData = {}
@@ -1646,9 +1645,7 @@ function CodexMenuReloadAllTraits()
 	end
 
 	for i, traitData in pairs(removedTraitData) do
-		if shouldSkip[traitData.Name] ~= true then
-			RemoveTrait( CurrentRun.Hero, traitData.Name )
-		end
+		RemoveTrait( CurrentRun.Hero, traitData.Name )
 	end
 	-- re-equip all weapons to flush Absolute change values
 
