@@ -268,7 +268,7 @@ function OpenBoonSelector(godName, spawnBoon)
 	CloseCodexScreen()
 	wait(0.1)
 	CheckHadesShout(CurrentRun.Hero.Traits)
-	ReloadAllTraits()
+	CodexMenuReloadAllTraits()
 	if godName ~= nil and CodexMenuData[godName] then
 		local Boons = DeepCopyTable(CodexMenuData[godName])
 		if Boons == nil then
@@ -578,7 +578,7 @@ function HandleBoonManagerClick(screen, button)
 						AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon.Name, Rarity = button.Boon.Rarity }) })
 					end
 					CheckHadesShout(CurrentRun.Hero.Traits)
-					ReloadAllTraits()
+					CodexMenuReloadAllTraits()
 				end
 			end
 			return
@@ -597,7 +597,7 @@ function HandleBoonManagerClick(screen, button)
 						AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon.Name, Rarity = button.Boon.Rarity }) })
 					end
 					CheckHadesShout(CurrentRun.Hero.Traits)
-					ReloadAllTraits()
+					CodexMenuReloadAllTraits()
 				end
 			end
 			return
@@ -606,7 +606,7 @@ function HandleBoonManagerClick(screen, button)
 			RemoveTrait(CurrentRun.Hero, button.Boon.Name)
 			Destroy({ Ids = { button.Id, button.Background.Id } })
 			CheckHadesShout(CurrentRun.Hero.Traits)
-			ReloadAllTraits()
+			CodexMenuReloadAllTraits()
 			return
 		end
 	end
@@ -714,7 +714,7 @@ function OpenBoonManager()
 	CloseCodexScreen()
 	wait(0.1)
 	CheckHadesShout(CurrentRun.Hero.Traits)
-	ReloadAllTraits()
+	CodexMenuReloadAllTraits()
 	if CurrentRun.Hero.Traits ~= nil then
 		ScreenAnchors.BoonSelector = DeepCopyTable(CodexMenuData.BoonSelector)
 		local screen = ScreenAnchors.BoonSelector
@@ -855,7 +855,7 @@ function CloseBoonManager(screen, button)
 	screen.KeepOpen = false
 	screen.BoonsList = {}
 	CheckHadesShout(CurrentRun.Hero.Traits)
-	ReloadAllTraits()
+	CodexMenuReloadAllTraits()
 	OnScreenClosed({ Flag = screen.Name })
 end
 
@@ -1624,3 +1624,59 @@ function CodexMain(triggerArgs)
 		end
 		return CurrentRun
 	end
+
+--[[
+Duplicate the ReloadAllTraits function because the default implementation will reset the bonuses for keepsakes from Thanatos and Hermes.
+It will also give bonus max health from the RoomRewardMaxHealthTrait trait, but that is more difficult to fix.
+]]--
+function CodexMenuReloadAllTraits()
+	-- Remove all traits, then readd them in order
+	local shouldSkip = {
+		FastClearDodgeBonusTrait = true,
+		PerfectClearDamageBonusTrait = true
+	}
+	local weaponName = GetEquippedWeapon()
+	local removedTraitData = {}
+	for i, traitData in pairs( CurrentRun.Hero.Traits ) do
+		if shouldSkip[traitData.Name] ~= true then
+			table.insert(removedTraitData, { Name = traitData.Name, Rarity = traitData.Rarity })
+			DebugPrint({Text = "Reloading trait" .. traitData.Name })
+		end
+	end
+
+	for i, traitData in pairs(removedTraitData) do
+		RemoveTrait( CurrentRun.Hero, traitData.Name )
+	end
+	-- re-equip all weapons to flush Absolute change values
+
+	UnequipWeapon({ DestinationId = CurrentRun.Hero.ObjectId, Name = weaponName })
+	local weaponSetNames = WeaponSets.HeroWeaponSets[weaponName]
+	if weaponSetNames ~= nil then
+		for k, linkedWeaponName in pairs( weaponSetNames ) do
+			UnequipWeapon({ DestinationId = CurrentRun.Hero.ObjectId, Name = linkedWeaponName })
+		end
+	end
+	UnequipWeapon({ DestinationId = CurrentRun.Hero.ObjectId, Name = "RangedWeapon "})
+
+
+	EquipWeapon({ DestinationId = CurrentRun.Hero.ObjectId, Name = weaponName })
+	if weaponSetNames ~= nil then
+		for k, linkedWeaponName in pairs( weaponSetNames ) do
+			EquipWeapon({ DestinationId = CurrentRun.Hero.ObjectId, Name = linkedWeaponName })
+		end
+	end
+	EquipWeapon({ DestinationId = CurrentRun.Hero.ObjectId, Name = "RangedWeapon" })
+
+
+	for i, traitData in pairs(removedTraitData) do
+		if traitData.Name then
+			if traitData.Rarity then
+				AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = traitData.Name, Rarity = traitData.Rarity}) })
+			else
+				AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = traitData.Name }) })
+			end
+		end
+	end
+	UpdateHeroTraitDictionary()
+	DebugPrint({Text = "Finished reloading "})
+end
