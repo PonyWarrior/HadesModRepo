@@ -469,7 +469,7 @@ function HandleBoonManagerClick(screen, button)
 			for i, traitData in pairs(CurrentRun.Hero.Traits) do
 				screen.Traits = CurrentRun.Hero.Traits
 				local numTraits = GetTraitNameCount(screen, traitData.Name)
-				if numTraits < 10 and IsGodTrait(traitData.Name) and TraitData[traitData.Name] and IsGameStateEligible(CurrentRun, TraitData[traitData.Name]) and traitData.Rarity ~= "Legendary" then
+				if numTraits < 100 and IsGodTrait(traitData.Name) and TraitData[traitData.Name] and IsGameStateEligible(CurrentRun, TraitData[traitData.Name]) and traitData.Rarity ~= "Legendary" then
 					upgradableTraits[traitData.Name] = true
 					for _, levelbutton in pairs(screen.Components) do
 						if not levelbutton.IsBackground and levelbutton.Boon == traitData then
@@ -485,26 +485,33 @@ function HandleBoonManagerClick(screen, button)
 				AddTraitToHero({ TraitName = name })
 			end
 			return
-		-- elseif screen.Mode == "Level" and screen.LockedModeButton.Substract == true then
-		-- 	for i, traitData in pairs(CurrentRun.Hero.Traits) do
-		-- 		screen.Traits = CurrentRun.Hero.Traits
-		-- 		local numTraits = GetTraitNameCount(screen, traitData.Name)
-		-- 		if numTraits > 1 and IsGodTrait(traitData.Name) and TraitData[traitData.Name] and IsGameStateEligible(CurrentRun, TraitData[traitData.Name]) and traitData.Rarity ~= "Legendary" then
-		-- 			numTraits = numTraits - 1
-		-- 			RemoveWeaponTrait(traitData.Name)
-		-- 			AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = traitData.Name, Rarity = traitData.Rarity }) })
-		-- 			for i=1, numTraits-1 do
-		-- 				AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = traitData.Name, Rarity = traitData.Rarity }) })
-		-- 			end
-		-- 			for _, levelbutton in pairs(screen.Components) do
-		-- 				if levelbutton.IsBackground and levelbutton.Boon == traitData then
-		-- 					levelbutton.Boon.Level = levelbutton.Boon.Level - 1
-		-- 					ModifyTextBox({Id = levelbutton.Id, Text = "Lv. "..levelbutton.Boon.Level})
-		-- 				end
-		-- 			end
-		-- 		end
-		-- 	end
-		-- 	return
+		elseif screen.Mode == "Level" and screen.LockedModeButton.Substract == true then
+			-- for i, traitData in pairs(CurrentRun.Hero.Traits) do
+			-- 	screen.Traits = CurrentRun.Hero.Traits
+			-- 	local numTraits = GetTraitNameCount(screen, traitData.Name)
+			-- 	if numTraits > 1 and IsGodTrait(traitData.Name) and TraitData[traitData.Name] and IsGameStateEligible(CurrentRun, TraitData[traitData.Name]) and traitData.Rarity ~= "Legendary" then
+			-- 		local numOldTrait = GetTraitNameCount(CurrentRun.Hero, traitData.Name)
+			-- 		if numOldTrait > 100 then
+			-- 			numOldTrait = 100
+			-- 		end
+			-- 		numOldTrait = numOldTrait - 1
+			-- 		while HeroHasTrait(traitData.Name) do
+			-- 			RemoveTrait(CurrentRun.Hero, traitData.Name)
+			-- 		end
+			-- 		while numOldTrait > 0 do
+			-- 			AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = traitData.Name, Rarity = traitData.Rarity }) })
+			-- 			numOldTrait = numOldTrait - 1
+			-- 		end
+			-- 		AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = traitData.Name, Rarity = traitData.Rarity }) })
+			-- 		for _, levelbutton in pairs(screen.Components) do
+			-- 			if not levelbutton.IsBackground and levelbutton.Boon == traitData then
+			-- 				levelbutton.Boon.Level = levelbutton.Boon.Level - 1
+			-- 				ModifyTextBox({Id = levelbutton.Background.Id, Text = "Lv. "..levelbutton.Boon.Level})
+			-- 			end
+			-- 		end
+			-- 	end
+			-- end
+			-- return
 		elseif screen.Mode == "Rarity" then
 			local upgradableTraits = {}
 			local upgradedTraits = {}
@@ -539,7 +546,7 @@ function HandleBoonManagerClick(screen, button)
 	else
 		--Individual mode
 		if screen.Mode == "Level" and screen.LockedModeButton.Add == true then
-			if GetTraitNameCount(CurrentRun.Hero, button.Boon.Name) < 10 and TraitData[button.Boon.Name] and IsGameStateEligible(CurrentRun, TraitData[button.Boon.Name]) then
+			if GetTraitNameCount(CurrentRun.Hero, button.Boon.Name) < 100 and TraitData[button.Boon.Name] and IsGameStateEligible(CurrentRun, TraitData[button.Boon.Name]) then
 				AddTraitToHero({TraitName = button.Boon.Name})
 				button.Boon.Level = button.Boon.Level + 1
 				ModifyTextBox({Id = button.Background.Id, Text = "Lv. "..button.Boon.Level})
@@ -548,8 +555,8 @@ function HandleBoonManagerClick(screen, button)
 		elseif screen.Mode == "Level" and screen.LockedModeButton.Substract == true then
 			if GetTraitNameCount(CurrentRun.Hero, button.Boon.Name) > 1 and TraitData[button.Boon.Name] and IsGameStateEligible(CurrentRun, TraitData[button.Boon.Name]) then
 				local numOldTrait = GetTraitNameCount(CurrentRun.Hero, button.Boon.Name)
-				if numOldTrait > 10 then
-					numOldTrait = 10
+				if numOldTrait > 100 then
+					numOldTrait = 100
 				end
 				numOldTrait = numOldTrait - 1
 				while HeroHasTrait(button.Boon.Name) do
@@ -567,7 +574,7 @@ function HandleBoonManagerClick(screen, button)
 			if IsGodTrait(button.Boon.Name, { ForShop = true }) or Contains(CodexMenuData.ConsumableTraits, button.Boon.Name) or IsChaosBoon(button.Boon.Name) or IsHermesBoon(button.Boon.Name) then
 				if TraitData[button.Boon.Name] and button.Boon.Rarity ~= nil and GetUpgradedRarity(button.Boon.Rarity) ~= nil and button.Boon.RarityLevels[GetUpgradedRarity(button.Boon.Rarity)] ~= nil then
 					local numOldTrait = GetTraitNameCount(CurrentRun.Hero, button.Boon.Name)
-					if numOldTrait > 10 then
+					if numOldTrait > 100 then
 						numOldTrait = 10
 					end
 					RemoveTrait(CurrentRun.Hero, button.Boon.Name)
@@ -586,8 +593,8 @@ function HandleBoonManagerClick(screen, button)
 			if IsGodTrait(button.Boon.Name, { ForShop = true }) or Contains(CodexMenuData.ConsumableTraits, button.Boon.Name) or IsChaosBoon(button.Boon.Name) or IsHermesBoon(button.Boon.Name) then
 				if TraitData[button.Boon.Name] and button.Boon.Rarity ~= nil and GetDowngradedRarity(button.Boon.Rarity) ~= nil and button.Boon.RarityLevels[GetDowngradedRarity(button.Boon.Rarity)] ~= nil then
 					local numOldTrait = GetTraitNameCount(CurrentRun.Hero, button.Boon.Name)
-					if numOldTrait > 10 then
-						numOldTrait = 10
+					if numOldTrait > 100 then
+						numOldTrait = 100
 					end
 					RemoveTrait(CurrentRun.Hero, button.Boon.Name)
 					button.Boon.Rarity = GetDowngradedRarity(button.Boon.Rarity)
@@ -602,8 +609,10 @@ function HandleBoonManagerClick(screen, button)
 			end
 			return
 		elseif screen.Mode == "Delete" then
-			screen.BoonsList[screen.CurrentPage][button.Index]=nil
-			RemoveTrait(CurrentRun.Hero, button.Boon.Name)
+			screen.BoonsList[screen.CurrentPage][button.Index] = nil
+			while HeroHasTrait(button.Boon.Name) do
+				RemoveTrait(CurrentRun.Hero, button.Boon.Name)
+			end
 			Destroy({ Ids = { button.Id, button.Background.Id } })
 			CheckHadesShout(CurrentRun.Hero.Traits)
 			CodexMenuReloadAllTraits()
@@ -1538,6 +1547,35 @@ function CodexMain(triggerArgs)
 			end
 			return
 		end
+		--Fish
+		if CodexStatus.SelectedChapterName == "Fish" then
+			local fishName = CodexStatus.SelectedEntryNames[CodexStatus.SelectedChapterName]
+			local fishData = FishingData.FishValues[fishName]
+
+			RecordFish(fishName)
+
+			local fishingText = "Fishing_SuccessGoodTitle"
+			if fishingState == "Perfect" then
+				fishingText = "Fishing_SuccessPerfectTitle"
+			end
+
+			thread( PlayVoiceLines, fishData.FishIdentifiedVoiceLines )
+
+			DisplayUnlockText({
+				Icon = fishName,
+				TitleText = fishingText,
+				SubtitleText = "Fishing_SuccessSubtitle",
+				SubtitleData = { LuaKey = "TempTextData", LuaValue = { Name = fishName }},
+				IconOffsetY = 20,
+				HighlightIcon = true,
+				IconMoveSpeed = 0.1,
+				IconScale = 0.64,
+				AdditionalAnimation = "FishCatchPresentationSparkles",
+				IconBacking = "FishCatchIconBacking",
+				AnimationName = "LocationTextBGFish",
+				AnimationOutName = "LocationTextBGFishOut",
+			})
+		end
 	end
 
 	function StartNewCustomRun(bossRoom)
@@ -1640,7 +1678,6 @@ function CodexMenuReloadAllTraits()
 	for i, traitData in pairs( CurrentRun.Hero.Traits ) do
 		if shouldSkip[traitData.Name] ~= true then
 			table.insert(removedTraitData, { Name = traitData.Name, Rarity = traitData.Rarity })
-			DebugPrint({Text = "Reloading trait" .. traitData.Name })
 		end
 	end
 
@@ -1678,5 +1715,4 @@ function CodexMenuReloadAllTraits()
 		end
 	end
 	UpdateHeroTraitDictionary()
-	DebugPrint({Text = "Finished reloading "})
 end
