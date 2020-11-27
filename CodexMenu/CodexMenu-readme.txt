@@ -221,3 +221,18 @@ all mode + rarity mode crashed with some boons
 all mode + level mode did not update the on-screen level display
 rarity mode crash with some boons
 level mode crash with some boons
+
+2.4.3
+
+fixed issues :
+opening the boon manager during a run resets progress of stacking keepsakes (@SpaceHamster)
+deleting a boon in the boon manager sometimes only removed 1 level
+
+new/changed features :
+fish can now be spawned
+level cap for boons increased to 100 from 10
+
+TODO:
+-more all mode features
+-fix animation bugs (casts etc)
+-boon selector and manager tooltip
