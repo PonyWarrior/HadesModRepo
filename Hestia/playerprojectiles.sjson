@@ -1,0 +1,247 @@
+{
+  Projectiles = [
+  "_append"
+  {
+    Name = "BurnOverTime"
+    IgnoreName = "_PlayerUnit"
+    Type = "DAMAGE_OVER_TIME"
+    IsVulnerabilityEffect = true
+    Amount = 0.0
+    Cooldown = 0.5
+    Duration = 6
+    IndependentStackCooldown = true
+    Stacks = true
+    ExtendDurationOnReapply = true
+    MaxStacks = 12
+    FrontFx = "DionysusStatusFx"
+    Active = false
+    TimeModifierFraction = 0
+  }
+  {
+   Name = "HestiaProjectile"
+   InheritFrom = "1_BaseNonPhysicalProjectile"
+   Type = "STRAIGHT"
+   Speed = 3000
+   Range = 200
+   DamageLow = 10
+   DamageHigh = 10
+  ScaleGeometryAlongRange = true
+   CheckObstacleImpact = false
+   CheckUnitImpact = true
+   UnlimitedUnitPenetration = true
+  UnlimitedObstaclePenetration = false
+   ImpactVelocity = 0
+   ImpactVelocityCap = 0
+   UseRadialImpact = false
+   ImpactFx = "AphroditeProjectileImpact"
+  DetonateOnImpact = true
+  DamageRadius = 300
+   GroupName = "Standing"
+   UseVulnerability = false
+  DetonateLineOfSight = true
+  StartFx = "AphroditeProjectileFx"
+   Thing = {
+     Graphic = "null"
+     OffsetZ = 0
+     AttachedAnim = "null"
+     Grip = 999999
+     RotateGeometry = true
+  SortBoundsScale = 0.33
+  Tallness = 20
+     Points = [
+       {
+         X = 0
+         Y = -300
+       }
+       {
+         X = 70
+         Y = 0
+       }
+       {
+         X = 0
+         Y = 300
+       }
+     ]
+   }
+   Effects = [
+     {
+       Name = "RushGrip"
+       Type = "GRIP"
+       Duration = 0.1
+       Modifier = 0.5
+       HaltOnEnd = true
+       Active = false
+     }
+     {
+       Name = "BurnOverTime"
+       IgnoreName = "_PlayerUnit"
+       Type = "DAMAGE_OVER_TIME"
+       IsVulnerabilityEffect = true
+       Amount = 0.0
+       Cooldown = 0.5
+       Duration = 6
+       IndependentStackCooldown = true
+       Stacks = true
+       ExtendDurationOnReapply = true
+       MaxStacks = 12
+       FrontFx = "HestiaStatusFx"
+       Active = false
+       TimeModifierFraction = 0
+     }
+     {
+       Name = "OnHitStun"
+       Duration = 0.7
+       DisableMove = true
+       DisableRotate = true
+       DisableAttack = true
+       Active = true
+       CanAffectInvulnerable = false
+       FrontFx = "null"
+     }
+   ]
+  }
+     {
+       Name = "HestiaDashProjectile"
+       InheritFrom = "DefaultRushProjectile"
+       DetonateGraphic = "RadialNovaDionysus"
+       Type = "INSTANT"
+       FuseMin = 1.0
+       FuseMax = 1.0
+       MultiDetonate = true
+       TotalFuse = 6.0
+       DamageLow = 0
+       DamageHigh = 0
+       DamageRadius = 180.0
+       DamageRadiusScaleY = 0.6
+       DamageRadiusScaleX = 1.1
+       AutoAdjustForTarget = false
+       UseVulnerability = false
+       NumPenetrations = 999
+       SpawnRadius = 0
+       SpawnCount = 0
+       UseStartLocation = true
+       CanHitWithoutDamage = true
+       SilentImpactOnInvulnerable = true
+       Thing = {
+         Graphic = "null"
+         OffsetZ = 70
+         AttachedAnim = "null"
+         RotateGeometry = true
+         Grip = 999999
+         Points = [
+           {
+             X = 48
+             Y = 48
+           }
+           {
+             X = 48
+             Y = -48
+           }
+           {
+             X = -48
+             Y = -48
+           }
+           {
+             X = -48
+             Y = 48
+           }
+         ]
+       }
+       Effects = [
+         {
+           Name = "BurnOverTime"
+           IgnoreName = "_PlayerUnit"
+           Type = "DAMAGE_OVER_TIME"
+           IsVulnerabilityEffect = true
+           Amount = 0.0
+           Cooldown = 0.5
+           Duration = 6
+           IndependentStackCooldown = true
+           Stacks = true
+           ExtendDurationOnReapply = true
+           MaxStacks = 12
+           FrontFx = "HestiaStatusFx"
+           Active = false
+           TimeModifierFraction = 0
+         }
+       ]
+     }
+     {
+         Name = "HestiaSuper"
+         InheritFrom = "1_BasePlayerSmallProjectile"
+         Type = "STRAIGHT"
+         DetonateSound = "/SFX/Player Sounds/DemeterBlizzardShardComponent"
+         CanBeReflected = false
+         CanBeProjectileDefenseDestroyed = false
+         AffectsEnemies = true
+         AffectsFriends = true
+         Range = 1.0
+       TotalFuse = 20.0
+       Fuse = 0.25
+         MultiDetonate = true
+         DamageRadius = 750
+         DamageRadiusScaleY = 0.5
+         BlastSpeed = 300
+       ExpandBlastDuringDetonation = true
+         NumPenetrations = 9999
+         AffectsSelf = false
+         CheckUnitImpact = true
+         CheckObstacleImpact = false
+         UnlimitedUnitPenetration = true
+         DamageLow = 20
+         DamageHigh = 20
+         ImpactVelocity = 0
+         CriticalFx = "CriticalHit"
+         HitVulnerabilityFx = "Backstab"
+         UseArmor = false
+         UseVulnerability = false
+       IgnoreCoverageAngles = true
+         Effects = [
+           {
+             Name = "BurnOverTime"
+             IgnoreName = "_PlayerUnit"
+             Type = "DAMAGE_OVER_TIME"
+             IsVulnerabilityEffect = true
+             Amount = 0.0
+             Cooldown = 0.5
+             Duration = 6
+             IndependentStackCooldown = true
+             Stacks = true
+             ExtendDurationOnReapply = true
+             MaxStacks = 12
+             FrontFx = "HestiaStatusFx"
+             Active = false
+             TimeModifierFraction = 0
+           }
+         ]
+         Thing = {
+           Graphic = "DemeterWrathIn"
+           OffsetZ = 0
+           Grip = 999999
+           Points = [
+             {
+               X = 90
+               Y = 0
+             }
+             {
+               X = 0
+               Y = -45
+             }
+             {
+               X = -90
+               Y = 0
+             }
+             {
+               X = 0
+               Y = 45
+             }
+           ]
+         }
+       }
+     {
+         Name = "HestiaMaxSuper"
+         InheritFrom = "HestiaSuper"
+         DamageRadius = 1500
+     }
+  ]
+}

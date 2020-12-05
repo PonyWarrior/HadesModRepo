@@ -1,0 +1,31 @@
+{
+  Animations = [
+  "_append"
+  {
+    Name = "HestiaStatusFx"
+    ChainTo = "DionysusStatusFxDissipate"
+    FilePath = "Fx\TartarusFlame\TartarusFlame"
+    GroupName = "Combat_UI"
+    Type = "Book"
+    VisualFx = "DionysusRainbowParty_InPlace"
+    AngleFromOwner = "Ignore"
+    Sound = "/Leftovers/Object Ambiences/FireAmbientLoop2"
+    StopSoundOnFinishFade = 0.2
+    ColorFromOwner = "Ignore"
+    Type = "Book"
+    EndFrame = 80
+    Loop = true
+    NumFrames = 80
+    RandomPlaySpeedMax = 40.0
+    RandomPlaySpeedMin = 30.0
+    StartFrame = 1
+    OffsetZ = 160.0
+    Scale = 0.25
+    TransferFrameFromThis = true
+    ScaleFromOwner = "Ignore"
+    Ambient = 0.0
+    VisualFxIntervalMax = 0.3
+    VisualFxIntervalMin = 0.2
+  }
+  ]
+}

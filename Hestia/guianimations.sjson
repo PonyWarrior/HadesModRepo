@@ -1,0 +1,16 @@
+{
+  Animations = [
+  "_append"
+  {
+    Name = "Burn_Small"
+    FilePath = "GUI\HUD\BoonIconWrath"
+    Type = "ConstantNoUpdate"
+    EndFrame = 1
+    NumFrames = 1
+    StartFrame = 1
+    SortMode = "Id"
+    Scale = 0.75
+    Material = "Unlit"
+  }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  Weapons = [
+  "_append"
+  {
+    Name = "HestiaSuper"
+    InheritFrom = "1_BaseMagicWeapon"
+    Type = "GUN"
+    Projectile = "HestiaSuper"
+    FullyAutomatic = true
+    AutoLock = true
+    FireFx = "null"
+    IgnoreOwnerAttackDisabled = true
+    NumProjectiles = 1
+  }
+  {
+    Name = "HestiaMaxSuper"
+    InheritFrom = "1_BaseMagicWeapon"
+    Type = "GUN"
+    Projectile = "HestiaMaxSuper"
+    FullyAutomatic = true
+    AutoLock = true
+    FireFx = "null"
+    IgnoreOwnerAttackDisabled = true
+    NumProjectiles = 1
+  }
+  ]
+}
