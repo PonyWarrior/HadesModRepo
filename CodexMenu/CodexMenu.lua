@@ -577,7 +577,9 @@ function HandleBoonManagerClick(screen, button)
 					if numOldTrait > 100 then
 						numOldTrait = 10
 					end
-					RemoveTrait(CurrentRun.Hero, button.Boon.Name)
+					while HeroHasTrait(button.Boon.Name) do
+						RemoveTrait(CurrentRun.Hero, button.Boon.Name)
+					end
 					button.Boon.Rarity = GetUpgradedRarity(button.Boon.Rarity)
 					SetColor({Id = button.Background.Id, Color = Color["BoonPatch"..button.Boon.Rarity]})
 					AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon.Name, Rarity = button.Boon.Rarity }) })
@@ -596,7 +598,9 @@ function HandleBoonManagerClick(screen, button)
 					if numOldTrait > 100 then
 						numOldTrait = 100
 					end
-					RemoveTrait(CurrentRun.Hero, button.Boon.Name)
+					while HeroHasTrait(button.Boon.Name) do
+						RemoveTrait(CurrentRun.Hero, button.Boon.Name)
+					end
 					button.Boon.Rarity = GetDowngradedRarity(button.Boon.Rarity)
 					SetColor({Id = button.Background.Id, Color = Color["BoonPatch"..button.Boon.Rarity]})
 					AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon.Name, Rarity = button.Boon.Rarity }) })

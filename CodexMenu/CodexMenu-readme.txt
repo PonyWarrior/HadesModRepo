@@ -224,6 +224,11 @@ level mode crash with some boons
 
 2.4.3
 
+ongoing issues :
+some casts have bugged animations
+some users crash when opening the boon manager
+various bugs with all mode in boon manager
+
 fixed issues :
 opening the boon manager during a run resets progress of stacking keepsakes (@SpaceHamster)
 deleting a boon in the boon manager sometimes only removed 1 level
@@ -232,7 +237,12 @@ new/changed features :
 fish can now be spawned
 level cap for boons increased to 100 from 10
 
-TODO:
--more all mode features
--fix animation bugs (casts etc)
--boon selector and manager tooltip
+2.4.4
+
+ongoing issues :
+some casts have bugged animations
+some users crash when opening the boon manager
+various bugs with all mode in boon manager
+
+fixed issues :
+rarity mode duplicates boons with levels
