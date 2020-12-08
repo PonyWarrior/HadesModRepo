@@ -246,3 +246,6 @@ various bugs with all mode in boon manager
 
 fixed issues :
 rarity mode duplicates boons with levels
+
+changed feature :
+code rewrite/optimization

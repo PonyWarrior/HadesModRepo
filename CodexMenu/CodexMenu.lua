@@ -1350,304 +1350,115 @@ OnControlPressed{ "Confirm",
 	end
 }
 
-function CodexMain(triggerArgs)
-		if CodexUI.Screen == nil or not IsScreenOpen("Codex") then
-			return
-		end
-		--set to false for public version
-		local debug = false
-		--Avoid early game crash
-		if not GameState.Resources.MetaPoints then
-			GameState.Resources.MetaPoints = 0
-		end
-		--Boons
-		if CodexStatus.SelectedChapterName == "OlympianGods" then
-			if debug then
-				ModDebugPrint("Trying to open boon selector : " .. boon)
-			end
-			OpenBoonSelector(CodexStatus.SelectedEntryNames[CodexStatus.SelectedChapterName], true)
-			return
-		end
-		--Chaos Boon
-		if CodexStatus.SelectedChapterName == "ChthonicGods" and CodexStatus.SelectedEntryNames[CodexStatus.SelectedChapterName] == "TrialUpgrade" then
-			if debug then
-				ModDebugPrint("Trying to open boon selector : " .. boon)
-			end
-			OpenBoonSelector(CodexStatus.SelectedEntryNames[CodexStatus.SelectedChapterName], true)
-			return
-		end
-		--Items
-		if CodexStatus.SelectedChapterName == "Items" then
-			-- translates codex entry names to spawnable consumables
-			local consumableTable =
-			{
-				-- StackUpgrade = "StackUpgradeDrop",
-			}
-			local item = CodexStatus.SelectedEntryNames[CodexStatus.SelectedChapterName]
-			if consumableTable[item] then item = consumableTable[item] end
-			if ConsumableData[item] ~= nil then
-        local consumableId = SpawnObstacle({ Name = item, DestinationId = CurrentRun.Hero.ObjectId, Group = "Standing", OffsetX = 100 })
-        local consumable = CreateConsumableItem( consumableId, item, 0 )
-				if debug then
-					ModDebugPrint("Trying to spawn consumable : " .. item)
-				end
-				return
-			elseif item == "WeaponUpgrade" then
-				OpenBoonSelector(item, true)
-				return
-			else
-				CreateLoot({ Name = item, OffsetX = 100, SpawnPoint = CurrentRun.Hero.ObjectId })
-				return
-			end
-			if debug then
-				ModDebugPrint("Trying to spawn item : " .. item)
-			end
-			return
-		end
-		--Weapons
-		if CodexStatus.SelectedChapterName == "Weapons" then
+local FishTable = CodexOrdering.Fish.Order
+local WeaponTable = CodexOrdering.Weapons.Order
+local BoonTable =
+{
+	"TrialUpgrade",
+	"ZeusUpgrade",
+	"PoseidonUpgrade",
+	"AthenaUpgrade",
+	"AphroditeUpgrade",
+	"ArtemisUpgrade",
+	"AresUpgrade",
+	"DionysusUpgrade",
+	"HermesUpgrade",
+	"DemeterUpgrade",
+	"WeaponUpgrade",
+	NPC_Dusa_01 = "Duos"
+}
+local ConsumableTable =
+{
+	"RoomRewardMetaPointDrop",
+	"AmmoPack",
+	"RoomRewardMoneyDrop",
+	"RoomRewardMaxHealthDrop",
+	"ChaosWeaponUpgrade",
+	"LockKeyDrop",
+	"SuperLockKeyDrop",
+	"GemDrop",
+	"SuperGemDrop",
+	"GiftDrop",
+	"SuperGiftDrop",
+	"CharonStoreDiscount",
+	"RoomRewardConsolationPrize"
+}
+local LootTable =
+{
+	"StackUpgrade"
+}
+local EnemyTable =
+{ "HeavyMelee", "LightRanged", "PunchingBagUnit", "ThiefMineLayer", "WretchAssassinMiniboss", "Swarmer", "LightSpawner", "DisembodiedHand", "HeavyRanged", "HeavyRangedSplitterMiniboss", "ShieldRanged", "BloodlessNaked", "BloodlessNakedBerserker", "BloodlessGrenadier", "BloodlessSelfDestruct", "BloodlessPitcher", "BloodlessWaveFist", "RangedBurrower", "SpreadShotUnit", "FreezeShotUnit", "CrusherUnit", "HitAndRunUnit", "SplitShotUnit", "Chariot", "ChariotSuicide", "ShadeSwordUnit", "ShadeSpearUnit", "ShadeBowUnit", "ShadeShieldUnit", "FlurrySpawner", "Crawler", "RatThug", "CrawlerMiniBoss", "ThiefImpulseMineLayer", "HeavyRangedForked", "SatyrRanged" }
+local BossTable =
+{
+	NPC_FurySister_01 = RoomSetData.Tartarus.A_Boss01,
+	Harpy2 = RoomSetData.Tartarus.A_Boss02,
+	Harpy3 = RoomSetData.Tartarus.A_Boss03,
+	HydraHeadImmortal = RoomSetData.Asphodel.B_Boss01,
+	Theseus = RoomSetData.Elysium.C_Boss01,
+	Minotaur = RoomSetData.Elysium.C_MiniBoss01,
+	NPC_Hades_01 = RoomSetData.Styx.D_Boss01,
+}
+local CommandTable =
+{
+	PlayerUnit = function()
+	RemoveAllTraits()
+	ReloadEquipment()
+	CloseCodexScreen()
+	end,
+	NPC_Achilles_01 = function()
+		if IsSuperValid() then
+			wait(1, RoomThreadName)
+			BuildSuperMeter(CurrentRun, 100)
+			CommenceSuperMove()
+			UpdateSuperDamageBonus()
+			thread( MarkObjectiveComplete, "EXMove" )
 			CloseCodexScreen()
-			local weapon = CodexStatus.SelectedEntryNames[CodexStatus.SelectedChapterName]
-			EquipPlayerWeapon( WeaponData[weapon], { PreLoadBinks = true } )
-			RemoveAllTraits()
-			ReloadEquipment()
-			ShowWeaponUpgradeScreen({ WeaponName = weapon })
-			if debug then
-				ModDebugPrint("Trying to equip weapon : " .. weapon)
-			end
-			return
 		end
-		--Enemies
-		if CodexStatus.SelectedChapterName == "Enemies" then
-			local enemy = CodexStatus.SelectedEntryNames[CodexStatus.SelectedChapterName]
-			if enemy == "HydraHeadImmortal" then
+	end,
+	NPC_Nyx_01 = function()
+		CloseCodexScreen()
+		OpenCustomMirror()
+	end,
+	NPC_Skelly_01 = function(triggerArgs)
+		CloseCodexScreen()
+		KillHero(CurrentRun.Hero, triggerArgs)
+	end,
+	NPC_Cerberus_01 = function(triggerArgs)
+		CloseCodexScreen()
+		StartUpAwardMenu(triggerArgs.TriggeredByTable)
+	end,
+	NPC_Charon_01 = function()
+		CloseCodexScreen()
+		CurrentRun.CurrentRoom.Store = nil
+		StartUpStore()
+	end,
+	NPC_Hypnos_01 = function()
+		CloseCodexScreen()
+		GenerateSellTraitShop(CurrentRun, CurrentRun.CurrentRoom)
+		OpenSellTraitMenu()
+	end,
+	NPC_Orpheus_01 = function()
+		--Save state
+		CloseCodexScreen()
+		if CurrentRun.Hero.Traits ~= nil then
+			local wp = GetEquippedWeapon()
+			if GameState.LastInteractedWeaponUpgrade ~= nil and GetWeaponUpgradeTrait( GameState.LastInteractedWeaponUpgrade.WeaponName, GameState.LastInteractedWeaponUpgrade.ItemIndex ) ~= nil then
+				GameState.CodexMenuSavedState = { Traits = {}, Weapon = wp, Aspect = { Name = GetWeaponUpgradeTrait(wp, GameState.LastWeaponUpgradeData[wp].Index), Rarity = GetRarityKey(GetWeaponUpgradeLevel(wp, GetEquippedWeaponTraitIndex(wp))) }, Keepsake = GameState.LastAwardTrait, Assist = GameState.LastAssistTrait, }
 			else
-				local enemyData = EnemyData[enemy]
-				local newEnemy = DeepCopyTable( enemyData )
-				newEnemy.AIOptions = enemyData.AIOptions
-				newEnemy.BlocksLootInteraction = false
-				local invaderSpawnPoint = 40000
-				newEnemy.ObjectId = SpawnUnit({
-						Name = enemyData.Name,
-						Group = "Standing",
-						DestinationId = invaderSpawnPoint, OffsetX = 400, OffsetY = 200 })
-				SetupEnemyObject( newEnemy, CurrentRun )
-				if debug then
-					ModDebugPrint("Trying to spawn enemy : " .. enemy)
-				end
-				return
+				GameState.CodexMenuSavedState = { Traits = {}, Weapon = wp, Keepsake = GameState.LastAwardTrait, Assist = GameState.LastAssistTrait, }
+				GameState.CodexMenuSavedState.Aspect = { Name = nil, Rarity = nil}
 			end
-		end
-		--Bosses and Commands
-		if CodexStatus.SelectedChapterName == "ChthonicGods" or CodexStatus.SelectedChapterName == "OtherDenizens" or CodexStatus.SelectedChapterName == "Enemies" then
-			local debugTicks = 0
-			local entry = CodexStatus.SelectedEntryNames[CodexStatus.SelectedChapterName]
-			local bossTable =
-			{
-				NPC_FurySister_01 = RoomSetData.Tartarus.A_Boss01,
-				Harpy2 = RoomSetData.Tartarus.A_Boss02,
-				Harpy3 = RoomSetData.Tartarus.A_Boss03,
-				HydraHeadImmortal = RoomSetData.Asphodel.B_Boss01,
-				Theseus = RoomSetData.Elysium.C_Boss01,
-				Minotaur = RoomSetData.Elysium.C_MiniBoss01,
-				NPC_Hades_01 = RoomSetData.Styx.D_Boss01,
-			}
-			local commandTable =
-			{
-				["PlayerUnit"] = function()
-					RemoveAllTraits()
-					ReloadEquipment()
-					CloseCodexScreen()
-				end,
-				["NPC_Achilles_01"] = function()
-					if IsSuperValid() then
-						wait(1, RoomThreadName)
-						BuildSuperMeter(CurrentRun, 100)
-						CommenceSuperMove()
-						UpdateSuperDamageBonus()
-						thread( MarkObjectiveComplete, "EXMove" )
-						CloseCodexScreen()
-					end
-				end,
-				["NPC_Nyx_01"] = function()
-					CloseCodexScreen()
-					OpenCustomMirror()
-				end,
-				["NPC_Skelly_01"] = function()
-					CloseCodexScreen()
-					KillHero(CurrentRun.Hero, triggerArgs)
-				end,
-				["NPC_Cerberus_01"] = function()
-					CloseCodexScreen()
-					StartUpAwardMenu(triggerArgs.TriggeredByTable)
-				end,
-				["NPC_Charon_01"] = function()
-					CloseCodexScreen()
-					CurrentRun.CurrentRoom.Store = nil
-					StartUpStore()
-				end,
-				["NPC_Hypnos_01"] = function()
-					CloseCodexScreen()
-					GenerateSellTraitShop(CurrentRun, CurrentRun.CurrentRoom)
-					OpenSellTraitMenu()
-				end,
-				["NPC_Orpheus_01"] = function()
-					--Save state
-					CloseCodexScreen()
-					if CurrentRun.Hero.Traits ~= nil then
-						local wp = GetEquippedWeapon()
-						if GameState.LastInteractedWeaponUpgrade ~= nil and GetWeaponUpgradeTrait( GameState.LastInteractedWeaponUpgrade.WeaponName, GameState.LastInteractedWeaponUpgrade.ItemIndex ) ~= nil then
-							GameState.CodexMenuSavedState = { Traits = {}, Weapon = wp, Aspect = { Name = GetWeaponUpgradeTrait(wp, GameState.LastWeaponUpgradeData[wp].Index), Rarity = GetRarityKey(GetWeaponUpgradeLevel(wp, GetEquippedWeaponTraitIndex(wp))) }, Keepsake = GameState.LastAwardTrait, Assist = GameState.LastAssistTrait, }
-						else
-							GameState.CodexMenuSavedState = { Traits = {}, Weapon = wp, Keepsake = GameState.LastAwardTrait, Assist = GameState.LastAssistTrait, }
-							GameState.CodexMenuSavedState.Aspect = { Name = nil, Rarity = nil}
-						end
-						for i, traitData in pairs( CurrentRun.Hero.Traits ) do
-							if traitData.Name ~= GameState.CodexMenuSavedState.Weapon and traitData.Name ~= GameState.CodexMenuSavedState.Aspect.Name
-							and traitData.Name ~= GameState.CodexMenuSavedState.Keepsake and traitData.Name ~= GameState.CodexMenuSavedState.Assist then
-								table.insert(GameState.CodexMenuSavedState.Traits, { Name = traitData.Name, Rarity = traitData.Rarity, })
-							end
-						end
-					end
-				end,
-				["NPC_Patroclus_01"] = function()
-					CloseCodexScreen()
-					if GameState.CodexMenuSavedState ~= nil then
-						RemoveAllTraits()
-						if GameState.LastAwardTrait == "ReincarnationTrait" then
-								RemoveLastStand( CurrentRun.Hero, "ReincarnationTrait" )
-								CurrentRun.Hero.MaxLastStands = CurrentRun.Hero.MaxLastStands - 1
-						end
-						EquipPlayerWeapon( WeaponData[GameState.CodexMenuSavedState.Weapon], { PreLoadBinks = true } )
-						EquipKeepsake(CurrentRun.Hero, GameState.CodexMenuSavedState.Keepsake)
-						EquipAssist(CurrentRun.Hero, GameState.CodexMenuSavedState.Assist)
-						if GameState.CodexMenuSavedState.Aspect.Name ~= nil then
-							AddTraitToHero({ TraitName = GameState.CodexMenuSavedState.Aspect.Name, Rarity = GameState.CodexMenuSavedState.Aspect.Rarity })
-						end
-						for i, traitData in pairs( GameState.CodexMenuSavedState.Traits ) do
-							AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = traitData.Name, Rarity = traitData.Rarity }) })
-						end
-					end
-				end,
-				["NPC_Eurydice_01"] = function()
-					OpenBoonManager()
-				end,
-				["NPC_Dusa_01"] = function()
-					OpenBoonSelector("Duos")
-				end,
-			}
-			--Bosses
-			if bossTable[entry] then
-				local bossRoom = bossTable[entry]
-				CloseCodexScreen()
-				StartNewCustomRun(bossRoom)
-				LoadMap({ Name = CurrentRun.CurrentRoom.Name, ResetBinks = true, ResetWeaponBinks = true })
-			--Commands
-			elseif commandTable[entry] then
-				commandTable[entry]()
-				if debug then
-					ModDebugPrint("Trying to use command : " .. entry)
+			for i, traitData in pairs( CurrentRun.Hero.Traits ) do
+				if traitData.Name ~= GameState.CodexMenuSavedState.Weapon and traitData.Name ~= GameState.CodexMenuSavedState.Aspect.Name
+				and traitData.Name ~= GameState.CodexMenuSavedState.Keepsake and traitData.Name ~= GameState.CodexMenuSavedState.Assist then
+					table.insert(GameState.CodexMenuSavedState.Traits, { Name = traitData.Name, Rarity = traitData.Rarity, })
 				end
 			end
-			return
 		end
-		--Fish
-		if CodexStatus.SelectedChapterName == "Fish" then
-			local fishName = CodexStatus.SelectedEntryNames[CodexStatus.SelectedChapterName]
-			local fishData = FishingData.FishValues[fishName]
-
-			RecordFish(fishName)
-
-			local fishingText = "Fishing_SuccessGoodTitle"
-			if fishingState == "Perfect" then
-				fishingText = "Fishing_SuccessPerfectTitle"
-			end
-
-			thread( PlayVoiceLines, fishData.FishIdentifiedVoiceLines )
-
-			DisplayUnlockText({
-				Icon = fishName,
-				TitleText = fishingText,
-				SubtitleText = "Fishing_SuccessSubtitle",
-				SubtitleData = { LuaKey = "TempTextData", LuaValue = { Name = fishName }},
-				IconOffsetY = 20,
-				HighlightIcon = true,
-				IconMoveSpeed = 0.1,
-				IconScale = 0.64,
-				AdditionalAnimation = "FishCatchPresentationSparkles",
-				IconBacking = "FishCatchIconBacking",
-				AnimationName = "LocationTextBGFish",
-				AnimationOutName = "LocationTextBGFishOut",
-			})
-		end
-	end
-
-	function StartNewCustomRun(bossRoom)
-		SetupRunData()
-		--ResetUI()
-		SessionState.NeedWeaponPickupBinkLoad = false
-		CurrentRun = {}
-		CurrentRun.DamageRecord = {}
-		CurrentRun.HealthRecord = {}
-		CurrentRun.ConsumableRecord = {}
-		CurrentRun.ActualHealthRecord = {}
-		CurrentRun.BlockTimerFlags = {}
-		CurrentRun.WeaponsFiredRecord = {}
-		CurrentRun.Hero = CreateNewHero( prevRun, args )
-		EquipKeepsake( CurrentRun.Hero, GameState.LastAwardTrait, { SkipNewTraitHighlight = true })
-		EquipAssist( CurrentRun.Hero, GameState.LastAssistTrait, { SkipNewTraitHighlight = true } )
-		EquipWeaponUpgrade( CurrentRun.Hero, { SkipTraitHighlight = true } )
-		CurrentRun.RoomHistory = {}
-		UpdateRunHistoryCache( CurrentRun )
-		CheckRunStartFlags( CurrentRun )
-		BuildMetaupgradeCache()
-		CurrentRun.RoomCreations = {}
-		CurrentRun.LootTypeHistory = {}
-		CurrentRun.NPCInteractions = {}
-		CurrentRun.AnimationState = {}
-		CurrentRun.EventState = {}
-		CurrentRun.ActivationRecord = {}
-		CurrentRun.SpeechRecord = {}
-		CurrentRun.TextLinesRecord = {}
-		CurrentRun.TriggerRecord = {}
-		CurrentRun.UseRecord = {}
-		CurrentRun.GiftRecord = {}
-		CurrentRun.HintRecord = {}
-		CurrentRun.EnemyUpgrades = {}
-		CurrentRun.BlockedEncounters = {}
-		CurrentRun.InvulnerableFlags = {}
-		CurrentRun.PhasingFlags = {}
-		CurrentRun.Money = CalculateStartingMoney()
-		CurrentRun.MoneySpent = 0
-		CurrentRun.MoneyRecord = {}
-		CurrentRun.BonusDarknessWeapon = GetRandomUnequippedWeapon()
-		CurrentRun.ActiveObjectives = {}
-		CurrentRun.RunDepthCache = 11
-		CurrentRun.GameplayTime = 0
-		CurrentRun.BiomeTime = 0
-		CurrentRun.ActiveBiomeTimer = GetNumMetaUpgrades("BiomeSpeedShrineUpgrade") > 0
-		CurrentRun.NumRerolls = GetNumMetaUpgrades( "RerollMetaUpgrade" ) + GetNumMetaUpgrades("RerollPanelMetaUpgrade")
-		CurrentRun.ThanatosSpawns = 0
-		CurrentRun.SupportAINames = {}
-		CurrentRun.Hero.TargetMetaRewardsAdjustSpeed = 10.0
-		CurrentRun.ClosedDoors = {}
-		CurrentRun.CompletedStyxWings = 0
-		CurrentRun.TargetShrinePointThreshold = GetCurrentRunClearedShrinePointThreshold( GetEquippedWeapon() )
-		CurrentRun.BannedEliteAttributes = {}
-		if ConfigOptionCache.EasyMode then
-			CurrentRun.EasyModeLevel = GameState.EasyModeLevel
-		end
-		InitHeroLastStands( CurrentRun.Hero )
-
-		InitializeRewardStores( CurrentRun )
-		SelectBannedEliteAttributes( CurrentRun )
-
-		if bossRoom ~= nil then
-			CurrentRun.CurrentRoom = CreateRoom( bossRoom )
-		else
-			CurrentRun.CurrentRoom = ChooseStartingRoom( CurrentRun, "Tartarus" )
-		end
-
+	end,
+	NPC_Patroclus_01 = function()
+		CloseCodexScreen()
 		if GameState.CodexMenuSavedState ~= nil then
 			RemoveAllTraits()
 			if GameState.LastAwardTrait == "ReincarnationTrait" then
@@ -1664,8 +1475,181 @@ function CodexMain(triggerArgs)
 				AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = traitData.Name, Rarity = traitData.Rarity }) })
 			end
 		end
-		return CurrentRun
+	end,
+	NPC_Eurydice_01 = function()
+		OpenBoonManager()
+	end,
+}
+
+function CodexMain(triggerArgs)
+	if CodexUI.Screen == nil or not IsScreenOpen("Codex") then
+		return
 	end
+	--Prevent early game crash
+	if not GameState.Resources.MetaPoints then
+		GameState.Resources.MetaPoints = 0
+	end
+
+	local selection = CodexStatus.SelectedEntryNames[CodexStatus.SelectedChapterName]
+
+	if Contains(BoonTable, selection) then
+		DebugPrint({Text = "@CodexMenu Trying to open boon : "..selection})
+		OpenBoonSelector(selection, true)
+
+	elseif BoonTable[selection] ~= nil then
+		DebugPrint({Text = "@CodexMenu Trying to open boon : "..selection})
+		OpenBoonSelector(BoonTable[selection], false)
+
+	elseif Contains(ConsumableTable, selection) then
+		DebugPrint({Text = "@CodexMenu Trying to spawn consumable : "..selection})
+		local consumableId = SpawnObstacle({ Name = selection, DestinationId = CurrentRun.Hero.ObjectId, Group = "Standing", OffsetX = 100 })
+		local consumable = CreateConsumableItem( consumableId, selection, 0 )
+
+	elseif Contains(LootTable, selection) then
+		DebugPrint({Text = "@CodexMenu Trying to spawn loot : "..selection})
+		CreateLoot({ Name = selection, OffsetX = 100, SpawnPoint = CurrentRun.Hero.ObjectId })
+
+	elseif Contains(FishTable, selection) then
+		DebugPrint({Text = "@CodexMenu Trying to spawn fish : "..selection})
+		local fishData = FishingData.FishValues[selection]
+
+		RecordFish(selection)
+		thread( PlayVoiceLines, fishData.FishIdentifiedVoiceLines )
+
+		DisplayUnlockText({
+			Icon = selection,
+			TitleText = "Fishing_SuccessGoodTitle",
+			SubtitleText = "Fishing_SuccessSubtitle",
+			SubtitleData = { LuaKey = "TempTextData", LuaValue = { Name = selection }},
+			IconOffsetY = 20,
+			HighlightIcon = true,
+			IconMoveSpeed = 0.1,
+			IconScale = 0.64,
+			AdditionalAnimation = "FishCatchPresentationSparkles",
+			IconBacking = "FishCatchIconBacking",
+			AnimationName = "LocationTextBGFish",
+			AnimationOutName = "LocationTextBGFishOut",
+		})
+
+	elseif Contains(WeaponTable, selection) then
+		DebugPrint({Text = "@CodexMenu Trying to equip weapon : "..selection})
+		CloseCodexScreen()
+		local weapon = CodexStatus.SelectedEntryNames[CodexStatus.SelectedChapterName]
+		EquipPlayerWeapon( WeaponData[weapon], { PreLoadBinks = true } )
+		RemoveAllTraits()
+		ReloadEquipment()
+		ShowWeaponUpgradeScreen({ WeaponName = weapon })
+	elseif Contains(EnemyTable, selection) then
+		DebugPrint({Text = "@CodexMenu Trying to spawn enemy : "..selection})
+		local enemyData = EnemyData[selection]
+		local newEnemy = DeepCopyTable( enemyData )
+		newEnemy.AIOptions = enemyData.AIOptions
+		newEnemy.BlocksLootInteraction = false
+		local invaderSpawnPoint = 40000
+		newEnemy.ObjectId = SpawnUnit({
+				Name = enemyData.Name,
+				Group = "Standing",
+				DestinationId = invaderSpawnPoint, OffsetX = 400, OffsetY = 200 })
+		SetupEnemyObject( newEnemy, CurrentRun )
+
+	elseif BossTable[selection] ~= nil then
+		DebugPrint({Text = "@CodexMenu Trying to start boss fight : "..selection})
+		CloseCodexScreen()
+		StartNewCustomRun(BossTable[selection])
+		LoadMap({ Name = CurrentRun.CurrentRoom.Name, ResetBinks = true, ResetWeaponBinks = true })
+
+	elseif CommandTable[selection] ~= nil then
+		DebugPrint({Text = "@CodexMenu Trying to execute command : "..selection})
+		CommandTable[selection](triggerArgs)
+	else
+		DebugPrint({Text = "@CodexMenu Selection did not match any feature : "..selection})
+	end
+end
+
+function StartNewCustomRun(bossRoom)
+SetupRunData()
+--ResetUI()
+SessionState.NeedWeaponPickupBinkLoad = false
+CurrentRun = {}
+CurrentRun.DamageRecord = {}
+CurrentRun.HealthRecord = {}
+CurrentRun.ConsumableRecord = {}
+CurrentRun.ActualHealthRecord = {}
+CurrentRun.BlockTimerFlags = {}
+CurrentRun.WeaponsFiredRecord = {}
+CurrentRun.Hero = CreateNewHero( prevRun, args )
+EquipKeepsake( CurrentRun.Hero, GameState.LastAwardTrait, { SkipNewTraitHighlight = true })
+EquipAssist( CurrentRun.Hero, GameState.LastAssistTrait, { SkipNewTraitHighlight = true } )
+EquipWeaponUpgrade( CurrentRun.Hero, { SkipTraitHighlight = true } )
+CurrentRun.RoomHistory = {}
+UpdateRunHistoryCache( CurrentRun )
+CheckRunStartFlags( CurrentRun )
+BuildMetaupgradeCache()
+CurrentRun.RoomCreations = {}
+CurrentRun.LootTypeHistory = {}
+CurrentRun.NPCInteractions = {}
+CurrentRun.AnimationState = {}
+CurrentRun.EventState = {}
+CurrentRun.ActivationRecord = {}
+CurrentRun.SpeechRecord = {}
+CurrentRun.TextLinesRecord = {}
+CurrentRun.TriggerRecord = {}
+CurrentRun.UseRecord = {}
+CurrentRun.GiftRecord = {}
+CurrentRun.HintRecord = {}
+CurrentRun.EnemyUpgrades = {}
+CurrentRun.BlockedEncounters = {}
+CurrentRun.InvulnerableFlags = {}
+CurrentRun.PhasingFlags = {}
+CurrentRun.Money = CalculateStartingMoney()
+CurrentRun.MoneySpent = 0
+CurrentRun.MoneyRecord = {}
+CurrentRun.BonusDarknessWeapon = GetRandomUnequippedWeapon()
+CurrentRun.ActiveObjectives = {}
+CurrentRun.RunDepthCache = 11
+CurrentRun.GameplayTime = 0
+CurrentRun.BiomeTime = 0
+CurrentRun.ActiveBiomeTimer = GetNumMetaUpgrades("BiomeSpeedShrineUpgrade") > 0
+CurrentRun.NumRerolls = GetNumMetaUpgrades( "RerollMetaUpgrade" ) + GetNumMetaUpgrades("RerollPanelMetaUpgrade")
+CurrentRun.ThanatosSpawns = 0
+CurrentRun.SupportAINames = {}
+CurrentRun.Hero.TargetMetaRewardsAdjustSpeed = 10.0
+CurrentRun.ClosedDoors = {}
+CurrentRun.CompletedStyxWings = 0
+CurrentRun.TargetShrinePointThreshold = GetCurrentRunClearedShrinePointThreshold( GetEquippedWeapon() )
+CurrentRun.BannedEliteAttributes = {}
+if ConfigOptionCache.EasyMode then
+	CurrentRun.EasyModeLevel = GameState.EasyModeLevel
+end
+InitHeroLastStands( CurrentRun.Hero )
+
+InitializeRewardStores( CurrentRun )
+SelectBannedEliteAttributes( CurrentRun )
+
+if bossRoom ~= nil then
+	CurrentRun.CurrentRoom = CreateRoom( bossRoom )
+else
+	CurrentRun.CurrentRoom = ChooseStartingRoom( CurrentRun, "Tartarus" )
+end
+
+if GameState.CodexMenuSavedState ~= nil then
+	RemoveAllTraits()
+	if GameState.LastAwardTrait == "ReincarnationTrait" then
+			RemoveLastStand( CurrentRun.Hero, "ReincarnationTrait" )
+			CurrentRun.Hero.MaxLastStands = CurrentRun.Hero.MaxLastStands - 1
+	end
+	EquipPlayerWeapon( WeaponData[GameState.CodexMenuSavedState.Weapon], { PreLoadBinks = true } )
+	EquipKeepsake(CurrentRun.Hero, GameState.CodexMenuSavedState.Keepsake)
+	EquipAssist(CurrentRun.Hero, GameState.CodexMenuSavedState.Assist)
+	if GameState.CodexMenuSavedState.Aspect.Name ~= nil then
+		AddTraitToHero({ TraitName = GameState.CodexMenuSavedState.Aspect.Name, Rarity = GameState.CodexMenuSavedState.Aspect.Rarity })
+	end
+	for i, traitData in pairs( GameState.CodexMenuSavedState.Traits ) do
+		AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = traitData.Name, Rarity = traitData.Rarity }) })
+	end
+end
+return CurrentRun
+end
 
 --[[
 Duplicate the ReloadAllTraits function because the default implementation will reset the bonuses for keepsakes from Thanatos and Hermes.
