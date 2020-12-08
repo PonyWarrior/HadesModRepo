@@ -302,7 +302,59 @@ function SwitchWeapon()
     RestoreSavedHammerUpgrades(DualWieldingConfig.weapon1, DualWieldingConfig.weapon1aspect)
   end
   CheckHadesShout(CurrentRun.Hero.Traits)
-  ReloadAllTraits()
+  DualWieldingReloadAllTraits()
+end
+
+function DualWieldingReloadAllTraits()
+	-- Remove all traits, then readd them in order
+	local shouldSkip = {
+		FastClearDodgeBonusTrait = true,
+		PerfectClearDamageBonusTrait = true,
+    RoomRewardMaxHealthTrait = true,
+    RoomRewardEmptyMaxHealthTrait = true
+	}
+	local weaponName = GetEquippedWeapon()
+	local removedTraitData = {}
+	for i, traitData in pairs( CurrentRun.Hero.Traits ) do
+		if shouldSkip[traitData.Name] ~= true then
+			table.insert(removedTraitData, { Name = traitData.Name, Rarity = traitData.Rarity })
+		end
+	end
+
+	for i, traitData in pairs(removedTraitData) do
+		RemoveTrait( CurrentRun.Hero, traitData.Name )
+	end
+	-- re-equip all weapons to flush Absolute change values
+
+	UnequipWeapon({ DestinationId = CurrentRun.Hero.ObjectId, Name = weaponName })
+	local weaponSetNames = WeaponSets.HeroWeaponSets[weaponName]
+	if weaponSetNames ~= nil then
+		for k, linkedWeaponName in pairs( weaponSetNames ) do
+			UnequipWeapon({ DestinationId = CurrentRun.Hero.ObjectId, Name = linkedWeaponName })
+		end
+	end
+	UnequipWeapon({ DestinationId = CurrentRun.Hero.ObjectId, Name = "RangedWeapon "})
+
+
+	EquipWeapon({ DestinationId = CurrentRun.Hero.ObjectId, Name = weaponName })
+	if weaponSetNames ~= nil then
+		for k, linkedWeaponName in pairs( weaponSetNames ) do
+			EquipWeapon({ DestinationId = CurrentRun.Hero.ObjectId, Name = linkedWeaponName })
+		end
+	end
+	EquipWeapon({ DestinationId = CurrentRun.Hero.ObjectId, Name = "RangedWeapon" })
+
+
+	for i, traitData in pairs(removedTraitData) do
+		if traitData.Name then
+			if traitData.Rarity then
+				AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = traitData.Name, Rarity = traitData.Rarity}) })
+			else
+				AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = traitData.Name }) })
+			end
+		end
+	end
+	UpdateHeroTraitDictionary()
 end
 
 function SaveDualWieldingConfig(screen, button)
