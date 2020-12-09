@@ -772,7 +772,7 @@ function OpenBoonManager()
 		local index = 0
 		screen.BoonsList = {}
 		for i,boon in ipairs(CurrentRun.Hero.Traits) do
-			if Contains(displayedTraits, boon.Name) then
+			if Contains(displayedTraits, boon.Name) or boon.Name == "GodModeTrait" then
 			else
 				if IsGodTrait(boon.Name) or IsHermesChaosHammerCharonBoon(boon.Name) or Contains(CodexMenuData.ConsumableTraits, boon.Name) then
 					table.insert(displayedTraits, boon.Name)

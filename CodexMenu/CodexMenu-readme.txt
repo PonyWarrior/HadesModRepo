@@ -249,3 +249,13 @@ rarity mode duplicates boons with levels
 
 changed feature :
 code rewrite/optimization
+
+2.4.5
+
+ongoing issues :
+some casts have bugged animations
+some users crash when opening the boon manager
+various bugs with all mode in boon manager
+
+fixed issues :
+god mode causes issues with the boon manager
