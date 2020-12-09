@@ -202,6 +202,12 @@ ModUtil.WrapBaseFunction("ShowHealthUI", function(baseFunc)
 return baseFunc()
 end)
 
+local baseCloseAdvancedTooltipScreen = CloseAdvancedTooltipScreen
+function CloseAdvancedTooltipScreen()
+	baseCloseAdvancedTooltipScreen()
+	ShowDepthCounter()
+end
+
 --Show 'pom-able' boons when opening the boon tab
 function ShowAdvancedTooltipScreen( args )
 	OnScreenOpened( { Flag = "TraitTrayScreen", PersistCombatUI = true, SkipBlockTimer = true, } )

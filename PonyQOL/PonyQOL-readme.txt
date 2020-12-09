@@ -18,3 +18,8 @@ added incompatibility display in the boon list
 added pom icon to level-able boons for all menus
 added permanent chamber counter
 can no longer roll Demeter's Nourished Soul boon with Lasting Consequences 4 pact option
+
+2.0.1
+
+fixed issues:
+closing the boon tray hides the chamber counter
