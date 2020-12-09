@@ -259,3 +259,4 @@ various bugs with all mode in boon manager
 
 fixed issues :
 god mode causes issues with the boon manager
+cerberus entry causes zagreus to turn into a box during a run

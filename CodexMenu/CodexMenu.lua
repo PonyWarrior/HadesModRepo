@@ -1426,7 +1426,9 @@ local CommandTable =
 	end,
 	NPC_Cerberus_01 = function(triggerArgs)
 		CloseCodexScreen()
-		StartUpAwardMenu(triggerArgs.TriggeredByTable)
+		UIData.AwardMenu.AvailableKeepsakeTraits = GetAvailableKeepsakeTraits()
+		UIData.AwardMenu.AvailableAssistTraits = GetAllAssistTraits()
+		ShowAwardMenu()
 	end,
 	NPC_Charon_01 = function()
 		CloseCodexScreen()
