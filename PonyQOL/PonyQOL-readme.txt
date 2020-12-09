@@ -23,3 +23,6 @@ can no longer roll Demeter's Nourished Soul boon with Lasting Consequences 4 pac
 
 fixed issues:
 closing the boon tray hides the chamber counter
+
+new features:
+make Lucifer beam destroy projectiles

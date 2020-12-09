@@ -10,6 +10,13 @@ if BoonInfoScreenData.TraitDictionary["WeaponUpgrade"] then
 	BoonInfoScreenData.TraitDictionary["WeaponUpgrade"] = nil
 end
 
+--Make Lucifer beam base destroy projectiles
+for i, property in pairs (TraitData.GunLoadedGrenadeTrait.PropertyChanges) do
+	if property.ProjectileProperty == "ProjectileDefenseRadius" then
+		table.remove(TraitData.GunLoadedGrenadeTrait.PropertyChanges, i)
+	end
+end
+
 function CreateTraitRequirements( traitName )
 	local screen = ScreenAnchors.BoonInfoScreen
 	Destroy({Ids = screen.TraitRequirements })
