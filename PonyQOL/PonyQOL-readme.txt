@@ -26,3 +26,4 @@ closing the boon tray hides the chamber counter
 
 new features:
 make Lucifer beam destroy projectiles
+added weapon boon lists only listing their own hammer upgrades

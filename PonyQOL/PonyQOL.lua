@@ -1,21 +1,51 @@
 
---Add Hammer boon list
---Display incompatibility in boon list
---Add pom icon to 'pom-able' boons
-table.insert(BoonInfoScreenData.Ordering, "WeaponUpgrade")
-BoonInfoScreenData.SortedTraitIndex["WeaponUpgrade"] = {}
-if BoonInfoScreenData.TraitDictionary["WeaponUpgrade"] then
-	BoonInfoScreenData.SortedTraitIndex["WeaponUpgrade"] = GetAllKeys( BoonInfoScreenData.TraitDictionary["WeaponUpgrade"] )
-	table.sort( BoonInfoScreenData.SortedTraitIndex["WeaponUpgrade"], BoonInfoSort )
-	BoonInfoScreenData.TraitDictionary["WeaponUpgrade"] = nil
-end
-
 --Make Lucifer beam base destroy projectiles
 for i, property in pairs (TraitData.GunLoadedGrenadeTrait.PropertyChanges) do
 	if property.ProjectileProperty == "ProjectileDefenseRadius" then
 		table.remove(TraitData.GunLoadedGrenadeTrait.PropertyChanges, i)
 	end
 end
+
+--Add Hammer boon list
+--Add weapon boon lists
+--Display incompatibility in boon list
+--Add pom icon to 'pom-able' boons
+table.insert(BoonInfoScreenData.Ordering, "WeaponUpgrade")
+table.insert(BoonInfoScreenData.Ordering, "SwordWeapon")
+table.insert(BoonInfoScreenData.Ordering, "BowWeapon")
+table.insert(BoonInfoScreenData.Ordering, "ShieldWeapon")
+table.insert(BoonInfoScreenData.Ordering, "SpearWeapon")
+table.insert(BoonInfoScreenData.Ordering, "GunWeapon")
+table.insert(BoonInfoScreenData.Ordering, "FistWeapon")
+local swordUpgrades = {}
+local bowUpgrades = {}
+local shieldUpgrades = {}
+local spearUpgrades = {}
+local gunUpgrades = {}
+local fistUpgrades = {}
+for i, upgrade in pairs(LootData.WeaponUpgrade.Traits) do
+	if TraitData[upgrade].RequiredWeapon == "SwordWeapon" then
+		table.insert(swordUpgrades, upgrade)
+	elseif TraitData[upgrade].RequiredWeapon == "BowWeapon" then
+		table.insert(bowUpgrades, upgrade)
+	elseif TraitData[upgrade].RequiredWeapon == "ShieldWeapon" then
+		table.insert(shieldUpgrades, upgrade)
+	elseif TraitData[upgrade].RequiredWeapon == "SpearWeapon" then
+		table.insert(spearUpgrades, upgrade)
+	elseif TraitData[upgrade].RequiredWeapon == "GunWeapon" then
+		table.insert(gunUpgrades, upgrade)
+	elseif TraitData[upgrade].RequiredWeapon == "FistWeapon" then
+		table.insert(fistUpgrades, upgrade)
+	end
+end
+BoonInfoScreenData.SortedTraitIndex["WeaponUpgrade"] = LootData.WeaponUpgrade.Traits
+BoonInfoScreenData.SortedTraitIndex["SwordWeapon"] = swordUpgrades
+BoonInfoScreenData.SortedTraitIndex["BowWeapon"] = bowUpgrades
+BoonInfoScreenData.SortedTraitIndex["ShieldWeapon"] = shieldUpgrades
+BoonInfoScreenData.SortedTraitIndex["SpearWeapon"] = spearUpgrades
+BoonInfoScreenData.SortedTraitIndex["GunWeapon"] = gunUpgrades
+BoonInfoScreenData.SortedTraitIndex["FistWeapon"] = fistUpgrades
+
 
 function CreateTraitRequirements( traitName )
 	local screen = ScreenAnchors.BoonInfoScreen
@@ -141,6 +171,69 @@ function CreateTraitRequirements( traitName )
   end
   --Mod end
 
+	--Mod start
+	local onelist = {}
+	local setlist = {}
+	local twolist = {}
+	if TraitData[traitData.Name] then
+		for _, trait in pairs (TraitData) do
+			if BoonInfoScreenData.TraitRequirementsDictionary[trait.Name] then
+				local requirementData = BoonInfoScreenData.TraitRequirementsDictionary[trait.Name]
+				if requirementData.Type == "OneOf" and Contains(requirementData.OneOf, traitData.Name) then
+					table.insert(onelist, trait.Name)
+				end
+				if requirementData .Type == "OneFromEachSet" then
+					for i, set in pairs(requirementData.OneFromEachSet) do
+						if Contains(set, traitData.Name) then
+							table.insert(setlist, trait.Name)
+						end
+					end
+				elseif requirementData.Type == "TwoOf" then
+					for i, set in pairs(requirementData.OneFromEachSet) do
+						if Contains(set, traitData.Name) then
+							table.insert(twolist, trait.Name)
+						end
+					end
+				end
+			end
+		end
+	else
+		for _, trait in pairs (ConsumableData) do
+			if BoonInfoScreenData.TraitRequirementsDictionary[trait.Name] then
+				local requirementData = BoonInfoScreenData.TraitRequirementsDictionary[trait.Name]
+				if requirementData.Type == "OneOf" and Contains(requirementData.OneOf, traitData.Name) then
+					table.insert(onelist, trait.Name)
+				end
+				if requirementData .Type == "OneFromEachSet" then
+					for i, set in pairs(requirementData.OneFromEachSet) do
+						if Contains(set, traitData.Name) then
+							table.insert(setlist, trait.Name)
+						end
+					end
+				elseif requirementData.Type == "TwoOf" then
+					for i, set in pairs(requirementData.OneFromEachSet) do
+						if Contains(set, traitData.Name) and not Contains(twolist, trait.Name) then
+							table.insert(twolist, trait.Name)
+						end
+					end
+				end
+			end
+		end
+	end
+	if not IsEmpty(onelist) then
+		startY = CreateTraitRequirementList( screen, { Text = "Fulfills requirement:", TextSingular = "Fulfills requirement:" }, onelist, startY )
+		hasRequirement = true
+	end
+	if not IsEmpty(setlist) then
+		startY = CreateTraitRequirementList( screen, { Text = "Partially fulfills requirement:", TextSingular = "Partially fulfills requirement:" }, setlist, startY )
+		hasRequirement = true
+	end
+	if not IsEmpty(twolist) then
+		startY = CreateTraitRequirementList( screen, { Text = "Required by (TwoOf):", TextSingular = "Required by (TwoOf):" }, twolist, startY )
+		hasRequirement = true
+	end
+	--Mod end
+
 	if BoonInfoScreenData.TraitRequirementsDictionary[traitName] then
 		hasRequirement = true
 		local requirementData = BoonInfoScreenData.TraitRequirementsDictionary[traitName]
@@ -185,6 +278,125 @@ function CreateTraitRequirements( traitName )
 		ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2},
 		Justification = "Left"})
 	end
+end
+
+--Boon list infographs
+function ShowBoonInfoScreen( lootName )
+	OnScreenOpened( { Flag = "BoonInfoScreen", PersistCombatUI = true } )
+	SetConfigOption({ Name = "ExclusiveInteractGroup", Value = "Combat_Menu_TraitTray_Backing" })
+
+	FreezePlayerUnit("BoonInfoScreen" )
+
+	PlaySound({ Name = "/SFX/Menu Sounds/GeneralWhooshMENULoud" })
+
+	ScreenAnchors.BoonInfoScreen = { LootName = lootName, StartingIndex = 1, Components = {}, Name = "BoonInfoScreen", TraitContainers = {}, TraitRequirements = {} }
+	local screen = ScreenAnchors.BoonInfoScreen
+	local components = ScreenAnchors.BoonInfoScreen.Components
+	BoonInfoPopulateTraits( screen )
+	EnableShopGamepadCursor( ScreenAnchors.BoonInfoScreen.Name )
+	SetConfigOption({ Name = "FreeFormSelectWrapY", Value = false })
+	SetConfigOption({ Name = "FreeFormSelectStepDistance", Value = 32 })
+	SetConfigOption({ Name = "FreeFormSelectSuccessDistanceStep", Value = 18 })
+	if IsScreenOpen("Codex") then
+		screen.OldFreeFormSelecSearchFromId = GetConfigOptionValue({ Name = "FreeFormSelecSearchFromId" })
+		CodexUI.Screen.Components.CloseButton.OnPressedFunctionName = nil
+	end
+
+	components.ShopBackgroundDim = CreateScreenComponent({ Name = "rectangle01", Group = "Combat_Menu_TraitTray_Backing" })
+	SetScale({ Id = components.ShopBackgroundDim.Id, Fraction = 10 })
+	SetColor({ Id = components.ShopBackgroundDim.Id, Color = {0.090, 0.055, 0.157, 0.6} })
+
+	components.ShopBackground = CreateScreenComponent({ Name = "BoonInfoBacking", Group = "Combat_Menu_TraitTray_Backing", X = ScreenCenterX, Y = ScreenHeight/2 })
+
+	components.PageUp = CreateScreenComponent({ Name = "ButtonCodexUp", Scale = 0.8, Sound = "/SFX/Menu Sounds/GeneralWhooshMENU", Group = "Combat_Menu_TraitTray_Backing" })
+	Attach({ Id = components.PageUp.Id, DestinationId = components.ShopBackground.Id, OffsetX = -400 , OffsetY = -395 })
+	components.PageUp.OnPressedFunctionName = "BoonInfoScreenPrevious"
+	components.PageUp.ControlHotkey = "MenuUp"
+
+	components.PageDown = CreateScreenComponent({ Name = "ButtonCodexDown", Scale = 0.8, Sound = "/SFX/Menu Sounds/GeneralWhooshMENU", Group = "Combat_Menu_TraitTray_Backing" })
+	Attach({ Id = components.PageDown.Id, DestinationId = components.ShopBackground.Id, OffsetX = -400 , OffsetY = 415 })
+	components.PageDown.OnPressedFunctionName = "BoonInfoScreenNext"
+	components.PageDown.ControlHotkey = "MenuDown"
+
+
+	components.CloseButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 1, Group = "Combat_Menu_TraitTray_Backing" })
+	Attach({ Id = components.CloseButton.Id, DestinationId = components.ShopBackground.Id, OffsetX = 0 , OffsetY = 490 })
+	components.CloseButton.OnPressedFunctionName = "CloseBoonInfoScreen"
+	components.CloseButton.ControlHotkey = "Cancel"
+	CreateTextBox({ Id = components.ShopBackground.Id, Text = "Codex_BoonInfo_Title",
+		FontSize = 32,
+		OffsetX = 0, OffsetY = -487,
+		Color = Color.White,
+		Font = "SpectralSCLightTitling",
+		ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 3},
+		OutlineThickness = 3,
+		Justification = "Center",
+		LuaKey = "TempTextData",
+		LuaValue = { BoonName = lootName }
+	})
+
+	for i = screen.StartingIndex, screen.StartingIndex + BoonInfoScreenData.NumPerPage - 1 do
+		CreateBoonInfoButton( screen.SortedTraitIndex[i], i )
+	end
+	TeleportCursor({ DestinationId = ScreenAnchors.BoonInfoScreen.Components["BooninfoButton1"].DetailsBacking.Id, ForceUseCheck = true })
+
+	components.RequirementsTitle = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_TraitTray" })
+	Attach({ Id = components.RequirementsTitle.Id, DestinationId = components.ShopBackground.Id, OffsetX = 100 , OffsetY = -405 })
+	CreateTextBox(MergeTables({
+		Id = components.RequirementsTitle.Id,
+		Text = "BoonInfo_Requirements",
+		FontSize = 28,
+		OffsetX = 75,
+		OffsetY = 60,
+		Color = color,
+		Font = "AlegreyaSansSCLight",
+		ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2},
+		Justification = "Left",
+	}, LocalizationData.BoonInfoScreenScripts.RequirementsTitle ))
+	--Mod start
+	components.InfographButton = CreateScreenComponent({ Name = "ButtonDefault", Scale = 1.0, Sound = "/SFX/Menu Sounds/GeneralWhooshMENU", Group = "Combat_Menu_TraitTray_Backing" })
+	Attach({ Id = components.InfographButton.Id, DestinationId = components.ShopBackground.Id, OffsetX = 750 , OffsetY = -300 })
+	components.InfographButton.OnPressedFunctionName = "ShowInfograph"
+	CreateTextBox({ Id = components.InfographButton.Id, Text = "Show Infograph",
+		FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = Color.BoonPatchHeroic, Font = "AlegreyaSansSCLight",
+		ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"})
+
+	components.DuoInfographButton = CreateScreenComponent({ Name = "ButtonDefault", Scale = 1.0, Sound = "/SFX/Menu Sounds/GeneralWhooshMENU", Group = "Combat_Menu_TraitTray_Backing" })
+	Attach({ Id = components.DuoInfographButton.Id, DestinationId = components.ShopBackground.Id, OffsetX = 750 , OffsetY = -200 })
+	components.DuoInfographButton.OnPressedFunctionName = "ShowDuoInfograph"
+	CreateTextBox({ Id = components.DuoInfographButton.Id, Text = "Show Duo Infograph",
+		FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = Color.BoonPatchDuo, Font = "AlegreyaSansSCLight",
+		ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"})
+	--Mod end
+
+	UpdateBoonInfoPageButtons( screen )
+
+	ScreenAnchors.BoonInfoScreen.KeepOpen = true
+	ScreenAnchors.BoonInfoScreen.CanClose = true
+	thread( HandleWASDInput, ScreenAnchors.BoonInfoScreen )
+	HandleScreenInput( ScreenAnchors.BoonInfoScreen )
+end
+
+function ShowInfograph(screen, button)
+	local components = screen.Components
+	components.Infograph = CreateScreenComponent({ Name = "BlankObstacle", Scale = 1, Group = "Infograph" })
+	Attach({ Id = components.Infograph.Id, DestinationId = components.ShopBackground.Id, OffsetX = 0 , OffsetY = 0 })
+	components.Infograph.OnPressedFunctionName = "CloseInfograph"
+	components.Infograph.ControlHotkey = "Confirm"
+	SetAnimation({ Name = "QuestLogIn", DestinationId = components.Infograph.Id })
+end
+
+function CloseInfograph(screen, button)
+	Destroy({Id = button.Id})
+end
+
+function ShowDuoInfograph(screen, button)
+	local components = screen.Components
+	components.DuoInfograph = CreateScreenComponent({ Name = "BlankObstacle", Scale = 1, Group = "Infograph" })
+	Attach({ Id = components.DuoInfograph.Id, DestinationId = components.ShopBackground.Id, OffsetX = 0 , OffsetY = 0 })
+	components.DuoInfograph.OnPressedFunctionName = "CloseInfograph"
+	components.DuoInfograph.ControlHotkey = "Confirm"
+	SetAnimation({ Name = "QuestLogIn", DestinationId = components.DuoInfograph.Id })
 end
 
 -- No Nourished Soul with LC4
@@ -547,11 +759,16 @@ local baseSetTraitTrayDetails = SetTraitTrayDetails
 function SetTraitTrayDetails( button, detailsBox, rarityBox, titleBox, patch, icon )
   baseSetTraitTrayDetails( button, detailsBox, rarityBox, titleBox, patch, icon )
     --Mod start
-    if GetTraitNameCount(CurrentRun.Hero, button.TraitData.Name) == 1 and IsGameStateEligible(CurrentRun, TraitData[button.TraitData.Name]) and IsGodTrait(button.TraitData.Name) then
+    if not button.ForBoonInfo and GetTraitNameCount(CurrentRun.Hero, button.TraitData.Name) == 1 and IsGameStateEligible(CurrentRun, TraitData[button.TraitData.Name]) and IsGodTrait(button.TraitData.Name) then
       local pom = CreateScreenObstacle({ Name = "BlankObstacle", Group = "Combat_Menu_TraitTray"  })
       Attach({ Id = pom, DestinationId = icon.Id, OffsetX = 0, OffsetY = 40 })
       SetAnimation({ Name = "StackUpgradePreview", DestinationId = pom, Group = "Combat_Menu_TraitTray" })
       SetScale({ Id = pom, Fraction = 0.4})
+		-- elseif button.ForBoonInfo and IsGameStateEligible(CurrentRun, TraitData[button.TraitData.Name]) and IsGodTrait(button.TraitData.Name) then
+		-- 	local pom = CreateScreenObstacle({ Name = "BlankObstacle", Group = "Combat_Menu_TraitTray"  })
+		-- 	Attach({ Id = pom, DestinationId = icon.Id, OffsetX = 0, OffsetY = 40 })
+		-- 	SetAnimation({ Name = "StackUpgradePreview", DestinationId = pom, Group = "Combat_Menu_TraitTray" })
+		-- 	SetScale({ Id = pom, Fraction = 0.4})
     end
     --Mod end
 end
