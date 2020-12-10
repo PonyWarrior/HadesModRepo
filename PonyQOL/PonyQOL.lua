@@ -17,6 +17,7 @@ table.insert(BoonInfoScreenData.Ordering, "ShieldWeapon")
 table.insert(BoonInfoScreenData.Ordering, "SpearWeapon")
 table.insert(BoonInfoScreenData.Ordering, "GunWeapon")
 table.insert(BoonInfoScreenData.Ordering, "FistWeapon")
+table.insert(BoonInfoScreenData.Ordering, "NPC_Charon_01")
 local swordUpgrades = {}
 local bowUpgrades = {}
 local shieldUpgrades = {}
@@ -38,6 +39,10 @@ for i, upgrade in pairs(LootData.WeaponUpgrade.Traits) do
 		table.insert(fistUpgrades, upgrade)
 	end
 end
+local charonUpgrades = StoreData.RoomShop.Traits
+for i, offer in pairs(StoreData.RoomShop.HealingOffers.WeightedList) do
+	table.insert(charonUpgrades, offer.Name)
+end
 BoonInfoScreenData.SortedTraitIndex["WeaponUpgrade"] = LootData.WeaponUpgrade.Traits
 BoonInfoScreenData.SortedTraitIndex["SwordWeapon"] = swordUpgrades
 BoonInfoScreenData.SortedTraitIndex["BowWeapon"] = bowUpgrades
@@ -45,7 +50,7 @@ BoonInfoScreenData.SortedTraitIndex["ShieldWeapon"] = shieldUpgrades
 BoonInfoScreenData.SortedTraitIndex["SpearWeapon"] = spearUpgrades
 BoonInfoScreenData.SortedTraitIndex["GunWeapon"] = gunUpgrades
 BoonInfoScreenData.SortedTraitIndex["FistWeapon"] = fistUpgrades
-
+BoonInfoScreenData.SortedTraitIndex["NPC_Charon_01"] = charonUpgrades
 
 function CreateTraitRequirements( traitName )
 	local screen = ScreenAnchors.BoonInfoScreen
@@ -92,6 +97,42 @@ function CreateTraitRequirements( traitName )
 			Attach({ Id = metaupgradeIcon.Id, DestinationId = screen.Components.ShopBackground.Id, OffsetX = startX + 175, OffsetY = -290 })
 		end
 	end
+	--Mod start
+	if traitData.RequiredInactiveMetaUpgrade then
+		local requiredMetaUpgrade = traitData.RequiredInactiveMetaUpgrade
+		local requirementsText = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_TraitTray" })
+		table.insert(screen.TraitRequirements, requirementsText.Id )
+		Attach({ Id = requirementsText.Id, DestinationId = screen.Components.ShopBackground.Id, OffsetX = startX , OffsetY = -405 })
+
+		local color = Color.White
+		if IsGameStateEligible( CurrentRun, { RequiredInactiveMetaUpgrade = traitData.RequiredInactiveMetaUpgrade }) then
+			color = Color.BoonInfoAcquired
+		end
+		CreateTextBox({
+		Id = requirementsText.Id,
+		Text = "BoonInfo_RequiredInactiveMetaupgrade",
+		FontSize = 24,
+		Width = 360,
+		OffsetX = 200,
+		OffsetY =  startY-5,
+		Color = color,
+		Font = "AlegreyaSansSCLight",
+		ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2},
+		Justification = "Left",
+		LuaKey = "TempTextData",
+		LuaValue = { MetaupgradeName = requiredMetaUpgrade }})
+		startY = startY + 45
+		hasRequirement = true
+
+		if MetaUpgradeData[requiredMetaUpgrade] and MetaUpgradeData[requiredMetaUpgrade].Icon then
+			local metaupgradeIcon = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_TraitTray" })
+			SetAnimation({ Name = MetaUpgradeData[requiredMetaUpgrade].Icon, DestinationId = metaupgradeIcon.Id })
+			table.insert(screen.TraitRequirements, metaupgradeIcon.Id )
+			Attach({ Id = metaupgradeIcon.Id, DestinationId = screen.Components.ShopBackground.Id, OffsetX = startX + 175, OffsetY = -290 })
+		end
+	end
+	--Mod end
+
 	if traitData.RequiredTrait then
 		local requirementsText = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_TraitTray" })
 		table.insert(screen.TraitRequirements, requirementsText.Id )
@@ -169,6 +210,7 @@ function CreateTraitRequirements( traitName )
       hasRequirement = true
     end
   end
+
   --Mod end
 
 	--Mod start
