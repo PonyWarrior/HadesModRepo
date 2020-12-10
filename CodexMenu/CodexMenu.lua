@@ -1484,7 +1484,7 @@ local CommandTable =
 }
 
 function CodexMain(triggerArgs)
-	if CodexUI.Screen == nil or not IsScreenOpen("Codex") then
+	if CodexUI.Screen == nil or not IsScreenOpen("Codex") or IsScreenOpen("BoonInfoScreen") then
 		return
 	end
 	--Prevent early game crash
@@ -1569,88 +1569,88 @@ function CodexMain(triggerArgs)
 end
 
 function StartNewCustomRun(bossRoom)
-SetupRunData()
---ResetUI()
-SessionState.NeedWeaponPickupBinkLoad = false
-CurrentRun = {}
-CurrentRun.DamageRecord = {}
-CurrentRun.HealthRecord = {}
-CurrentRun.ConsumableRecord = {}
-CurrentRun.ActualHealthRecord = {}
-CurrentRun.BlockTimerFlags = {}
-CurrentRun.WeaponsFiredRecord = {}
-CurrentRun.Hero = CreateNewHero( prevRun, args )
-EquipKeepsake( CurrentRun.Hero, GameState.LastAwardTrait, { SkipNewTraitHighlight = true })
-EquipAssist( CurrentRun.Hero, GameState.LastAssistTrait, { SkipNewTraitHighlight = true } )
-EquipWeaponUpgrade( CurrentRun.Hero, { SkipTraitHighlight = true } )
-CurrentRun.RoomHistory = {}
-UpdateRunHistoryCache( CurrentRun )
-CheckRunStartFlags( CurrentRun )
-BuildMetaupgradeCache()
-CurrentRun.RoomCreations = {}
-CurrentRun.LootTypeHistory = {}
-CurrentRun.NPCInteractions = {}
-CurrentRun.AnimationState = {}
-CurrentRun.EventState = {}
-CurrentRun.ActivationRecord = {}
-CurrentRun.SpeechRecord = {}
-CurrentRun.TextLinesRecord = {}
-CurrentRun.TriggerRecord = {}
-CurrentRun.UseRecord = {}
-CurrentRun.GiftRecord = {}
-CurrentRun.HintRecord = {}
-CurrentRun.EnemyUpgrades = {}
-CurrentRun.BlockedEncounters = {}
-CurrentRun.InvulnerableFlags = {}
-CurrentRun.PhasingFlags = {}
-CurrentRun.Money = CalculateStartingMoney()
-CurrentRun.MoneySpent = 0
-CurrentRun.MoneyRecord = {}
-CurrentRun.BonusDarknessWeapon = GetRandomUnequippedWeapon()
-CurrentRun.ActiveObjectives = {}
-CurrentRun.RunDepthCache = 11
-CurrentRun.GameplayTime = 0
-CurrentRun.BiomeTime = 0
-CurrentRun.ActiveBiomeTimer = GetNumMetaUpgrades("BiomeSpeedShrineUpgrade") > 0
-CurrentRun.NumRerolls = GetNumMetaUpgrades( "RerollMetaUpgrade" ) + GetNumMetaUpgrades("RerollPanelMetaUpgrade")
-CurrentRun.ThanatosSpawns = 0
-CurrentRun.SupportAINames = {}
-CurrentRun.Hero.TargetMetaRewardsAdjustSpeed = 10.0
-CurrentRun.ClosedDoors = {}
-CurrentRun.CompletedStyxWings = 0
-CurrentRun.TargetShrinePointThreshold = GetCurrentRunClearedShrinePointThreshold( GetEquippedWeapon() )
-CurrentRun.BannedEliteAttributes = {}
-if ConfigOptionCache.EasyMode then
-	CurrentRun.EasyModeLevel = GameState.EasyModeLevel
-end
-InitHeroLastStands( CurrentRun.Hero )
-
-InitializeRewardStores( CurrentRun )
-SelectBannedEliteAttributes( CurrentRun )
-
-if bossRoom ~= nil then
-	CurrentRun.CurrentRoom = CreateRoom( bossRoom )
-else
-	CurrentRun.CurrentRoom = ChooseStartingRoom( CurrentRun, "Tartarus" )
-end
-
-if GameState.CodexMenuSavedState ~= nil then
-	RemoveAllTraits()
-	if GameState.LastAwardTrait == "ReincarnationTrait" then
-			RemoveLastStand( CurrentRun.Hero, "ReincarnationTrait" )
-			CurrentRun.Hero.MaxLastStands = CurrentRun.Hero.MaxLastStands - 1
+	SetupRunData()
+	--ResetUI()
+	SessionState.NeedWeaponPickupBinkLoad = false
+	CurrentRun = {}
+	CurrentRun.DamageRecord = {}
+	CurrentRun.HealthRecord = {}
+	CurrentRun.ConsumableRecord = {}
+	CurrentRun.ActualHealthRecord = {}
+	CurrentRun.BlockTimerFlags = {}
+	CurrentRun.WeaponsFiredRecord = {}
+	CurrentRun.Hero = CreateNewHero( prevRun, args )
+	EquipKeepsake( CurrentRun.Hero, GameState.LastAwardTrait, { SkipNewTraitHighlight = true })
+	EquipAssist( CurrentRun.Hero, GameState.LastAssistTrait, { SkipNewTraitHighlight = true } )
+	EquipWeaponUpgrade( CurrentRun.Hero, { SkipTraitHighlight = true } )
+	CurrentRun.RoomHistory = {}
+	UpdateRunHistoryCache( CurrentRun )
+	CheckRunStartFlags( CurrentRun )
+	BuildMetaupgradeCache()
+	CurrentRun.RoomCreations = {}
+	CurrentRun.LootTypeHistory = {}
+	CurrentRun.NPCInteractions = {}
+	CurrentRun.AnimationState = {}
+	CurrentRun.EventState = {}
+	CurrentRun.ActivationRecord = {}
+	CurrentRun.SpeechRecord = {}
+	CurrentRun.TextLinesRecord = {}
+	CurrentRun.TriggerRecord = {}
+	CurrentRun.UseRecord = {}
+	CurrentRun.GiftRecord = {}
+	CurrentRun.HintRecord = {}
+	CurrentRun.EnemyUpgrades = {}
+	CurrentRun.BlockedEncounters = {}
+	CurrentRun.InvulnerableFlags = {}
+	CurrentRun.PhasingFlags = {}
+	CurrentRun.Money = CalculateStartingMoney()
+	CurrentRun.MoneySpent = 0
+	CurrentRun.MoneyRecord = {}
+	CurrentRun.BonusDarknessWeapon = GetRandomUnequippedWeapon()
+	CurrentRun.ActiveObjectives = {}
+	CurrentRun.RunDepthCache = 11
+	CurrentRun.GameplayTime = 0
+	CurrentRun.BiomeTime = 0
+	CurrentRun.ActiveBiomeTimer = GetNumMetaUpgrades("BiomeSpeedShrineUpgrade") > 0
+	CurrentRun.NumRerolls = GetNumMetaUpgrades( "RerollMetaUpgrade" ) + GetNumMetaUpgrades("RerollPanelMetaUpgrade")
+	CurrentRun.ThanatosSpawns = 0
+	CurrentRun.SupportAINames = {}
+	CurrentRun.Hero.TargetMetaRewardsAdjustSpeed = 10.0
+	CurrentRun.ClosedDoors = {}
+	CurrentRun.CompletedStyxWings = 0
+	CurrentRun.TargetShrinePointThreshold = GetCurrentRunClearedShrinePointThreshold( GetEquippedWeapon() )
+	CurrentRun.BannedEliteAttributes = {}
+	if ConfigOptionCache.EasyMode then
+		CurrentRun.EasyModeLevel = GameState.EasyModeLevel
 	end
-	EquipPlayerWeapon( WeaponData[GameState.CodexMenuSavedState.Weapon], { PreLoadBinks = true } )
-	EquipKeepsake(CurrentRun.Hero, GameState.CodexMenuSavedState.Keepsake)
-	EquipAssist(CurrentRun.Hero, GameState.CodexMenuSavedState.Assist)
-	if GameState.CodexMenuSavedState.Aspect.Name ~= nil then
-		AddTraitToHero({ TraitName = GameState.CodexMenuSavedState.Aspect.Name, Rarity = GameState.CodexMenuSavedState.Aspect.Rarity })
+	InitHeroLastStands( CurrentRun.Hero )
+
+	InitializeRewardStores( CurrentRun )
+	SelectBannedEliteAttributes( CurrentRun )
+
+	if bossRoom ~= nil then
+		CurrentRun.CurrentRoom = CreateRoom( bossRoom )
+	else
+		CurrentRun.CurrentRoom = ChooseStartingRoom( CurrentRun, "Tartarus" )
 	end
-	for i, traitData in pairs( GameState.CodexMenuSavedState.Traits ) do
-		AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = traitData.Name, Rarity = traitData.Rarity }) })
+
+	if GameState.CodexMenuSavedState ~= nil then
+		RemoveAllTraits()
+		if GameState.LastAwardTrait == "ReincarnationTrait" then
+				RemoveLastStand( CurrentRun.Hero, "ReincarnationTrait" )
+				CurrentRun.Hero.MaxLastStands = CurrentRun.Hero.MaxLastStands - 1
+		end
+		EquipPlayerWeapon( WeaponData[GameState.CodexMenuSavedState.Weapon], { PreLoadBinks = true } )
+		EquipKeepsake(CurrentRun.Hero, GameState.CodexMenuSavedState.Keepsake)
+		EquipAssist(CurrentRun.Hero, GameState.CodexMenuSavedState.Assist)
+		if GameState.CodexMenuSavedState.Aspect.Name ~= nil then
+			AddTraitToHero({ TraitName = GameState.CodexMenuSavedState.Aspect.Name, Rarity = GameState.CodexMenuSavedState.Aspect.Rarity })
+		end
+		for i, traitData in pairs( GameState.CodexMenuSavedState.Traits ) do
+			AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = traitData.Name, Rarity = traitData.Rarity }) })
+		end
 	end
-end
-return CurrentRun
+	return CurrentRun
 end
 
 --[[
