@@ -1,3 +1,8 @@
+local _DepthDamageMultiplier = 0.0
+local _DuplicateMultiplier = -0.60
+local _DuplicateStrongMultiplier = -0.40
+local _DuplicateVeryStrongMultiplier = -0.20
+
 TraitData.HestiaWeaponTrait =
 {
 	Icon = "Boon_Dionysus_01",
@@ -43,10 +48,10 @@ TraitData.HestiaWeaponTrait =
 			BaseMax = 1,
 			MinMultiplier = 0.335,
 			AsInt = true,
-			DepthMult = DepthDamageMultiplier,
+			DepthMult = _DepthDamageMultiplier,
 			IdenticalMultiplier =
 			{
-				Value = DuplicateMultiplier,
+				Value = _DuplicateMultiplier,
 			},
 			ExtractValue =
 			{
@@ -174,10 +179,10 @@ TraitData.HestiaRangedTrait =
 			BaseMax = 1,
 			MinMultiplier = 0.335,
 			AsInt = true,
-			DepthMult = DepthDamageMultiplier,
+			DepthMult = _DepthDamageMultiplier,
 			IdenticalMultiplier =
 			{
-				Value = DuplicateMultiplier,
+				Value = _DuplicateMultiplier,
 			},
 			ExtractValue =
 			{
@@ -189,10 +194,10 @@ TraitData.HestiaRangedTrait =
 			ProjectileProperty = "DamageLow",
 			BaseMin = 90,
 			BaseMax = 90,
-			DepthMult = DepthDamageMultiplier,
+			DepthMult = _DepthDamageMultiplier,
 			IdenticalMultiplier =
 			{
-				Value = DuplicateStrongMultiplier,
+				Value = _DuplicateStrongMultiplier,
 			},
 			ExtractValue =
 			{
@@ -397,10 +402,10 @@ TraitData.HestiaSecondaryTrait =
 			AsInt = true,
 			MinMultiplier = 0.25,
 			ChangeType = "Add",
-			DepthMult = DepthDamageMultiplier,
+			DepthMult = _DepthDamageMultiplier,
 			IdenticalMultiplier =
 			{
-				Value = DuplicateMultiplier,
+				Value = _DuplicateMultiplier,
 			},
 			ExtractValue =
 			{
@@ -530,10 +535,10 @@ TraitData.HestiaShoutTrait =
 			AsInt = true,
 			MinMultiplier = 0.25,
 			ChangeType = "Add",
-			DepthMult = DepthDamageMultiplier,
+			DepthMult = _DepthDamageMultiplier,
 			IdenticalMultiplier =
 			{
-				Value = DuplicateMultiplier,
+				Value = _DuplicateMultiplier,
 			},
 			ExtractValue =
 			{
@@ -548,7 +553,7 @@ TraitData.HestiaShoutTrait =
 			MinMultiplier = 0.2,
 			IdenticalMultiplier =
 			{
-				Value = DuplicateMultiplier,
+				Value = _DuplicateMultiplier,
 			},
 			ExtractValue =
 			{

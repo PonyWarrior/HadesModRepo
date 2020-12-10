@@ -1,4 +1,10 @@
 
+ModUtil.WrapBaseFunction( "SetupMap", function(baseFunc)
+	DebugPrint({Text = "@NewAphrodite Trying to load package NewAphrodite.pkg"})
+	LoadPackages({Name = "NewAphrodite"})
+	return baseFunc()
+end)
+
 function BurnOverTimeApply( triggerArgs )
 	UpdateBurnEffectStacks( triggerArgs )
 end
