@@ -30,3 +30,8 @@ added weapon boon lists only listing their own hammer upgrades
 added charon boon list
 added inactive mirror upgrade to a boon's possible requirement in boon list
 added bulk buy toggle to wretched broker
+
+2.1.1
+
+new features:
+added reset button to pact

@@ -1498,3 +1498,389 @@ function SwapMarketPrices(screen, button)
 		OpenMarketScreen()
 	end
 end
+
+--Add reset button to pact
+function OpenShrineUpgradeMenu( args )
+	args = args or {}
+	GameState.Flags.ShrineUnlocked = true
+
+	ScreenAnchors.ShrineScreen = { Components = {} }
+	local screen = ScreenAnchors.ShrineScreen
+	local components = screen.Components
+	OverwriteTableKeys( screen, args )
+	screen.Name = "ShrineUpgrade"
+	screen.ResourceName = "ShrinePoints"
+	screen.MaxShrinePoints = GetMaximumPossibleShrinePoints()
+	screen.CloseAnimation = "ShrineOut"
+	screen.SubtitleText = "ShrineMenu_Subtitle_CurrentMetaPoints"
+	screen.InvestedColor = Color.MetaUpgradePointsInvalidPulseColor
+	screen.UnlockVoiceLines = HeroVoiceLines.ShrineUpgradeUnlockedVoiceLines
+	screen.FreeSpend = true
+	screen.RefundPresentationName = "ShrinePointRefundPresentation"
+	screen.SpendPresentationName = "ShrinePointSpendPresentation"
+	screen.StatChangeX = 360 - 68
+	screen.UpgradeCostX = 550 - 68
+	screen.UpgradeCostJustification = "Left"
+	screen.HighlightX = -196 + 80 - 68
+	screen.TooltipOffsetX = 350
+	screen.BackingOffsetX = -25 - 68
+
+	screen.BackingTooltipOffsetX = 35 - 68
+	screen.BackingTooltipOffsetY = 1
+
+	screen.RightArrowOffsetX = LevelUpUI.RightArrowOffsetX + 10
+	screen.LeftArrowOffsetX = LevelUpUI.LeftArrowOffsetX + 23
+	screen.RightArrowOverride = "LevelUpArrowRight"
+	screen.IconX = 970 - 68
+
+	local firstView = not GameState.ScreensViewed[screen.Name]
+
+	OnScreenOpened({ Flag = screen.Name, PersistCombatUI = false })
+	FreezePlayerUnit()
+
+	EnableShopGamepadCursor()
+	HideCombatUI()
+	SetConfigOption({ Name = "FreeFormSelectWrapY", Value = true })
+	SetConfigOption({ Name = "ExclusiveInteractGroup", Value = nil })
+	SetConfigOption({ Name = "FreeFormSelectStepDistance", Value = 16 })
+	SetConfigOption({ Name = "FreeFormSelectSuccessDistanceStep", Value = 8 })
+	SetConfigOption({ Name = "FreeFormSelecSearchFromId", Value = 0 })
+	SetConfigOption({ Name = "FreeFormSelectRepeatDelay", Value = 0.6 })
+	SetConfigOption({ Name = "FreeFormSelectRepeatInterval", Value = 0.1 })
+
+	screen.SubjectName = "ShrineUpgrades"
+	components.ShopBackgroundDim = CreateScreenComponent({ Name = "rectangle01", Group = "Combat_Menu" })
+	components.ShopBackgroundSplatter = CreateScreenComponent({ Name = "LevelUpBackground", Group = "Combat_Menu" })
+	components.ShopBackground = CreateScreenComponent({ Name = "rectangle01", Group = "Combat_Menu" })
+
+	local thermometerCenter = 550
+	components.ThermometerForeground = CreateScreenComponent({ Name = "ShrineMeterBarFill", Group = "Combat_Menu", X = thermometerCenter, Y = ScreenCenterY - 90 })
+	SetScale({ Id = components.ThermometerForeground.Id, Fraction = 0.88 })
+	local fraction = 1
+	if GetShrinePointLimit() > 0 then
+		fraction = GetTotalSpentShrinePoints() / GetShrinePointLimit()
+	end
+	SetAnimationFrameTarget({ Name = "ShrineMeterBarFill", Fraction = fraction, DestinationId = components.ThermometerForeground.Id, Instant = true })
+	components.ThermometerEffects = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_Additive" })
+	SetScale({ Id = components.ThermometerEffects.Id, Fraction = 0.88 })
+	Attach({ Id = components.ThermometerEffects.Id, DestinationId = components.ThermometerForeground.Id })
+
+	SetAnimation({ DestinationId = components.ShopBackground.Id, Name = "ShrineIn" })
+	SetScale({ Id = components.ShopBackgroundDim.Id, Fraction = 4 })
+	SetColor({ Id = components.ShopBackgroundDim.Id, Color = {0.090, 0.055, 0.157, 0.8} })
+
+	PlaySound({ Name = "/SFX/Menu Sounds/PactMenuOpenSFX" })
+
+	thread( PlayVoiceLines, HeroVoiceLines.OpenedShrineVoiceLines, true )
+
+	-- for conditional VO on menu close
+	screen.PointsAddedThisTime = 0
+
+	local yStart = -475
+	-- Title
+	CreateTextBox({ Id = components.ShopBackground.Id, Text = "ShrineMenu", FontSize = 38, OffsetX = 0, OffsetY = yStart, Color = {1.000, 0.776, 0.000, 1.0}, Font = "SpectralSCExtraLight", ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
+	CreateTextBox({ Id = components.ShopBackground.Id, Text = "ShrineMenu_Flavor", FontSize = 15, OffsetX = 0, OffsetY = yStart + 45, Width = 840, Color = {1.000, 0.443, 0.110, 1.0}, Font = "CrimsonTextItalic", ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
+
+	CreateTextBox({ Id = components.ShopBackground.Id, Text = "ShrineMenu_SubHead", FontSize = 24, OffsetX = -620, OffsetY = yStart + 130, Width = 1080, Color = Color.White, Font = "AlegreyaSansSCExtraBold", ShadowBlur = 0, ShadowColor = {0,0,0,255}, ShadowOffset={0, 1}, Justification = "Left", VerticalJustification = "CENTER", TextSymbolScale = 1.0 })
+
+	if not screen.ReadOnly then
+		CreateTextBox({ Id = components.ShopBackground.Id, Text = "ShrineMenu_Hint", FontSize = 18, OffsetX = -475, OffsetY = yStart + 825, Width = 540, Color = {255, 255, 255, 240}, Font = "AlegreyaSansRegular", ShadowBlur = 0, ShadowColor = {0,0,0,0}, ShadowOffset={0, 1}, ShadowAlpha=0.5, Justification = "Center", LineSpacingBottom = 10, Scale = 0 })
+	end
+
+	local weaponName = GetEquippedWeapon()
+	components.WeaponTitle = CreateScreenComponent({ Name = "BlankObstacle", X = ScreenCenterX, Y = ScreenCenterY, Group = "Combat_Menu" })
+	Attach({ Id = components.WeaponTitle, DestinationId = components.ShopBackground.Id })
+
+	components.WeaponImage = CreateScreenComponent({ Name = "rectangle01", Group = "Combat_Menu_TraitTray", X = 250, Y = 470 })
+	SetAnimation({ DestinationId = components.WeaponImage.Id, Name = GetWeaponAspectImage( weaponName ) })
+
+	SetThingProperty({ Property = "Ambient", Value = 0.0, DestinationId = components.WeaponImage.Id })
+
+	local text = "RequiredShrineThreshold"
+	local weaponName = GetEquippedWeapon()
+	local currentShrineThreshold = GetCurrentRunClearedShrinePointThreshold( weaponName )
+	if not IsShrinePointLevelFullyCleared( GetEquippedWeapon(), 0 ) and GetLastClearedShrinePointThreshold( weaponName ) <= 0 and not GameState.Flags.HardMode then
+		text = "RequiredShrineThreshold_Zero"
+	elseif currentShrineThreshold > GetMaximumAllocatableShrinePoints() then
+		currentShrineThreshold = GetMaximumAllocatableShrinePoints()
+		text = "RequiredShrineThreshold_AtSoftLimit"
+		if not IsShrinePointLevelFullyCleared( GetEquippedWeapon(), 0 ) and not GameState.Flags.HardMode then
+			text = "RequiredShrineThreshold_AtSoftLimit_ZeroLimitUncleared"
+		end
+	end
+
+	CreateTextBox({ Id = components.WeaponTitle.Id, Text = text, FontSize = 20, OffsetX = -600, OffsetY = yStart + 235, Width = 540, Color = Color.White, Font = "AlegreyaSansSCRegular", ShadowBlur = 0, ShadowColor = {0,0,0,255}, ShadowOffset={0, 1}, Justification = "Left", VerticalJustification = "CENTER", LineSpacingBottom = 10, TextSymbolScale = 1.0, LuaKey = "TempTextData", LuaKey = "TempTextData", LuaValue = { Limit = GetShrinePointLimit(), WeaponName = weaponName },
+		LangRuScaleModifier = 0.9,
+		LangPlScaleModifier = 0.9,
+		LangItScaleModifier = 0.9,
+		LangKoScaleModifier = 0.9,
+		LangCnScaleModifier = 0.9
+	})
+		-- Alert text
+	components.LocationAlerts = CreateScreenComponent({ Name = "BlankObstacle", X = ScreenCenterX, Y = ScreenCenterY, Group = "Combat_Menu" })
+	Attach({ Id = components.LocationAlerts, DestinationId = components.ShopBackground.Id })
+
+	components.LocationAlertHeader = CreateScreenComponent({ Name = "BlankObstacle", X = ScreenCenterX, Y = ScreenCenterY, Group = "Combat_Menu" })
+	Attach({ Id = components.LocationAlertHeader, DestinationId = components.ShopBackground.Id })
+
+	components.ThresholdText = CreateScreenComponent({ Name = "BlankObstacle", X = ScreenCenterX - 210, Y = ScreenCenterY - 15, Group = "Combat_Menu" })
+	Attach({ Id = components.ThresholdText, DestinationId = components.ShopBackground.Id })
+	CreateTextBox({ Id = components.ThresholdText.Id, Text = "Blank", FontSize = 18, Width = 600, Color = Color.White, Font = "AlegreyaSansRegular", ShadowBlur = 0, ShadowColor = {0,0,0,0}, ShadowOffset={0, 1}, Justification = "Center", VerticalJustification = "CENTER", TextSymbolScale = 1.0, LineSpacingBottom = 8, OffsetX = -155, OffsetY = -26,
+		LangRuScaleModifier = 0.7,
+		LangPlScaleModifier = 0.8,
+		LangKoScaleModifier = 0.7,
+	})
+
+
+	-- location rewards
+
+	local locationY = yStart + 678
+	local locationMarkY = locationY - 35
+
+	local locationXSpacer = 124
+	local locationX = -548
+	local iconOffsetX = -18
+	local iconOffsetY = -22
+	local checkMarkOffsetX = 18
+	local checkMarkOffsetY = 16
+
+	local rewardShrineAmount = GetTotalSpentShrinePoints()
+	if rewardShrineAmount > GetCurrentRunClearedShrinePointThreshold( weaponName ) then
+		rewardShrineAmount = GetCurrentRunClearedShrinePointThreshold( weaponName )
+	end
+
+	CreateTextBox({ Id = components.LocationAlertHeader.Id, Text = "ShrineRewardBiomeProgress", FontSize = 22, OffsetX = -580, OffsetY = locationY - 160, Width = 580, Color = Color.White, Font = "AlegreyaSansSCBold", ShadowBlur = 0, ShadowColor = {0,0,0,255}, ShadowOffset={0, 1}, Justification = "Left", VerticalJustification = "Top", TextSymbolScale = 0.75, LuaKey = "TempTextData", LineSpacingBottom = 12, LuaValue = { ShrinePointThreshold = rewardShrineAmount, WeaponName = WeaponData[GetEquippedWeapon()].ShortName },
+		LangRuScaleModifier = 0.75,
+		LangPlScaleModifier = 0.75,
+		LangKoScaleModifier = 0.85,
+	})
+
+	screen.ClearIndicatorIds = {}
+
+	if HasSeenRoom( "RoomOpening" ) then
+		CreateTextBox({ Id = components.LocationAlerts.Id, Text = "Location_Tartarus", FontSize = 14, OffsetX = locationX, OffsetY = locationY, Width = 200, Color = Color.White, Font = "AlegreyaSansSCBold", ShadowBlur = 0, ShadowColor = {0,0,0,0}, ShadowOffset={0, 1}, Justification = "Center", VerticalJustification = "Top", TextSymbolScale = 1.0, LuaKey = "TempTextData", LuaValue = { TartarusCleared = tartarusText, AsphodelCleared = asphodelText, ElysiumCleared = elysiumText, StyxCleared = styxText } })
+	end
+	components.TartarusClearIndicator = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu" })
+	Attach({ Id = components.TartarusClearIndicator.Id, DestinationId = components.LocationAlerts.Id, OffsetX = locationX + checkMarkOffsetX, OffsetY = locationMarkY + checkMarkOffsetY})
+	components.TartarusClearRewardIndicator = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu" })
+	SetScale({ Id = components.TartarusClearRewardIndicator.Id, Fraction = 0.8})
+	Attach({ Id = components.TartarusClearRewardIndicator.Id, DestinationId = components.TartarusClearIndicator.Id, OffsetX = iconOffsetX, OffsetY = iconOffsetY })
+	table.insert( screen.ClearIndicatorIds, components.TartarusClearIndicator.Id )
+	table.insert( screen.ClearIndicatorIds, components.TartarusClearRewardIndicator.Id )
+	locationX = locationX + locationXSpacer
+
+	if HasSeenRoom( "B_Intro" ) then
+		CreateTextBox({ Id = components.LocationAlerts.Id, Text = "Location_Asphodel", FontSize = 14, OffsetX = locationX, OffsetY = locationY, Width = 200, Color = Color.White, Font = "AlegreyaSansSCBold", ShadowBlur = 0, ShadowColor = {0,0,0,0}, ShadowOffset={0, 1}, Justification = "Center", VerticalJustification = "Top", TextSymbolScale = 1.0, LuaKey = "TempTextData", LuaValue = { TartarusCleared = tartarusText, AsphodelCleared = asphodelText, ElysiumCleared = elysiumText, StyxCleared = styxText } })
+	end
+	components.AsphodelClearIndicator = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu" })
+	Attach({ Id = components.AsphodelClearIndicator.Id, DestinationId = components.LocationAlerts.Id, OffsetX = locationX + checkMarkOffsetX, OffsetY = locationMarkY + checkMarkOffsetY})
+	components.AsphodelClearRewardIndicator = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu" })
+	SetScale({ Id = components.AsphodelClearRewardIndicator.Id, Fraction = 0.8})
+	Attach({ Id = components.AsphodelClearRewardIndicator.Id, DestinationId = components.AsphodelClearIndicator.Id, OffsetX = iconOffsetX, OffsetY = iconOffsetY })
+	table.insert( screen.ClearIndicatorIds, components.AsphodelClearIndicator.Id )
+	table.insert( screen.ClearIndicatorIds, components.AsphodelClearRewardIndicator.Id )
+	locationX = locationX + locationXSpacer
+
+	if HasSeenRoom( "C_Intro" ) then
+		CreateTextBox({ Id = components.LocationAlerts.Id, Text = "Location_Elysium", FontSize = 14, OffsetX = locationX,	OffsetY = locationY, Width = 200, Color = Color.White, Font = "AlegreyaSansSCBold", ShadowBlur = 0, ShadowColor = {0,0,0,0}, ShadowOffset={0, 1}, Justification = "Center", VerticalJustification = "Top", TextSymbolScale = 1.0, LuaKey = "TempTextData", LuaValue = { TartarusCleared = tartarusText, AsphodelCleared = asphodelText, ElysiumCleared = elysiumText, StyxCleared = styxText } })
+	end
+	components.ElysiumClearIndicator = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu" })
+	Attach({ Id = components.ElysiumClearIndicator.Id, DestinationId = components.LocationAlerts.Id, OffsetX = locationX + checkMarkOffsetX, OffsetY = locationMarkY + checkMarkOffsetY})
+	components.ElysiumClearRewardIndicator = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu" })
+	SetScale({ Id = components.ElysiumClearRewardIndicator.Id, Fraction = 0.8})
+	Attach({ Id = components.ElysiumClearRewardIndicator.Id, DestinationId = components.ElysiumClearIndicator.Id, OffsetX = iconOffsetX, OffsetY = iconOffsetY })
+	table.insert( screen.ClearIndicatorIds, components.ElysiumClearIndicator.Id )
+	table.insert( screen.ClearIndicatorIds, components.ElysiumClearRewardIndicator.Id )
+	locationX = locationX + locationXSpacer
+
+	if HasSeenRoom( "D_Intro" ) then
+		CreateTextBox({ Id = components.LocationAlerts.Id, Text = "Location_Styx_Short", FontSize = 14, OffsetX = locationX, OffsetY = locationY, Width = 150, Color = Color.White, Font = "AlegreyaSansSCBold", ShadowBlur = 0, ShadowColor = {0,0,0,0}, ShadowOffset={0, 1}, Justification = "Center", VerticalJustification = "Top", TextSymbolScale = 1.0, LuaKey = "TempTextData", LuaValue = { TartarusCleared = tartarusText, AsphodelCleared = asphodelText, ElysiumCleared = elysiumText, StyxCleared = styxText } })
+	end
+	components.StyxClearIndicator = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu" })
+	Attach({ Id = components.StyxClearIndicator.Id, DestinationId = components.LocationAlerts.Id, OffsetX = locationX + checkMarkOffsetX, OffsetY = locationMarkY + checkMarkOffsetY})
+	components.StyxClearRewardIndicator = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu" })
+	SetScale({ Id = components.StyxClearRewardIndicator.Id, Fraction = 0.8})
+	Attach({ Id = components.StyxClearRewardIndicator.Id, DestinationId = components.StyxClearIndicator.Id, OffsetX = iconOffsetX, OffsetY = iconOffsetY })
+	table.insert( screen.ClearIndicatorIds, components.StyxClearIndicator.Id )
+	table.insert( screen.ClearIndicatorIds, components.StyxClearRewardIndicator.Id )
+	-- Subtitle
+
+	if not screen.ReadOnly then
+		local pointsSpent = GetTotalSpentShrinePoints()
+		local bonus = (pointsSpent * CurrentRun.Hero.ShrinePointMetaPointBonusMultiplier) * 100
+		components.SubtitleMetaPointBonus = CreateScreenComponent({ Name = "BlankObstacle", X = ScreenCenterX, Y = ScreenCenterY, Group = "Combat_Menu" })
+		screen.SubtitleMetaPointBonusText = "ShrineMenu_Subtitle_MetaPointBonus"
+		CreateTextBox({ Id = components.SubtitleMetaPointBonus.Id, Text = screen.SubtitleMetaPointBonusText, FontSize = 24, OffsetX = -232, OffsetY = yStart + 195, Width = 840, Color = Color.White, Font = "AlegreyaSansSCBold", ShadowBlur = 0, ShadowColor = {0,0,0,255}, ShadowOffset={0, 1}, Justification = "Right", TextSymbolScale = 1.0, LuaKey = "TempTextData", LuaValue = { Current = pointsSpent, Limit = GetShrinePointLimit()} })
+
+		components.SubTitle = CreateScreenComponent({ Name = "BlankObstacle", X = ScreenCenterX, Y = ScreenCenterY, Group = "Combat_Menu" })
+
+		components.SpentShrinePoints = CreateScreenComponent({ Name = "BlankObstacle", X = ScreenCenterX, Y = ScreenCenterY, Group = "Combat_Menu" })
+		CreateTextBox({ Id = components.SpentShrinePoints.Id, Text = screen.SubtitleText, FontSize = 26, OffsetX = -165, OffsetY = yStart + 385, Width = 840, Color = Color.White, Font = "AlegreyaSansSCBold", ShadowBlur = 0, ShadowColor = {0,0,0,255}, ShadowOffset={0, 1}, Justification = "Center", TextSymbolScale = 1.0, LuaKey = "TempTextData", LuaValue = { CurrentAmount = pointsSpent, Limit = GetShrinePointLimit()},
+			LangRuScaleModifier = 0.65,
+			LangPlScaleModifier = 0.65
+		})
+
+		if GameState.Flags.HardMode and GameState.SpentShrinePointsCache < currentShrineThreshold then
+			local shrinePointThreshold = GetCurrentRunClearedShrinePointThreshold( weaponName )
+			local shrinePointsSpent = GameState.SpentShrinePointsCache or 5
+			if shrinePointsSpent < shrinePointThreshold then
+				thread( HardModeShrinePointThresholdIncreasedPresentation, screen )
+			end
+		end
+	end
+
+	if not screen.ReadOnly then
+		local hasLockedUpgrades = false
+		for k, upgradeName in pairs( ShrineUpgradeOrder ) do
+			if not GameState.MetaUpgradesUnlocked[upgradeName] then
+				hasLockedUpgrades = true
+				break
+			end
+		end
+
+		if hasLockedUpgrades then
+			components.SubTitleKeys = CreateScreenComponent({ Name = "BlankObstacle", X = ScreenCenterX, Y = ScreenCenterY, Group = "Combat_Menu" })
+			Attach({ Id = components.SubTitleKeys, DestinationId = components.ShopBackground.Id })
+
+			local keyAmount = GameState.Resources.LockKeys or 0
+			local superKeyAmount = GameState.Resources.SuperLockKeys or 0
+			CreateTextBox({ Id = components.SubTitleKeys.Id, Text = "MetaUpgradeMenu_Subtitle_Key", FontSize = 26, OffsetX = 205, OffsetY = -225, Width = 840, Color = Color.White, Font = "AlegreyaSansSCBold", ShadowBlur = 0, ShadowColor = {68,68,68,255}, ShadowOffset={0, 1}, Justification = "Right", TextSymbolScale = 0.8, LuaKey = "TempTextData", LuaValue = { CurrentKeys = keyAmount, CurrentSuperKeys = superKeyAmount }})
+		end
+	end
+
+	-- Info button
+	components.InfoButton = CreateScreenComponent({ Name = "ShrineUpgradeMenuInfo", Scale = 1.0, Group = "Combat_Menu" })
+	Attach({ Id = components.InfoButton.Id, DestinationId = components.ShopBackground.Id, OffsetX = -300, OffsetY = 456 })
+	components.InfoButton.OnPressedFunctionName = "ShowShrineInfo"
+	-- CreateTextBox({ Id = components.InfoButton.Id, Text = "ShrineMenu_Info", FontSize = 18, Color = Color.White, Font = "AlegreyaSansSCBold", ShadowBlur = 0, ShadowColor = {68,68,68,255}, ShadowOffset={0, 1}, Justification = "Center", TextSymbolScale = 0.8, })
+	components.InfoButton.ControlHotkey = "MenuInfo"
+
+	-- Close button
+	components.CloseButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 1, Group = "Combat_Menu" })
+	Attach({ Id = components.CloseButton.Id, DestinationId = components.ShopBackground.Id, OffsetX = -440, OffsetY = 456 })
+	components.CloseButton.OnPressedFunctionName = "CloseShrineUpgradeScreen"
+	components.CloseButton.OnPressedGlobalVoiceLines = "SkellyClosedShrineReactionVoiceLines"
+	components.CloseButton.ControlHotkey = "Cancel"
+
+
+	if not args or not args.BlockRunStartButton then
+		components.StartButton = CreateScreenComponent({ Name = "ShrineUpgradeMenuConfirm", Scale = 1, Group = "Combat_Menu" })
+		Attach({ Id = components.StartButton.Id, DestinationId = components.ShopBackground.Id, OffsetX = 400, OffsetY = 456 })
+		components.StartButton.OnPressedFunctionName = "CloseShrineUpgradeScreenAndStartOver"
+		CreateTextBox({ Id = components.StartButton.Id, Text = "ShrineMenu_Confirm", FontSize = 26, Color = Color.White, Font = "AlegreyaSansSCBold", ShadowBlur = 0, ShadowColor = {68,68,68,255}, ShadowOffset={0, 1}, Justification = "Center", TextSymbolScale = 0.8, })
+		components.StartButton.ControlHotkey = "Confirm"
+	end
+
+	--Mod start
+	components.ResetButton = CreateScreenComponent({ Name = "ShrineUpgradeMenuConfirm", Scale = 1, Group = "Combat_Menu" })
+	Attach({ Id = components.ResetButton.Id, DestinationId = components.ShopBackground.Id, OffsetX = 0, OffsetY = 456 })
+	components.ResetButton.OnPressedFunctionName = "ResetShrine"
+	CreateTextBox({ Id = components.ResetButton.Id, Text = "Reset Options", FontSize = 26, Color = Color.White, Font = "AlegreyaSansSCBold", ShadowBlur = 0, ShadowColor = {68,68,68,255}, ShadowOffset={0, 1}, Justification = "Center", TextSymbolScale = 0.8, })
+	--Mod end
+
+	components.LevelUpStatHighlight = CreateScreenComponent({ Name = "ShrineStatHighlight", Group = "Combat_Menu" })
+	SetAlpha({ Id = components.LevelUpStatHighlight.Id, Fraction = 0.0 })
+	ScreenAnchors.LevelUpStatHighlightId = components.LevelUpStatHighlight.Id
+
+	local itemLocationX = ScreenCenterX + 280 - 68
+	local itemLocationY = yStart + 765
+	local firstUseable = false
+	for k, upgradeName in ipairs( ShrineUpgradeOrder ) do
+		local upgradeData = MetaUpgradeData[upgradeName]
+		local itemBackingKey = "Backing"..k
+		components[itemBackingKey] = CreateScreenComponent({ Name = "BlankObstacle", X = itemLocationX, Y = itemLocationY, Group = "Combat_Menu" })
+
+		local graphicKey = "Graphic"..k
+		components[graphicKey] = CreateScreenComponent({ Name = "BlankObstacle", X = itemLocationX, Y = itemLocationY, Scale = 0.7, Group = "Combat_Menu" })
+		Attach({ Id = components[graphicKey].Id, DestinationId = components[itemBackingKey].Id, OffsetX = -265 - 30, OffsetY = -30 })
+
+		if ( upgradeData.GameStateRequirements ~= nil and not IsGameStateEligible( CurrentRun, upgradeData.GameStateRequirements ) and not args.IgnoreRequirements ) then
+			-- Leave blank
+		elseif GetNumMetaUpgrades( upgradeName ) > 0 or not upgradeData.RequiredHeatThreshold or GetHighestRunClearShrinePointThreshold() >= upgradeData.RequiredHeatThreshold or ( upgradeData.RequiredPreUpdateSevenHeatThreshold and GetPreUpdateSevenHighestShrinePointRunClear() > upgradeData.RequiredPreUpdateSevenHeatThreshold ) then
+			if not GameState.MetaUpgradesUnlocked[upgradeName] and not screen.ReadOnly then
+				CreateTextBox({ Id = components[itemBackingKey].Id, Text = upgradeData.Name,
+					FontSize = 21,
+					OffsetX = LevelUpUI.TextInfoBaseX, OffsetY = -30,
+					Color = Color.ShrineAttributeLocked,
+					Font = "AlegreyaSansSCExtraBold",
+					ShadowBlur = 0, ShadowColor = {0,0,0,255}, ShadowOffset={0, 2},
+					Justification = "Left" })
+
+				local unlockId = "Locked"..k
+				local metaUpgradeNextCostKey = "UpgradeCost"..k
+
+				local button = CreateUnlockButton( upgradeData, { Screen = screen, OffsetX = itemLocationX, OffsetY = itemLocationY, Index = k, IsEnabled = HasResource( upgradeData.ResourceName, upgradeData.UnlockCost ), KeyCostKey = metaUpgradeNextCostKey } )
+				button.ResourceName = screen.ResourceName
+
+				components[metaUpgradeNextCostKey] = CreateScreenComponent({ Name = "BlankObstacle", X = ScreenCenterX, Y = itemLocationY, Group = "Combat_Menu" })
+				Attach({ Id = components[metaUpgradeNextCostKey].Id, DestinationId = components[unlockId].Id })
+
+				local color = Color.White
+				if not HasResource( upgradeData.ResourceName, upgradeData.UnlockCost ) then
+					color = Color.MetaUpgradePointsInvalid
+				end
+
+				local text = "Blank"
+				if ResourceData[ upgradeData.ResourceName ] and ResourceData[ upgradeData.ResourceName ].RequirementText then
+					text = ResourceData[ upgradeData.ResourceName ].RequirementText
+				end
+				CreateTextBox({
+					Id = components[metaUpgradeNextCostKey].Id, Text = text,
+					LuaKey = "TempTextData", LuaValue = { Amount = tostring(upgradeData.UnlockCost) },
+					FontSize = 26,
+					OffsetX = 160, OffsetY = 0,
+					TextSymbolScale = 0.85,
+					Color = color,
+					Font = "AlegreyaSansSCRegular",
+					ShadowBlur = 0, ShadowColor = {96,96,96,255}, ShadowOffset={0, 1},
+					Justification = "Right" })
+
+				local lockIconKey = "LockIcon"..k
+				components[lockIconKey] = CreateScreenComponent({ Name = "BlankObstacle", X = ScreenCenterX, Y = itemLocationY, Group = "Combat_Menu" })
+				Attach({ Id = components[lockIconKey].Id, DestinationId = components[unlockId].Id, OffsetX = -530, OffsetY = -2 })
+				SetAnimation({ Name = "LockedIcon", DestinationId = components[lockIconKey].Id, Scale = 1.0 })
+			else
+				CreateMetaUpgradeEntry( { Screen = screen, Components = components, Data = upgradeData, Index = k, OffsetY = itemLocationY } )
+			end
+		elseif upgradeData.RequiredHeatThreshold and not screen.ReadOnly  then
+			CreateTextBox({ Id = components[itemBackingKey].Id, Text = "UnknownShrineUpgrade",
+				FontSize = 21,
+				OffsetX = LevelUpUI.TextInfoBaseX, OffsetY = -30,
+				Color = Color.ShrineAttribute,
+				Font = "AlegreyaSansSCExtraBold",
+				ShadowBlur = 0, ShadowColor = {0,0,0,0}, ShadowOffset={0, 1},
+				Justification = "Left",
+				LuaKey = "TempTextData", LuaValue = { Amount = tostring(upgradeData.RequiredHeatThreshold) },
+			})
+		end
+		itemLocationY = itemLocationY + LevelUpUI.MetaUpgradeSpacer
+	end
+
+	UpdateButtonStates( screen )
+
+	if firstView then
+		ShowShrineInfo( screen )
+		TeleportCursor({ OffsetX = 1470, OffsetY = 280, ForceUseCheck = true })
+	else
+		TeleportCursor({ OffsetX = ScreenCenterX + 300, OffsetY = ScreenCenterY + 456, ForceUseCheck = true })
+	end
+
+	screen.KeepOpen = true
+	thread( HandleWASDInput, screen )
+	HandleScreenInput( screen )
+
+end
+
+function ResetShrine(screen, button)
+	for k, upgradeName in pairs( ShrineUpgradeOrder ) do
+		local upgradeData = MetaUpgradeData[upgradeName]
+		if GameState.MetaUpgrades[upgradeName] ~= nil and GameState.MetaUpgrades[upgradeName] > 0 then
+			while GameState.MetaUpgrades[upgradeName] > 0 do
+				DecrementTableValue( GameState.MetaUpgrades, upgradeName )
+				ApplyMetaUpgrade( upgradeData, true, GameState.MetaUpgrades[upgradeName] <= 0, true )
+			end
+		end
+	end
+	CloseShrineUpgradeScreen(screen, button)
+	OpenShrineUpgradeMenu()
+end
