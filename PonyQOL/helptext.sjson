@@ -1,0 +1,9 @@
+{
+    Texts = [
+        "_append"
+        {
+        Id = "BoonInfo_RequiredInactiveMetaupgrade"
+        DisplayName = "{#BoldFormatGraftNoColor}{$TempTextData.MetaupgradeName} {#PreviousFormat}Inactive"
+        }
+    ]
+}
