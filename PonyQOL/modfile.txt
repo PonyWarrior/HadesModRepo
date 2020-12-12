@@ -1,3 +1,3 @@
 Import "PonyQOL.lua"
-To "Game/Text/HelpText.en.sjson"
+To "Game/Text/en/HelpText.en.sjson"
 SJSON "helptext.sjson"

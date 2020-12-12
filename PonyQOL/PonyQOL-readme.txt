@@ -33,5 +33,9 @@ added bulk buy toggle to wretched broker
 
 2.1.1
 
+fixed issues:
+game sometimes crashes when entering rooms with a charon well
+incorrect modfile.txt
+
 new features:
 added reset button to pact

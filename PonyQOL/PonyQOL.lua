@@ -1884,3 +1884,47 @@ function ResetShrine(screen, button)
 	CloseShrineUpgradeScreen(screen, button)
 	OpenShrineUpgradeMenu()
 end
+
+--fix a bullshit crash
+function IsTraitEligible( currentRun, traitData )
+	--Mod start
+	if traitData == nil then
+		return false
+	end
+	--Mod end
+
+	if traitData.MaxAmount ~= nil and traitData.MaxAmount <= GetTraitCount(CurrentRun.Hero, traitData) then
+		return false
+	end
+
+	if not IsGameStateEligible( currentRun, traitData ) then
+		return
+	end
+
+	return true
+end
+
+--Add Commendations tab to codex
+-- local Commendations =
+-- {
+-- 	Order = {}
+-- }
+-- for _, msg in pairs(GameData.RunClearMessageData) do
+-- 	if msg ~= GameData.RunClearMessageData.DefaultMessage then
+-- 		table.insert(Commendations.Order, ModUtil.ToString(msg))
+-- 	end
+-- end
+-- table.insert(CodexOrdering.Order, "Commendations")
+-- table.insert(CodexOrdering, Commendations)
+-- DebugPrint({Text = "test"})
+-- Commendations =
+-- {
+-- 	TitleText = "Codex_ChthonicGodsChapter",
+-- 	Entries = GameData.RunClearMessageData,
+-- }
+-- Commendations.Entries.DefaultMessage = nil
+-- Codex.Commendations = Commendations
+-- for i, entry in pairs(Codex.Commendations.Entries) do
+-- 	entry = {}
+-- end
+
