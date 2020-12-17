@@ -1,0 +1,11 @@
+Import scripts.lua
+To Game\Animations\GUIAnimations.sjson
+SJSON guianimations.sjson
+To Win/Packages/AC.pkg
+Replace AC.pkg
+To Win/Packages/720p/AC.pkg
+Replace AC.pkg
+To Win/Packages/AC.pkg_manifest
+Replace AC.pkg_manifest
+To Win/Packages/720p/AC.pkg_manifest
+Replace AC.pkg_manifest

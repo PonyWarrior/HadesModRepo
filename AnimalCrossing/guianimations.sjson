@@ -1,0 +1,23 @@
+{
+    Animations = [
+        "_append"
+    {
+      Name = "AnimalCrossingTextboxIn"
+      FilePath = "AC\ac_zagreus_textbox\ac_zagreus_textbox"
+      Type = "Book"
+      EndFrame = 242
+      NumFrames = 242
+      PlaySpeed = 30.0
+      StartFrame = 1
+      SortMode = "Id"
+      Material = "Unlit"
+      Sound = "/SFX/Menu Sounds/FishPanelIn"
+    }
+
+    {
+      Name = "AnimalCrossingTextboxOut"
+      InheritFrom = "LocationTextBGOut"
+      FilePath = "AC\ac_zagreus_textbox\ac_zagreus_textbox"
+    }
+    ]
+}
