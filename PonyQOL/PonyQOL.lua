@@ -1904,27 +1904,774 @@ function IsTraitEligible( currentRun, traitData )
 	return true
 end
 
---Add Commendations tab to codex
--- local Commendations =
--- {
--- 	Order = {}
--- }
--- for _, msg in pairs(GameData.RunClearMessageData) do
--- 	if msg ~= GameData.RunClearMessageData.DefaultMessage then
--- 		table.insert(Commendations.Order, ModUtil.ToString(msg))
--- 	end
--- end
--- table.insert(CodexOrdering.Order, "Commendations")
--- table.insert(CodexOrdering, Commendations)
--- DebugPrint({Text = "test"})
--- Commendations =
--- {
--- 	TitleText = "Codex_ChthonicGodsChapter",
--- 	Entries = GameData.RunClearMessageData,
--- }
--- Commendations.Entries.DefaultMessage = nil
--- Codex.Commendations = Commendations
--- for i, entry in pairs(Codex.Commendations.Entries) do
--- 	entry = {}
--- end
+--Add Commendations codex tab
+local Commendations =
+{
+	Order =
+	{
+		"ClearNumOne",
+		"ClearNumTen",
+		"ClearNumFifty",
+		"ClearNumOneHundred",
+		"ClearNumTwoFifty",
+		"ClearNumFiveHundred",
+		"ClearNearDeath",
+		"ClearFullHealth",
+		"ClearHighMaxHealth",
+		"ClearTimeFast",
+		"ClearTimeVeryFast",
+		"ClearTimeSlow",
+		"ClearMoneyNone",
+		"ClearMoneyHigh",
+		"ClearMetaPointsInvestedNone",
+		"ClearNoOlympianBoons",
+		"ClearAllStoryRooms",
+		"ClearAllReprieveRooms",
+		"ClearAllShopRooms",
+		"ClearRequiredTraitsZeus",
+		"ClearRequiredTraitsPoseidon",
+		"ClearRequiredTraitsAthena",
+		"ClearRequiredTraitsAres",
+		"ClearRequiredTraitsArtemis",
+		"ClearRequiredTraitsAphrodite",
+		"ClearRequiredTraitsDionysus",
+		"ClearRequiredTraitsDemeter",
+		"ClearRequiredTraitsHermes",
+		"ClearRequiredTraitsChaos",
+		"ClearSynergyTraits",
+		"ClearLegendaryTraits",
+		"ClearChallengeSwitches",
+		"ClearDevotionEncounters",
+		"ClearShrineChallengeEncounters",
+		"ClearMiniBossEncounters",
+		"ClearWeaponsFiredWrath",
+		"ClearWeaponsFiredRanged",
+		"ClearFishCaught",
+		"ClearConsecutiveHigh",
+		"ClearHealItems",
+		"ClearStackUpgrades",
+		"ClearGiftDrops",
+		"ClearLockKeyDrops",
+		"ClearConsolationPrizes",
+		"ClearManyLastStands",
+		"ClearShutDownThanatos",
+		"ClearManyTraitsSold",
+	}
+}
 
+table.insert(CodexOrdering.Order, "Commendations")
+CodexOrdering.Commendations = Commendations
+
+Commendations =
+{
+	UnlockType = CodexUnlockTypes.Mystery,
+	TitleText = "Commendations",
+	Entries =
+	{
+		ClearNumOne =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0001"
+				},
+				{
+					Text = "Commendation_0002",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearNumTen =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0003"
+				},
+				{
+					Text = "Commendation_0004",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearNumFifty =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0005"
+				},
+				{
+					Text = "Commendation_0006",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearNumOneHundred =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0007"
+				},
+				{
+					Text = "Commendation_0008",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearNumTwoFifty =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0009"
+				},
+				{
+					Text = "Commendation_0010",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearNumFiveHundred =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0011"
+				},
+				{
+					Text = "Commendation_0012",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearNearDeath =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0013"
+				},
+				{
+					Text = "Commendation_0014",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearFullHealth =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0015"
+				},
+				{
+					Text = "Commendation_0016",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearHighMaxHealth =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0017"
+				},
+				{
+					Text = "Commendation_0018",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearTimeFast =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0019"
+				},
+				{
+					Text = "Commendation_0020",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearTimeVeryFast =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0021"
+				},
+				{
+					Text = "Commendation_0022",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearTimeSlow =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0023"
+				},
+				{
+					Text = "Commendation_0024",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearMoneyNone =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0025"
+				},
+				{
+					Text = "Commendation_0026",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearMoneyHigh =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0027"
+				},
+				{
+					Text = "Commendation_0028",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearMetaPointsInvestedNone =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0029"
+				},
+				{
+					Text = "Commendation_0030",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearNoOlympianBoons =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0031"
+				},
+				{
+					Text = "Commendation_0032",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearAllStoryRooms =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0033"
+				},
+				{
+					Text = "Commendation_0034",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearAllReprieveRooms =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0035"
+				},
+				{
+					Text = "Commendation_0036",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearAllShopRooms =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0037"
+				},
+				{
+					Text = "Commendation_0038",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearRequiredTraitsZeus =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0039"
+				},
+				{
+					Text = "Commendation_0040",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearRequiredTraitsPoseidon =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0041"
+				},
+				{
+					Text = "Commendation_0042",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearRequiredTraitsAthena =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0043"
+				},
+				{
+					Text = "Commendation_0044",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearRequiredTraitsAres =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0045"
+				},
+				{
+					Text = "Commendation_0046",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearRequiredTraitsArtemis =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0047"
+				},
+				{
+					Text = "Commendation_0048",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearRequiredTraitsAphrodite =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0049"
+				},
+				{
+					Text = "Commendation_0050",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearRequiredTraitsDionysus =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0051"
+				},
+				{
+					Text = "Commendation_0052",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearRequiredTraitsDemeter =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0053"
+				},
+				{
+					Text = "Commendation_0054",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearRequiredTraitsHermes =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0055"
+				},
+				{
+					Text = "Commendation_0056",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearRequiredTraitsChaos =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0057"
+				},
+				{
+					Text = "Commendation_0058",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearSynergyTraits =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0059"
+				},
+				{
+					Text = "Commendation_0060",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearLegendaryTraits =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0061"
+				},
+				{
+					Text = "Commendation_0062",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearChallengeSwitches =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0063"
+				},
+				{
+					Text = "Commendation_0064",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearDevotionEncounters =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0065"
+				},
+				{
+					Text = "Commendation_0066",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearShrineChallengeEncounters =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0067"
+				},
+				{
+					Text = "Commendation_0068",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearMiniBossEncounters =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0069"
+				},
+				{
+					Text = "Commendation_0070",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearWeaponsFiredWrath =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0071"
+				},
+				{
+					Text = "Commendation_0072",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearWeaponsFiredRanged =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0073"
+				},
+				{
+					Text = "Commendation_0074",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearFishCaught =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0075"
+				},
+				{
+					Text = "Commendation_0076",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearConsecutiveHigh =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0077"
+				},
+				{
+					Text = "Commendation_0078",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearHealItems =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0079"
+				},
+				{
+					Text = "Commendation_0080",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearStackUpgrades =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0081"
+				},
+				{
+					Text = "Commendation_0082",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearGiftDrops =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0083"
+				},
+				{
+					Text = "Commendation_0084",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearLockKeyDrops =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0085"
+				},
+				{
+					Text = "Commendation_0086",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearConsolationPrizes =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0087"
+				},
+				{
+					Text = "Commendation_0088",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearManyLastStands =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0089"
+				},
+				{
+					Text = "Commendation_0090",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearShutDownThanatos =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0091"
+				},
+				{
+					Text = "Commendation_0092",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+		ClearManyTraitsSold =
+		{
+			Entries =
+			{
+				{
+					Text = "Commendation_0093"
+				},
+				{
+					Text = "Commendation_0094",
+					UnlockType = CodexUnlockTypes.Mystery,
+					UnlockThreshold = 1,
+				}
+			}
+		},
+	}
+}
+Codex.Commendations = Commendations
+
+local baseShowRunClearScreen = ShowRunClearScreen
+function ShowRunClearScreen()
+	baseShowRunClearScreen()
+	for name, message in pairs( GameData.RunClearMessageData ) do
+		if IsGameStateEligible( CurrentRun, message.GameStateRequirements ) then
+			UnlockCodexEntry("Commendations", message.Name, 2)
+		end
+	end
+end
+
+OnControlPressed{ "Shout",
+  function(triggerArgs)
+    while IsControlDown({ Name = "Shout" }) do
+	  if IsControlDown({ Name = "Reload" }) then
+		ShowRunClearScreen()
+        return
+      end
+      wait(0.1)
+    end
+end}
+
+function CheckRunCompletionCommendations()
+	local totalRuns = GetNumRunsCleared()
+	if totalRuns >= 1 then
+		UnlockCodexEntry("Commendations", "ClearNumOne", 2)
+	end
+	if totalRuns >= 10 then
+		UnlockCodexEntry("Commendations", "ClearNumTen", 2)
+	end
+	if totalRuns >= 50 then
+		UnlockCodexEntry("Commendations", "ClearNumFifty", 2)
+	end
+	if totalRuns >= 100 then
+		UnlockCodexEntry("Commendations", "ClearNumOneHundred", 2)
+	end
+	if totalRuns >= 250 then
+		UnlockCodexEntry("Commendations", "ClearNumTwoFifty", 2)
+	end
+	if totalRuns >= 500 then
+		UnlockCodexEntry("Commendations", "ClearNumFiveHundred", 2)
+	end
+end
+OnAnyLoad{"DeathArea",function(triggerArgs)
+	CheckRunCompletionCommendations()
+  end}
