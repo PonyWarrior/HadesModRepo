@@ -39,3 +39,17 @@ incorrect modfile.txt
 
 new features:
 added reset button to pact
+
+2.2.0
+
+new features:
+added Commendations tab to the codex
+- all victory messages are listed along with their requirements
+- on completion of a run all messages you qualified for are marked as completed
+
+2.2.1
+
+new features:
+added Infographs/Flowcharts for each god in the boon list
+- includes Zeus, Poseidon, Athena, Aphrodite, Ares, Hermes, Dionysus, Demeter
+added boon slot requirement display to the boon list

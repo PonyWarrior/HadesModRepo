@@ -1,0 +1,107 @@
+{
+    Animations = [
+        "_append"
+    {
+      Name = "AphroditeUpgrade_Solo"
+      FilePath = "GUI\Screen\Charts\AphroditeUpgrade_Solo"
+      Type = "ConstantNoUpdate"
+      Material = "Unlit"
+    }
+    {
+      Name = "AphroditeUpgrade_Duo"
+      FilePath = "GUI\Screen\Charts\AphroditeUpgrade_Duo"
+      Type = "ConstantNoUpdate"
+      Material = "Unlit"
+    }
+    {
+      Name = "AresUpgrade_Solo"
+      FilePath = "GUI\Screen\Charts\AresUpgrade_Solo"
+      Type = "ConstantNoUpdate"
+      Material = "Unlit"
+    }
+    {
+      Name = "AresUpgrade_Duo"
+      FilePath = "GUI\Screen\Charts\AresUpgrade_Duo"
+      Type = "ConstantNoUpdate"
+      Material = "Unlit"
+    }
+    {
+      Name = "ArtemisUpgrade_Solo"
+      FilePath = "GUI\Screen\Charts\ArtemisUpgrade_Solo"
+      Type = "ConstantNoUpdate"
+      Material = "Unlit"
+    }
+    {
+      Name = "ArtemisUpgrade_Duo"
+      FilePath = "GUI\Screen\Charts\ArtemisUpgrade_Duo"
+      Type = "ConstantNoUpdate"
+      Material = "Unlit"
+    }
+    {
+      Name = "AthenaUpgrade_Solo"
+      FilePath = "GUI\Screen\Charts\AthenaUpgrade_Solo"
+      Type = "ConstantNoUpdate"
+      Material = "Unlit"
+    }
+    {
+      Name = "AthenaUpgrade_Duo"
+      FilePath = "GUI\Screen\Charts\AthenaUpgrade_Duo"
+      Type = "ConstantNoUpdate"
+      Material = "Unlit"
+    }
+    {
+      Name = "DemeterUpgrade_Solo"
+      FilePath = "GUI\Screen\Charts\DemeterUpgrade_Solo"
+      Type = "ConstantNoUpdate"
+      Material = "Unlit"
+    }
+    {
+      Name = "DemeterUpgrade_Duo"
+      FilePath = "GUI\Screen\Charts\DemeterUpgrade_Duo"
+      Type = "ConstantNoUpdate"
+      Material = "Unlit"
+    }
+    {
+      Name = "DionysusUpgrade_Solo"
+      FilePath = "GUI\Screen\Charts\DionysusUpgrade_Solo"
+      Type = "ConstantNoUpdate"
+      Material = "Unlit"
+    }
+    {
+      Name = "DionysusUpgrade_Duo"
+      FilePath = "GUI\Screen\Charts\DionysusUpgrade_Duo"
+      Type = "ConstantNoUpdate"
+      Material = "Unlit"
+    }
+    {
+      Name = "HermesUpgrade_Solo"
+      FilePath = "GUI\Screen\Charts\HermesUpgrade_Solo"
+      Type = "ConstantNoUpdate"
+      Material = "Unlit"
+    }
+    {
+      Name = "PoseidonUpgrade_Solo"
+      FilePath = "GUI\Screen\Charts\PoseidonUpgrade_Solo"
+      Type = "ConstantNoUpdate"
+      Material = "Unlit"
+    }
+    {
+      Name = "PoseidonUpgrade_Duo"
+      FilePath = "GUI\Screen\Charts\PoseidonUpgrade_Duo"
+      Type = "ConstantNoUpdate"
+      Material = "Unlit"
+    }
+    {
+      Name = "ZeusUpgrade_Solo"
+      FilePath = "GUI\Screen\Charts\ZeusUpgrade_Solo"
+      Type = "ConstantNoUpdate"
+      Material = "Unlit"
+    }
+    {
+      Name = "ZeusUpgrade_Duo"
+      FilePath = "GUI\Screen\Charts\ZeusUpgrade_Duo"
+      Type = "ConstantNoUpdate"
+      Material = "Unlit"
+    }
+    ]
+}

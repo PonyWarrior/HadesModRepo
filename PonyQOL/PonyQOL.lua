@@ -1,4 +1,13 @@
 
+local mod = "Pony QoL"
+local package = "Charts"
+
+ModUtil.WrapBaseFunction( "SetupMap", function(baseFunc)
+	DebugPrint({Text = "@"..mod.." Trying to load package "..package..".pkg"})
+	LoadPackages({Name = package})
+	return baseFunc()
+end)
+
 --Make Lucifer beam base destroy projectiles
 for i, property in pairs (TraitData.GunLoadedGrenadeTrait.PropertyChanges) do
 	if property.ProjectileProperty == "ProjectileDefenseRadius" then
@@ -187,6 +196,32 @@ function CreateTraitRequirements( traitName )
     Justification = "Left",
     LuaKey = "TempTextData",
     LuaValue = { TraitName = traitData.RequiredWeapon}})
+    startY = startY + 45
+    hasRequirement = true
+  end
+  --Mod end
+
+  --Mod start
+  if traitData.RequiredSlottedTrait then
+    local requirementsText = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_TraitTray" })
+    table.insert(screen.TraitRequirements, requirementsText.Id )
+    Attach({ Id = requirementsText.Id, DestinationId = screen.Components.ShopBackground.Id, OffsetX = startX + 35, OffsetY = -405 })
+    local color = Color.BoonInfoUnacquired
+    if HeroHasTrait(traitData.RequiredSlottedTrait) then
+      color = Color.BoonInfoAcquired
+    end
+    CreateTextBox({
+    Id = requirementsText.Id,
+    Text = "BoonInfo_RequiredTrait",
+    FontSize = 20,
+    OffsetX = 170,
+    OffsetY =  startY,
+    Color = color,
+    Font = "AlegreyaSansSCMedium",
+    ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2},
+    Justification = "Left",
+    LuaKey = "TempTextData",
+    LuaValue = { TraitName = traitData.RequiredSlottedTrait}})
     startY = startY + 45
     hasRequirement = true
   end
@@ -419,26 +454,69 @@ function ShowBoonInfoScreen( lootName )
 	HandleScreenInput( ScreenAnchors.BoonInfoScreen )
 end
 
+local ValidSolo =
+{
+	"ZeusUpgrade",
+	"AresUpgrade",
+	"ArtemisUpgrade",
+	"AphroditeUpgrade",
+	"DionysusUpgrade",
+	"AthenaUpgrade",
+	"PoseidonUpgrade",
+	"DemeterUpgrade",
+	"HermesUpgrade",
+}
+local ValidDuo =
+{
+	"ZeusUpgrade",
+	"AresUpgrade",
+	"ArtemisUpgrade",
+	"AphroditeUpgrade",
+	"DionysusUpgrade",
+	"AthenaUpgrade",
+	"PoseidonUpgrade",
+	"DemeterUpgrade",
+}
+
 function ShowInfograph(screen, button)
+	DebugPrint({Text = " "..screen.LootName})
 	local components = screen.Components
-	components.Infograph = CreateScreenComponent({ Name = "BlankObstacle", Scale = 1, Group = "Infograph" })
-	Attach({ Id = components.Infograph.Id, DestinationId = components.ShopBackground.Id, OffsetX = 0 , OffsetY = 0 })
-	components.Infograph.OnPressedFunctionName = "CloseInfograph"
-	components.Infograph.ControlHotkey = "Confirm"
-	SetAnimation({ Name = "QuestLogIn", DestinationId = components.Infograph.Id })
+	if Contains(ValidSolo, screen.LootName) then
+		if components.Infograph ~= nil or components.DuoInfograph ~= nil then
+			CloseInfograph(screen, components.Infograph or components.DuoInfograph)
+		end
+		components.Infograph = CreateScreenComponent({ Name = "BlankObstacle", Scale = 1, Group = "Infograph" })
+		Attach({ Id = components.Infograph.Id, DestinationId = components.ShopBackground.Id, OffsetX = -135 , OffsetY = 13 })
+		components.Infograph.OnPressedFunctionName = "CloseInfograph"
+		components.Infograph.ControlHotkey = "Confirm"
+		SetAnimation({ Name = screen.LootName.."_Solo", DestinationId = components.Infograph.Id })
+		SetScale({ Id = components.Infograph.Id, Fraction = 0.73})
+		SetScaleX({ Id = components.Infograph.Id, Fraction = 1.03})
+
+	end
 end
 
 function CloseInfograph(screen, button)
 	Destroy({Id = button.Id})
+	screen.Components.Infograph = nil
+	screen.Components.DuoInfograph = nil
+
 end
 
 function ShowDuoInfograph(screen, button)
 	local components = screen.Components
-	components.DuoInfograph = CreateScreenComponent({ Name = "BlankObstacle", Scale = 1, Group = "Infograph" })
-	Attach({ Id = components.DuoInfograph.Id, DestinationId = components.ShopBackground.Id, OffsetX = 0 , OffsetY = 0 })
-	components.DuoInfograph.OnPressedFunctionName = "CloseInfograph"
-	components.DuoInfograph.ControlHotkey = "Confirm"
-	SetAnimation({ Name = "QuestLogIn", DestinationId = components.DuoInfograph.Id })
+	if Contains(ValidDuo, screen.LootName) then
+		if components.Infograph ~= nil or components.DuoInfograph ~= nil then
+			CloseInfograph(screen, components.Infograph or components.DuoInfograph)
+		end
+		components.DuoInfograph = CreateScreenComponent({ Name = "BlankObstacle", Scale = 1, Group = "Infograph" })
+		Attach({ Id = components.DuoInfograph.Id, DestinationId = components.ShopBackground.Id, OffsetX = -135 , OffsetY = 13 })
+		components.DuoInfograph.OnPressedFunctionName = "CloseInfograph"
+		components.DuoInfograph.ControlHotkey = "Confirm"
+		SetAnimation({ Name = screen.LootName.."_Duo", DestinationId = components.DuoInfograph.Id })
+		SetScale({ Id = components.DuoInfograph.Id, Fraction = 0.73})
+		SetScaleX({ Id = components.DuoInfograph.Id, Fraction = 1.03})
+	end
 end
 
 -- No Nourished Soul with LC4
@@ -2639,17 +2717,6 @@ function ShowRunClearScreen()
 		end
 	end
 end
-
-OnControlPressed{ "Shout",
-  function(triggerArgs)
-    while IsControlDown({ Name = "Shout" }) do
-	  if IsControlDown({ Name = "Reload" }) then
-		ShowRunClearScreen()
-        return
-      end
-      wait(0.1)
-    end
-end}
 
 function CheckRunCompletionCommendations()
 	local totalRuns = GetNumRunsCleared()

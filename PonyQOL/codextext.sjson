@@ -1,0 +1,475 @@
+{
+    Texts = [
+        "_append"
+    {
+      Id = "Commendation_0001"
+      Speaker = "Achilles"
+      DisplayName = "Clear 1 run."
+    }
+    {
+      Id = "Commendation_0002"
+      Speaker = "Achilles"
+      DisplayName = "Clear 1 run. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0003"
+      Speaker = "Achilles"
+      DisplayName = "Clear 10 runs."
+    }
+    {
+      Id = "Commendation_0004"
+      Speaker = "Achilles"
+      DisplayName = "Clear 10 runs. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0005"
+      Speaker = "Achilles"
+      DisplayName = "Clear 50 runs."
+    }
+    {
+      Id = "Commendation_0006"
+      Speaker = "Achilles"
+      DisplayName = "Clear 50 runs. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0007"
+      Speaker = "Achilles"
+      DisplayName = "Clear 100 runs."
+    }
+    {
+      Id = "Commendation_0008"
+      Speaker = "Achilles"
+      DisplayName = "Clear 100 runs. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0009"
+      Speaker = "Achilles"
+      DisplayName = "Clear 250 runs."
+    }
+    {
+      Id = "Commendation_0010"
+      Speaker = "Achilles"
+      DisplayName = "Clear 250 runs. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0011"
+      Speaker = "Achilles"
+      DisplayName = "Clear 500 runs."
+    }
+    {
+      Id = "Commendation_0012"
+      Speaker = "Achilles"
+      DisplayName = "Clear 500 runs. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0013"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run with less than 5% of your max health and no remaining death defiance."
+    }
+    {
+      Id = "Commendation_0014"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run with less than 5% of your max health and no remaining death defiance. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0015"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run with 100% of your max health and without the Aspect of Guan Yu or Cursed Slash."
+    }
+    {
+      Id = "Commendation_0016"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run with 100% of your max health and without the Aspect of Guan Yu or Cursed Slash. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0017"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run with 400 or higher max health."
+    }
+    {
+      Id = "Commendation_0018"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run with 400 or higher max health. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0019"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run under 15:00 minutes."
+    }
+    {
+      Id = "Commendation_0020"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run under 15:00 minutes. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0021"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run under 12:00 minutes."
+    }
+    {
+      Id = "Commendation_0022"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run under 12:00 minutes. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0023"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run with a time over 60:00 minutes."
+    }
+    {
+      Id = "Commendation_0024"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run with a time over 60:00 minutes. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0025"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run with no obols left."
+    }
+    {
+      Id = "Commendation_0026"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run with no obols left. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0027"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run with at least 2000 obols left."
+    }
+    {
+      Id = "Commendation_0028"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run with at least 2000 obols left. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0029"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run with no mirror upgrade active."
+    }
+    {
+      Id = "Commendation_0030"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run with no mirror upgrade active. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0031"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run with no God boons. (Hermes, Chaos and Daedalus boons can still be obtained)"
+    }
+    {
+      Id = "Commendation_0032"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run with no God boons. (Hermes, Chaos and Daedalus boons can still be obtained -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0033"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having visited Sisyphus, Eurydice and Patroclus."
+    }
+    {
+      Id = "Commendation_0034"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having visited Sisyphus, Eurydice and Patroclus. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0035"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having visited all fountain rooms. (Tartarus, Asphodel and Elysium)"
+    }
+    {
+      Id = "Commendation_0036"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having visited all fountain rooms. (Tartarus, Asphodel and Elysium) -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0037"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having visited all shop rooms. (Tartarus, Asphodel and Elysium)"
+    }
+    {
+      Id = "Commendation_0038"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having visited all shop rooms. (Tartarus, Asphodel and Elysium) -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0039"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having Zeus' legendary boon Splitting Bolt and any 6 other boons from him."
+    }
+    {
+      Id = "Commendation_0040"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having Zeus' legendary boon Splitting Bolt and any 6 other boons from him. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0041"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having Poseidon's legendary boon Second Wave and any 6 other boons from him. (Sunken Treasure and Huge Catch don't count)"
+    }
+    {
+      Id = "Commendation_0042"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having Poseidon's legendary boon Second Wave and any 6 other boons from him. (Sunken Treasure and Huge Catch don't count) -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0043"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having Athena's legendary boon Divine Protection and any 6 other boons from her. (Last Stand and Deathless Stand don't count)"
+    }
+    {
+      Id = "Commendation_0044"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having Athena's legendary boon Divine Protection and any 6 other boons from her. (Last Stand and Deathless Stand don't count) -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0045"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having Ares' legendary boon Vicious Cycle and any 6 other boons from him."
+    }
+    {
+      Id = "Commendation_0046"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having Ares' legendary boon Vicious Cycle and any 6 other boons from him. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0047"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having Artemis' legendary boon Fully Loaded and any 6 other boons from her."
+    }
+    {
+      Id = "Commendation_0048"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having Artemis' legendary boon Fully Loaded and any 6 other boons from her. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0049"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having Aphrodite's legendary boon Unhealthy Fixation and any 6 other boons from her."
+    }
+    {
+      Id = "Commendation_0050"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having Aphrodite's legendary boon Unhealthy Fixation and any 6 other boons from her. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0051"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having Dionysus' legendary boon Black Out and any 6 other boons from him. (Premium Vintage doesn't count)"
+    }
+    {
+      Id = "Commendation_0052"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having Dionysus' legendary boon Black Out and any 6 other boons from him. (Premium Vintage doesn't count) -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0053"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having Demeter's legendary boon Winter Harvest and any 6 other boons from her. (Nourished Sould and Rare Crop don't count)"
+    }
+    {
+      Id = "Commendation_0054"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having Demeter's legendary boon Winter Harvest and any 6 other boons from her. (Nourished Sould and Rare Crop don't count) -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0055"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having one of Hermes' legendary boons, either Greater Recall or Bad News, and any 3 other boons from him."
+    }
+    {
+      Id = "Commendation_0056"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having one of Hermes' legendary boons, either Greater Recall or Bad News, and any 3 other boons from him. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0057"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having Chaos' legendary blessing Defiance and any 3 other blessings from them. (Curses don't count)"
+    }
+    {
+      Id = "Commendation_0058"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having Chaos' legendary blessing Defiance and any 3 other blessings from them. (Curses don't count) -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0059"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having at least 4 Duo Boons."
+    }
+    {
+      Id = "Commendation_0060"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having at least 4 Duo Boons. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0061"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having at least 3 Legendary Boons. (Huge Catch doesn't count)"
+    }
+    {
+      Id = "Commendation_0062"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having at least 3 Legendary Boons. (Huge Catch doesn't count) -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0063"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having bought Trove Tracker from Charon's well and opened a treasure trove in Tartatus, Asphodel and Elysium."
+    }
+    {
+      Id = "Commendation_0064"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having bought Trove Tracker from Charon's well and opened a treasure trove in Tartatus, Asphodel and Elysium. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0065"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having visited at least 2 Devotion rooms and interacted with 4 gods. (Hermes, Chaos and Daedalus don't count)"
+    }
+    {
+      Id = "Commendation_0066"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having visited at least 2 Devotion rooms and interacted with 4 gods. (Hermes, Chaos and Daedalus don't count) -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0067"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having visited Erebus in Tartarus, Asphodel and Elysium. (It's not required to succeed the encounter)"
+    }
+    {
+      Id = "Commendation_0068"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having visited Erebus in Tartarus, Asphodel and Elysium. (It's not required to succeed the encounter) -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0069"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having the Middle Management pact option active and beating at least 5 minibosses."
+    }
+    {
+      Id = "Commendation_0070"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having the Middle Management pact option active and beating at least 5 minibosses. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0071"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having used at least 50 times any of the following gods' aid : Ares, Poseidon, Athena, Aphrodite, Artemis and Demeter."
+    }
+    {
+      Id = "Commendation_0072"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having used at least 50 times any of the following gods' aid : Ares, Poseidon, Athena, Aphrodite, Artemis and Demeter. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0073"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having fired your cast at least 1000 times."
+    }
+    {
+      Id = "Commendation_0074"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having fired your cast at least 1000 times. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0075"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having caught any legendary fish and a total of at least 4 fishes."
+    }
+    {
+      Id = "Commendation_0076"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having caught any legendary fish and a total of at least 4 fishes. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0077"
+      Speaker = "Achilles"
+      DisplayName = "Clear 10 runs in a row."
+    }
+    {
+      Id = "Commendation_0078"
+      Speaker = "Achilles"
+      DisplayName = "Clear 10 runs in a row. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0079"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having eaten at least 65 burgers."
+    }
+    {
+      Id = "Commendation_0080"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having eaten at least 65 burgers. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0081"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having obtained at least 10 Poms of Power."
+    }
+    {
+      Id = "Commendation_0082"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having obtained at least 10 Poms of Power. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0083"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having collected at least 7 Nectars."
+    }
+    {
+      Id = "Commendation_0084"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having collected at least 7 Nectars. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0085"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having collected at least 7 Chthonic Keys."
+    }
+    {
+      Id = "Commendation_0086"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having collected at least 7 Chthonic Keys. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0087"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having eaten at least 2 Onions."
+    }
+    {
+      Id = "Commendation_0088"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having eaten at least 2 Onions. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0089"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having used at least 6 Death Defiances."
+    }
+    {
+      Id = "Commendation_0090"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having used at least 6 Death Defiances. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0091"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having met Thanatos and not letting him score any point."
+    }
+    {
+      Id = "Commendation_0092"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having met Thanatos and not letting him score any point. -- {#CodexBoldFormat}Complete!"
+    }
+    {
+      Id = "Commendation_0093"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having sold at least 5 boons."
+    }
+    {
+      Id = "Commendation_0094"
+      Speaker = "Achilles"
+      DisplayName = "Clear a run while having sold at least 5 boons. -- {#CodexBoldFormat}Complete!"
+    }
+    ]
+}

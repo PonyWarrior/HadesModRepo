@@ -3,3 +3,13 @@ To "Game/Text/en/HelpText.en.sjson"
 SJSON "helptext.sjson"
 To "Game/Text/en/CodexText.en.sjson"
 SJSON "codextext.sjson"
+To "Game/Animations/GUIAnimations.sjson"
+SJSON "guianimations.sjson"
+To "Win/Packages/Charts.pkg"
+Replace "Charts.pkg"
+To Win/Packages/720p/Charts.pkg
+Replace "Charts.pkg"
+To Win/Packages/Charts.pkg_manifest
+Replace "Charts.pkg_manifest"
+To Win/Packages/720p/Charts.pkg_manifest
+Replace "Charts.pkg_manifest"
