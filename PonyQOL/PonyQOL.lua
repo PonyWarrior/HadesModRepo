@@ -17,7 +17,7 @@ end
 
 --Add Hammer boon list
 --Add weapon boon lists
---Display incompatibility in boon list
+--Display extra info in boon list
 --Add pom icon to 'pom-able' boons
 table.insert(BoonInfoScreenData.Ordering, "WeaponUpgrade")
 table.insert(BoonInfoScreenData.Ordering, "SwordWeapon")
@@ -2742,3 +2742,180 @@ end
 OnAnyLoad{"DeathArea",function(triggerArgs)
 	CheckRunCompletionCommendations()
   end}
+
+OnControlPressed{ "Shout",
+function(triggerArgs)
+	if CurrentDeathAreaRoom ~= nil and DeathLoopData[CurrentDeathAreaRoom.Name] then
+		local fishingpoint = SpawnObstacle({ Name = "FishingPoint", Group = "FX_Terrain", DestinationId = CurrentRun.Hero.ObjectId, OffsetX = 100, OffsetY = 100 })
+		CurrentRun.Hero.FishingStarted = true
+		FreezePlayerUnit( "FishingStartUp", { DisableTray = true, DisableCodex = true } )
+		AddTimerBlock( CurrentRun, "Fishing" )
+		wait( 0.25, "FishingStartDelay" )
+		UnfreezePlayerUnit("FishingStartUp")
+		if CurrentRun.Hero.FishingStarted then
+			UseableOff({ Id = fishingpoint })
+			SetAlpha({ Id = fishingpoint, Fraction = 0.0, Duration = 0.25 })
+			BlockVfx({ DestinationId = fishingpoint })
+			StartPracticeFishing( fishingpoint )
+		end
+		return
+	end
+end}
+
+function StartPracticeFishing(fishingPointId)
+	FreezePlayerUnit( "Fishing", { DisableTray = true, DisableCodex = true } )
+	CurrentRun.Hero.FishingInput = false
+	CurrentRun.Hero.FishingState = "TooEarly"
+	local fishingFailed = false
+	local fishingAnimationPointId = SpawnObstacle({ Name = "BlankObstacle", DestinationId = fishingPointId, Group = GetGroupName({ Id = fishingPointId, DrawGroup = true }) })
+	CreateTextBox({Id = fishingAnimationPointId, Text = CurrentRun.Hero.FishingState, FontSize = 24, Color = Color.Yellow, OffsetY = 30})
+
+	FishingStartPresentation( fishingPointId, fishingAnimationPointId )
+	-- zag fishing pose
+	wait(1.5, "Fishing")
+	thread( WaitForPracticeFishingInput, fishingAnimationPointId )
+
+	local numfakedunks = RandomInt( FishingData.NumFakeDunks.Min, FishingData.NumFakeDunks.Max )
+	for i = 1, numfakedunks do
+		wait( RandomFloat( FishingData.FakeDunkInterval.Min, FishingData.FakeDunkInterval.Max ), "Fishing" )
+		SetAnimation({ Name = "FishingBobberFakeDunkA", DestinationId = fishingAnimationPointId })
+		thread( DoRumble, { { ScreenPreWait = 0.01, LeftFraction = 0.17, Duration = 0.17 }, } )
+	end
+
+	local warnTime = RandomFloat( FishingData.WarnInterval.Min, FishingData.WarnInterval.Max )
+	wait( warnTime , "Fishing" )
+	SetAnimation({ Name = "FishingBobberDunk", DestinationId = fishingAnimationPointId })
+	thread( DoRumble, { { ScreenPreWait = 0.01, RightFraction = 0.4, Duration = 0.3 }, } )
+
+	if not CurrentRun.Hero.FishingInput then
+		CurrentRun.Hero.FishingState = "Perfect"
+		ModifyTextBox({Id = fishingAnimationPointId, Text = CurrentRun.Hero.FishingState})
+	end
+	wait( FishingData.PerfectInterval, "Fishing" )
+
+	if not CurrentRun.Hero.FishingInput then
+		CurrentRun.Hero.FishingState = "Good"
+		ModifyTextBox({Id = fishingAnimationPointId, Text = CurrentRun.Hero.FishingState})
+	end
+	wait( FishingData.GoodInterval, "Fishing" )
+
+	if not CurrentRun.Hero.FishingInput then
+		CurrentRun.Hero.FishingState = "TooLate"
+		ModifyTextBox({Id = fishingAnimationPointId, Text = CurrentRun.Hero.FishingState})
+	end
+
+	SetAnimation({ Name = "FishingBobberResurface", DestinationId = fishingAnimationPointId })
+
+	wait( FishingData.WayLateInterval, "Fishing" )
+	if not CurrentRun.Hero.FishingInput then
+		CurrentRun.Hero.FishingState = "WayLate"
+		thread( CheckForFishNotCaughtWayTooLateVoiceLines )
+		ModifyTextBox({Id = fishingAnimationPointId, Text = CurrentRun.Hero.FishingState})
+	end
+	wait( FishingData.GiveUpInterval, "Fishing" )
+	notify("FishingInput")
+end
+
+function WaitForPracticeFishingInput( fishingAnimationPointId )
+	ToggleControl({ Names = { "Use" }, Enabled = true })
+	NotifyOnControlPressed({ Names = { "Use", }, Notify = "FishingInput" })
+	waitUntil( "FishingInput" )
+	DestroyTextBox({Id = fishingAnimationPointId})
+	PracticeFishingEndPresentation( fishingAnimationPointId )
+end
+
+function PracticeFishingEndPresentation( fishingAnimationPointId )
+	CreateAnimation({ Name = "FishingSplashB", DestinationId = fishingAnimationPointId })
+	SetAlpha({ Id = fishingAnimationPointId, Fraction = 0, Duration = 0 })
+
+	CurrentRun.Hero.FishingInput = true
+	killTaggedThreads( "Fishing")
+	local fishingState = CurrentRun.Hero.FishingState
+	local fishName = nil
+	local biomeName = CurrentRun.CurrentRoom.FishBiome or CurrentRun.CurrentRoom.RoomSetName or "None"
+	fishName = GetFish( biomeName, fishingState )
+	local fishData = FishingData.FishValues[fishName]
+
+	if fishName then
+		thread( MarkObjectiveComplete, "Fishing" )
+		thread( PlayVoiceLines, fishData.FishCaughtVoiceLines )
+
+		--Shake({ Id = CurrentRun.Hero.ObjectId, Distance = 2, Speed = 200, Duration = 0.35 })
+		PlaySound({ Name = "/SFX/CriticalHit" })
+		PlaySound({ Name = "/VO/ZagreusEmotes/EmotePowerAttacking_Sword" })
+		thread( DoRumble, { { ScreenPreWait = 0.04, RightFraction = 0.28, Duration = 0.4 }, } )
+		wait(0.1)
+		PlaySound({ Name = "/SFX/Player Sounds/ZagreusWhooshDropIn" })
+		wait(0.2)
+		--Shake({ Id = CurrentRun.Hero.ObjectId, Distance = 2, Speed = 200, Duration = 0.35 })
+		PlaySound({ Name = "/SFX/Enemy Sounds/Megaera/MegDeathSplash", Id = fishingAnimationPointId })
+		PlaySound({ Name = "/VO/ZagreusEmotes/EmoteRanged" })
+		SetAnimation({ Name = "ZagreusInteractionFishing_PullSuccess", DestinationId = CurrentRun.Hero.ObjectId })
+		thread( DoRumble, { { ScreenPreWait = 0.7, LeftFraction = 0.35, Duration = 0.4 }, } )
+
+		PlaySound({ Name = "/Leftovers/SFX/VictoryScreenUpdateSFX", Delay = 1 })
+
+		local fishingText = "Fishing_SuccessGoodTitle"
+		if fishingState == "Perfect" then
+			fishingText = "Fishing_SuccessPerfectTitle"
+		end
+
+		thread( PlayVoiceLines, fishData.FishIdentifiedVoiceLines )
+
+		DisplayUnlockText({
+			Icon = fishName,
+			TitleText = fishingText,
+			SubtitleText = "Fishing_SuccessSubtitle",
+			SubtitleData = { LuaKey = "TempTextData", LuaValue = { Name = fishName }},
+			IconOffsetY = 20,
+			HighlightIcon = true,
+			IconMoveSpeed = 0.1,
+			IconScale = 0.64,
+			AdditionalAnimation = "FishCatchPresentationSparkles",
+			IconBacking = "FishCatchIconBacking",
+			AnimationName = "LocationTextBGFish",
+			AnimationOutName = "LocationTextBGFishOut",
+		})
+	else
+		thread( MarkObjectiveFailed, "Fishing" )
+		SetAnimation({ Name = "ZagreusInteractionFishing_PullFailure", DestinationId = CurrentRun.Hero.ObjectId })
+		PlaySound({ Name = "/Leftovers/SFX/BigSplashRing", Delay = 0.3 })
+		PlaySound({ Name = "/SFX/CrappyRewardDrop", Delay = 0.5 })
+
+		PlaySound({ Name = "/Leftovers/SFX/ImpCrowdLaugh" })
+		thread( DoRumble, { { ScreenPreWait = 0.02, RightFraction = 0.17, Duration = 0.7 }, } )
+
+		if CurrentRun.Hero.FishingState == "TooEarly" then
+			thread( PlayVoiceLines, HeroVoiceLines.FishNotCaughtVoiceLines, true )
+
+			thread( DisplayUnlockText, {
+			TitleText = "Fishing_FailedTitle",
+			SubtitleText = "Fishing_FailedEarly",
+			})
+
+		else
+			if CurrentRun.Hero.FishingState == "TooLate" then
+				thread( PlayVoiceLines, HeroVoiceLines.FishNotCaughtVoiceLines, true )
+			elseif CurrentRun.Hero.FishingState == "WayLate" then
+				thread( PlayVoiceLines, HeroVoiceLines.FishNotCaughtTooLateVoiceLines, true )
+			end
+
+			thread( DisplayUnlockText, {
+			TitleText = "Fishing_FailedTitle",
+			SubtitleText = "Fishing_FailedLate",
+			})
+		end
+		wait( 2 )
+	end
+	CurrentRun.CurrentRoom.CompletedFishing = true
+	CurrentRun.Hero.FishingStarted = false
+	RemoveTimerBlock( CurrentRun, "Fishing" )
+	UnfreezePlayerUnit("Fishing")
+	UnblockCombatUI("Fishing")
+
+	if CurrentRun.CurrentRoom.ZoomFraction ~= nil then
+		AdjustZoom({ Fraction = CurrentRun.CurrentRoom.ZoomFraction, LerpTime = 1.5 })
+	else
+		AdjustZoom({ Fraction = 1.0, LerpTime = 1.5 })
+	end
+end

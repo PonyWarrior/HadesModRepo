@@ -47,9 +47,13 @@ added Commendations tab to the codex
 - all victory messages are listed along with their requirements
 - on completion of a run all messages you qualified for are marked as completed
 
-2.2.1
+2.3.0
 
 new features:
 added Infographs/Flowcharts for each god in the boon list
 - includes Zeus, Poseidon, Athena, Aphrodite, Ares, Hermes, Dionysus, Demeter
 added boon slot requirement display to the boon list
+added practice fishing
+- pressing your call key anywhere in the house will initiate practice fishing
+- fishing state is displayed below the bobber
+- no fish obtained on success
