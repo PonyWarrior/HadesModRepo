@@ -1569,6 +1569,8 @@ function CodexMain(triggerArgs)
 end
 
 function StartNewCustomRun(bossRoom)
+	CurrentDeathAreaRoom = nil
+	PreviousDeathAreaRoom = nil
 	SetupRunData()
 	--ResetUI()
 	SessionState.NeedWeaponPickupBinkLoad = false
