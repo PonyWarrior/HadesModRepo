@@ -2743,6 +2743,7 @@ OnAnyLoad{"DeathArea",function(triggerArgs)
 	CheckRunCompletionCommendations()
   end}
 
+--Practice fishing
 OnControlPressed{ "Shout",
 function(triggerArgs)
 	if CurrentDeathAreaRoom ~= nil and DeathLoopData[CurrentDeathAreaRoom.Name] then
@@ -2918,4 +2919,182 @@ function PracticeFishingEndPresentation( fishingAnimationPointId )
 	else
 		AdjustZoom({ Fraction = 1.0, LerpTime = 1.5 })
 	end
+end
+
+--Display regular call text hint
+function SuperReachedPresentation( pipIndex, maxedOutMeter )
+	if pipIndex == 1 then
+		--Mod start
+		thread( InCombatText, CurrentRun.Hero.ObjectId, "SuperCharged", 1.8, { ShadowScale = 0.8 } )
+		--Mod end
+	end
+
+	if maxedOutMeter then
+		thread( InCombatText, CurrentRun.Hero.ObjectId, "MaxSuperCharged", 1.8, { ShadowScale = 0.8 } )
+	end
+
+	if ScreenAnchors.SuperMeterHint then
+		if maxedOutMeter then
+			SetAnimation({ Name = "WrathBarFullFxStart", DestinationId = ScreenAnchors.SuperMeterHint })
+		end
+	end
+
+	if ScreenAnchors.SuperPipIds then
+		SetColor({ Color = Color.White, Ids = ScreenAnchors.SuperPipIds, Duration = 0.5 })
+	end
+end
+
+--Display boss health in numbers
+function CreateBossHealthBar( boss )
+	if boss.HasHealthBar then
+		return
+	end
+	boss.HasHealthBar = true
+
+	if ScreenAnchors.BossHealthTitles == nil then
+		ScreenAnchors.BossHealthTitles = {}
+	end
+	local index = TableLength(ScreenAnchors.BossHealthTitles)
+	local numBars = GetNumBossHealthBars()
+	local yOffset = 0
+	local xScale = 1 / numBars
+	boss.BarXScale = xScale
+	local totalWidth = ScreenWidth * xScale
+	local xOffset = ( totalWidth / ( 2 * numBars )) * ( 1 + index * 2 ) + (ScreenWidth - totalWidth) / 2
+
+	ScreenAnchors.BossHealthBack = CreateScreenObstacle({Name = "BossHealthBarBack", Group = "Combat_UI_Backing", X = xOffset , Y = 70 + yOffset})
+	ScreenAnchors.BossHealthTitles[ boss.ObjectId ] = ScreenAnchors.BossHealthBack
+	ScreenAnchors.BossHealthFill = CreateScreenObstacle({Name = "BossHealthBarFill", Group = "Combat_UI", X = xOffset , Y = 72 + yOffset})
+
+	local fallOffBar = CreateScreenObstacle({Name = "BossHealthBarFillFalloff", Group = "Combat_UI_Backing", X = xOffset , Y = 72 + yOffset})
+
+	SetColor({ Id = fallOffBar, Color = Color.HealthFalloff })
+	SetAnimationFrameTarget({ Name = "EnemyHealthBarFillSlowBoss", Fraction = 0, DestinationId = fallOffBar, Instant = true })
+
+	CreateAnimation({ Name = "BossNameShadow", DestinationId = ScreenAnchors.BossHealthBack })
+
+	SetScaleX({ Ids = { ScreenAnchors.BossHealthBack, ScreenAnchors.BossHealthFill, fallOffBar }, Fraction = xScale, Duration = 0 })
+
+	local bossName = boss.HealthBarTextId or boss.Name
+
+	if boss.AltHealthBarTextIds ~= nil then
+		local eligibleTextIds = {}
+		for k, altTextIdData in pairs(boss.AltHealthBarTextIds) do
+			if IsGameStateEligible( CurrentRun, altTextIdData.Requirements) then
+				table.insert(eligibleTextIds, altTextIdData.TextId)
+			end
+		end
+		if not IsEmpty(eligibleTextIds) then
+			bossName = GetRandomValue(eligibleTextIds)
+		end
+	end
+
+	CreateTextBox({ Id = ScreenAnchors.BossHealthBack, Text = bossName,
+			Font = "CaesarDressing", FontSize = 22, ShadowRed = 0, ShadowBlue = 0, ShadowGreen = 0,
+			OutlineColor = {0, 0, 0, 1}, OutlineThickness = 2,
+			ShadowAlpha = 1.0, ShadowBlur = 0, ShadowOffsetY = 3, ShadowOffsetX = 0, Justification = "Center", OffsetY = -30,
+			OpacityWithOwner = false,
+			AutoSetDataProperties = true,
+			})
+	--Mod start
+	CreateTextBox({ Id = ScreenAnchors.BossHealthFill, Text = boss.Health.."/"..boss.MaxHealth,
+			FontSize = 18, ShadowRed = 0, ShadowBlue = 0, ShadowGreen = 0,
+			OutlineColor = {0, 0, 0, 1}, OutlineThickness = 2,
+			ShadowAlpha = 1.0, ShadowBlur = 0, ShadowOffsetY = 3, ShadowOffsetX = 0, Justification = "Center", OffsetY = 50,
+			OpacityWithOwner = false,
+			AutoSetDataProperties = true,
+			})
+	--Mod end
+
+	ModifyTextBox({ Id = ScreenAnchors.BossHealthBack, FadeTarget = 0, FadeDuration = 0 })
+	SetAlpha({ Id = ScreenAnchors.BossHealthBack, Fraction = 0.01, Duration = 0.0 })
+	SetAlpha({ Id = ScreenAnchors.BossHealthBack, Fraction = boss.Health / boss.MaxHealth, Duration = 2.0 })
+	EnemyHealthDisplayAnchors[boss.ObjectId.."back"] = ScreenAnchors.BossHealthBack
+
+	boss.HealthBarFill = "EnemyHealthBarFillBoss"
+	SetAnimationFrameTarget({ Name = "EnemyHealthBarFillBoss", Fraction = boss.Health / boss.MaxHealth, DestinationId = screenId })
+	SetAlpha({ Ids = { ScreenAnchors.BossHealthFill, fallOffBar }, Fraction = 0.01, Duration = 0.0 })
+	SetAlpha({ Ids = { ScreenAnchors.BossHealthFill, fallOffBar }, Fraction = 1, Duration = 2.0 })
+	EnemyHealthDisplayAnchors[boss.ObjectId] = ScreenAnchors.BossHealthFill
+	EnemyHealthDisplayAnchors[boss.ObjectId.."falloff"] = fallOffBar
+
+	thread( BossHealthBarPresentation, boss )
+end
+
+function UpdateHealthBarReal( args )
+
+	local enemy = args[1]
+	local screenId = args[2]
+	local backingScreenId = EnemyHealthDisplayAnchors[enemy.ObjectId.."falloff"]
+
+	if enemy.IsDead then
+		SetAnimationFrameTarget({ Name = "EnemyHealthBarFillSlow", Fraction = 1, DestinationId = EnemyHealthDisplayAnchors[enemy.ObjectId .. "falloff"] })
+		SetAnimationFrameTarget({ Name = enemy.HealthBarFill or "EnemyHealthBarFill", Fraction = 1, DestinationId = screenId, Instant = true })
+		return
+	end
+
+	local maxHealth = enemy.MaxHealth
+	local currentHealth = enemy.Health
+	if currentHealth == nil then
+		return
+	end
+
+	UpdateHealthBarIcons( enemy )
+
+	if enemy.UseBossHealthBar then
+		SetAnimationFrameTarget({ Name = enemy.HealthBarFill or "EnemyHealthBarFill", Fraction = 1 - ( currentHealth / maxHealth ), DestinationId = screenId, Instant = true  })
+		--Mod start
+		ModifyTextBox({Id = ScreenAnchors.BossHealthFill, Text = currentHealth.."/"..maxHealth})
+		--Mod end
+		if enemy.HitShields > 0 then
+			SetColor({ Id = screenId, Color = Color.HitShield})
+		else
+			SetColor({ Id = screenId, Color = Color.Red })
+		end
+		thread( UpdateBossHealthBarFalloff, enemy, newBar )
+		return
+	end
+
+	local displayedHealthPercent = 1
+
+	if enemy.CursedHealthBarEffect then
+		if enemy.HitShields ~= nil and enemy.HitShields > 0 then
+			SetColor({ Id = screenId, Color = Color.CurseHitShield })
+		elseif enemy.HealthBuffer ~= nil and enemy.HealthBuffer > 0 then
+			SetColor({ Id = screenId, Color = Color.CurseHealthBuffer })
+		else
+			SetColor({ Id = screenId, Color = Color.CurseHealth })
+		end
+		SetColor({ Id = backingScreenId, Color = Color.CurseFalloff })
+	elseif enemy.Charmed then
+		SetColor({ Id = screenId, Color = Color.CharmHealth })
+		SetColor({ Id = backingScreenId, Color = Color.HealthBufferFalloff })
+	else
+		if enemy.HitShields ~= nil and enemy.HitShields > 0 then
+			SetColor({ Id = screenId, Color = Color.HitShield })
+		elseif enemy.HealthBuffer ~= nil and enemy.HealthBuffer > 0 then
+			SetColor({ Id = screenId, Color = Color.HealthBuffer })
+			SetColor({ Id = backingScreenId, Color = Color.HealthBufferFalloff })
+		else
+			SetColor({ Id = screenId, Color = Color.Red })
+			SetColor({ Id = backingScreenId, Color = Color.HealthFalloff })
+		end
+	end
+
+	if enemy.HitShields ~= nil and enemy.HitShields > 0 then
+		displayedHealthPercent = 1
+	elseif enemy.HealthBuffer ~= nil and enemy.HealthBuffer > 0 then
+		displayedHealthPercent = enemy.HealthBuffer / enemy.MaxHealthBuffer
+	else
+		displayedHealthPercent = currentHealth / maxHealth
+	end
+
+	local newBar = false
+	if enemy.DisplayedHealthFraction < displayedHealthPercent then
+		newBar = true
+	end
+
+	enemy.DisplayedHealthFraction = displayedHealthPercent
+	SetAnimationFrameTarget({ Name = enemy.HealthBarFill or "EnemyHealthBarFill", Fraction = 1 - displayedHealthPercent, DestinationId = screenId, Instant = true })
+	thread( UpdateEnemyHealthBarFalloff, enemy, newBar )
 end
