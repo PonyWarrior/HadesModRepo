@@ -1,3 +1,4 @@
+
 ChallengeSelection = { Components = {} }
 
 OnAnyLoad{"RoomPreRun", function(triggerArgs) 
@@ -18,6 +19,8 @@ function OpenChallengeSelectionScreen()
   local title = "Challenge Selector"
   local subtitle = "Choose your death"
   screen.Name = "ChallengeSelection"
+  screen.RowStartX = -600
+  screen.RowStartY = -270
   OnScreenOpened({ Flag = screen.Name, PersistCombatUI = true })
   SetConfigOption({ Name = "UseOcclusion", Value = false })
   FreezePlayerUnit()
@@ -49,13 +52,16 @@ function OpenChallengeSelectionScreen()
   components.CloseButton.OnPressedFunctionName = "CloseChallengeSelection"
   components.CloseButton.ControlHotkey = "Cancel"
   --Display
-  components.Challenge1 = CreateScreenComponent({ Name = "BoonSlot1", Group = "ChallengeSelection", Scale = 0.3, })
-  components.Challenge1.OnPressedFunctionName = "StartChallenge1"
-  Attach({ Id = components.Challenge1.Id, DestinationId = components.Background.Id, OffsetX = -600, OffsetY = -270 })
-  CreateTextBox({ Id = components.Challenge1.Id, Text = "Challenge1",
-      FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = lColor, Font = "AlegreyaSansSCLight",
-      ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
-  })
+  for i, challenge in pairs (ChallengeData) do
+    local challengeKey = "ChallengeKey"..i
+    components[challengeKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "ChallengeSelection", Scale = 0.3, })
+    components[challengeKey].OnPressedFunctionName = challenge.SetupFunction
+    Attach({ Id = components[challengeKey].Id, DestinationId = components.Background.Id, OffsetX = screen.RowStartX, OffsetY = screen.RowStartY })
+    CreateTextBox({ Id = components[challengeKey].Id, Text = challenge.Name,
+        FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = lColor, Font = "AlegreyaSansSCLight",
+        ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+    })
+  end
   --End
   screen.KeepOpen = true
   HandleScreenInput(screen)
@@ -71,9 +77,4 @@ function CloseChallengeSelection(screen, button)
   UnfreezePlayerUnit()
   screen.KeepOpen = false
   OnScreenClosed({ Flag = screen.Name })
-end
-
-function StartChallenge1()
-    RoomSetData.Tartarus.RoomOpening.NextRoomSet = {"Asphodel"}
-    StartOver()
 end
