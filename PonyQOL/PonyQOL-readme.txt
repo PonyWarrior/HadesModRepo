@@ -57,3 +57,24 @@ added practice fishing
 - pressing your call key anywhere in the house will initiate practice fishing
 - fishing state is displayed below the bobber
 - no fish obtained on success
+
+2.3.1
+
+new issues:
+pressing the Call key during a Codex Menu boss rush encounter starts practice fishing, soon fixed in future Codex Menu update
+
+new features:
+added boss numeric health display
+added regular call text hint
+
+2.4.0
+
+updated features:
+practice fishing now requires the Call key to be held down for 3 seconds
+
+new features:
+all available bounties are now completed at once
+added courtyard weapons to all post boss rooms (hammer upgrades only work for the weapon you obtained it with)
+
+fixed issues:
+numeric health only updated for the first boss you hit during the Theseus & Asterius fight

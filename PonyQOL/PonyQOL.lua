@@ -2745,21 +2745,31 @@ OnAnyLoad{"DeathArea",function(triggerArgs)
 
 --Practice fishing
 OnControlPressed{ "Shout",
-function(triggerArgs)
+  function(triggerArgs)
 	if CurrentDeathAreaRoom ~= nil and DeathLoopData[CurrentDeathAreaRoom.Name] then
-		local fishingpoint = SpawnObstacle({ Name = "FishingPoint", Group = "FX_Terrain", DestinationId = CurrentRun.Hero.ObjectId, OffsetX = 100, OffsetY = 100 })
-		CurrentRun.Hero.FishingStarted = true
-		FreezePlayerUnit( "FishingStartUp", { DisableTray = true, DisableCodex = true } )
-		AddTimerBlock( CurrentRun, "Fishing" )
-		wait( 0.25, "FishingStartDelay" )
-		UnfreezePlayerUnit("FishingStartUp")
-		if CurrentRun.Hero.FishingStarted then
-			UseableOff({ Id = fishingpoint })
-			SetAlpha({ Id = fishingpoint, Fraction = 0.0, Duration = 0.25 })
-			BlockVfx({ DestinationId = fishingpoint })
-			StartPracticeFishing( fishingpoint )
+		local ticks = 3
+		while IsControlDown({ Name = "Shout" }) do
+		if ticks <= 0 then
+			ModUtil.Hades.PrintStack('Initiating practice fishing', 1)
+			local fishingpoint = SpawnObstacle({ Name = "FishingPoint", Group = "FX_Terrain", DestinationId = CurrentRun.Hero.ObjectId, OffsetX = 100, OffsetY = 100 })
+			CurrentRun.Hero.FishingStarted = true
+			FreezePlayerUnit( "FishingStartUp", { DisableTray = true, DisableCodex = true } )
+			AddTimerBlock( CurrentRun, "Fishing" )
+			wait( 0.25, "FishingStartDelay" )
+			UnfreezePlayerUnit("FishingStartUp")
+			if CurrentRun.Hero.FishingStarted then
+				UseableOff({ Id = fishingpoint })
+				SetAlpha({ Id = fishingpoint, Fraction = 0.0, Duration = 0.25 })
+				BlockVfx({ DestinationId = fishingpoint })
+				StartPracticeFishing( fishingpoint )
+			end
+			return
+		else
+			ModUtil.Hades.PrintStack('Initiating practice fishing in '..ticks, 1)
+			ticks = ticks - 1
 		end
-		return
+		wait(1)
+		end
 	end
 end}
 
@@ -2997,10 +3007,11 @@ function CreateBossHealthBar( boss )
 			AutoSetDataProperties = true,
 			})
 	--Mod start
-	CreateTextBox({ Id = ScreenAnchors.BossHealthFill, Text = boss.Health.."/"..boss.MaxHealth,
+	boss.NumericHealthbar = CreateScreenObstacle({Name = "BlankObstacle", Group = "Combat_UI_Backing", X = xOffset, Y = 112 + yOffset})
+	CreateTextBox({ Id = boss.NumericHealthbar, Text = boss.Health.."/"..boss.MaxHealth,
 			FontSize = 18, ShadowRed = 0, ShadowBlue = 0, ShadowGreen = 0,
 			OutlineColor = {0, 0, 0, 1}, OutlineThickness = 2,
-			ShadowAlpha = 1.0, ShadowBlur = 0, ShadowOffsetY = 3, ShadowOffsetX = 0, Justification = "Center", OffsetY = 50,
+			ShadowAlpha = 1.0, ShadowBlur = 0, ShadowOffsetY = 3, ShadowOffsetX = 0, Justification = "Center", OffsetY = 0,
 			OpacityWithOwner = false,
 			AutoSetDataProperties = true,
 			})
@@ -3017,6 +3028,10 @@ function CreateBossHealthBar( boss )
 	SetAlpha({ Ids = { ScreenAnchors.BossHealthFill, fallOffBar }, Fraction = 1, Duration = 2.0 })
 	EnemyHealthDisplayAnchors[boss.ObjectId] = ScreenAnchors.BossHealthFill
 	EnemyHealthDisplayAnchors[boss.ObjectId.."falloff"] = fallOffBar
+	--Mod start
+	EnemyHealthDisplayAnchors[boss.ObjectId.."numeric"] = boss.NumericHealthbar
+	--Mod end
+
 
 	thread( BossHealthBarPresentation, boss )
 end
@@ -3026,16 +3041,29 @@ function UpdateHealthBarReal( args )
 	local enemy = args[1]
 	local screenId = args[2]
 	local backingScreenId = EnemyHealthDisplayAnchors[enemy.ObjectId.."falloff"]
+	--Mod start
+	local numericHealthBar = EnemyHealthDisplayAnchors[enemy.ObjectId.."numeric"]
+	--Mod end
 
 	if enemy.IsDead then
 		SetAnimationFrameTarget({ Name = "EnemyHealthBarFillSlow", Fraction = 1, DestinationId = EnemyHealthDisplayAnchors[enemy.ObjectId .. "falloff"] })
 		SetAnimationFrameTarget({ Name = enemy.HealthBarFill or "EnemyHealthBarFill", Fraction = 1, DestinationId = screenId, Instant = true })
+		--Mod start
+		if numericHealthBar ~= nil then
+			Destroy({Id = numericHealthBar})
+		end
+		--Mod end
 		return
 	end
 
 	local maxHealth = enemy.MaxHealth
 	local currentHealth = enemy.Health
 	if currentHealth == nil then
+		--Mod start
+		if numericHealthBar ~= nil then
+			Destroy({Id = numericHealthBar})
+		end
+		--Mod end
 		return
 	end
 
@@ -3044,7 +3072,7 @@ function UpdateHealthBarReal( args )
 	if enemy.UseBossHealthBar then
 		SetAnimationFrameTarget({ Name = enemy.HealthBarFill or "EnemyHealthBarFill", Fraction = 1 - ( currentHealth / maxHealth ), DestinationId = screenId, Instant = true  })
 		--Mod start
-		ModifyTextBox({Id = ScreenAnchors.BossHealthFill, Text = currentHealth.."/"..maxHealth})
+		ModifyTextBox({Id = numericHealthBar, Text = currentHealth.."/"..maxHealth})
 		--Mod end
 		if enemy.HitShields > 0 then
 			SetColor({ Id = screenId, Color = Color.HitShield})
@@ -3098,3 +3126,88 @@ function UpdateHealthBarReal( args )
 	SetAnimationFrameTarget({ Name = enemy.HealthBarFill or "EnemyHealthBarFill", Fraction = 1 - displayedHealthPercent, DestinationId = screenId, Instant = true })
 	thread( UpdateEnemyHealthBarFalloff, enemy, newBar )
 end
+--Complete all bounties
+table.insert(EncounterData.BossHarpy1.PostUnthreadedEvents, {FunctionName = "CompleteAllAvailableBounties"})
+table.insert(EncounterData.BossHarpyTriumvirate.PostUnthreadedEvents, {FunctionName = "CompleteAllAvailableBounties"})
+table.insert(EncounterData.BossHydra.PostUnthreadedEvents, {FunctionName = "CompleteAllAvailableBounties"})
+table.insert(EncounterData.BossTheseusAndMinotaur.PostUnthreadedEvents, {FunctionName = "CompleteAllAvailableBounties"})
+table.insert(EncounterData.BossHades.PostUnthreadedEvents, {FunctionName = "CompleteAllAvailableBounties"})
+
+function CompleteAllAvailableBounties()
+	if GameState.SpentShrinePointsCache ~= nil then
+		local activeShrinePoints = GameState.SpentShrinePointsCache - 1
+		local weaponName = GetEquippedWeapon()
+		local roomName = CurrentRun.CurrentRoom.GenusName or CurrentRun.CurrentRoom.Name
+		while activeShrinePoints > GameState.RecordClearedShrineThreshold[weaponName][roomName] do
+			local consumableName = GetRandomValue(RewardStoreData.SuperMetaProgress)
+			local offsetY = RandomInt(0, 100)
+			local offsetX = RandomInt(0, 100)
+			local consumableId = SpawnObstacle({ Name = consumableName.Name, DestinationId = CurrentRun.Hero.ObjectId, Group = "Standing", OffsetX = offsetX, OffsetY = offsetY })
+			local consumable = CreateConsumableItem( consumableId, consumableName.Name, 0 )
+
+			GameState.RecordClearedShrineThreshold[weaponName][roomName] = GetLastRoomClearedShrinePointThreshold( weaponName, roomName ) + ShrineClearData.ClearThreshold
+			GameState.RecordLastClearedShrineReward[weaponName][roomName][GetLastRoomClearedShrinePointThreshold( weaponName, roomName )] = consumableName.Name
+			wait(0.1)
+		end
+	end
+end
+--Add swappable weapons to post boss rooms
+table.insert(RoomSetData.Tartarus.A_PostBoss01.ThreadedEvents,
+{
+	FunctionName = "AssignWeaponKits",
+	Args =
+	{
+		PreLoadBinks = true,
+		BinkCacheOverrides =
+		{
+			SpearWeapon = "WeaponCache",
+		}
+	},
+})
+table.insert(RoomSetData.Asphodel.B_PostBoss01.ThreadedEvents,
+{
+	FunctionName = "AssignWeaponKits",
+	Args =
+	{
+		PreLoadBinks = true,
+		BinkCacheOverrides =
+		{
+			SpearWeapon = "WeaponCache",
+		}
+	},
+})
+table.insert(RoomSetData.Elysium.C_PostBoss01.ThreadedEvents,
+{
+	FunctionName = "AssignWeaponKits",
+	Args =
+	{
+		PreLoadBinks = true,
+		BinkCacheOverrides =
+		{
+			SpearWeapon = "WeaponCache",
+		}
+	},
+})
+ModUtil.WrapBaseFunction( "AssignWeaponKits", function(baseFunc, eventSource, args)
+	if string.match(eventSource.Name, "PostBoss") then
+		local kits = {}
+		local offsetX = 1000
+		local offsetY = -150
+		local incrementX = 150
+		local incrementY = -50
+		if eventSource.Flipped then
+			offsetX = -1000
+			offsetY = -150
+			incrementX = -150
+			incrementY = -50
+		end
+		for i=6, 0, -1 do
+			local key = "Key"..i
+			kits[key] = SpawnObstacle({ Name = "WeaponKit01", Group = "Overlay", DestinationId = CurrentRun.Hero.ObjectId, OffsetX = offsetX, OffsetY = offsetY })
+			SetScale({ Id = kits[key], Fraction = 0.1 })
+			offsetX = offsetX + incrementX
+			offsetY = offsetY + incrementY
+		end
+	end
+	return baseFunc(eventSource, args)
+end)
