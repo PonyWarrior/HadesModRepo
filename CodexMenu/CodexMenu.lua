@@ -709,12 +709,14 @@ function BoonManagerPageButtons(screen)
 		Attach({ Id = components.LeftPageButton.Id, DestinationId = components.Background.Id, OffsetX = -480, OffsetY = -350 })
 		components.LeftPageButton.OnPressedFunctionName = "BoonManagerChangePage"
 		components.LeftPageButton.Direction = "Left"
+		components.LeftPageButton.ControlHotkeys = { "MenuLeft", "Left" }
 	end
 	if screen.CurrentPage ~= screen.LastPage then
 		components.RightPageButton = CreateScreenComponent({ Name = "ButtonCodexRight", Scale = 0.8, Sound = "/SFX/Menu Sounds/GeneralWhooshMENU", Group = "BoonManager" })
 		Attach({ Id = components.RightPageButton.Id, DestinationId = components.Background.Id, OffsetX = 720, OffsetY = -350 })
 		components.RightPageButton.OnPressedFunctionName = "BoonManagerChangePage"
 		components.RightPageButton.Direction = "Right"
+		components.RightPageButton.ControlHotkeys = { "MenuRight", "Right" }
 	end
 end
 
