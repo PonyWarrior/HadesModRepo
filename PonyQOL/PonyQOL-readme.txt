@@ -78,3 +78,8 @@ added courtyard weapons to all post boss rooms (hammer upgrades only work for th
 
 fixed issues:
 numeric health only updated for the first boss you hit during the Theseus & Asterius fight
+
+2.5.0
+
+updated features:
+all features are now split into modules which you can enable or disable (all are enabled by default)
