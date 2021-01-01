@@ -7,7 +7,7 @@ TraitData.HestiaWeaponTrait =
 {
 	Icon = "Boon_Dionysus_01",
 	InheritFrom = { "ShopTier1Trait" },
-	God = "Hera",
+	God = "Hestia",
 	Slot = "Melee",
 	RarityLevels =
 	{
@@ -29,6 +29,27 @@ TraitData.HestiaWeaponTrait =
 		Heroic =
 		{
 			Multiplier = 1.75,
+		}
+	},
+	AddOutgoingDamageModifiers =
+	{
+		ValidWeaponMultiplier =
+		{
+			BaseValue = 1.40,
+			SourceIsMultiplier = true,
+			IdenticalMultiplier =
+			{
+				Value = _DuplicateMultiplier,
+			},
+		},
+		ValidWeapons = WeaponSets.HeroPhysicalWeapons,
+		ExtractValues =
+		{
+			{
+				Key = "ValidWeaponMultiplier",
+				ExtractAs = "TooltipDamage",
+				Format = "PercentDelta",
+			},
 		}
 	},
 	PropertyChanges =
@@ -244,7 +265,7 @@ TraitData.HestiaRangedTrait =
 TraitData.HestiaRushTrait =
 {
 	InheritFrom = { "ShopTier1Trait" },
-	God = "Hera",
+	God = "Hestia",
 	Slot = "Rush",
 	Icon = "Boon_Dionysus_03",
 	RarityLevels =
@@ -361,7 +382,7 @@ TraitData.HestiaSecondaryTrait =
 {
 	Icon = "Boon_Dionysus_00",
 	InheritFrom = { "ShopTier1Trait" },
-	God = "Hera",
+	God = "Hestia",
 	Slot = "Secondary",
 	RarityLevels =
 	{
@@ -383,6 +404,27 @@ TraitData.HestiaSecondaryTrait =
 		Heroic =
 		{
 			Multiplier = 1.6,
+		}
+	},
+	AddOutgoingDamageModifiers =
+	{
+		ValidWeaponMultiplier =
+		{
+			BaseValue = 1.6,
+			SourceIsMultiplier = true,
+			IdenticalMultiplier =
+			{
+				Value = DuplicateMultiplier,
+			},
+		},
+		ValidWeapons = WeaponSets.HeroSecondaryWeapons,
+		ExtractValues =
+		{
+			{
+				Key = "ValidWeaponMultiplier",
+				ExtractAs = "TooltipDamage",
+				Format = "PercentDelta",
+			},
 		}
 	},
 	PropertyChanges =
@@ -462,6 +504,36 @@ TraitData.HestiaSecondaryTrait =
 			DecimalPlaces = 1,
 		}
 	}
+}
+
+TraitData.HestiaRetaliateTrait =
+{
+	Icon = "Boon_Athena_08",
+	InheritFrom = { "ShopTier1Trait" },
+	God = "Hestia",
+	AddOnHitWeapons = { "MagicShieldRetaliate" },
+	PropertyChanges =
+	{
+		{
+			WeaponName = "MagicShieldRetaliate",
+			ProjectileProperty = "DamageLow",
+			BaseMin = 30,
+			BaseMax = 30,
+			IdenticalMultiplier =
+			{
+				Value = DuplicateVeryStrongMultiplier,
+			},
+			ExtractValue =
+			{
+				ExtractAs = "TooltipDamage",
+			}
+		},
+		{
+			WeaponName = "MagicShieldRetaliate",
+			ProjectileProperty = "DamageHigh",
+			DeriveValueFrom = "DamageLow",
+		},
+	},
 }
 
 TraitData.HestiaShoutTrait =

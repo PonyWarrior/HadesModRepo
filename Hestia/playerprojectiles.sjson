@@ -13,7 +13,7 @@
     Stacks = true
     ExtendDurationOnReapply = true
     MaxStacks = 12
-    FrontFx = "DionysusStatusFx"
+    FrontFx = "HestiaStatusFx"
     Active = false
     TimeModifierFraction = 0
   }
