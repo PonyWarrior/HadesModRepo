@@ -3696,5 +3696,24 @@ if PQOL.Config.BloodRefund.Enabled then
 end
 
 if PQOL.Config.GodKeepsakes.Enabled then
-	
+	--Reset the uses of god keepsakes after beating a boss
+	table.insert(RoomSetData.Tartarus.A_PostBoss01.ThreadedEvents,
+	{
+		FunctionName = "ResetGodKeepsakeUses",
+	})
+	table.insert(RoomSetData.Asphodel.B_PostBoss01.ThreadedEvents,
+	{
+		FunctionName = "ResetGodKeepsakeUses",
+	})
+	table.insert(RoomSetData.Elysium.C_PostBoss01.ThreadedEvents,
+	{
+		FunctionName = "ResetGodKeepsakeUses",
+	})
+	function ResetGodKeepsakeUses()
+		for i, traitData in pairs(CurrentRun.Hero.Traits) do
+			if traitData.Name == GameState.LastAwardTrait and traitData.ForceBoonName ~= nil then
+				traitData.Uses = traitData.Uses + 1
+			end
+		end
+	end
 end

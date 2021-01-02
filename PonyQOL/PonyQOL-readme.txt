@@ -83,3 +83,7 @@ numeric health only updated for the first boss you hit during the Theseus & Aste
 
 updated features:
 all features are now split into modules which you can enable or disable (all are enabled by default)
+some features have additional configuration options
+
+new features:
+god keepsake uses are refreshed/reset to 1 after completing a region
