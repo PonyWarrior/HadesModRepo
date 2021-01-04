@@ -81,9 +81,15 @@ numeric health only updated for the first boss you hit during the Theseus & Aste
 
 2.5.0
 
+new issues:
+opening any weapon's boon list causes a crash for some users, I put a prevention in place until I find out the reason
+
 updated features:
 all features are now split into modules which you can enable or disable (all are enabled by default)
 some features have additional configuration options
+added control keys to boon lists infographs for better controller support : press left to open infograph, press right to open duo infograph
 
 new features:
 god keepsake uses are refreshed/reset to 1 after completing a region
+added configurable run loot caps : maximum gods, maximum hammers and maximum hermes
+changed Maim from Aspect of Gilgamesh to deal -25% total damage but the damage is applied over time instead of a burst at the end

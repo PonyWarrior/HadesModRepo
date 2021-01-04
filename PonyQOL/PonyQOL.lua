@@ -3,6 +3,7 @@ PQOL =
 	Config =
 	{
 		-- Change "Enabled" to Enabled = false to disable any feature
+		-- Some features have additional configuration options
 		BoonList =
 		{
 			Enabled = true,
@@ -50,6 +51,11 @@ PQOL =
 		Gameplay =
 		{
 			Enabled = true,
+			GilgameshChanges =
+			{
+				Enabled = true,
+				BaseDamage = 25,	-- multiplied by aspect level
+			},
 		},
 		BloodRefund =
 		{
@@ -60,6 +66,13 @@ PQOL =
 		GodKeepsakes =
 		{
 			Enabled = true,
+		},
+		CustomPerRunLoot =
+		{
+			Enabled = true,
+			HammerCap = 2,	-- How many hammers you can receive in a run; default = 2
+			HermesCap = 2,	-- How many hermes boons you can receive in a run; default = 2
+			GodCap = 4,	-- How many gods you can encounter in a run; default = 4;	min = 1;   max = 8
 		},
 	}
 }
@@ -107,7 +120,31 @@ if PQOL.Config.Gameplay.Enabled then
         end
         end
         return baseFunc(lootData, args)
-    end)
+	end)
+	
+	if PQOL.Config.Gameplay.GilgameshChanges.Enabled then
+		for i, property in pairs(TraitData.FistDetonateTrait.PropertyChanges) do
+			if property.EffectName == "FistDetonationDamage" and property.EffectProperty == "Amount" then
+				property.BaseValue = PQOL.Config.Gameplay.GilgameshChanges.BaseDamage
+			end
+		end
+		table.insert(TraitData.FistDetonateTrait.PropertyChanges,
+		{
+			WeaponName = "FistDetonationWeapon",
+			EffectName = "FistDetonationDamage",
+			EffectProperty = "Cooldown",
+			ChangeValue = 1.0,
+			ChangeType = "Absolute",
+		})
+		table.insert(TraitData.FistDetonateTrait.PropertyChanges,
+		{
+			WeaponName = "FistDetonationWeapon",
+			EffectName = "FistDetonationDamage",
+			EffectProperty = "DamageOnExpire",
+			ChangeValue = false,
+			ChangeType = "Absolute",
+		})
+	end
 end
 
 if PQOL.Config.BoonList.Enabled then
@@ -118,6 +155,17 @@ if PQOL.Config.BoonList.Enabled then
         DebugPrint({Text = "@"..mod.." Trying to load package "..package..".pkg"})
         LoadPackages({Name = package})
         return baseFunc()
+	end)
+	
+	ModUtil.WrapBaseFunction( "CreateBoonInfoButton", function(baseFunc, traitName, index)
+		if traitName == nil then
+			DebugPrint({Text = "@PonyQOL a traitName was nil! Closed boon info screen to prevent a crash"})
+			ModUtil.Hades.PrintStack("PonyQOL: a traitName was nil!")
+			ModUtil.Hades.PrintStack("Canceled opening boon list to prevent a crash!")
+			ModUtil.Hades.PrintStack("Please report to PonyWarrior and include your savefile!")
+			return
+		end
+        return baseFunc(traitName, index)
     end)
     
     --Add Hammer boon list
@@ -519,8 +567,15 @@ if PQOL.Config.BoonList.Enabled then
     
         for i = screen.StartingIndex, screen.StartingIndex + BoonInfoScreenData.NumPerPage - 1 do
             CreateBoonInfoButton( screen.SortedTraitIndex[i], i )
-        end
-        TeleportCursor({ DestinationId = ScreenAnchors.BoonInfoScreen.Components["BooninfoButton1"].DetailsBacking.Id, ForceUseCheck = true })
+		end
+		--Mod start
+		if ScreenAnchors.BoonInfoScreen.Components["BooninfoButton1"] == nil then
+			ScreenAnchors.BoonInfoScreen.CanClose = true
+			CloseBoonInfoScreen()
+			return
+		end
+		--Mod end
+		TeleportCursor({ DestinationId = ScreenAnchors.BoonInfoScreen.Components["BooninfoButton1"].DetailsBacking.Id, ForceUseCheck = true })
     
         components.RequirementsTitle = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_TraitTray" })
         Attach({ Id = components.RequirementsTitle.Id, DestinationId = components.ShopBackground.Id, OffsetX = 100 , OffsetY = -405 })
@@ -538,14 +593,16 @@ if PQOL.Config.BoonList.Enabled then
         --Mod start
         components.InfographButton = CreateScreenComponent({ Name = "ButtonDefault", Scale = 1.0, Sound = "/SFX/Menu Sounds/GeneralWhooshMENU", Group = "Combat_Menu_TraitTray_Backing" })
         Attach({ Id = components.InfographButton.Id, DestinationId = components.ShopBackground.Id, OffsetX = 750 , OffsetY = -300 })
-        components.InfographButton.OnPressedFunctionName = "ShowInfograph"
+		components.InfographButton.OnPressedFunctionName = "ShowInfograph"
+		components.InfographButton.ControlHotkeys = { "MenuLeft", "Left" }
         CreateTextBox({ Id = components.InfographButton.Id, Text = "Show Infograph",
             FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = Color.BoonPatchHeroic, Font = "AlegreyaSansSCLight",
             ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"})
     
         components.DuoInfographButton = CreateScreenComponent({ Name = "ButtonDefault", Scale = 1.0, Sound = "/SFX/Menu Sounds/GeneralWhooshMENU", Group = "Combat_Menu_TraitTray_Backing" })
         Attach({ Id = components.DuoInfographButton.Id, DestinationId = components.ShopBackground.Id, OffsetX = 750 , OffsetY = -200 })
-        components.DuoInfographButton.OnPressedFunctionName = "ShowDuoInfograph"
+		components.DuoInfographButton.OnPressedFunctionName = "ShowDuoInfograph"
+		components.DuoInfographButton.ControlHotkeys = { "MenuRight", "Right" }
         CreateTextBox({ Id = components.DuoInfographButton.Id, Text = "Show Duo Infograph",
             FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = Color.BoonPatchDuo, Font = "AlegreyaSansSCLight",
             ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"})
@@ -3714,6 +3771,81 @@ if PQOL.Config.GodKeepsakes.Enabled then
 			if traitData.Name == GameState.LastAwardTrait and traitData.ForceBoonName ~= nil then
 				traitData.Uses = traitData.Uses + 1
 			end
+		end
+	end
+end
+
+if PQOL.Config.CustomPerRunLoot.Enabled then
+	if PQOL.Config.CustomPerRunLoot.HammerCap ~= 2 then
+		local newCap = PQOL.Config.CustomPerRunLoot.HammerCap
+		if newCap > 2 then
+			for i, loot in pairs(RewardStoreData.RunProgress) do
+				if loot.Name == "WeaponUpgrade" and loot.GameStateRequirements.RequiredFalseConsumablesThisRun == nil then
+					loot.RequiredMaxWeaponUpgrades = newCap - 1
+					break
+				end
+			end
+		elseif newCap == 1 then
+			for i, loot in pairs(RewardStoreData.RunProgress) do
+				if loot.Name == "WeaponUpgrade" and loot.GameStateRequirements.RequiredFalseConsumablesThisRun then
+					RewardStoreData.RunProgress[i] = nil
+					break
+				end
+			end
+		elseif newCap == 0 then
+			for i, loot in pairs(RewardStoreData.RunProgress) do
+				if loot.Name == "WeaponUpgrade" then
+					RewardStoreData.RunProgress[i] = nil
+				end
+			end
+		end
+	end
+
+	if PQOL.Config.CustomPerRunLoot.HermesCap ~= 2 then
+		local newCap = PQOL.Config.CustomPerRunLoot.HermesCap
+		if newCap > 2 then
+			for i, loot in pairs(RewardStoreData.RunProgress) do
+				if loot.Name == "HermesUpgrade" then
+					loot.RequiredMaxHermesUpgrades = newCap - 1
+					break
+				end
+			end
+		elseif newCap == 1 then
+			for i, loot in pairs(RewardStoreData.RunProgress) do
+				if loot.Name == "HermesUpgrade" then
+					loot.RequiredMaxHermesUpgrades = 0
+					break
+				end
+			end
+		elseif newCap == 0 then
+			for i, loot in pairs(RewardStoreData.RunProgress) do
+				if loot.Name == "HermesUpgrade" then
+					RewardStoreData.RunProgress[i] = nil
+				end
+			end
+		end
+	end
+
+	if PQOL.Config.CustomPerRunLoot.GodCap ~= 4 then
+		function ReachedMaxGods( excludedGods )
+			excludedGods = excludedGods or {}
+			--Mod start
+			local maxLootTypes = 4
+			if PQOL.Config.CustomPerRunLoot.GodCap < 1 then
+				maxLootTypes = 1
+			elseif PQOL.Config.CustomPerRunLoot.GodCap > 8 then
+				maxLootTypes = 8
+			else
+				maxLootTypes = PQOL.Config.CustomPerRunLoot.GodCap
+			end
+			--Mod end
+			local gods = ShallowCopyTable( excludedGods )
+			for i, godName in pairs(GetInteractedGodsThisRun()) do
+				if not Contains( gods, godName ) then
+					table.insert( gods, godName )
+				end
+			end
+			return TableLength( gods ) >= maxLootTypes
 		end
 	end
 end

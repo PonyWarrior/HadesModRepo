@@ -5,5 +5,15 @@
         Id = "BoonInfo_RequiredInactiveMetaupgrade"
         DisplayName = "{#BoldFormatGraftNoColor}{$TempTextData.MetaupgradeName} {#PreviousFormat}Inactive"
         }
+        {
+        Id = "WeaponUpgrade_Refund"
+        DisplayName = "{$TempTextData.Amount}{!Icons.SuperLockKeySmall}"
+        OverwriteLocalization = true
+        }
+        {
+        Id = "WeaponUpgrade_Key_Cost"
+        DisplayName = "Costs {$TempTextData.Amount}{!Icons.LockKeySmall} to refund"
+        OverwriteLocalization = true
+        }
     ]
 }
