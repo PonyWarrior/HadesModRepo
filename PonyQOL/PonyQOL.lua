@@ -3280,10 +3280,18 @@ if PQOL.Config.CompleteAllBounties.Enabled then
 	table.insert(EncounterData.BossHades.PostUnthreadedEvents, {FunctionName = "CompleteAllAvailableBounties"})
 
 	function CompleteAllAvailableBounties()
-		if GameState.SpentShrinePointsCache ~= nil then
+		if GameState.SpentShrinePointsCache ~= nil and GameState.RecordClearedShrineThreshold ~= nil then
 			local activeShrinePoints = GameState.SpentShrinePointsCache - 1
 			local weaponName = GetEquippedWeapon()
 			local roomName = CurrentRun.CurrentRoom.GenusName or CurrentRun.CurrentRoom.Name
+			if weaponName == nil 
+				or roomName == nil
+				or GameState.RecordClearedShrineThreshold[weaponName] == nil
+				or GameState.RecordClearedShrineThreshold[weaponName][roomName] == nil
+				or activeShrinePoints <= GameState.RecordClearedShrineThreshold[weaponName][roomName]
+				then
+				return
+			end
 			while activeShrinePoints > GameState.RecordClearedShrineThreshold[weaponName][roomName] do
 				local consumableName = GetRandomValue(RewardStoreData.SuperMetaProgress)
 				local offsetY = RandomInt(0, 100)
