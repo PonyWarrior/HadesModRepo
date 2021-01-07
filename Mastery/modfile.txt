@@ -1,3 +1,5 @@
 Import "Mastery.lua"
+To "Scripts/EncounterData.lua"
+Import "encounterdata.lua"
 To "Game/Obstacles/Backgrounds.sjson"
 SJSON "Mastery.sjson"

@@ -458,7 +458,13 @@ function CloseMasteryPanel(screen, button)
   screen.KeepOpen = false
   OnScreenClosed({ Flag = screen.Name })
   if screen.Name == "MasteryLevelUpPresentation" then
+    DebugPrint({Text="softlock!"})
     CurrentRun.CurrentRoom.SoftlockPrevention = true
+    local consumableName = GetRandomValue(RewardStoreData.SuperMetaProgress)
+    local offsetY = RandomInt(0, 100)
+    local offsetX = RandomInt(0, 100)
+    local consumableId = SpawnObstacle({ Name = consumableName.Name, DestinationId = CurrentRun.Hero.ObjectId, Group = "Standing", OffsetX = offsetX, OffsetY = offsetY })
+    local consumable = CreateConsumableItem( consumableId, consumableName.Name, 0 )
   end
 end
 
@@ -1076,9 +1082,9 @@ end
 local baseAttemptUseDoor = AttemptUseDoor
 function AttemptUseDoor(door)
   if CurrentRun.CurrentRoom.SoftlockPrevention ~= nil then
+    CurrentRun.CurrentRoom.Encounter.Completed = true
     door.ReadyToUse = true
     UnlockRoomExits( CurrentRun, CurrentRun.CurrentRoom )
-    CurrentRun.CurrentRoom.Encounter.Completed = true
   end
   baseAttemptUseDoor(door)
 end
@@ -1092,12 +1098,6 @@ OnHit{function(triggerArgs)
   victim.AppliedOnHitCosmetics = true
   ApplyOnHitCosmetics(triggerArgs)
 end}
-
-local baseCloseRunClearScreen = CloseRunClearScreen
-function CloseRunClearScreen()
-  baseCloseRunClearScreen()
-  OpenProgressionPanel()
-end
 
 OnAnyLoad{ "DeathArea",
 function(triggerArgs)

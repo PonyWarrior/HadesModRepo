@@ -18,3 +18,8 @@ couldn't open the menu in the house lobby
 
 fixed issues :
 crash when opening detailed panel of any weapon you never completed a single run with
+
+1.0.4
+
+updated features:
+fixed the softlock issues
