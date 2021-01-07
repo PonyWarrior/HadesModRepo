@@ -93,3 +93,9 @@ new features:
 god keepsake uses are refreshed/reset to 1 after completing a region
 added configurable run loot caps : maximum gods, maximum hammers and maximum hermes
 changed Maim from Aspect of Gilgamesh to deal -25% total damage but the damage is applied over time instead of a burst at the end
+
+2.5.1
+
+fixed issues:
+beating a boss for the first time with a weapon caused a crash
+complete all bounties did not work properly

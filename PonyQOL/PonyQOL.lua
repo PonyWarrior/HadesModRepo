@@ -74,6 +74,10 @@ PQOL =
 			HermesCap = 2,	-- How many hermes boons you can receive in a run; default = 2
 			GodCap = 4,	-- How many gods you can encounter in a run; default = 4;	min = 1;   max = 8
 		},
+		AlwaysEncounterStoryRooms =
+		{
+			Enabled = true,
+		},
 	}
 }
 
@@ -3273,11 +3277,6 @@ end
 
 if PQOL.Config.CompleteAllBounties.Enabled then
 	--Complete all bounties
-	table.insert(EncounterData.BossHarpy1.PostUnthreadedEvents, {FunctionName = "CompleteAllAvailableBounties"})
-	table.insert(EncounterData.BossHarpyTriumvirate.PostUnthreadedEvents, {FunctionName = "CompleteAllAvailableBounties"})
-	table.insert(EncounterData.BossHydra.PostUnthreadedEvents, {FunctionName = "CompleteAllAvailableBounties"})
-	table.insert(EncounterData.BossTheseusAndMinotaur.PostUnthreadedEvents, {FunctionName = "CompleteAllAvailableBounties"})
-	table.insert(EncounterData.BossHades.PostUnthreadedEvents, {FunctionName = "CompleteAllAvailableBounties"})
 
 	function CompleteAllAvailableBounties()
 		if GameState.SpentShrinePointsCache ~= nil and GameState.RecordClearedShrineThreshold ~= nil then
@@ -3304,6 +3303,10 @@ if PQOL.Config.CompleteAllBounties.Enabled then
 				wait(0.1)
 			end
 		end
+	end
+else
+	function CompleteAllAvailableBounties()
+		-- do nothing
 	end
 end
 
@@ -3360,7 +3363,7 @@ if PQOL.Config.PostBossWeaponSelect.Enabled then
 			end
 			for i=6, 0, -1 do
 				local key = "Key"..i
-				kits[key] = SpawnObstacle({ Name = "WeaponKit01", Group = "Overlay", DestinationId = CurrentRun.Hero.ObjectId, OffsetX = offsetX, OffsetY = offsetY })
+				kits[key] = SpawnObstacle({ Name = "WeaponKit01", Group = "FX_Terrain", DestinationId = CurrentRun.Hero.ObjectId, OffsetX = offsetX, OffsetY = offsetY })
 				SetScale({ Id = kits[key], Fraction = 0.1 })
 				offsetX = offsetX + incrementX
 				offsetY = offsetY + incrementY
@@ -3856,4 +3859,15 @@ if PQOL.Config.CustomPerRunLoot.Enabled then
 			return TableLength( gods ) >= maxLootTypes
 		end
 	end
+end
+
+if PQOL.Config.AlwaysEncounterStoryRooms.Enabled then
+	RoomSetData.Tartarus.A_Story01.ForceAtBiomeDepthMin = 1
+	RoomSetData.Tartarus.A_Story01.ForceAtBiomeDepthMax = 10
+
+	RoomSetData.Asphodel.B_Story01.ForceAtBiomeDepthMin = 1
+	RoomSetData.Asphodel.B_Story01.ForceAtBiomeDepthMax = 10
+
+	RoomSetData.Elysium.C_Story01.ForceAtBiomeDepthMin = 1
+	RoomSetData.Elysium.C_Story01.ForceAtBiomeDepthMax = 10
 end

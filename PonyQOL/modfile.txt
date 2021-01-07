@@ -1,4 +1,6 @@
 Import "PonyQOL.lua"
+To "Scripts/EncounterData.lua
+Import "encounterdata.lua"
 To "Game/Text/en/HelpText.en.sjson"
 SJSON "helptext.sjson"
 To "Game/Text/en/CodexText.en.sjson"
