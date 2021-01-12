@@ -1,1 +1,3 @@
 Import "main.lua"
+To "Game/Text/en/HelpText.en.sjson"
+SJSON "helptext.en.sjson"
