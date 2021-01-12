@@ -1,8 +1,23 @@
 
 ZagreusUpgradeData =
 {
-    Boons = {},
+    Altar = {},
+    Boons =
+    {
+        ZeusUpgrade = {},
+        PoseidonUpgrade = {},
+        AthenaUpgrade = {},
+        AphroditeUpgrade = {},
+        ArtemisUpgrade = {},
+        AresUpgrade = {},
+        DionysusUpgrade = {},
+        HermesUpgrade = {},
+        DemeterUpgrade = {},
+        TrialUpgrade = {},
+    },
 }
+
+-- SaveIgnores["ZagreusUpgradeData"] = true
 
 local AltarScreen = { Components = {} }
 
@@ -51,21 +66,7 @@ local Sounds =
 
 OnControlPressed{ "Shout",
 function(triggerArgs)
-
-for i=1, TableLength(ValidGods) do
-    if GetGiftLevel(ValidGods[i]) == GetMaxGiftLevel(ValidGods[i]) then
-        local traitName = nil
-        if ValidGods[i] == "TrialUpgrade" then
-            traitName = GetRandomValue(LootData[ValidGods[i]].PermanentTraits)
-        else
-            traitName = GetRandomValue(LootData[ValidGods[i]].Traits)
-        end
-       if traitName ~= nil then
-        AddTraitToHero({ TraitName = traitName})
-       end
-    end
-end
-
+    LoadAltarBoons()
 end}
 
 table.insert(DeathLoopData.DeathAreaBedroom.UnthreadedEvents,
@@ -95,7 +96,7 @@ OnUsed{ "Altar", function()
     ShowAltarScreen()
 end}
 
- 
+
 function ShowAltarScreen()
   ScreenAnchors.AltarScreen = DeepCopyTable(AltarScreen)
   local screen = ScreenAnchors.AltarScreen
@@ -132,7 +133,7 @@ function ShowAltarScreen()
   screen.KeepOpen = true
   HandleScreenInput(screen)
 end
- 
+
 function CloseAltarScreen(screen, button)
   DisableShopGamepadCursor()
   SetConfigOption({ Name = "FreeFormSelectWrapY", Value = false })
@@ -172,7 +173,7 @@ function CreateAltarButtons(screen)
         SetAlpha({ Ids = { components[key].Id, components[buttonKey].Id }, Fraction = fraction, Duration = 0.9 })
         SetAnimation({ DestinationId = components[key].Id, Name = Portraits[i] })
         Move({ Ids = { components[key].Id, components[buttonKey].Id }, OffsetX = rowStartX, OffsetY = 500, Duration = 0.9 })
-        
+
         components[buttonKey].ToDestroy = true
         components[key].ToDestroy = true
         wait(0.1)
@@ -236,7 +237,7 @@ function CreateGodAltarButtons(screen, godName)
 
 	local tooltipData = {}
 
-    for itemIndex, itemName in ipairs( LootData[godName].Traits ) do
+    for itemIndex, itemName in ipairs( LootData[godName].Traits or LootData[godName].PermanentTraits ) do
         local rowoffset = 200
         local columnoffset = 700
         local numperrow = 2
@@ -246,51 +247,52 @@ function CreateGodAltarButtons(screen, godName)
         local purchaseButtonKey = "PurchaseButton"..itemIndex
         components[purchaseButtonKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "Combat_Menu", Scale = 0.8, X = offsetX, Y = offsetY })
         components[purchaseButtonKey].ToDestroy = true
+        components[purchaseButtonKey].TempToDestroy = true
         SetScaleY({ Id = components[purchaseButtonKey].Id, Fraction = 1.25 })
-        
+
 		local upgradeData = nil
 		local upgradeTitle = GetTraitTooltipTitle( TraitData[itemName] )
         upgradeData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = itemName, Rarity = "Common" })
         tooltipData = upgradeData
         SetTraitTextData( tooltipData )
         local upgradeDescription = GetTraitTooltip( tooltipData , { Default = upgradeData.Title })
+        if HasDisplayName({ Text = upgradeDescription .."_Initial" }) then
+            upgradeDescription = upgradeDescription .."_Initial"
+        end
         local traitNum = GetTraitCount(CurrentRun.Hero, upgradeData)
+
+        local color = Color.White
+        if ZagreusUpgradeData.Boons[godName][upgradeData.Name] then
+            color = LootData[godName].LootColor or Color.Gray
+        end
 
         components[purchaseButtonKey.."Icon"] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu", X = offsetX - 250, Y = offsetY })
         components[purchaseButtonKey.."Icon"].ToDestroy = true
+        components[purchaseButtonKey.."Icon"].TempToDestroy = true
         SetAnimation({ DestinationId = components[purchaseButtonKey.."Icon"].Id, Name = upgradeData.Icon .. "_Large" })
         SetScale({ Id = components[purchaseButtonKey.."Icon"].Id, Fraction = 0.85 })
 
         components[purchaseButtonKey.."Frame"] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu", X = offsetX - 250, Y = offsetY })
         components[purchaseButtonKey.."Frame"].ToDestroy = true
+        components[purchaseButtonKey.."Frame"].TempToDestroy = true
         SetAnimation({ DestinationId = components[purchaseButtonKey.."Frame"].Id, Name = "Frame_Boon_Menu_Common"})
         SetScale({ Id = components[purchaseButtonKey.."Frame"].Id, Fraction = 0.85 })
-
-        local icon = "Boon_Common"
-		CreateTextBox({ Id = components[purchaseButtonKey].Id, Text = icon,
-			FontSize = 27,
-			OffsetX = -150, OffsetY = -60,
-			Width = 720,
-			Color = Color.White,
-			Font = "AlegreyaSansSCLight",
-			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2},
-			Justification = "Right"
-		})
 
 		CreateTextBox({ Id = components[purchaseButtonKey].Id,
 			Text = upgradeTitle,
 			FontSize = 27,
 			OffsetX = -150, OffsetY = -65,
-			Color = Color.White,
+			Color = color,
 			Font = "AlegreyaSansSCLight",
 			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2},
 			Justification = "Left",
 			LuaKey = "TooltipData", LuaValue = tooltipData,
         })
-        
+
 		CreateTextBoxWithFormat(MergeTables({ Id = components[purchaseButtonKey].Id,
 			Text = upgradeDescription,
-			OffsetX = -150, OffsetY = -30,
+            OffsetX = -150, OffsetY = -30,
+			Color = color,
 			Width = 475,
 			Justification = "Left",
 			VerticalJustification = "Top",
@@ -300,7 +302,13 @@ function CreateGodAltarButtons(screen, godName)
 			Format = "BaseFormat",
 			VariableAutoFormat = "BoldFormatGraft",
 			TextSymbolScale = 0.8,
-		}, LocalizationData.UpgradeChoice.BoonLootButton))
+        }, LocalizationData.UpgradeChoice.BoonLootButton))
+
+        components[purchaseButtonKey].OnPressedFunctionName = "HandleBoonAltarClick"
+        components[purchaseButtonKey].TraitData = upgradeData
+        components[purchaseButtonKey].God = godName
+
+        -- SetAnimation({DestinationId = components[purchaseButtonKey].Id, Name = "BoonSlotLocked" })
 
     end
 end
@@ -320,3 +328,48 @@ function CloseGodAltarPanel(screen, button)
     Destroy({Ids = ToDestroy})
 	DestroyTextBox({ Ids = { ToDestroy, components.Background.Id } })
 end
+
+function HandleBoonAltarClick(screen, button)
+
+    local traitData = button.TraitData
+    local godName = button.God
+
+    if not ZagreusUpgradeData.Boons[godName][traitData.Name] then
+        if ZagreusUpgradeData.Boons[godName] ~= nil then
+            ZagreusUpgradeData.Boons[godName] = {}
+        end
+        ZagreusUpgradeData.Boons[godName][1] = traitData
+
+        DestroyTempButtons(screen)
+        CreateGodAltarButtons(screen, godName)
+    end
+end
+
+function DestroyTempButtons(screen)
+    local components = screen.Components
+    local TempToDestroy = {}
+    for i, component in pairs (components) do
+        if component.TempToDestroy then
+            table.insert(TempToDestroy, component.Id)
+        end
+    end
+    Destroy({Ids = TempToDestroy})
+	DestroyTextBox({ Ids = { TempToDestroy, components.Background.Id } })
+end
+
+function LoadAltarBoons()
+    for _, boons in pairs(ZagreusUpgradeData.Boons) do
+        if boons ~= nil then
+            if boons[1] ~= nil and not HeroHasTrait(boons[1].Name) then
+                AddTraitToHero({ TraitData = boons[1] })
+            end
+        end
+    end
+end
+
+OnAnyLoad{function()
+    if not CurrentRun.AltarBoonsLoaded then
+        LoadAltarBoons()
+        CurrentRun.AltarBoonsLoaded = true
+    end
+end}
