@@ -5,5 +5,14 @@
       Id = "Boon_Incomplete"
       DisplayName = "Incomplete"
     }
+    {
+      Id = "Boon_Slot_Taken"
+      DisplayName = "Slot taken by {$TempTextData.God}"
+    }
+    {
+      Id = "Upgrade_God_Altar_Cost"
+      DisplayName = "Upgrade to {$TempTextData.NextRarity} \n {$TempTextData.Amount}{!Icons.SuperLockKeySmall}"
+      OverwriteLocalization = true
+    }
     ]
 }
