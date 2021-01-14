@@ -142,3 +142,33 @@ OnAnyLoad{function ()
         wait(1)
     end
 end}
+
+ModUtil.WrapBaseFunction( "HarpyKillPresentation", function(baseFunc, unit, args)
+    RemoveOutline({ Id = unit.ObjectId})
+    return baseFunc(unit, args)
+end)
+
+ModUtil.WrapBaseFunction( "HydraKillPresentation", function(baseFunc, unit, args)
+    RemoveOutline({ Id = unit.ObjectId})
+    return baseFunc(unit, args)
+end)
+
+ModUtil.WrapBaseFunction( "HydraKillPresentation", function(baseFunc, unit, args)
+    RemoveOutline({ Id = unit.ObjectId})
+    return baseFunc(unit, args)
+end)
+
+ModUtil.WrapBaseFunction( "TheseusMinotaurKillPresentation", function(baseFunc, unit, args)
+    RemoveOutline({ Id = unit.ObjectId})
+    return baseFunc(unit, args)
+end)
+
+ModUtil.WrapBaseFunction( "CrawlerMiniBossKillPresentation", function(baseFunc, unit, args)
+    RemoveOutline({ Id = unit.ObjectId})
+    return baseFunc(unit, args)
+end)
+
+ModUtil.WrapBaseFunction( "HadesKillPresentation", function(baseFunc, unit, args)
+    RemoveOutline({ Id = unit.ObjectId})
+    return baseFunc(unit, args)
+end)
