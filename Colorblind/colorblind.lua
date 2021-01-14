@@ -73,6 +73,14 @@ function IsOutlineLegal(enemy)
         return false
     end
 
+    if enemy.Name == "HarpySupportUnit" then
+        return false
+    end
+
+    if enemy.InheritFrom ~= nil and Contains(enemy.InheritFrom, "IsNeutral") then
+        return false
+    end
+
     return true
 end
 
