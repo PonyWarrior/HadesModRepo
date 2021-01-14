@@ -172,3 +172,23 @@ ModUtil.WrapBaseFunction( "HadesKillPresentation", function(baseFunc, unit, args
     RemoveOutline({ Id = unit.ObjectId})
     return baseFunc(unit, args)
 end)
+
+ModUtil.WrapBaseFunction( "KillPresentation", function(baseFunc, unit, args)
+    RemoveOutline({ Id = unit.ObjectId})
+    return baseFunc(unit, args)
+end)
+
+ModUtil.WrapBaseFunction( "DeathPresentation", function(baseFunc, unit, args)
+    RemoveOutline({ Id = unit.ObjectId})
+    return baseFunc(unit, args)
+end)
+
+ModUtil.WrapBaseFunction( "BoatToDeathAreaTransition", function(baseFunc, unit, args)
+    RemoveOutline({ Id = unit.ObjectId})
+    return baseFunc(unit, args)
+end)
+
+ModUtil.WrapBaseFunction( "SurfaceDeathPresentation", function(baseFunc, unit, args)
+    RemoveOutline({ Id = unit.ObjectId})
+    return baseFunc(unit, args)
+end)
