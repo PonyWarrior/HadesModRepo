@@ -261,3 +261,23 @@ fixed issues :
 god mode causes issues with the boon manager
 cerberus entry causes zagreus to turn into a box during a run
 pressing confirm while having the boon list opened opens the boon selector
+
+2.4.6
+
+ongoing issues :
+some casts have bugged animations
+some users crash when opening the boon manager
+various bugs with all mode in boon manager
+
+updated features:
+boon manager page buttons can now be controlled with shoulder buttons on controller
+
+fixed issues:
+pony qol practice fishing works during boss rush encounters
+
+2.4.7
+
+fixed issues :
+rare crash in boss rush when there is special dialogue
+animations are not properly loaded when equipping certain boons (requires modutil)
+added missing 'Rending Claws' upgrade to Twin Fists hammer

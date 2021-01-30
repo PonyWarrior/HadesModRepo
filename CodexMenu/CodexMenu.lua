@@ -83,7 +83,7 @@ CodexMenuData =
 
 	GunWeapon = { "GunSlowGrenade", "GunMinigunTrait", "GunShotgunTrait", "GunExplodingSecondaryTrait", "GunGrenadeFastTrait", "GunArmorPenerationTrait", "GunInfiniteAmmoTrait", "GunConsecutiveFireTrait", "GunGrenadeClusterTrait", "GunGrenadeDropTrait", "GunHeavyBulletTrait", "GunHomingBulletTrait", "GunChainShotTrait", "GunLoadedGrenadeBoostTrait", "GunLoadedGrenadeLaserTrait", "GunLoadedGrenadeSpeedTrait", "GunLoadedGrenadeWideTrait", "GunLoadedGrenadeInfiniteAmmoTrait"},
 
-	FistWeapon = { "FistReachAttackTrait", "FistDashAttackHealthBufferTrait", "FistTeleportSpecialTrait", "FistDoubleDashSpecialTrait", "FistChargeSpecialTrait", "FistKillTrait", "FistSpecialLandTrait", "FistAttackFinisherTrait", "FistConsecutiveAttackTrait", "FistSpecialFireballTrait", "FistHeavyAttackTrait", "FistAttackDefenseTrait", "FistDetonateBoostTrait"},
+	FistWeapon = { "FistReachAttackTrait", "FistDashAttackHealthBufferTrait", "FistTeleportSpecialTrait", "FistDoubleDashSpecialTrait", "FistChargeSpecialTrait", "FistKillTrait", "FistSpecialLandTrait", "FistAttackFinisherTrait", "FistConsecutiveAttackTrait", "FistSpecialFireballTrait", "FistHeavyAttackTrait", "FistAttackDefenseTrait", "FistDetonateBoostTrait", "MaimBoostTrait"},
 
 	Legendaries =
 	{
@@ -143,6 +143,28 @@ local RealGodNames = {
 }
 
 SaveIgnores["CodexMenuData"] = true
+
+-- ModUtil part
+if ModUtil ~= nil and PQOL == nil then
+    local mod = "CodexMenu"
+
+    ModUtil.WrapBaseFunction( "SetupMap", function(baseFunc)
+        DebugPrint({Text = "@"..mod.." Loading all god packages!"})
+        LoadPackages({Names = {
+            "ZeusUpgrade",
+            "PoseidonUpgrade",
+            "AthenaUpgrade",
+            "AphroditeUpgrade",
+            "ArtemisUpgrade",
+            "AresUpgrade",
+            "DionysusUpgrade",
+            "HermesUpgrade",
+            "DemeterUpgrade",
+            "Chaos"
+        }})
+        return baseFunc()
+    end)
+end
 
 CodexMenuData.GodNames = {}
 for key,_ in pairs(CodexMenuData) do
@@ -1470,7 +1492,9 @@ local CommandTable =
 					CurrentRun.Hero.MaxLastStands = CurrentRun.Hero.MaxLastStands - 1
 			end
 			EquipPlayerWeapon( WeaponData[GameState.CodexMenuSavedState.Weapon], { PreLoadBinks = true } )
+			GameState.LastInteractedWeaponUpgrade = { WeaponName = GetEquippedWeapon(), ItemIndex = GetEquippedWeaponTraitIndex( GetEquippedWeapon() ) }
 			EquipKeepsake(CurrentRun.Hero, GameState.CodexMenuSavedState.Keepsake)
+
 			EquipAssist(CurrentRun.Hero, GameState.CodexMenuSavedState.Assist)
 			if GameState.CodexMenuSavedState.Aspect.Name ~= nil then
 				AddTraitToHero({ TraitName = GameState.CodexMenuSavedState.Aspect.Name, Rarity = GameState.CodexMenuSavedState.Aspect.Rarity })
@@ -1478,6 +1502,8 @@ local CommandTable =
 			for i, traitData in pairs( GameState.CodexMenuSavedState.Traits ) do
 				AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = traitData.Name, Rarity = traitData.Rarity }) })
 			end
+
+
 		end
 	end,
 	NPC_Eurydice_01 = function()
@@ -1584,9 +1610,11 @@ function StartNewCustomRun(bossRoom)
 	CurrentRun.BlockTimerFlags = {}
 	CurrentRun.WeaponsFiredRecord = {}
 	CurrentRun.Hero = CreateNewHero( prevRun, args )
-	EquipKeepsake( CurrentRun.Hero, GameState.LastAwardTrait, { SkipNewTraitHighlight = true })
-	EquipAssist( CurrentRun.Hero, GameState.LastAssistTrait, { SkipNewTraitHighlight = true } )
-	EquipWeaponUpgrade( CurrentRun.Hero, { SkipTraitHighlight = true } )
+	if GameState.CodexMenuSavedState == nil then
+		EquipKeepsake( CurrentRun.Hero, GameState.LastAwardTrait, { SkipNewTraitHighlight = true })
+		EquipAssist( CurrentRun.Hero, GameState.LastAssistTrait, { SkipNewTraitHighlight = true } )
+		EquipWeaponUpgrade( CurrentRun.Hero, { SkipTraitHighlight = true } )
+	end
 	CurrentRun.RoomHistory = {}
 	UpdateRunHistoryCache( CurrentRun )
 	CheckRunStartFlags( CurrentRun )
