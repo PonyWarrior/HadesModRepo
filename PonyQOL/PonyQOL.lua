@@ -59,7 +59,7 @@ PQOL =
 		},
 		BloodRefund =
 		{
-			Enabled = true,
+			Enabled = false,
 			FreeMode = false,	-- Makes refunding free when enabled
 			KeyCostPerBloodRefunded = 2,	-- How many keys refunding 1 titan blood costs
 		},
@@ -125,7 +125,7 @@ if PQOL.Config.Gameplay.Enabled then
         end
         return baseFunc(lootData, args)
 	end)
-	
+
 	if PQOL.Config.Gameplay.GilgameshChanges.Enabled then
 		for i, property in pairs(TraitData.FistDetonateTrait.PropertyChanges) do
 			if property.EffectName == "FistDetonationDamage" and property.EffectProperty == "Amount" then
@@ -154,13 +154,13 @@ end
 if PQOL.Config.BoonList.Enabled then
     local mod = "Pony QoL"
     local package = "Charts"
-    
+
     ModUtil.WrapBaseFunction( "SetupMap", function(baseFunc)
         DebugPrint({Text = "@"..mod.." Trying to load package "..package..".pkg"})
         LoadPackages({Name = package})
         return baseFunc()
 	end)
-	
+
 	ModUtil.WrapBaseFunction( "CreateBoonInfoButton", function(baseFunc, traitName, index)
 		if traitName == nil then
 			DebugPrint({Text = "@PonyQOL a traitName was nil! Closed boon info screen to prevent a crash"})
@@ -171,7 +171,7 @@ if PQOL.Config.BoonList.Enabled then
 		end
         return baseFunc(traitName, index)
     end)
-    
+
     --Add Hammer boon list
     --Add weapon boon lists
     --Display extra info in boon list
@@ -217,7 +217,7 @@ if PQOL.Config.BoonList.Enabled then
     BoonInfoScreenData.SortedTraitIndex["GunWeapon"] = gunUpgrades
     BoonInfoScreenData.SortedTraitIndex["FistWeapon"] = fistUpgrades
     BoonInfoScreenData.SortedTraitIndex["NPC_Charon_01"] = charonUpgrades
-    
+
     function CreateTraitRequirements( traitName )
         local screen = ScreenAnchors.BoonInfoScreen
         Destroy({Ids = screen.TraitRequirements })
@@ -235,7 +235,7 @@ if PQOL.Config.BoonList.Enabled then
             local requirementsText = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_TraitTray" })
             table.insert(screen.TraitRequirements, requirementsText.Id )
             Attach({ Id = requirementsText.Id, DestinationId = screen.Components.ShopBackground.Id, OffsetX = startX , OffsetY = -405 })
-    
+
             local color = Color.White
             if IsGameStateEligible( CurrentRun, { RequiredMetaUpgradeSelected = traitData.RequiredMetaUpgradeSelected }) then
                 color = Color.BoonInfoAcquired
@@ -255,7 +255,7 @@ if PQOL.Config.BoonList.Enabled then
             LuaValue = { MetaupgradeName = requiredMetaUpgrade }})
             startY = startY + 45
             hasRequirement = true
-    
+
             if MetaUpgradeData[requiredMetaUpgrade] and MetaUpgradeData[requiredMetaUpgrade].Icon then
                 local metaupgradeIcon = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_TraitTray" })
                 SetAnimation({ Name = MetaUpgradeData[requiredMetaUpgrade].Icon, DestinationId = metaupgradeIcon.Id })
@@ -269,7 +269,7 @@ if PQOL.Config.BoonList.Enabled then
             local requirementsText = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_TraitTray" })
             table.insert(screen.TraitRequirements, requirementsText.Id )
             Attach({ Id = requirementsText.Id, DestinationId = screen.Components.ShopBackground.Id, OffsetX = startX , OffsetY = -405 })
-    
+
             local color = Color.White
             if IsGameStateEligible( CurrentRun, { RequiredInactiveMetaUpgrade = traitData.RequiredInactiveMetaUpgrade }) then
                 color = Color.BoonInfoAcquired
@@ -289,7 +289,7 @@ if PQOL.Config.BoonList.Enabled then
             LuaValue = { MetaupgradeName = requiredMetaUpgrade }})
             startY = startY + 45
             hasRequirement = true
-    
+
             if MetaUpgradeData[requiredMetaUpgrade] and MetaUpgradeData[requiredMetaUpgrade].Icon then
                 local metaupgradeIcon = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_TraitTray" })
                 SetAnimation({ Name = MetaUpgradeData[requiredMetaUpgrade].Icon, DestinationId = metaupgradeIcon.Id })
@@ -298,7 +298,7 @@ if PQOL.Config.BoonList.Enabled then
             end
         end
         --Mod end
-    
+
         if traitData.RequiredTrait then
             local requirementsText = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_TraitTray" })
             table.insert(screen.TraitRequirements, requirementsText.Id )
@@ -321,8 +321,8 @@ if PQOL.Config.BoonList.Enabled then
             LuaValue = { TraitName = traitData.RequiredTrait}})
             startY = startY + 45
             hasRequirement = true
-    
-    
+
+
             if TraitData[traitData.RequiredTrait] and TraitData[traitData.RequiredTrait].Icon then
                 local metaupgradeIcon = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_TraitTray" })
                 SetAnimation({ Name = GetTraitIcon( TraitData[traitData.RequiredTrait] ), DestinationId = metaupgradeIcon.Id })
@@ -331,7 +331,7 @@ if PQOL.Config.BoonList.Enabled then
                 Attach({ Id = metaupgradeIcon.Id, DestinationId = screen.Components.ShopBackground.Id, OffsetX = startX + 180, OffsetY = -405 + 120 })
             end
         end
-    
+
       --Mod start
       if traitData.RequiredWeapon then
         local requirementsText = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_TraitTray" })
@@ -357,7 +357,7 @@ if PQOL.Config.BoonList.Enabled then
         hasRequirement = true
       end
       --Mod end
-    
+
       --Mod start
       if traitData.RequiredSlottedTrait then
         local requirementsText = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_TraitTray" })
@@ -383,12 +383,12 @@ if PQOL.Config.BoonList.Enabled then
         hasRequirement = true
       end
       --Mod end
-    
+
         if traitData.RequiredOneOfTraits then
             startY = CreateTraitRequirementList( screen, { Text = "BoonInfo_OneOf", TextSingular = "BoonInfo_OneOf_Singular" }, traitData.RequiredOneOfTraits, startY, IsGameStateEligible(CurrentRun, { RequiredOneOfTraits = traitData.RequiredOneOfTraits }))
             hasRequirement = true
         end
-    
+
       --Mod start
       if traitData.RequiredFalseTraits then
         local list = traitData.RequiredFalseTraits
@@ -402,9 +402,9 @@ if PQOL.Config.BoonList.Enabled then
           hasRequirement = true
         end
       end
-    
+
       --Mod end
-    
+
         --Mod start
         local onelist = {}
         local setlist = {}
@@ -467,7 +467,7 @@ if PQOL.Config.BoonList.Enabled then
             hasRequirement = true
         end
         --Mod end
-    
+
         if BoonInfoScreenData.TraitRequirementsDictionary[traitName] then
             hasRequirement = true
             local requirementData = BoonInfoScreenData.TraitRequirementsDictionary[traitName]
@@ -491,16 +491,16 @@ if PQOL.Config.BoonList.Enabled then
                         hasAmount = hasAmount + 1
                     end
                 end
-    
+
                 startY = CreateTraitRequirementList( screen, { Text = "BoonInfo_TwoOf" }, (GetAllKeys(allTraitsDictionary)), startY, ( hasAmount >= 2 ))
             end
         end
-    
+
         if not hasRequirement then
             local requirementsText = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_TraitTray" })
             table.insert(screen.TraitRequirements, requirementsText.Id )
             Attach({ Id = requirementsText.Id, DestinationId = screen.Components.ShopBackground.Id, OffsetX = startX , OffsetY = -405 })
-    
+
             CreateTextBox({
             Id = requirementsText.Id,
             Text = "BoonInfo_NoRequirements",
@@ -513,16 +513,16 @@ if PQOL.Config.BoonList.Enabled then
             Justification = "Left"})
         end
     end
-    
+
     --Boon list infographs
     function ShowBoonInfoScreen( lootName )
         OnScreenOpened( { Flag = "BoonInfoScreen", PersistCombatUI = true } )
         SetConfigOption({ Name = "ExclusiveInteractGroup", Value = "Combat_Menu_TraitTray_Backing" })
-    
+
         FreezePlayerUnit("BoonInfoScreen" )
-    
+
         PlaySound({ Name = "/SFX/Menu Sounds/GeneralWhooshMENULoud" })
-    
+
         ScreenAnchors.BoonInfoScreen = { LootName = lootName, StartingIndex = 1, Components = {}, Name = "BoonInfoScreen", TraitContainers = {}, TraitRequirements = {} }
         local screen = ScreenAnchors.BoonInfoScreen
         local components = ScreenAnchors.BoonInfoScreen.Components
@@ -535,24 +535,24 @@ if PQOL.Config.BoonList.Enabled then
             screen.OldFreeFormSelecSearchFromId = GetConfigOptionValue({ Name = "FreeFormSelecSearchFromId" })
             CodexUI.Screen.Components.CloseButton.OnPressedFunctionName = nil
         end
-    
+
         components.ShopBackgroundDim = CreateScreenComponent({ Name = "rectangle01", Group = "Combat_Menu_TraitTray_Backing" })
         SetScale({ Id = components.ShopBackgroundDim.Id, Fraction = 10 })
         SetColor({ Id = components.ShopBackgroundDim.Id, Color = {0.090, 0.055, 0.157, 0.6} })
-    
+
         components.ShopBackground = CreateScreenComponent({ Name = "BoonInfoBacking", Group = "Combat_Menu_TraitTray_Backing", X = ScreenCenterX, Y = ScreenHeight/2 })
-    
+
         components.PageUp = CreateScreenComponent({ Name = "ButtonCodexUp", Scale = 0.8, Sound = "/SFX/Menu Sounds/GeneralWhooshMENU", Group = "Combat_Menu_TraitTray_Backing" })
         Attach({ Id = components.PageUp.Id, DestinationId = components.ShopBackground.Id, OffsetX = -400 , OffsetY = -395 })
         components.PageUp.OnPressedFunctionName = "BoonInfoScreenPrevious"
         components.PageUp.ControlHotkey = "MenuUp"
-    
+
         components.PageDown = CreateScreenComponent({ Name = "ButtonCodexDown", Scale = 0.8, Sound = "/SFX/Menu Sounds/GeneralWhooshMENU", Group = "Combat_Menu_TraitTray_Backing" })
         Attach({ Id = components.PageDown.Id, DestinationId = components.ShopBackground.Id, OffsetX = -400 , OffsetY = 415 })
         components.PageDown.OnPressedFunctionName = "BoonInfoScreenNext"
         components.PageDown.ControlHotkey = "MenuDown"
-    
-    
+
+
         components.CloseButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 1, Group = "Combat_Menu_TraitTray_Backing" })
         Attach({ Id = components.CloseButton.Id, DestinationId = components.ShopBackground.Id, OffsetX = 0 , OffsetY = 490 })
         components.CloseButton.OnPressedFunctionName = "CloseBoonInfoScreen"
@@ -568,7 +568,7 @@ if PQOL.Config.BoonList.Enabled then
             LuaKey = "TempTextData",
             LuaValue = { BoonName = lootName }
         })
-    
+
         for i = screen.StartingIndex, screen.StartingIndex + BoonInfoScreenData.NumPerPage - 1 do
             CreateBoonInfoButton( screen.SortedTraitIndex[i], i )
 		end
@@ -580,7 +580,7 @@ if PQOL.Config.BoonList.Enabled then
 		end
 		--Mod end
 		TeleportCursor({ DestinationId = ScreenAnchors.BoonInfoScreen.Components["BooninfoButton1"].DetailsBacking.Id, ForceUseCheck = true })
-    
+
         components.RequirementsTitle = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_TraitTray" })
         Attach({ Id = components.RequirementsTitle.Id, DestinationId = components.ShopBackground.Id, OffsetX = 100 , OffsetY = -405 })
         CreateTextBox(MergeTables({
@@ -602,7 +602,7 @@ if PQOL.Config.BoonList.Enabled then
         CreateTextBox({ Id = components.InfographButton.Id, Text = "Show Infograph",
             FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = Color.BoonPatchHeroic, Font = "AlegreyaSansSCLight",
             ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"})
-    
+
         components.DuoInfographButton = CreateScreenComponent({ Name = "ButtonDefault", Scale = 1.0, Sound = "/SFX/Menu Sounds/GeneralWhooshMENU", Group = "Combat_Menu_TraitTray_Backing" })
         Attach({ Id = components.DuoInfographButton.Id, DestinationId = components.ShopBackground.Id, OffsetX = 750 , OffsetY = -200 })
 		components.DuoInfographButton.OnPressedFunctionName = "ShowDuoInfograph"
@@ -611,15 +611,15 @@ if PQOL.Config.BoonList.Enabled then
             FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = Color.BoonPatchDuo, Font = "AlegreyaSansSCLight",
             ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"})
         --Mod end
-    
+
         UpdateBoonInfoPageButtons( screen )
-    
+
         ScreenAnchors.BoonInfoScreen.KeepOpen = true
         ScreenAnchors.BoonInfoScreen.CanClose = true
         thread( HandleWASDInput, ScreenAnchors.BoonInfoScreen )
         HandleScreenInput( ScreenAnchors.BoonInfoScreen )
     end
-    
+
     local ValidSolo =
     {
         "ZeusUpgrade",
@@ -643,7 +643,7 @@ if PQOL.Config.BoonList.Enabled then
         "PoseidonUpgrade",
         "DemeterUpgrade",
     }
-    
+
     function ShowInfograph(screen, button)
         DebugPrint({Text = " "..screen.LootName})
         local components = screen.Components
@@ -658,17 +658,17 @@ if PQOL.Config.BoonList.Enabled then
             SetAnimation({ Name = screen.LootName.."_Solo", DestinationId = components.Infograph.Id })
             SetScale({ Id = components.Infograph.Id, Fraction = 0.73})
             SetScaleX({ Id = components.Infograph.Id, Fraction = 1.03})
-    
+
         end
     end
-    
+
     function CloseInfograph(screen, button)
         Destroy({Id = button.Id})
         screen.Components.Infograph = nil
         screen.Components.DuoInfograph = nil
-    
+
     end
-    
+
     function ShowDuoInfograph(screen, button)
         local components = screen.Components
         if Contains(ValidDuo, screen.LootName) then
@@ -3273,6 +3273,14 @@ if PQOL.Config.BossNumericHealth.Enabled then
 		SetAnimationFrameTarget({ Name = enemy.HealthBarFill or "EnemyHealthBarFill", Fraction = 1 - displayedHealthPercent, DestinationId = screenId, Instant = true })
 		thread( UpdateEnemyHealthBarFalloff, enemy, newBar )
 	end
+
+	ModUtil.WrapBaseFunction( "BossChillKillPresentation", function(baseFunc, unit)
+		-- local numericHealthBar = EnemyHealthDisplayAnchors[unit.ObjectId.."numeric"]
+		if EnemyHealthDisplayAnchors[unit.ObjectId.."numeric"] ~= nil then
+			Destroy({Id = numericHealthBar})
+		end
+        return baseFunc(unit)
+	end)
 end
 
 if PQOL.Config.CompleteAllBounties.Enabled then
@@ -3280,10 +3288,11 @@ if PQOL.Config.CompleteAllBounties.Enabled then
 
 	function CompleteAllAvailableBounties()
 		if GameState.SpentShrinePointsCache ~= nil and GameState.RecordClearedShrineThreshold ~= nil then
+			DebugPrint({Text="@PonyQOL Trying to complete all bounties!"})
 			local activeShrinePoints = GameState.SpentShrinePointsCache - 1
 			local weaponName = GetEquippedWeapon()
 			local roomName = CurrentRun.CurrentRoom.GenusName or CurrentRun.CurrentRoom.Name
-			if weaponName == nil 
+			if weaponName == nil
 				or roomName == nil
 				or GameState.RecordClearedShrineThreshold[weaponName] == nil
 				or GameState.RecordClearedShrineThreshold[weaponName][roomName] == nil
@@ -3378,27 +3387,27 @@ if PQOL.Config.BloodRefund.Enabled then
 	function ShowWeaponUpgradeScreen( args )
 
 		local textOffsetX = -50
-	
+
 		OnScreenOpened( { Flag = "WeaponUpgradeScreen", PersistCombatUI = true } )
 		FreezePlayerUnit("WeaponUpgradeScreen" )
 		EnableShopGamepadCursor()
-	
+
 		local weaponName = args.WeaponName
-	
+
 		ScreenAnchors.WeaponUpgradeScreen = { Components = {}, Name = "WeaponUpgradeScreen", OpenedEquippedIndex = GetEquippedWeaponTraitIndex( weaponName ) }
 		local components = ScreenAnchors.WeaponUpgradeScreen.Components
 		EnableShopGamepadCursor( ScreenAnchors.WeaponUpgradeScreen.Name )
-	
+
 		components.ShopBackgroundDim = CreateScreenComponent({ Name = "rectangle01", Group = "Combat_Menu" })
 		components.ShopBackground = CreateScreenComponent({ Name = "WeaponSelectPanelBox", Group = "Combat_Menu_TraitTray_Backing", X = ScreenCenterX, Y = ScreenHeight/2 - 18})
 		components.WeaponImage = CreateScreenComponent({ Name = "rectangle01", Group = "Combat_Menu_TraitTray", X = 335, Y = 435 })
 		DebugAssert({ Condition = GetWeaponAspectImage( weaponName ) ~= nil, Text = "No weapon image available for " .. weaponName .. " index " .. GetEquippedWeaponTraitIndex( weaponName )})
 		SetAnimation({ DestinationId = components.WeaponImage.Id, Name = GetWeaponAspectImage( weaponName )})
-	
+
 		SetAlpha({ Id = components.WeaponImage.Id, Fraction = 0 })
 		SetThingProperty({ Property = "Ambient", Value = 0.0, DestinationId = components.WeaponImage.Id })
-	
-	
+
+
 		-- CreateTextBox({ Id = components.ShopBackground.Id, Text = "WeaponUpgradeScreen_Header", FontSize = 24, OffsetX = -500, OffsetY = -380, Color = Color.White, Font = "AlegreyaSansSCRegular", ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center" })
 		CreateTextBox({ Id = components.ShopBackground.Id, Text = weaponName.."_Full", FontSize = 38, OffsetX = 0, OffsetY = -480, Color = Color.White, Font = "SpectralSCLightTitling", ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center" })
 		CreateTextBox({ Id = components.ShopBackground.Id, Text = weaponName.."_Full", UseDescription = true, FontSize = 20, Width = 620, OffsetX = 0, OffsetY = -406, Color = {0.643, 0.635, 0.482, 1.0}, Font = "CrimsonTextItalic", ShadowBlur = 0, ShadowColor = {0,0,0,0}, ShadowOffset={0, 2}, Justification = "Center" })
@@ -3410,24 +3419,24 @@ if PQOL.Config.BloodRefund.Enabled then
 		local heatClearText = "NoHeatClear"
 		local weaponKills = "NoWeaponKills"
 		local weaponSelectPanelRightString = "WeaponSelectPanel_Right"
-	
+
 		if GameState.TimesClearedWeapon and GameState.TimesClearedWeapon[weaponName] then
 			timesCleared = GameState.TimesClearedWeapon[weaponName]
 		end
 		if GameState.WeaponRecordsClearTime and GameState.WeaponRecordsClearTime[weaponName] then
 			clearTimeText = GetTimerString( GameState.WeaponRecordsClearTime[weaponName])
 		end
-	
+
 		if GameState.WeaponRecordsShrinePoints and GameState.WeaponRecordsShrinePoints[weaponName] and GameState.WeaponRecordsShrinePoints[weaponName] > 0 then
 			heatClearText = GameState.WeaponRecordsShrinePoints[weaponName]
 		else
 			weaponSelectPanelRightString = "WeaponSelectPanel_Right_Alt"
 		end
-	
+
 		if GameState.WeaponKills and GameState.WeaponKills[weaponName] then
 			weaponKills = GameState.WeaponKills[weaponName]
 		end
-	
+
 		SetAlpha({ Id = components.WeaponImage.Id, Fraction = 1 })
 		local ruScale = 0.75
 		local deScale = 0.8
@@ -3437,7 +3446,7 @@ if PQOL.Config.BloodRefund.Enabled then
 			LangPlScaleModifier = plScale
 		})
 		CreateTextBox({ Id = components.ShopBackground.Id, Text = "WeaponSelectPanel_Left", FontSize = 20, Width = 340, OffsetX = -795, OffsetY = 230, Color = {0.749, 0.749, 0.749, 1.0}, Font = "AlegreyaSansSCRegular", ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Left", VerticalJustification = "Top", LineSpacingBottom = -5,
-	
+
 				LangRuScaleModifier = ruScale,
 				LangDeScaleModifier = deScale,
 				LangCnScaleModifier = cnScale,
@@ -3457,7 +3466,7 @@ if PQOL.Config.BloodRefund.Enabled then
 				RecordShrinePoints = heatClearText,
 				WeaponKills = weaponKills,
 			}})
-	
+
 		components.CurrentKeys = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_TraitTray" })
 		CreateTextBox({ Id = components.CurrentKeys.Id,
 			Text = "MetaUpgrade_Available_SuperKeys",
@@ -3474,9 +3483,9 @@ if PQOL.Config.BloodRefund.Enabled then
 			LuaKey = "TempTextData",
 			LuaValue = { Amount = tostring(GameState.Resources.SuperLockKeys)}
 		})
-	
+
 		PlaySound({ Name = "/SFX/Menu Sounds/GeneralWhooshMENULoud" })
-	
+
 		thread( PlayVoiceLines, GlobalVoiceLines.OpenedWeaponUpgradeMenuVoiceLines, true )
 		--Mod start
 		local bloodCost = 0
@@ -3497,7 +3506,7 @@ if PQOL.Config.BloodRefund.Enabled then
 			components[purchaseButtonKey] = CreateScreenComponent({ Name = animationName, Group = "Combat_Menu_TraitTray", X = ScreenCenterX + 40, Y = 20 + itemIndex * 220})
 			SetScaleX({ Id = components[purchaseButtonKey].Id, Fraction = 1 })
 			SetInteractProperty({ DestinationId = components[purchaseButtonKey].Id, Property = "TooltipOffsetX", Value = 700})
-	
+
 			-- Upgrade description
 			local itemName = "UnknownUpgrade"
 			local itemIcon = "WeaponUpgrade_Unknown"
@@ -3508,7 +3517,7 @@ if PQOL.Config.BloodRefund.Enabled then
 			elseif itemData.GameStateRequirements and ( not IsGameStateEligible(CurrentRun, itemData.GameStateRequirements) or IsGameStateEligible(CurrentRun, itemData.GameStateRequirements) and not GameState.SeenWeaponUnlocks[weaponName..itemIndex]) then
 				itemName = "UnknownLockedAspect"
 				itemIcon = "WeaponUpgrade_Unknown"
-	
+
 				if IsGameStateEligible(CurrentRun, itemData.GameStateRequirements) and not GameState.SeenWeaponUnlocks[weaponName..itemIndex] then
 					thread( WeaponAspectRevealPresentation, components, itemData.TraitName, purchaseButtonKey)
 					GameState.SeenWeaponUnlocks[weaponName..itemIndex] = true
@@ -3532,19 +3541,19 @@ if PQOL.Config.BloodRefund.Enabled then
 				itemIcon = TraitData[itemName].Icon .. "_Large"
 				traitData =  GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = itemName, Rarity = GetRarityKey(GetWeaponUpgradeLevel( weaponName, itemIndex ))})
 				SetTraitTextData( traitData )
-	
+
 				if itemData.MaxedTraitDescription and IsWeaponUpgradeUnlocked( weaponName, itemIndex ) and not CanUpgradeWeaponUpgrade( weaponName, itemIndex ) then
 					itemName = itemData.MaxedTraitDescription
 				end
 			end
-	
+
 			components[purchaseButtonKey.."Icon"] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_TraitTray" })
 			Attach({ Id = components[purchaseButtonKey.."Icon"].Id, DestinationId = components[purchaseButtonKey].Id, OffsetX = 365 - 750, OffsetY = 0 })
 			SetAnimation({ DestinationId = components[purchaseButtonKey.."Icon"].Id, Name = itemIcon })
 			if itemIcon ~= "WeaponUpgrade_Unknown" then
 				SetScale({ Id = components[purchaseButtonKey.."Icon"].Id, Fraction = 1.0 })
 			end
-	
+
 			CreateTextBoxWithFormat({ Id = components[purchaseButtonKey].Id,
 				Text = itemName,
 				OffsetX = 465 - 700 + textOffsetX, OffsetY = -35,
@@ -3568,22 +3577,22 @@ if PQOL.Config.BloodRefund.Enabled then
 				LangItScaleModifier = 0.8,
 				LangKoScaleModifier = 0.7,
 			})
-	
+
 			if traitData and traitData.LimitedTime then
 				CreateTextBox({ Id = components[purchaseButtonKey].Id, TextSymbolScale = 0, Text = "SeasonalItem", Color = Color.Transparent })
 			end
-	
+
 			components[purchaseButtonKey.."Frame"] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_TraitTray" })
 			Attach({ Id = components[purchaseButtonKey.."Frame"].Id, DestinationId = components[purchaseButtonKey.."Icon"].Id, OffsetX = 0, OffsetY = 0 })
 			SetAnimation({ DestinationId = components[purchaseButtonKey.."Frame"].Id, Name = "Frame_Boon_Menu_Enchantment" })
 			SetScale({ Id = components[purchaseButtonKey.."Frame"].Id, Fraction = 1.0 })
-	
+
 			components[purchaseButtonKey].OnPressedFunctionName = "HandleWeaponUpgradeSelection"
 			components[purchaseButtonKey].UpgradeButtonKey = purchaseButtonKey .. "Upgrade"
 			components[purchaseButtonKey].WeaponName = weaponName
 			components[purchaseButtonKey].Data = itemData
 			components[purchaseButtonKey].Index = itemIndex
-	
+
 			components[purchaseButtonKey.."Subtitle"] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_TraitTray" })
 			Attach({ Id = components[purchaseButtonKey.."Subtitle"].Id, DestinationId = components[purchaseButtonKey.."Icon"].Id, OffsetX = 710, OffsetY = 33 })
 			CreateTextBox({ Id = components[purchaseButtonKey.."Subtitle"].Id,
@@ -3599,10 +3608,10 @@ if PQOL.Config.BloodRefund.Enabled then
 				Justification = "Right",
 				LuaKey = "TempTextData",
 				LuaValue = { Amount = GetNextWeaponUpgradeKeyCost( weaponName, itemIndex )}})
-	
+
 			components[purchaseButtonKey .. "Title"] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_TraitTray" })
 			Attach({ Id = components[purchaseButtonKey.."Title"].Id, DestinationId = components[purchaseButtonKey].Id, OffsetX = textOffsetX, OffsetY = 0 })
-	
+
 			CreateTextBox({ Id = components[purchaseButtonKey .. "Title"].Id,
 				Text = itemName,
 				FontSize = 25,
@@ -3614,10 +3623,10 @@ if PQOL.Config.BloodRefund.Enabled then
 				Justification = "Left",
 				VerticalJustification = "Top"
 			})
-	
+
 			components[purchaseButtonKey .. "Level"] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_TraitTray" })
 			Attach({ Id = components[purchaseButtonKey.."Level"].Id, DestinationId = components[purchaseButtonKey.."Title"].Id, OffsetX = 0, OffsetY = -75 })
-	
+
 			CreateTextBox({ Id = components[purchaseButtonKey .. "Level"].Id,
 				FontSize = 25,
 				OffsetX = 400, OffsetY = 0,
@@ -3629,7 +3638,7 @@ if PQOL.Config.BloodRefund.Enabled then
 				VerticalJustification = "Top",
 				LuaKey = "TempTextData",
 				LuaValue = { Amount = GetWeaponUpgradeLevel(weaponName, itemIndex )}})
-	
+
 			-- LOCK Icons
 			local lockIconKey = "LockIcon"..itemIndex
 			components[lockIconKey] = CreateScreenComponent({ Name = "BlankObstacle", X = ScreenCenterX, Y = 0, Group = "Combat_Menu_TraitTray" })
@@ -3638,12 +3647,12 @@ if PQOL.Config.BloodRefund.Enabled then
 				SetColor({ Id = components[purchaseButtonKey.."Icon"].Id, Color = Color.DarkSlateGray })
 				SetAnimation({ Name = "LockedKeepsakeIcon", DestinationId = components[lockIconKey].Id, Scale = 1.0 })
 			end
-	
+
 			if IsWeaponUpgradeEquipped( weaponName, itemIndex ) then
 				SetAnimation({ Name = "EquippedIcon", DestinationId = components[purchaseButtonKey.."Subtitle"].Id })
 				TeleportCursor({ OffsetX = ScreenCenterX + 40, OffsetY = 20 + itemIndex * 220, ForceUseCheck = true })
 			end
-	
+
 			if not IsUpgradeWeaponUpgradeDisabled( weaponName, itemIndex ) then
 				if IsWeaponUpgradeUnlocked( weaponName, itemIndex ) then
 					components[purchaseButtonKey .. "Upgrade" ] = CreateScreenComponent({ Name = "WeaponLevelUpArrowRight", Scale = 1.0, Group = "Combat_Menu_TraitTray" })
@@ -3670,7 +3679,7 @@ if PQOL.Config.BloodRefund.Enabled then
 				end
 				SetInteractProperty({ DestinationId = components[purchaseButtonKey.."Upgrade"].Id, Property = "TooltipOffsetX", Value = 260})
 				SetInteractProperty({ DestinationId = components[purchaseButtonKey.."Upgrade"].Id, Property = "TooltipOffsetY", Value = 5})
-				CreateTextBox({ Id = components[purchaseButtonKey.. "Upgrade"].Id, 
+				CreateTextBox({ Id = components[purchaseButtonKey.. "Upgrade"].Id,
 					Text = itemName,
 					FontSize = 1,
 					UseDescription = true,
@@ -3696,14 +3705,14 @@ if PQOL.Config.BloodRefund.Enabled then
 					Justification = "Center",
 					LuaKey = "TempTextData",
 					LuaValue = { Amount = GetNextWeaponUpgradeKeyCost( weaponName, itemIndex ) } })
-	
+
 				if not CanUpgradeWeaponUpgrade( weaponName, itemIndex ) then
 					ModifyTextBox({ Id = components[purchaseButtonKey.."Level"].Id, Text = "UI_TraitLevel_Max" })
 				elseif GetWeaponUpgradeLevel(weaponName, itemIndex ) > 0 then
 					ModifyTextBox({ Id = components[purchaseButtonKey.."Level"].Id, Text = "UI_TraitLevel", LuaKey = "TempTextData", LuaValue = { Amount = GetWeaponUpgradeLevel(weaponName, itemIndex )} })
 				end
 			end
-	
+
 			wait(0.02)
 		end
 
@@ -3733,12 +3742,12 @@ if PQOL.Config.BloodRefund.Enabled then
 			OffsetX = 35, OffsetY = 45, LuaKey = "TempTextData", LuaValue = { Amount = amount}, })
 		end
 		--Mod end
-	
+
 		components.CloseButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "Combat_Menu_TraitTray_Overlay" })
 		Attach({ Id = components.CloseButton.Id, DestinationId = components.ShopBackground.Id, OffsetX = 0 , OffsetY = 515 })
 		components.CloseButton.OnPressedFunctionName = "CloseWeaponUpgradeScreen"
 		components.CloseButton.ControlHotkey = "Cancel"
-	
+
 		ScreenAnchors.WeaponUpgradeScreen.KeepOpen = true
 		ScreenAnchors.WeaponUpgradeScreen.CanClose = true
 		thread( HandleWASDInput, ScreenAnchors.WeaponUpgradeScreen )

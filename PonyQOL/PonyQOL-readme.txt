@@ -99,3 +99,8 @@ changed Maim from Aspect of Gilgamesh to deal -25% total damage but the damage i
 fixed issues:
 beating a boss for the first time with a weapon caused a crash
 complete all bounties did not work properly
+
+2.5.2
+
+fixed issues:
+boss numeric health did not disappear when Demeter's Winter Harvest killed them
