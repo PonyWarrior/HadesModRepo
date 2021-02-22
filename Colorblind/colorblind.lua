@@ -3,6 +3,7 @@ local config =
     ExcludeTraps = false,
     ExcludeMiscs = false,
     -- Exclude very specific things like fury assists in the meg fight
+    -- Also override ExcludeTraps and ExcludeMiscs to true
     SpeedrunMode = false,
 }
 
@@ -67,19 +68,19 @@ local Outlines =
 }
 
 function IsOutlineLegal(enemy)
-    if config.ExcludeTraps and enemy.InheritFrom ~= nil and Contains(enemy.InheritFrom, "BaseTrap") then
+    if (config.ExcludeTraps or config.SpeedrunMode) and enemy.InheritFrom ~= nil and Contains(enemy.InheritFrom, "BaseTrap") then
         return false
     end
 
-    if config.ExcludeTraps and enemy.InheritFrom ~= nil and Contains(enemy.InheritFrom, "IsNeutral") then
+    if (config.ExcludeTraps or config.SpeedrunMode) and enemy.InheritFrom ~= nil and Contains(enemy.InheritFrom, "IsNeutral") then
         return false
     end
 
-    if config.ExcludeTraps and enemy.Name == "CharonGhostChargeSource" then
+    if (config.ExcludeTraps or config.SpeedrunMode) and enemy.Name == "CharonGhostChargeSource" then
         return false
     end
 
-    if config.ExcludeMiscs and enemy.InheritFrom ~= nil and Contains(enemy.InheritFrom, "BaseBreakable") then
+    if (config.ExcludeMiscs or config.SpeedrunMode) and enemy.InheritFrom ~= nil and Contains(enemy.InheritFrom, "BaseBreakable") then
         return false
     end
 
