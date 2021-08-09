@@ -59,7 +59,7 @@ PQOL =
 		},
 		BloodRefund =
 		{
-			Enabled = false,
+			Enabled = true,
 			FreeMode = false,	-- Makes refunding free when enabled
 			KeyCostPerBloodRefunded = 2,	-- How many keys refunding 1 titan blood costs
 		},
@@ -2108,12 +2108,27 @@ if PQOL.Config.Pact.Enabled then
 	end
 
 	function ResetShrine(screen, button)
-		for k, upgradeName in pairs( ShrineUpgradeOrder ) do
-			local upgradeData = MetaUpgradeData[upgradeName]
-			if GameState.MetaUpgrades[upgradeName] ~= nil and GameState.MetaUpgrades[upgradeName] > 0 then
-				while GameState.MetaUpgrades[upgradeName] > 0 do
-					DecrementTableValue( GameState.MetaUpgrades, upgradeName )
-					ApplyMetaUpgrade( upgradeData, true, GameState.MetaUpgrades[upgradeName] <= 0, true )
+		if GameState.Flags.HardMode then
+			local HellModeLockedOptions = { "EnemyDamageShrineUpgrade", "HealingReductionShrineUpgrade", "EnemyCountShrineUpgrade", "EnemyHealthShrineUpgrade", "NoInvulnerabilityShrineUpgrade"}
+			for k, upgradeName in pairs( ShrineUpgradeOrder ) do
+				if not Contains(HellModeLockedOptions, upgradeName) then
+					local upgradeData = MetaUpgradeData[upgradeName]
+					if GameState.MetaUpgrades[upgradeName] ~= nil and GameState.MetaUpgrades[upgradeName] > 0 then
+						while GameState.MetaUpgrades[upgradeName] > 0 do
+							DecrementTableValue( GameState.MetaUpgrades, upgradeName )
+							ApplyMetaUpgrade( upgradeData, true, GameState.MetaUpgrades[upgradeName] <= 0, true )
+						end
+					end
+				end
+			end
+		else
+			for k, upgradeName in pairs( ShrineUpgradeOrder ) do
+				local upgradeData = MetaUpgradeData[upgradeName]
+				if GameState.MetaUpgrades[upgradeName] ~= nil and GameState.MetaUpgrades[upgradeName] > 0 then
+					while GameState.MetaUpgrades[upgradeName] > 0 do
+						DecrementTableValue( GameState.MetaUpgrades, upgradeName )
+						ApplyMetaUpgrade( upgradeData, true, GameState.MetaUpgrades[upgradeName] <= 0, true )
+					end
 				end
 			end
 		end

@@ -104,3 +104,8 @@ complete all bounties did not work properly
 
 fixed issues:
 boss numeric health did not disappear when Demeter's Winter Harvest killed them
+
+2.5.3
+
+fixed issues:
+resetting pact options in hell mode no longer resets locked options
