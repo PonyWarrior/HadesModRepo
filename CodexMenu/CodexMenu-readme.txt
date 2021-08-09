@@ -281,3 +281,8 @@ fixed issues :
 rare crash in boss rush when there is special dialogue
 animations are not properly loaded when equipping certain boons (requires modutil)
 added missing 'Rending Claws' upgrade to Twin Fists hammer
+
+2.4.8
+
+fixed issues :
+opening the boon manager while having a centaur heart healed you

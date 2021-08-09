@@ -1693,7 +1693,9 @@ function CodexMenuReloadAllTraits()
 	-- Remove all traits, then readd them in order
 	local shouldSkip = {
 		FastClearDodgeBonusTrait = true,
-		PerfectClearDamageBonusTrait = true
+		PerfectClearDamageBonusTrait = true,
+    	RoomRewardMaxHealthTrait = true,
+    	RoomRewardEmptyMaxHealthTrait = true
 	}
 	local weaponName = GetEquippedWeapon()
 	local removedTraitData = {}
