@@ -1718,7 +1718,7 @@ if PQOL.Config.Broker.Enabled then
 				end
 			end
 			marketSwapType = "Decrease"
-			CloseMarketScreen(screen, button)
+			CloseMarketScreen(screen, button, true)
 			OpenMarketScreen()
 		elseif marketSwapType == "Decrease" then
 			for itemIndex, item in ipairs( CurrentRun.MarketItems ) do
@@ -1728,9 +1728,29 @@ if PQOL.Config.Broker.Enabled then
 				end
 			end
 			marketSwapType = "Increase"
-			CloseMarketScreen(screen, button)
+			CloseMarketScreen(screen, button, true)
 			OpenMarketScreen()
 		end
+	end
+
+	function CloseMarketScreen( screen, button, isSwap )
+		--mod start
+		if not isSwap and marketSwapType == "Decrease" then
+			for itemIndex, item in ipairs( CurrentRun.MarketItems ) do
+				if item.Priority then
+					item.CostAmount = item.CostAmount / 10
+					item.BuyAmount = item.BuyAmount / 10
+				end
+			end
+			marketSwapType = "Increase"
+		end
+		--mod end
+		DisableShopGamepadCursor()
+		CloseScreen( GetAllIds( screen.Components ) )
+		PlaySound({ Name = "/SFX/Menu Sounds/GeneralWhooshMENU" })
+		UnfreezePlayerUnit()
+		screen.KeepOpen = false
+		OnScreenClosed({ Flag = screen.Name })
 	end
 end
 
