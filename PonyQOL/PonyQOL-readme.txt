@@ -110,3 +110,4 @@ boss numeric health did not disappear when Demeter's Winter Harvest killed them
 fixed issues:
 resetting pact options in hell mode no longer resets locked options
 closing the broker while prices are increased and coming back after a run messes with the prices
+add descriptions of all features in the config

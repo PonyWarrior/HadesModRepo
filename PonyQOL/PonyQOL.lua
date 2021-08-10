@@ -2,73 +2,99 @@ PQOL =
 {
 	Config =
 	{
-		-- Change "Enabled" to Enabled = false to disable any feature
+		-- Change "Enabled = true" to "Enabled = false" to disable any feature
 		-- Some features have additional configuration options
 		BoonList =
 		{
+			-- Improves the boon list by showing incompatibilities and hidden requirements
+			-- Adds a boon list to Daedalus hammer, individual weapons and Charon
+			-- Adds infographs in the boon list. Press Enter on keyboard and Attack on controller to close.
+			-- Includes infographs for Zeus, Poseidon, Athena, Aphrodite, Ares, Hermes, Dionysus, Demeter
 			Enabled = true,
 		},
 		Broker =
 		{
+			-- Lets you toggle bulk buy at the broker
 			Enabled = true,
 		},
 		Pact =
 		{
+			-- Adds a reset button to the pact of punishment
 			Enabled = true,
 		},
 		ChamberCounter =
 		{
+			-- Adds a permanent chamber counter at the top right of the screen during runs
 			Enabled = true,
 		},
 		PomIcons =
 		{
+			-- Adds small animated pom icons to level-able boons, disable when using the starting boon selector mod
 			Enabled = true,
 		},
 		Commendations =
 		{
+			-- Adds a Commendations tab in the codex which lists all victory messages and their requirements
+			-- Completing a run will mark all messages you qualified for as completed
 			Enabled = true,
 		},
 		PracticeFishing =
 		{
+			-- Lets you practice fishing while in the House by holding your 'Shout' key for 3 seconds
+			-- Fishing state is displayed below the bobber
 			Enabled = true,
 		},
 		BossNumericHealth =
 		{
+			-- Adds numeric health below the health bar of bosses
 			Enabled = true,
 		},
 		RegularCallHint =
 		{
+			-- Adds an on screen hint when you can use your regular shout, similar to max power shout hint
 			Enabled = true,
 		},
 		PostBossWeaponSelect =
 		{
+			-- Lets you swap weapons after beating a boss
+			-- All boons except hammers are kept when swapping
 			Enabled = true,
 		},
 		CompleteAllBounties =
 		{
+			-- When using more heat than required, all additional bounties are rewarded and completed when defeating bosses (you don't need to increase heat 1 by 1)
 			Enabled = true,
 		},
 		Gameplay =
 		{
+			-- When enabled :
+			-- Can no longer roll Demeter's Nourished Soul with Lasting Consequences 4 Pact option
+			-- Lucifer beam now destroys projectiles (only the base of the beam destroys projectiles, like it works with reflect) 
 			Enabled = true,
 			GilgameshChanges =
 			{
+				-- Disabling Gameplay also disables this
+				-- When enabled :
+				-- Changes Maim from Aspect of Gilgamesh to deal -25% total damage, but the damage is applied over time instead of a burst at the end
 				Enabled = true,
 				BaseDamage = 25,	-- multiplied by aspect level
 			},
 		},
 		BloodRefund =
 		{
+			-- Adds a refund titan blood button to all weapons
 			Enabled = true,
 			FreeMode = false,	-- Makes refunding free when enabled
 			KeyCostPerBloodRefunded = 2,	-- How many keys refunding 1 titan blood costs
 		},
 		GodKeepsakes =
 		{
+			-- God keepsake uses are refreshed/reset to 1 after completing a region
 			Enabled = true,
 		},
 		CustomPerRunLoot =
 		{
+			-- Adds configurable run loot caps
 			Enabled = true,
 			HammerCap = 2,	-- How many hammers you can receive in a run; default = 2
 			HermesCap = 2,	-- How many hermes boons you can receive in a run; default = 2
@@ -76,6 +102,7 @@ PQOL =
 		},
 		AlwaysEncounterStoryRooms =
 		{
+			-- When enabled you will always encounter Sisyphus, Euridyce and Patroclus
 			Enabled = true,
 		},
 	}
@@ -175,7 +202,6 @@ if PQOL.Config.BoonList.Enabled then
     --Add Hammer boon list
     --Add weapon boon lists
     --Display extra info in boon list
-    --Add pom icon to 'pom-able' boons
     table.insert(BoonInfoScreenData.Ordering, "WeaponUpgrade")
     table.insert(BoonInfoScreenData.Ordering, "SwordWeapon")
     table.insert(BoonInfoScreenData.Ordering, "BowWeapon")
