@@ -73,11 +73,19 @@ PQOL =
 			Enabled = true,
 			GilgameshChanges =
 			{
-				-- Disabling Gameplay also disables this
 				-- When enabled :
 				-- Changes Maim from Aspect of Gilgamesh to deal -25% total damage, but the damage is applied over time instead of a burst at the end
 				Enabled = true,
 				BaseDamage = 25,	-- multiplied by aspect level
+			},
+			OldChaosShield =
+			{
+				-- Disabling Gameplay also disables this
+				-- Restores Shield of Chaos - Aspect of Chaos to it's early access version
+				-- Extra shields are now fired in a star pattern
+				-- Extra shields can now bounce
+				-- Extra shields are 30% faster
+				Enabled = true,
 			},
 		},
 		BloodRefund =
@@ -4196,4 +4204,12 @@ if PQOL.Config.PoolOfPurging.Enabled then
 			CreateTextBox({ Id = components["RerollPanel"].Id, Text = tooltip, FontSize = 1, Color = Color.Transparent, Font = "AlegreyaSansSCExtraBold", LuaKey = "TempTextData", LuaValue = { Amount = cost }})
 		end
 	end
+end
+
+if PQOL.Config.Gameplay.OldChaosShield.Enabled then
+	OnAnyLoad{function(triggerArgs)
+		SetProjectileProperty({ WeaponName = "ChaosShieldThrow", DestinationId = CurrentRun.Hero.ObjectId, Property = "Speed", Value = 2600 })
+		SetProjectileProperty({ WeaponName = "ChaosShieldThrow", DestinationId = CurrentRun.Hero.ObjectId, Property = "NumJumps", Value = 2 })
+		SetWeaponProperty({ WeaponName = "ChaosShieldThrow", DestinationId = CurrentRun.Hero.ObjectId, Property = "ProjectileAngleOffset", Value = 45 })
+	end}
 end
