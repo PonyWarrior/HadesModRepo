@@ -103,5 +103,24 @@
       Type = "ConstantNoUpdate"
       Material = "Unlit"
     }
+    {
+      Name = "StatusIconWantsToFight"
+      InheritFrom = "StatusIconBase"
+      ChildAnimation = "null"
+      FilePath = "GUI\Icons\Status\WantsToFight"
+      GroupName = "Combat_UI"
+      PingPongColor = true
+      EndFrame = 1
+      Loop = true
+      RandomDurationMax = 2.0
+      RandomDurationMin = 2.5
+      StartFrame = 1
+      EndOffsetY = -4.0
+      OffsetZ = 10.0
+      EndScale = 0.5
+      PingPongScale = true
+      StartScale = 0.48
+      PingPongShiftOverDuration = true
+    }
     ]
 }

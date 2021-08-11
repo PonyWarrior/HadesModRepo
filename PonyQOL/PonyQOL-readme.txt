@@ -117,3 +117,4 @@ add descriptions of all features in the config
 new features:
 
 added boon level display in the pool of purging screen
+added warnings when opening pool of purging with pauper curse

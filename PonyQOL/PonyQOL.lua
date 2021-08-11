@@ -105,9 +105,10 @@ PQOL =
 			-- When enabled you will always encounter Sisyphus, Euridyce and Patroclus
 			Enabled = true,
 		},
-		PoolOfPurgingLevelDisPlay =
+		PoolOfPurging =
 		{
 			-- Displays boon levels in the pool of purging screen
+			-- Shows warnings when opening pool of purging with pauper curse
 			Enabled = true,
 		},
 	}
@@ -3947,8 +3948,9 @@ if PQOL.Config.AlwaysEncounterStoryRooms.Enabled then
 	RoomSetData.Elysium.C_Story01.ForceAtBiomeDepthMax = 10
 end
 
-if PQOL.Config.PoolOfPurgingLevelDisPlay.Enabled then
+if PQOL.Config.PoolOfPurging.Enabled then
 	-- Add boon levels to pool of purging
+	-- Add warnings when opening pool of purging with pauper curse
 	local baseCreateSellButtons = CreateSellButtons
 	function CreateSellButtons()
 
@@ -4101,14 +4103,30 @@ if PQOL.Config.PoolOfPurgingLevelDisPlay.Enabled then
 					LuaKey = "TooltipData", LuaValue = tooltipData,
 				}))
 
+				--mod start
+				local warningColor = Color.Red
+				local fontColor = Color.Gold
+				local warningFontSize = 30
+				local fontSize = 26
+
+				if components[purchaseButtonKey].Value == 0 then
+					fontColor = warningColor
+					fontSize = warningFontSize
+					components[purchaseButtonKey.."WarningIcon"] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_Overlay" })
+					Attach({ Id = components[purchaseButtonKey.."WarningIcon"].Id, DestinationId = components[purchaseButtonKey].Id, OffsetX = 320 ,OffsetY = 60 })
+					SetAnimation({ DestinationId = components[purchaseButtonKey.."WarningIcon"].Id, Name = "StatusIconWantsToFight" })
+					SetScale({ DestinationId = components[purchaseButtonKey.."WarningIcon"].Id, Fraction = 0.85 })
+				end
+
 				CreateTextBox(MergeTables(LocalizationData.SellTraitScripts.ShopButton,{
 					Id = components[purchaseButtonKey].Id, Text = "Sell_ItemCost", TextSymbolScale = 0.6, LuaKey = "TempTextData", LuaValue = { Amount = components[purchaseButtonKey].Value }, FontSize = 24,
 					OffsetY = GetLocalizedValue(60, { { Code = "ja", Value = 75}, }),
 					OffsetX = 430,
-					Color = Color.Gold,
+					Color = fontColor,
 					Justification = "RIGHT",
 					Font="AlegreyaSansSCBold",
-					FontSize=26,
+					FontSize=fontSize,
+					--mod end
 					LangJaScaleModifier = 0.85,
 					ShadowColor = {0,0,0,1},
 					ShadowOffsetY=2,
