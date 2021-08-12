@@ -119,6 +119,11 @@ PQOL =
 			-- Shows warnings when opening pool of purging with pauper curse
 			Enabled = true,
 		},
+		DisableAchievements =
+		{
+			-- Disables achievement unlocks when enabled
+			Enabled = false,
+		},
 	}
 }
 
@@ -189,6 +194,14 @@ if PQOL.Config.Gameplay.Enabled then
 			ChangeValue = false,
 			ChangeType = "Absolute",
 		})
+	end
+
+	if PQOL.Config.Gameplay.OldChaosShield.Enabled then
+		OnAnyLoad{function(triggerArgs)
+			SetProjectileProperty({ WeaponName = "ChaosShieldThrow", DestinationId = CurrentRun.Hero.ObjectId, Property = "Speed", Value = 2600 })
+			SetProjectileProperty({ WeaponName = "ChaosShieldThrow", DestinationId = CurrentRun.Hero.ObjectId, Property = "NumJumps", Value = 2 })
+			SetWeaponProperty({ WeaponName = "ChaosShieldThrow", DestinationId = CurrentRun.Hero.ObjectId, Property = "ProjectileAngleOffset", Value = 45 })
+		end}
 	end
 end
 
@@ -4206,10 +4219,14 @@ if PQOL.Config.PoolOfPurging.Enabled then
 	end
 end
 
-if PQOL.Config.Gameplay.OldChaosShield.Enabled then
-	OnAnyLoad{function(triggerArgs)
-		SetProjectileProperty({ WeaponName = "ChaosShieldThrow", DestinationId = CurrentRun.Hero.ObjectId, Property = "Speed", Value = 2600 })
-		SetProjectileProperty({ WeaponName = "ChaosShieldThrow", DestinationId = CurrentRun.Hero.ObjectId, Property = "NumJumps", Value = 2 })
-		SetWeaponProperty({ WeaponName = "ChaosShieldThrow", DestinationId = CurrentRun.Hero.ObjectId, Property = "ProjectileAngleOffset", Value = 45 })
-	end}
+if PQOL.Config.DisableAchievements.Enabled then
+	function CheckProgressAchievements( args )
+		DebugPrint{Text="Test1"}
+		return
+	end
+	
+	function CheckAchievement( args )
+		DebugPrint{Text="Test2"}
+		return
+	end
 end

@@ -118,6 +118,7 @@ new features:
 
 added boon level display in the pool of purging screen
 added warnings when opening pool of purging with pauper curse
+added achievement disabler (not enabled by default)
 
 restores Shield of Chaos - Aspect of Chaos to it's early access version
 extra shields are now fired in a star pattern, can bounce and are 30% faster
