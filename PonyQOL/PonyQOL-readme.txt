@@ -118,7 +118,8 @@ new features:
 
 added boon level display in the pool of purging screen
 added warnings when opening pool of purging with pauper curse
-added achievement disabler (not enabled by default)
+added achievement disabler (disabled by default)
+added numeric wrath bar with two display modes and optional value rounding
 when a fishing point appears in a room, doors are locked until you have used it (disabled by default)
 
 restores Shield of Chaos - Aspect of Chaos to it's early access version

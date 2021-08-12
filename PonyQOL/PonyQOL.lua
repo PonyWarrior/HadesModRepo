@@ -128,11 +128,25 @@ PQOL =
 		{
 			-- When enabled doors are locked until you have used the fishing point in that room
 			Enabled = false,
-		}
+		},
+		NumericWrathBar =
+		{
+			-- Displays numeric value of the wrath bar, up to 4 decimal points
+			-- Enabling RoundValues will round values to the lowest integer 
+			-- Two display modes available :
+			-- Regular - numeric values are shown at the right of the wrath bar, below your HP
+			-- Overlay - numeric values are shown on top of the wrath bar
+			-- Regular = 1, Overlay = 2
+			Enabled = true,
+			RoundValues = false,
+			DisplayMode = 1,
+		},
 	}
 }
 
 SaveIgnores["PQOL"] = true
+
+-- To anyone looking over the code, "--mod start" and "--mod end" are there to show what code I added to base game functions when a wrap wasn't possible
 
 --fix a bullshit crash
 function IsTraitEligible( currentRun, traitData )
@@ -4247,4 +4261,108 @@ if PQOL.Config.FishingDoorLocker.Enabled then
 		UnlockRoomExits( CurrentRun, CurrentRun.CurrentRoom )
 		return baseFunc(fishingAnimationPointId)
 	end)
+end
+
+if PQOL.Config.NumericWrathBar.Enabled then
+
+	function ShowSuperMeter()
+		if not IsSuperValid() then
+			return
+		end
+
+		if ScreenAnchors.SuperMeterIcon ~= nil then
+			-- Already visible
+			return
+		end
+		ScreenAnchors.SuperMeterIcon = CreateScreenObstacle({ Name = "BlankObstacle", Group = "Combat_UI", X = 10 - CombatUI.FadeDistance.Super, Y = ScreenHeight - 10})
+		ScreenAnchors.SuperMeterCap = CreateScreenObstacle({ Name = "BlankObstacle", Group = "Combat_Menu", X = 10 - CombatUI.FadeDistance.Super, Y = ScreenHeight - 10})
+		ScreenAnchors.SuperMeterHint = CreateScreenObstacle({ Name = "BlankObstacle", X = 10 , Y = ScreenHeight - 10, Group = "Combat_Menu_Additive"})
+
+		SetAnimation({ Name = "WrathBar", DestinationId = ScreenAnchors.SuperMeterIcon })
+
+		if HasHeroTraitValue("SuperMeterCap") then
+			SetAnimation({ Name = "WrathBarRegenCap", DestinationId = ScreenAnchors.SuperMeterCap })
+		end
+
+		local superMeterPoints = CurrentRun.Hero.SuperMeter
+		if superMeterPoints == nil then
+			superMeterPoints = 0
+		end
+
+		if CurrentRun.Hero.SuperMeter == CurrentRun.Hero.SuperMeterLimit and IsSuperAvailable( CurrentRun.Hero ) and CanCommenceSuper() then
+			SetAnimation({ Name = "WrathBarFullFx", DestinationId = ScreenAnchors.SuperMeterHint })
+		end
+		--mod start
+		local offsetX = 435
+		local color = Color.White
+		local fontSize = 23
+		if PQOL.Config.NumericWrathBar.DisplayMode == 2 then
+			offsetX = 200
+			color = {255, 255, 255, 120}
+			fontSize = 21
+		end
+		CreateTextBox({ Id = ScreenAnchors.SuperMeterIcon, Text = superMeterPoints.."/"..CurrentRun.Hero.SuperMeterLimit, OffsetX = offsetX, OffsetY = -15,
+		Font = "AlegreyaSansSCBold", FontSize = fontSize, Justification = "Center", Color = color })
+		--mod end
+
+		ScreenAnchors.SuperPipBackingIds = {}
+		ScreenAnchors.SuperPipIds = {}
+		local pipXSize = SuperUI.PipXWidth * CurrentRun.Hero.SuperCost/SuperUI.BaseMoveThreshold
+		for i = 1, math.ceil(CurrentRun.Hero.SuperMeterLimit / CurrentRun.Hero.SuperCost) do
+			table.insert( ScreenAnchors.SuperPipBackingIds, CreateScreenObstacle({ Name = "BlankObstacle", Group = "Combat_UI", X = SuperUI.PipXStart + ( i - 1 ) * pipXSize - CombatUI.FadeDistance.Super, Y = SuperUI.PipY}) )
+			table.insert( ScreenAnchors.SuperPipIds, CreateScreenObstacle({ Name = "BlankObstacle", Group = "Combat_Menu_Additive", X = SuperUI.PipXStart + ( i - 1 ) * pipXSize - CombatUI.FadeDistance.Super, Y = SuperUI.PipY}) )
+			local fillPercent = 0
+			if superMeterPoints > (i - 1) * CurrentRun.Hero.SuperCost then
+				if CurrentRun.Hero.SuperMeterLimit < CurrentRun.Hero.SuperCost * i and i == math.ceil(CurrentRun.Hero.SuperMeterLimit / CurrentRun.Hero.SuperCost) then
+					fillPercent = math.min(1, (superMeterPoints - (i - 1) * CurrentRun.Hero.SuperCost) / ( CurrentRun.Hero.SuperMeterLimit % CurrentRun.Hero.SuperCost ))
+				else
+					fillPercent = math.min(1, (superMeterPoints - (i - 1) * CurrentRun.Hero.SuperCost) / CurrentRun.Hero.SuperCost )
+				end
+			end
+			UpdateSuperUIComponent(i, fillPercent )
+		end
+
+		UpdateSuperMeterUI()
+
+		FadeObstacleIn({ Id = ScreenAnchors.SuperMeterIcon, Duration = CombatUI.FadeInDuration, IncludeText = true, Distance = CombatUI.FadeDistance.Super, Direction = 0 })
+		FadeObstacleIn({ Id = ScreenAnchors.SuperMeterCap, Duration = CombatUI.FadeInDuration, IncludeText = true, Distance = CombatUI.FadeDistance.Super, Direction = 0 })
+		for i, pipId in pairs(ScreenAnchors.SuperPipIds) do
+			FadeObstacleIn({ Id = pipId, Duration = CombatUI.FadeInDuration, IncludeText = false, Distance = CombatUI.FadeDistance.Super, Direction = 0 })
+		end
+		for i, pipId in pairs(ScreenAnchors.SuperPipBackingIds) do
+			FadeObstacleIn({ Id = pipId, Duration = CombatUI.FadeInDuration, IncludeText = false, Distance = CombatUI.FadeDistance.Super, Direction = 0 })
+		end
+	end
+
+	function UpdateSuperMeterUIReal()
+		if ScreenAnchors.SuperMeterIcon == nil then
+			return
+		end
+
+		local superMeterPoints = CurrentRun.Hero.SuperMeter
+		if superMeterPoints == nil then
+			superMeterPoints = 0
+		end
+
+		for i = 1, TableLength( ScreenAnchors.SuperPipBackingIds) do
+			local fillPercent = 0
+			if superMeterPoints > (i - 1) * CurrentRun.Hero.SuperCost then
+				if CurrentRun.Hero.SuperMeterLimit < CurrentRun.Hero.SuperCost * i and i == math.ceil(CurrentRun.Hero.SuperMeterLimit / CurrentRun.Hero.SuperCost) then
+					fillPercent = math.min(1, (superMeterPoints - (i - 1) * CurrentRun.Hero.SuperCost) / ( CurrentRun.Hero.SuperMeterLimit % CurrentRun.Hero.SuperCost ))
+				else
+					fillPercent = math.min(1, (superMeterPoints - (i - 1) * CurrentRun.Hero.SuperCost) / CurrentRun.Hero.SuperCost )
+				end
+			end
+			UpdateSuperUIComponent(i, fillPercent )
+		end
+		--mod start
+		local displayMeterPoints = superMeterPoints
+		if PQOL.Config.NumericWrathBar.RoundValues then
+			displayMeterPoints = math.floor(superMeterPoints)
+		end
+		ModifyTextBox({ Id = ScreenAnchors.SuperMeterIcon, Text = "UI_SuperText", LuaKey = "TempTextData", LuaValue = { Current = displayMeterPoints, Maximum = CurrentRun.Hero.SuperMeterLimit } })
+		--mod end
+
+		UIScriptsDeferred.SuperMeterDirty = false
+	end
 end
