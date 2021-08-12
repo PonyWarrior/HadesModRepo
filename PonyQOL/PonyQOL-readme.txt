@@ -124,3 +124,7 @@ when a fishing point appears in a room, doors are locked until you have used it 
 
 restores Shield of Chaos - Aspect of Chaos to it's early access version
 extra shields are now fired in a star pattern, can bounce and are 30% faster
+
+added configurable room object spawn chances, includes :
+Chaos door, Erebus gates, Infernal troves, Charon's wells, Pools of purging, Fishing points, Charon shop forbidden item
+(disabled by default)

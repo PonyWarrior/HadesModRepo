@@ -73,6 +73,7 @@ PQOL =
 			Enabled = true,
 			GilgameshChanges =
 			{
+				-- Disabling Gameplay also disables this
 				-- When enabled :
 				-- Changes Maim from Aspect of Gilgamesh to deal -25% total damage, but the damage is applied over time instead of a burst at the end
 				Enabled = true,
@@ -140,6 +141,54 @@ PQOL =
 			Enabled = true,
 			RoundValues = false,
 			DisplayMode = 1,
+		},
+		RoomObjectSpawnChances = 
+		{
+			-- Allows you to set a custom spawn chance for all room objects
+			-- Disabling this disables everything
+			Enabled = false,
+				Chaos =
+				{
+					Enabled = false, 
+					Chance = 0.5, -- Choose a value between 0 and 1.0; 0 = 0%, 0.5 50%, 1.0 = 100%
+					IgnoreRequirements = false, -- Ignores all spawn requirements except for a valid spawn location when enabled
+				},
+				Erebus =
+				{
+					Enabled = false,
+					Chance = 0.5, -- Choose a value between 0 and 1.0; 0 = 0%, 0.5 50%, 1.0 = 100%
+					IgnoreRequirements = false, -- Ignores all spawn requirements except for a valid spawn location when enabled
+				},
+				InfernalTrove =
+				{
+					Enabled = false,
+					Chance = 0.5, -- Choose a value between 0 and 1.0; 0 = 0%, 0.5 50%, 1.0 = 100%
+					IgnoreRequirements = false, -- Ignores all spawn requirements except for a valid spawn location when enabled
+				},
+				CharonWell =
+				{
+					Enabled = false,
+					Chance = 0.5, -- Choose a value between 0 and 1.0; 0 = 0%, 0.5 50%, 1.0 = 100%
+					IgnoreRequirements = false, -- Ignores all spawn requirements except for a valid spawn location when enabled
+				},
+				PurgingPool =
+				{
+					Enabled = false,
+					Chance = 0.5, -- Choose a value between 0 and 1.0; 0 = 0%, 0.5 50%, 1.0 = 100%
+					IgnoreRequirements = false, -- Ignores all spawn requirements except for a valid spawn location when enabled
+				},
+				Fish =
+				{
+					Enabled = false,
+					Chance = 0.5, -- Choose a value between 0 and 1.0; 0 = 0%, 0.5 50%, 1.0 = 100%
+					IgnoreRequirements = false, -- Ignores all spawn requirements except for a valid spawn location when enabled
+				},
+				CharonShopForbiddenItem =
+				{
+					Enabled = false,
+					Chance = 0.5, -- Choose a value between 0 and 1.0; 0 = 0%, 0.5 50%, 1.0 = 100%
+					IgnoreRequirements = false, -- Ignores all spawn requirements except for a valid spawn location when enabled
+				},
 		},
 	}
 }
@@ -4364,5 +4413,60 @@ if PQOL.Config.NumericWrathBar.Enabled then
 		--mod end
 
 		UIScriptsDeferred.SuperMeterDirty = false
+	end
+end
+
+if PQOL.Config.RoomObjectSpawnChances.Enabled then
+	for i, roomset in pairs (RoomSetData) do
+		for j, room in pairs (roomset) do
+			if PQOL.Config.RoomObjectSpawnChances.Chaos.Enabled then
+				room.SecretSpawnChance = PQOL.Config.RoomObjectSpawnChances.Chaos.Chance
+				if PQOL.Config.RoomObjectSpawnChances.Chaos.IgnoreRequirements then
+					room.SecretDoorRequirements = {}
+				end
+			end
+			if PQOL.Config.RoomObjectSpawnChances.Erebus.Enabled then
+				room.ShrinePointDoorSpawnChance = PQOL.Config.RoomObjectSpawnChances.Erebus.Chance
+				if PQOL.Config.RoomObjectSpawnChances.Erebus.IgnoreRequirements then
+					room.ShrinePointDoorRequirements = {}
+				end
+			end
+			if PQOL.Config.RoomObjectSpawnChances.InfernalTrove.Enabled then
+				room.ChallengeSpawnChance = PQOL.Config.RoomObjectSpawnChances.InfernalTrove.Chance
+				if PQOL.Config.RoomObjectSpawnChances.InfernalTrove.IgnoreRequirements then
+					room.ChallengeSwitchRequirements = {}
+				end
+			end
+			if PQOL.Config.RoomObjectSpawnChances.CharonWell.Enabled then
+				room.WellShopSpawnChance = PQOL.Config.RoomObjectSpawnChances.CharonWell.Chance
+				if PQOL.Config.RoomObjectSpawnChances.CharonWell.IgnoreRequirements then
+					room.WellShopRequirements = {}
+				end
+			end
+			if PQOL.Config.RoomObjectSpawnChances.PurgingPool.Enabled then
+				room.SellTraitShopChance = PQOL.Config.RoomObjectSpawnChances.PurgingPool.Chance
+				if PQOL.Config.RoomObjectSpawnChances.PurgingPool.IgnoreRequirements then
+					room.SellTraitShopRequirements = {}
+				end
+			end
+			if PQOL.Config.RoomObjectSpawnChances.Fish.Enabled then
+				room.FishingPointChance = PQOL.Config.RoomObjectSpawnChances.Fish.Chance
+				if PQOL.Config.RoomObjectSpawnChances.Fish.IgnoreRequirements then
+					room.FishingPointRequirements = {}
+				end
+			end
+		end
+	end
+
+	if PQOL.Config.RoomObjectSpawnChances.CharonShopForbiddenItem.Enabled then
+		if PQOL.Config.RoomObjectSpawnChances.CharonShopForbiddenItem.IgnoreRequirements then
+			EncounterData.Shop.StartRoomUnthreadedEvents = {}
+			table.insert(EncounterData.Shop.StartRoomUnthreadedEvents, { FunctionName = "SpawnRoomReward" })
+			table.insert(EncounterData.Shop.StartRoomUnthreadedEvents, { FunctionName = "CheckForbiddenShopItem", GameStateRequirements = { ChanceToPlay = PQOL.Config.RoomObjectSpawnChances.CharonShopForbiddenItem.Chance } })
+		else
+			EncounterData.Shop.StartRoomUnthreadedEvents = {}
+			table.insert(EncounterData.Shop.StartRoomUnthreadedEvents, { FunctionName = "SpawnRoomReward" })
+			table.insert(EncounterData.Shop.StartRoomUnthreadedEvents, { FunctionName = "CheckForbiddenShopItem", GameStateRequirements = { ChanceToPlay = PQOL.Config.RoomObjectSpawnChances.CharonShopForbiddenItem.Chance, RequiredMinRunsCleared = 1, CurrentRunValueFalse = "ForbiddenShopItemOffered", } })
+		end
 	end
 end
