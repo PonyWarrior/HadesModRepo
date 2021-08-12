@@ -124,6 +124,11 @@ PQOL =
 			-- Disables achievement unlocks when enabled
 			Enabled = false,
 		},
+		FishingDoorLocker =
+		{
+			-- When enabled doors are locked until you have used the fishing point in that room
+			Enabled = false,
+		}
 	}
 }
 
@@ -4221,12 +4226,25 @@ end
 
 if PQOL.Config.DisableAchievements.Enabled then
 	function CheckProgressAchievements( args )
-		DebugPrint{Text="Test1"}
 		return
 	end
 	
 	function CheckAchievement( args )
-		DebugPrint{Text="Test2"}
 		return
 	end
+end
+
+if PQOL.Config.FishingDoorLocker.Enabled then
+
+	ModUtil.WrapBaseFunction("CheckRoomExitsReady", function(baseFunc, currentRoom)
+		if CurrentRun.CurrentRoom.ForceFishing and CurrentRun.CurrentRoom.FishingPointId and IsUseable({ Id = CurrentRun.CurrentRoom.FishingPointId }) then
+			return false
+		end
+		return baseFunc(currentRoom)
+	end)
+
+	ModUtil.WrapBaseFunction("FishingEndPresentation", function(baseFunc, fishingAnimationPointId)
+		UnlockRoomExits( CurrentRun, CurrentRun.CurrentRoom )
+		return baseFunc(fishingAnimationPointId)
+	end)
 end
