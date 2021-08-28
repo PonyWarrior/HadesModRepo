@@ -193,8 +193,18 @@ PQOL =
 		GodMode =
 		{
 			-- Enable to set a fixed damage resistance value for god mode
-			Enabled = true,
+			Enabled = false,
 			FixedValue = 0.2, -- Percentage of damage resistance; 0 = 0%, 0.5 = 50%, 1.0 = 100%
+		},
+		ForceRoomRewardType =
+		{
+			-- Enable to only receive room rewards of a desired type
+			-- MetaProgress = resources used outside of runs like darkness and keys
+			-- RunProgress = resources used during a run like boons and hammers
+			-- Set RewardType to 1 for MetaProgress, 2 for RunProgress
+			-- Please not that some rooms have a hard set reward type and won't be affected
+			Enabled = true,
+			RewardType = 1,
 		},
 	}
 }
@@ -4485,4 +4495,20 @@ if PQOL.Config.GodMode.Enabled then
 		local easyModeMultiplier = 1 - PQOL.Config.GodMode.FixedValue
 		return easyModeMultiplier
 	end
+end
+
+if PQOL.Config.ForceRoomRewardType.Enabled then
+	local rewardStoreName = nil
+	if PQOL.Config.ForceRoomRewardType.RewardType == 1 then
+		rewardStoreName = "MetaProgress"
+	else
+		rewardStoreName = "RunProgress"
+	end
+	ModUtil.WrapBaseFunction("ChooseNextRewardStore", function(baseFunc, run)
+		if rewardStoreName ~= nil then
+			return rewardStoreName
+		else
+			return baseFunc(run)
+		end
+	end)
 end

@@ -120,7 +120,8 @@ added boon level display in the pool of purging screen
 added warnings when opening pool of purging with pauper curse
 added achievement disabler (disabled by default)
 added numeric wrath bar with two display modes and optional value rounding
-added configurable god mode damage resistance value
+added configurable god mode damage resistance value (disabled by default)
+added force room reward type, lets you receive only the type of rewards you want (disabled by default)
 when a fishing point appears in a room, doors are locked until you have used it (disabled by default)
 
 restores Shield of Chaos - Aspect of Chaos to it's early access version
