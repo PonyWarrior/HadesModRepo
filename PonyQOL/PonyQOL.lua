@@ -149,46 +149,52 @@ PQOL =
 			Enabled = false,
 				Chaos =
 				{
-					Enabled = false, 
-					Chance = 0.5, -- Choose a value between 0 and 1.0; 0 = 0%, 0.5 50%, 1.0 = 100%
+					Enabled = false,
+					Chance = 0.5, -- Choose a value between 0 and 1.0; 0 = 0%, 0.5 = 50%, 1.0 = 100%
 					IgnoreRequirements = false, -- Ignores all spawn requirements except for a valid spawn location when enabled
 				},
 				Erebus =
 				{
 					Enabled = false,
-					Chance = 0.5, -- Choose a value between 0 and 1.0; 0 = 0%, 0.5 50%, 1.0 = 100%
+					Chance = 0.5, -- Choose a value between 0 and 1.0; 0 = 0%, 0.5 = 50%, 1.0 = 100%
 					IgnoreRequirements = false, -- Ignores all spawn requirements except for a valid spawn location when enabled
 				},
 				InfernalTrove =
 				{
 					Enabled = false,
-					Chance = 0.5, -- Choose a value between 0 and 1.0; 0 = 0%, 0.5 50%, 1.0 = 100%
+					Chance = 0.5, -- Choose a value between 0 and 1.0; 0 = 0%, 0.5 = 50%, 1.0 = 100%
 					IgnoreRequirements = false, -- Ignores all spawn requirements except for a valid spawn location when enabled
 				},
 				CharonWell =
 				{
 					Enabled = false,
-					Chance = 0.5, -- Choose a value between 0 and 1.0; 0 = 0%, 0.5 50%, 1.0 = 100%
+					Chance = 0.5, -- Choose a value between 0 and 1.0; 0 = 0%, 0.5 = 50%, 1.0 = 100%
 					IgnoreRequirements = false, -- Ignores all spawn requirements except for a valid spawn location when enabled
 				},
 				PurgingPool =
 				{
 					Enabled = false,
-					Chance = 0.5, -- Choose a value between 0 and 1.0; 0 = 0%, 0.5 50%, 1.0 = 100%
+					Chance = 0.5, -- Choose a value between 0 and 1.0; 0 = 0%, 0.5 = 50%, 1.0 = 100%
 					IgnoreRequirements = false, -- Ignores all spawn requirements except for a valid spawn location when enabled
 				},
 				Fish =
 				{
 					Enabled = false,
-					Chance = 0.5, -- Choose a value between 0 and 1.0; 0 = 0%, 0.5 50%, 1.0 = 100%
+					Chance = 0.5, -- Choose a value between 0 and 1.0; 0 = 0%, 0.5 = 50%, 1.0 = 100%
 					IgnoreRequirements = false, -- Ignores all spawn requirements except for a valid spawn location when enabled
 				},
 				CharonShopForbiddenItem =
 				{
 					Enabled = false,
-					Chance = 0.5, -- Choose a value between 0 and 1.0; 0 = 0%, 0.5 50%, 1.0 = 100%
+					Chance = 0.5, -- Choose a value between 0 and 1.0; 0 = 0%, 0.5 = 50%, 1.0 = 100%
 					IgnoreRequirements = false, -- Ignores all spawn requirements except for a valid spawn location when enabled
 				},
+		},
+		GodMode =
+		{
+			-- Enable to set a fixed damage resistance value for god mode
+			Enabled = true,
+			FixedValue = 0.2, -- Percentage of damage resistance; 0 = 0%, 0.5 = 50%, 1.0 = 100%
 		},
 	}
 }
@@ -1986,7 +1992,7 @@ if PQOL.Config.Pact.Enabled then
 			end
 		end
 
-		CreateTextBox({ Id = components.WeaponTitle.Id, Text = text, FontSize = 20, OffsetX = -600, OffsetY = yStart + 235, Width = 540, Color = Color.White, Font = "AlegreyaSansSCRegular", ShadowBlur = 0, ShadowColor = {0,0,0,255}, ShadowOffset={0, 1}, Justification = "Left", VerticalJustification = "CENTER", LineSpacingBottom = 10, TextSymbolScale = 1.0, LuaKey = "TempTextData", LuaKey = "TempTextData", LuaValue = { Limit = GetShrinePointLimit(), WeaponName = weaponName },
+		CreateTextBox({ Id = components.WeaponTitle.Id, Text = text, FontSize = 20, OffsetX = -600, OffsetY = yStart + 235, Width = 540, Color = Color.White, Font = "AlegreyaSansSCRegular", ShadowBlur = 0, ShadowColor = {0,0,0,255}, ShadowOffset={0, 1}, Justification = "Left", VerticalJustification = "CENTER", LineSpacingBottom = 10, TextSymbolScale = 1.0, LuaKey = "TempTextData", LuaValue = { Limit = GetShrinePointLimit(), WeaponName = weaponName },
 			LangRuScaleModifier = 0.9,
 			LangPlScaleModifier = 0.9,
 			LangItScaleModifier = 0.9,
@@ -4208,7 +4214,7 @@ if PQOL.Config.PoolOfPurging.Enabled then
 				end
 
 				CreateTextBox(MergeTables(LocalizationData.SellTraitScripts.ShopButton,{
-					Id = components[purchaseButtonKey].Id, Text = "Sell_ItemCost", TextSymbolScale = 0.6, LuaKey = "TempTextData", LuaValue = { Amount = components[purchaseButtonKey].Value }, FontSize = 24,
+					Id = components[purchaseButtonKey].Id, Text = "Sell_ItemCost", TextSymbolScale = 0.6, LuaKey = "TempTextData", LuaValue = { Amount = components[purchaseButtonKey].Value },
 					OffsetY = GetLocalizedValue(60, { { Code = "ja", Value = 75}, }),
 					OffsetX = 430,
 					Color = fontColor,
@@ -4468,5 +4474,15 @@ if PQOL.Config.RoomObjectSpawnChances.Enabled then
 			table.insert(EncounterData.Shop.StartRoomUnthreadedEvents, { FunctionName = "SpawnRoomReward" })
 			table.insert(EncounterData.Shop.StartRoomUnthreadedEvents, { FunctionName = "CheckForbiddenShopItem", GameStateRequirements = { ChanceToPlay = PQOL.Config.RoomObjectSpawnChances.CharonShopForbiddenItem.Chance, RequiredMinRunsCleared = 1, CurrentRunValueFalse = "ForbiddenShopItemOffered", } })
 		end
+	end
+end
+
+if PQOL.Config.GodMode.Enabled then
+	function CalcEasyModeMultiplier( level )
+		if GameState == nil then
+			return 0
+		end
+		local easyModeMultiplier = 1 - PQOL.Config.GodMode.FixedValue
+		return easyModeMultiplier
 	end
 end
