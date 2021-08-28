@@ -69,7 +69,7 @@ PQOL =
 		{
 			-- When enabled :
 			-- Can no longer roll Demeter's Nourished Soul with Lasting Consequences 4 Pact option
-			-- Lucifer beam now destroys projectiles (only the base of the beam destroys projectiles, like it works with reflect) 
+			-- Lucifer beam now destroys projectiles (only the base of the beam destroys projectiles, like it works with reflect)
 			Enabled = true,
 			GilgameshChanges =
 			{
@@ -104,7 +104,7 @@ PQOL =
 		CustomPerRunLoot =
 		{
 			-- Adds configurable run loot caps
-			Enabled = true,
+			Enabled = false,
 			HammerCap = 2,	-- How many hammers you can receive in a run; default = 2
 			HermesCap = 2,	-- How many hermes boons you can receive in a run; default = 2
 			GodCap = 4,	-- How many gods you can encounter in a run; default = 4;	min = 1;   max = 8
