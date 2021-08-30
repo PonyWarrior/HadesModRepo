@@ -15,5 +15,10 @@
         DisplayName = "Costs {$TempTextData.Amount}{!Icons.LockKeySmall} to refund"
         OverwriteLocalization = true
         }
+        {
+        Id = "SuperGunManualReloadTrait"
+        DisplayName = "Hestia's Secret Gunpowder Recipe"
+        Description = "{#MarketScreenDescriptionFormat} After you manually {$Keywords.ManualReload}, your next shot is massively empowered. However, maximum ammo is reduced, reloading is slower and you can't {$Keywords.Dash}.{#PreviousFormat} \n {!Icons.Bullet}{#PropertyFormat}Empowered Shot Total Damage: \Column 380 {#UpgradeFormat}{$TooltipData.TooltipDamageBonus}%"
+        }
     ]
 }

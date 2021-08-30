@@ -130,3 +130,15 @@ extra shields are now fired in a star pattern, can bounce and are 30% faster
 added configurable room object spawn chances, includes :
 Chaos door, Erebus gates, Infernal troves, Charon's wells, Pools of purging, Fishing points, Charon shop forbidden item
 (disabled by default)
+
+2.6.0
+
+new features :
+
+added extra hammer upgrades
+currently adds Hestia's secret gunpowder recipe : requires Adamant Rail - Aspect of Hestia
+Empowered shots deal 300% total damage and have 150% range, max ammo reduced to 2, reload duration +100%, can't dash anymore
+
+changed features :
+
+config moved to a new separate file "config.lua"

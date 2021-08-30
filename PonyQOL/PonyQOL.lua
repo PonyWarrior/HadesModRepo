@@ -1,216 +1,3 @@
-PQOL =
-{
-	Config =
-	{
-		-- Change "Enabled = true" to "Enabled = false" to disable any feature
-		-- Some features have additional configuration options
-		BoonList =
-		{
-			-- Improves the boon list by showing incompatibilities and hidden requirements
-			-- Adds a boon list to Daedalus hammer, individual weapons and Charon
-			-- Adds infographs in the boon list. Press Enter on keyboard and Attack on controller to close.
-			-- Includes infographs for Zeus, Poseidon, Athena, Aphrodite, Ares, Hermes, Dionysus, Demeter
-			Enabled = true,
-		},
-		Broker =
-		{
-			-- Lets you toggle bulk buy at the broker
-			Enabled = true,
-		},
-		Pact =
-		{
-			-- Adds a reset button to the pact of punishment
-			Enabled = true,
-		},
-		ChamberCounter =
-		{
-			-- Adds a permanent chamber counter at the top right of the screen during runs
-			Enabled = true,
-		},
-		PomIcons =
-		{
-			-- Adds small animated pom icons to level-able boons, disable when using the starting boon selector mod
-			Enabled = true,
-		},
-		Commendations =
-		{
-			-- Adds a Commendations tab in the codex which lists all victory messages and their requirements
-			-- Completing a run will mark all messages you qualified for as completed
-			Enabled = true,
-		},
-		PracticeFishing =
-		{
-			-- Lets you practice fishing while in the House by holding your 'Shout' key for 3 seconds
-			-- Fishing state is displayed below the bobber
-			Enabled = true,
-		},
-		BossNumericHealth =
-		{
-			-- Adds numeric health below the health bar of bosses
-			Enabled = true,
-		},
-		RegularCallHint =
-		{
-			-- Adds an on screen hint when you can use your regular shout, similar to max power shout hint
-			Enabled = true,
-		},
-		PostBossWeaponSelect =
-		{
-			-- Lets you swap weapons after beating a boss
-			-- All boons except hammers are kept when swapping
-			Enabled = true,
-		},
-		CompleteAllBounties =
-		{
-			-- When using more heat than required, all additional bounties are rewarded and completed when defeating bosses (you don't need to increase heat 1 by 1)
-			Enabled = true,
-		},
-		Gameplay =
-		{
-			-- When enabled :
-			-- Can no longer roll Demeter's Nourished Soul with Lasting Consequences 4 Pact option
-			-- Lucifer beam now destroys projectiles (only the base of the beam destroys projectiles, like it works with reflect)
-			Enabled = true,
-			GilgameshChanges =
-			{
-				-- Disabling Gameplay also disables this
-				-- When enabled :
-				-- Changes Maim from Aspect of Gilgamesh to deal -25% total damage, but the damage is applied over time instead of a burst at the end
-				Enabled = true,
-				BaseDamage = 25,	-- multiplied by aspect level
-			},
-			OldChaosShield =
-			{
-				-- Disabling Gameplay also disables this
-				-- Restores Shield of Chaos - Aspect of Chaos to it's early access version
-				-- Extra shields are now fired in a star pattern
-				-- Extra shields can now bounce
-				-- Extra shields are 30% faster
-				Enabled = true,
-			},
-		},
-		BloodRefund =
-		{
-			-- Adds a refund titan blood button to all weapons
-			Enabled = true,
-			FreeMode = false,	-- Makes refunding free when enabled
-			KeyCostPerBloodRefunded = 2,	-- How many keys refunding 1 titan blood costs
-		},
-		GodKeepsakes =
-		{
-			-- God keepsake uses are refreshed/reset to 1 after completing a region
-			Enabled = true,
-		},
-		CustomPerRunLoot =
-		{
-			-- Adds configurable run loot caps
-			Enabled = false,
-			HammerCap = 2,	-- How many hammers you can receive in a run; default = 2
-			HermesCap = 2,	-- How many hermes boons you can receive in a run; default = 2
-			GodCap = 4,	-- How many gods you can encounter in a run; default = 4;	min = 1;   max = 8
-		},
-		AlwaysEncounterStoryRooms =
-		{
-			-- When enabled you will always encounter Sisyphus, Euridyce and Patroclus
-			Enabled = true,
-		},
-		PoolOfPurging =
-		{
-			-- Displays boon levels in the pool of purging screen
-			-- Shows warnings when opening pool of purging with pauper curse
-			Enabled = true,
-		},
-		DisableAchievements =
-		{
-			-- Disables achievement unlocks when enabled
-			Enabled = false,
-		},
-		FishingDoorLocker =
-		{
-			-- When enabled doors are locked until you have used the fishing point in that room
-			Enabled = false,
-		},
-		NumericWrathBar =
-		{
-			-- Displays numeric value of the wrath bar, up to 4 decimal points
-			-- Enabling RoundValues will round values to the lowest integer 
-			-- Two display modes available :
-			-- Regular - numeric values are shown at the right of the wrath bar, below your HP
-			-- Overlay - numeric values are shown on top of the wrath bar
-			-- Regular = 1, Overlay = 2
-			Enabled = true,
-			RoundValues = false,
-			DisplayMode = 1,
-		},
-		RoomObjectSpawnChances = 
-		{
-			-- Allows you to set a custom spawn chance for all room objects
-			-- Disabling this disables everything
-			Enabled = false,
-				Chaos =
-				{
-					Enabled = false,
-					Chance = 0.5, -- Choose a value between 0 and 1.0; 0 = 0%, 0.5 = 50%, 1.0 = 100%
-					IgnoreRequirements = false, -- Ignores all spawn requirements except for a valid spawn location when enabled
-				},
-				Erebus =
-				{
-					Enabled = false,
-					Chance = 0.5, -- Choose a value between 0 and 1.0; 0 = 0%, 0.5 = 50%, 1.0 = 100%
-					IgnoreRequirements = false, -- Ignores all spawn requirements except for a valid spawn location when enabled
-				},
-				InfernalTrove =
-				{
-					Enabled = false,
-					Chance = 0.5, -- Choose a value between 0 and 1.0; 0 = 0%, 0.5 = 50%, 1.0 = 100%
-					IgnoreRequirements = false, -- Ignores all spawn requirements except for a valid spawn location when enabled
-				},
-				CharonWell =
-				{
-					Enabled = false,
-					Chance = 0.5, -- Choose a value between 0 and 1.0; 0 = 0%, 0.5 = 50%, 1.0 = 100%
-					IgnoreRequirements = false, -- Ignores all spawn requirements except for a valid spawn location when enabled
-				},
-				PurgingPool =
-				{
-					Enabled = false,
-					Chance = 0.5, -- Choose a value between 0 and 1.0; 0 = 0%, 0.5 = 50%, 1.0 = 100%
-					IgnoreRequirements = false, -- Ignores all spawn requirements except for a valid spawn location when enabled
-				},
-				Fish =
-				{
-					Enabled = false,
-					Chance = 0.5, -- Choose a value between 0 and 1.0; 0 = 0%, 0.5 = 50%, 1.0 = 100%
-					IgnoreRequirements = false, -- Ignores all spawn requirements except for a valid spawn location when enabled
-				},
-				CharonShopForbiddenItem =
-				{
-					Enabled = false,
-					Chance = 0.5, -- Choose a value between 0 and 1.0; 0 = 0%, 0.5 = 50%, 1.0 = 100%
-					IgnoreRequirements = false, -- Ignores all spawn requirements except for a valid spawn location when enabled
-				},
-		},
-		GodMode =
-		{
-			-- Enable to set a fixed damage resistance value for god mode
-			Enabled = false,
-			FixedValue = 0.2, -- Percentage of damage resistance; 0 = 0%, 0.5 = 50%, 1.0 = 100%
-		},
-		ForceRoomRewardType =
-		{
-			-- Enable to only receive room rewards of a desired type
-			-- MetaProgress = resources used outside of runs like darkness and keys
-			-- RunProgress = resources used during a run like boons and hammers
-			-- Set RewardType to 1 for MetaProgress, 2 for RunProgress
-			-- Please not that some rooms have a hard set reward type and won't be affected
-			Enabled = true,
-			RewardType = 1,
-		},
-	}
-}
-
-SaveIgnores["PQOL"] = true
-
 -- To anyone looking over the code, "--mod start" and "--mod end" are there to show what code I added to base game functions when a wrap wasn't possible
 
 --fix a bullshit crash
@@ -286,6 +73,84 @@ if PQOL.Config.Gameplay.Enabled then
 			SetProjectileProperty({ WeaponName = "ChaosShieldThrow", DestinationId = CurrentRun.Hero.ObjectId, Property = "NumJumps", Value = 2 })
 			SetWeaponProperty({ WeaponName = "ChaosShieldThrow", DestinationId = CurrentRun.Hero.ObjectId, Property = "ProjectileAngleOffset", Value = 45 })
 		end}
+	end
+	if PQOL.Config.Gameplay.ExtraHammers.Enabled then
+		if PQOL.Config.Gameplay.ExtraHammers.SuperGunManualReloadTrait.Enabled then
+			function ApplyWeaponPropertyChange( unit, weaponName, propertyChange, reverse )
+
+				if propertyChange.LegalWeapons ~= nil then
+					if not Contains( propertyChange.LegalWeapons, weaponName ) then
+						return
+					end
+				end
+
+				if propertyChange.LegalWeapon ~= nil then
+					if propertyChange.LegalWeapon ~= weaponName then
+						return
+					end
+				end
+
+				if propertyChange.LegalUnits ~= nil then
+					if not Contains( propertyChange.LegalUnits, unit.Name ) then
+						return
+					end
+				end
+
+				local changeValue = propertyChange.ChangeValue
+				if reverse then
+					if propertyChange.ChangeType == "Multiply" then
+						changeValue = 1 / changeValue
+					elseif propertyChange.ChangeType == "Add" then
+						changeValue = 0 - changeValue
+					elseif type(changeValue) == "boolean" then
+						changeValue = not changeValue
+					else
+						return
+					end
+				end
+			if propertyChange.WeaponProperty ~= nil then
+				SetWeaponProperty({ WeaponName = weaponName, DestinationId = unit.ObjectId, Property = propertyChange.WeaponProperty, Value = changeValue, ValueChangeType = propertyChange.ChangeType })
+				if propertyChange.WeaponProperty == "MaxAmmo" then
+
+					if weaponName == "GunWeapon" then
+						thread( UpdateGunUI )
+					elseif weaponName == "RangedWeapon" then
+						if propertyChange.ChangeType == "Add" and changeValue > 0 then
+							RunWeaponMethod({ Id = unit.ObjectId, Weapon = "RangedWeapon", Method = "AddAmmo", Parameters = { math.ceil(changeValue) } })
+						end
+						thread( UpdateAmmoUI )
+					end
+				end
+				if propertyChange.WeaponProperty == "ClipSize" then
+					RunWeaponMethod({ Id = unit.ObjectId, Weapon = "RushWeapon", Method = "forceReload" })
+				end
+				if propertyChange.WeaponProperty == "ChargeTime" then
+					RunWeaponMethod({ Id = unit.ObjectId, Weapon = weaponName, Method = "cancelCharge" })
+				end
+				--mod start
+				if propertyChange.WeaponProperty == "ActiveReloadTime" then
+					if weaponName == "GunWeapon" then
+						WeaponData.GunWeapon.ActiveReloadTime = changeValue
+					end
+				end
+				--mod end
+				end
+				if propertyChange.ProjectileProperty ~= nil then
+					SetProjectileProperty({ WeaponName = weaponName, ProjectileName = propertyChange.ProjectileName, ExcludeProjectileName = propertyChange.ExcludeProjectileName, DestinationId = unit.ObjectId, Property = propertyChange.ProjectileProperty, Value = changeValue, ValueChangeType = propertyChange.ChangeType })
+				end
+				if propertyChange.EffectProperty ~= nil then
+					SetEffectProperty({ WeaponName = weaponName, EffectName = propertyChange.EffectName, DestinationId = unit.ObjectId, Property = propertyChange.EffectProperty, Value = changeValue, ValueChangeType = propertyChange.ChangeType })
+				end
+
+				local linkedWeapons = WeaponSets.LinkedWeaponUpgrades[weaponName]
+				if linkedWeapons and not propertyChange.ExcludeLinked then
+					for k, linkedWeaponName in pairs( linkedWeapons ) do
+						--DebugPrint({ Text = "Applying linked upgrade to "..linkedWeaponName, LogOnly = true })
+						ApplyWeaponPropertyChange( unit, linkedWeaponName, propertyChange, reverse )
+					end
+				end
+			end
+		end
 	end
 end
 
@@ -4307,7 +4172,7 @@ if PQOL.Config.DisableAchievements.Enabled then
 	function CheckProgressAchievements( args )
 		return
 	end
-	
+
 	function CheckAchievement( args )
 		return
 	end
@@ -4512,3 +4377,6 @@ if PQOL.Config.ForceRoomRewardType.Enabled then
 		end
 	end)
 end
+
+
+

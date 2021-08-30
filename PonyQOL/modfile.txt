@@ -1,6 +1,11 @@
+Top Import "config.lua"
 Import "PonyQOL.lua"
 To "Scripts/EncounterData.lua
 Import "encounterdata.lua"
+To "Scripts/TraitData.lua
+Import "traitdata.lua"
+To "Scripts/LootData.lua
+Import "lootdata.lua"
 To "Game/Text/en/HelpText.en.sjson"
 SJSON "helptext.sjson"
 To "Game/Text/en/CodexText.en.sjson"
