@@ -5,5 +5,9 @@
       Name = "MegSummon"
       InheritFrom = "Harpy"
     }
+    {
+      Name = "MegSupportUnit"
+      InheritFrom = "HarpySupportUnit"
+    }
     ]
 }

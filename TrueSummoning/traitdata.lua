@@ -1,4 +1,4 @@
-TraitData.	FuryAssistTrait =
+TraitData.FuryAssistTrait =
 {
     InheritFrom = { "AssistTrait" },
     InRackTitle = "FuryAssistTrait_Rack",
