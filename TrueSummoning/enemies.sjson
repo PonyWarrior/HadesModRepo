@@ -1,0 +1,9 @@
+{
+    Units = [
+    "_append"
+    {
+      Name = "MegSummon"
+      InheritFrom = "Harpy"
+    }
+    ]
+}
