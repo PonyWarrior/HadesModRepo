@@ -26,7 +26,7 @@ UnitSetData.Enemies.MegSummon =
     --RepulseOnMeleeInvulnerableHit = 400,
     IgnoreInvincibubbleOnHit = true,
 
-    AdditionalEnemySetupFunctionName = "TrueSummoning.SelectSupportAIs",
+    -- AdditionalEnemySetupFunctionName = "TrueSummoning.SelectSupportAIs",
 
     DefaultAIData =
     {
@@ -52,7 +52,8 @@ UnitSetData.Enemies.MegSummon =
     },
     PostAggroAI = AttackerAI,
 
-    WeaponOptions = { "HarpyLunge", "HarpyWhipWhirl", "HarpyLightning", "HarpyBeam" },
+    WeaponOptions = { "HarpyLunge" },
+    -- WeaponOptions = { "HarpyLunge", "HarpyWhipWhirl", "HarpyLightning", "HarpyBeam" },
     DisarmedWeapon = "HarpyLunge",
 
     ShrineMetaUpgradeName = "BossDifficultyShrineUpgrade",

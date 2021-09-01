@@ -1,6 +1,78 @@
+--TODO :
+--Upgrade system
+--Interface
+--Give boon to summon
+--Give commands to summon
+
 ModUtil.RegisterMod("TrueSummoning")
 
 SaveIgnores["TrueSummoning"] = true
+
+local TrueSummoningData = ModUtil.PathGet( "ModData.TrueSummoningData" ) or { }
+ModUtil.PathSet( "ModData.TrueSummoningData", TrueSummoningData )
+
+TrueSummoning.SummonUpgradeData =
+{
+	MegSummon =
+	{
+		Weapons =
+		{
+			HarpyLunge =
+			{
+				Name = "HarpyLunge",
+				DisplayName = "Lunge",
+				Description = "Megaera rushes forward a medium distance, damaging all enemies in her path."
+			},
+			HarpyWhipWhirl =
+			{
+				Name = "HarpyWhipWhirl",
+				DisplayName = "Whiplash",
+				Description = "Megaera stands still and lashes her whip in an area around her, damaging all enemies hit."
+			},
+			HarpyLightning =
+			{
+				Name = "HarpyLightning",
+				DisplayName = "Lightning Strikes",
+				Description = "Megaera calls down lightning on enemies, striking in groups of 4 anywhere in the room, each lightning strike damaging all enemies in a medium area."
+			},
+			HarpyBeam =
+			{
+				Name = "HarpyBeam",
+				DisplayName = "Triple Energy Beam",
+				Description = "Megaera stands still and fires 3 continuous beams of energy spheres in front of her in a cone, each sphere that hits an enemy damages it then dissipates."
+			}
+		},
+		AssistWeapons =
+		{
+			Tisiphone =
+			{
+				SummonTisiphoneBombingRun =
+				{
+					Name = "SummonTisiphoneBombingRun",
+					DisplayName = "Desolation",
+					Description = "Tisiphone flies over enemies and brings down explosions in a massive area, damaging all enemies hit."
+				}
+			},
+			Alecto =
+			{
+				SummonAlectoWhipShot =
+				{
+					Name = "SummonAlectoWhipShot",
+					DisplayName = "Hate Spike",
+					Description = "Alecto summons a spike of hate, damaging enemies in a small area after a short duration.",
+				},
+				SummonAlectoLightningChase =
+				{
+					Name = "SummonAlectoLightningChase",
+					DisplayName = "Chasing Tornado of Hate",
+					Description = "Alecto summons a tornado of hate, chasing and repeatedly damaging enemies in a small area."
+				}
+			},
+		}
+	},
+}
+
+SummonMenuScreen = { Components = {} }
 
 function TrueSummoning.MegaeraAssist()
     local summondata = EnemyData.MegSummon
@@ -13,7 +85,79 @@ function TrueSummoning.MegaeraAssist()
             DestinationId = CurrentRun.Hero.ObjectId, OffsetX = 0, OffsetY = 0 })
     SetupEnemyObject( newSummon, CurrentRun )
 
+	-- local weaponName = "HarpyLunge"
+	-- local upgradeData = TraitData.ZeusWeaponTrait
+	-- local onFireWeapon = "DemeterAmmoWind"
+	-- newSummon.OnFireWeapons = {}
+	-- newSummon.OnFireWeapons[weaponName] = {}
+	-- newSummon.OnFireWeapons[weaponName][onFireWeapon] = true
+
+	TrueSummoning.InheritHeroTraits(CurrentRun.Hero, newSummon)
+
     CurrentRun.CurrentRoom.TauntTargetId = newSummon.ObjectId
+	TrueSummoning.ActiveSummon = newSummon
+end
+
+function TrueSummoning.InheritHeroTraits(hero, summon)
+	if hero == nil or hero.Traits == nil or summon == nil then
+		return
+	end
+
+	local eligibleTraits = {}
+	for i, traitData in pairs(hero.Traits) do
+		if traitData.AddOnDamageWeapons
+		or traitData.AddOnFireWeapons
+		 then
+			table.insert(eligibleTraits, traitData)
+		end
+	end
+
+	if eligibleTraits ~= nil then
+		local weaponName = "HarpyLunge"
+
+		for i, traitData in pairs(eligibleTraits) do
+			if traitData.AddOnDamageWeapons ~= nil then
+				for j, onDamageWeapon in pairs(traitData.AddOnDamageWeapons) do
+
+					if summon.OnDamageWeapons == nil then
+						summon.OnDamageWeapons = {}
+					end
+
+					if summon.OnDamageWeapons[weaponName] == nil then
+						summon.OnDamageWeapons[weaponName] = {}
+					end
+
+					summon.OnDamageWeapons[weaponName][onDamageWeapon] = traitData.OnDamageWeaponProperties or true
+					DebugPrint({Text = "Inherited "..onDamageWeapon})
+				end
+			end
+
+			-- if traitData.AddOnFireWeapons ~= nil then
+			-- 	for j, onFireWeapon in pairs(traitData.AddOnFireWeapons) do
+			-- 		if summon.OnFireWeapons == nil then
+			-- 			summon.OnFireWeapons = {}
+			-- 		end
+
+			-- 		if summon.OnFireWeapons[weaponName] == nil then
+			-- 			summon.OnFireWeapons[weaponName] = {}
+			-- 		end
+
+			-- 		if not summon.OnFireWeapons[weaponName][onFireWeapon] then
+			-- 			if traitData.AddOnFireWeaponArgs then
+			-- 				summon.OnFireWeapons[weaponName][onFireWeapon] = DeepCopyTable( traitData.AddOnFireWeaponArgs )
+			-- 			else
+			-- 				summon.OnFireWeapons[weaponName][onFireWeapon] = true
+			-- 			end
+			-- 		end
+
+			-- 		-- summon.OnFireWeapons[weaponName][onFireWeapon] = traitData.OnFireWeaponProperties or true
+			-- 		DebugPrint({Text = "Inherited "..onFireWeapon})
+			-- 	end
+
+			-- end
+		end
+	end
+
 end
 
 function TrueSummoning.SelectSupportAIs(summon, currentRun)
@@ -156,3 +300,88 @@ function GetTargetId( enemy, aiData )
 
 	return targetId
 end
+
+OnControlPressed{ "Assist",
+	function( triggerArgs )
+
+		if not IsEmpty( ActiveScreens ) or CurrentRun.CurrentRoom.TauntTargetId == nil then
+			return
+		end
+
+		Move({ Id = CurrentRun.CurrentRoom.TauntTargetId, DestinationId = CurrentRun.Hero.ObjectId, Mode = "Precise" })
+	end
+}
+
+table.insert(DeathLoopData.DeathAreaBedroom.UnthreadedEvents,
+{
+    FunctionName = "TrueSummoning.SpawnAltar"
+})
+
+function TrueSummoning.SpawnAltar()
+    local unlocked = true
+    if unlocked then
+        CurrentRun.CurrentRoom.BlockKeepsakeMenu = true
+        local altar = DeepCopyTable( ObstacleData.GiftRack )
+        altar.ObjectId = SpawnObstacle({ Name = "GiftRack", Group = "FX_Terrain", DestinationId = CurrentRun.Hero.ObjectId, AttachedTable = altar, OffsetX = 1350, OffsetY = 350 })
+		SetScale({ Id = altar.ObjectId, Fraction = 0.1 })
+        SetupObstacle( altar )
+        AddToGroup({Id = altar.ObjectId, Name = "TrueSummoning.Altar"})
+    end
+end
+
+OnUsed{ "TrueSummoning.Altar", function()
+    TrueSummoning.OpenSummonMenu()
+end}
+
+function TrueSummoning.OpenSummonMenu()
+	ScreenAnchors.SummonMenuScreen = DeepCopyTable(SummonMenuScreen)
+	local screen = ScreenAnchors.SummonMenuScreen
+	local components = screen.Components
+	local title = "Alter of Summoning"
+	screen.Name = "SummonMenuScreen"
+	OnScreenOpened({ Flag = screen.Name, PersistCombatUI = true })
+	SetConfigOption({ Name = "UseOcclusion", Value = false })
+	FreezePlayerUnit()
+	EnableShopGamepadCursor()
+	PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
+	--Background
+	components.BackgroundDim = CreateScreenComponent({ Name = "rectangle01", Group = "SummonMenu" })
+	components.Background = CreateScreenComponent({ Name = "BlankObstacle", Group = "SummonMenu" })
+	SetScale({ Id = components.BackgroundDim.Id, Fraction = 4 })
+	SetColor({ Id = components.BackgroundDim.Id, Color = { 69, 69, 69, 255 } })
+	--Title
+	CreateTextBox({ Id = components.Background.Id, Text = title, FontSize = 34,
+	OffsetX = 0, OffsetY = -500, Color = Color.White, Font = "SpectralSCLight",
+	ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
+	--Close button
+	components.CloseButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.6, Group = "SummonMenu" })
+	Attach({ Id = components.CloseButton.Id, DestinationId = components.Background.Id, OffsetX = 0, OffsetY = 500 })
+	components.CloseButton.OnPressedFunctionName = "TrueSummoning.CloseSummonMenu"
+	components.CloseButton.ControlHotkey = "Cancel"
+	--Display
+	components.SummonPortrait = CreateScreenComponent({ Name = "BlankObstacle", Group = "SummonMenu" })
+	Attach({Id = components.SummonPortrait.Id, DestinationId = components.Background.Id, OffsetX = -500, OffsetY = 100})
+	SetAnimation({DestinationId = components.SummonPortrait.Id, Name = "Portrait_FurySister01_Default_01", Scale = 0.7})
+
+	CreateTextBox({ Id = components.SummonPortrait.Id, Text = "Harpy",
+	Font = "CaesarDressing", FontSize = 22, ShadowRed = 0, ShadowBlue = 0, ShadowGreen = 0,
+	OutlineColor = {0, 0, 0, 1}, OutlineThickness = 2,
+	ShadowAlpha = 1.0, ShadowBlur = 0, ShadowOffsetY = 3, ShadowOffsetX = 0, Justification = "Center", OffsetY = -400,})
+
+	--End
+	screen.KeepOpen = true
+	thread(HandleWASDInput, screen)
+	HandleScreenInput(screen)
+end
+
+function TrueSummoning.CloseSummonMenu(screen, button)
+	DisableShopGamepadCursor()
+	SetConfigOption({ Name = "FreeFormSelectWrapY", Value = false })
+	SetConfigOption({ Name = "UseOcclusion", Value = true })
+	CloseScreen(GetAllIds(screen.Components), 0.1)
+	PlaySound({ Name = "/SFX/Menu Sounds/GeneralWhooshMENU" })
+	ScreenAnchors.SummonMenuScreen = nil
+	UnfreezePlayerUnit()
+	screen.KeepOpen = false
+	OnScreenClosed({ Flag = screen.Name })
+  end
