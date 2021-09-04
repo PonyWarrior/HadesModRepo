@@ -4182,6 +4182,7 @@ if PQOL.Config.FishingDoorLocker.Enabled then
 
 	ModUtil.WrapBaseFunction("CheckRoomExitsReady", function(baseFunc, currentRoom)
 		if CurrentRun.CurrentRoom.ForceFishing and CurrentRun.CurrentRoom.FishingPointId and IsUseable({ Id = CurrentRun.CurrentRoom.FishingPointId }) then
+			thread( InCombatText, CurrentRun.Hero.ObjectId, "A fishing spot has appeared in this room", 1.8, { ShadowScale = 1.2 } )
 			return false
 		end
 		return baseFunc(currentRoom)
@@ -4486,3 +4487,54 @@ ModUtil.BaseOverride( "ChooseEncounter", function (currentRun, room)
 
 	return encounter
 end)
+
+if PQOL.Config.GoldenUrnWarning.Enabled then
+	ModUtil.BaseOverride("HandleBreakableSwap", function (currentRoom)
+		local roomBreakableData = currentRoom.BreakableValueOptions
+		local legalBreakables = FindAllSwappableBreakables()
+		local highValueLimit = roomBreakableData.MaxHighValueBreakables or 1
+		if IsEmpty( legalBreakables ) then
+			return
+		end
+		if TableLength( legalBreakables ) < highValueLimit then
+			highValueLimit = TableLength( legalBreakables )
+		end
+
+		local chanceMultiplier = 1.0
+		for k, mutator in pairs( GameState.ActiveMutators ) do
+			if mutator.BreakableChanceMultiplier ~= nil then
+				chanceMultiplier = chanceMultiplier * mutator.BreakableChanceMultiplier
+			end
+		end
+
+		for index = 0, highValueLimit, 1 do
+			local breakableData = RemoveRandomValue( legalBreakables )
+			if breakableData == nil then
+				return
+			end
+			local valueOptions = breakableData.ValueOptions
+			for k, swapOption in ipairs( valueOptions ) do
+				if swapOption.GameStateRequirements == nil or IsGameStateEligible( CurrentRun, swapOption, swapOption.GameStateRequirements ) then
+					if RandomChance( swapOption.Chance * chanceMultiplier ) then
+						SetAnimation({ DestinationId = breakableData.ObjectId, Name = swapOption.Animation, OffsetY = swapOption.OffsetY or 0 })
+						RecordObjectState( currentRoom, breakableData.ObjectId, "Animation", swapOption.Animation )
+						breakableData.MoneyDropOnDeath = swapOption.MoneyDropOnDeath
+						RecordObjectState( currentRoom, breakableData.ObjectId, "MoneyDropOnDeath", breakableData.MoneyDropOnDeath )
+						DebugPrint({ Text = "HandleBreakableSwap: an up-valued breakable has spawned somewhere in this room." })
+						--mod start
+						thread(GoldenUrnWarning)
+						--mod end
+						OverwriteTableKeys(breakableData, swapOption.DataOverrides)
+						break
+					end
+				end
+			end
+		end
+	end)
+
+	function GoldenUrnWarning()
+		wait(1.0)
+		InCombatText(CurrentRun.Hero.ObjectId, "A golden urn has appeared in this room", 1.8, { ShadowScale = 1.2 } )
+	end
+end
+

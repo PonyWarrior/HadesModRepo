@@ -138,8 +138,14 @@ new features :
 added extra hammer upgrades
 currently adds Hestia's secret gunpowder recipe : requires Adamant Rail - Aspect of Hestia
 Empowered shots deal 300% total damage and have 150% range, max ammo reduced to 2, reload duration +100%, can't dash anymore
-added force thanatos, enable to always encounter thanatos in a run, includes max spawn, spawn location and ignore requirements options
+added force thanatos, enable to always encounter thanatos in a run, includes max spawn, spawn location and ignore requirements options (disabled by default)
+added golden urn warning, when enabled a warning message appears at the start of an encounter if a golden urn spawned in the room
 
 changed features :
 
 config moved to a new separate file "config.lua"
+added warning message to fishing door locker
+
+fixed issues :
+
+some features which were supposed to be disabled by default were not

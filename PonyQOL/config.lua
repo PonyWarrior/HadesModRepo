@@ -224,11 +224,16 @@ PQOL =
 		ForceThanatos =
 		{
 			-- Enable to always encounter Thanatos in a run
-			Enabled = true,
+			Enabled = false,
 			SpawnLocation = 0, -- 0 = anywhere, 1 = Tartarus, 2 = Asphodel, 3 = Elysium
 			MaxEncounters = 1, -- -1 = unlimited
 			IgnoreRequirements = false, -- when enabled any room can have Thanatos appear except forced encounters (bosses etc), ignores SpawnLocation
 		},
+		GoldenUrnWarning =
+		{
+			-- When enabled a warning appears at the start of an encounter if a golden urn spawned in the room
+			Enabled = true,
+		}
 	}
 }
 
