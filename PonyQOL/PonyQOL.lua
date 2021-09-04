@@ -4378,5 +4378,111 @@ if PQOL.Config.ForceRoomRewardType.Enabled then
 	end)
 end
 
+ModUtil.BaseOverride( "ChooseEncounter", function (currentRun, room)
+	DebugAssert({ Condition = room ~= nil, Text = "Choosing an encounter for a nil room!" })
 
+	local encounterData = nil
+	if ForceNextEncounter ~= nil then
+		DebugPrint({ Text = "ForceNextEncounter = "..tostring(ForceNextEncounter) })
+		encounterData = EncounterData[ForceNextEncounter]
+		encounterData.SkipIntroEncounterCheck = true
+		ForceNextEncounter = nil
+	elseif currentRun.ForceNextEncounterData ~= nil then
+		encounterData = currentRun.ForceNextEncounterData
+	elseif HasHeroTraitValue( "ForceThanatosEncounter" ) then
+		local legalEncounters = {}
+		for i, encounterName in pairs( EncounterSets.ThanatosEncounters ) do
+			if IsEncounterEligible( currentRun, room, EncounterData[encounterName] ) then
+				table.insert(legalEncounters, encounterName )
+			end
+		end
+		if not IsEmpty( legalEncounters ) then
+			UseHeroTraitsWithValue( "ForceThanatosEncounter", true )
+			encounterData = EncounterData[legalEncounters[1]]
+		end
+	--mod start
+	elseif PQOL.Config.ForceThanatos.Enabled then
+		if CurrentRun.ThanatosSpawns < PQOL.Config.ForceThanatos.MaxEncounters or PQOL.Config.ForceThanatos.MaxEncounters == -1 then
+			local legalEncounters = {}
+			if PQOL.Config.ForceThanatos.IgnoreRequirements then
+				for i, encounterName in pairs( EncounterSets.ThanatosEncounters ) do
+						table.insert(legalEncounters, encounterName )
+				end
+			else
+				if PQOL.Config.ForceThanatos.SpawnLocation ~= 0 then
+					if PQOL.Config.ForceThanatos.SpawnLocation == 1 and IsEncounterEligible(currentRun, room, "ThanatosTartarus") then
+						encounterData = EncounterData["ThanatosTartarus"]
+					elseif PQOL.Config.ForceThanatos.SpawnLocation == 2 and IsEncounterEligible(currentRun, room, "ThanatosAsphodel") then
+						encounterData = EncounterData["ThanatosAsphodel"]
+					elseif PQOL.Config.ForceThanatos.SpawnLocation == 3 and IsEncounterEligible(currentRun, room, "ThanatosElysium") then
+						encounterData = EncounterData["ThanatosElysium"]
+					end
+				else
+					for i, encounterName in pairs( EncounterSets.ThanatosEncounters ) do
+						if IsEncounterEligible( currentRun, room, EncounterData[encounterName] ) then
+							table.insert(legalEncounters, encounterName )
+						end
+					end
+				end
+			end
+			if not IsEmpty( legalEncounters ) then
+				encounterData = EncounterData[legalEncounters[1]]
+			end
+		end
+	--mod end
+	end
 
+	if not encounterData then
+		local eligibleEncounters = {}
+		local forcedEncounters = {}
+		if room.LegalEncounters ~= nil then
+			for k, encounterName in pairs( room.LegalEncounters ) do
+				local encounterData = EncounterData[encounterName]
+				if IsEncounterEligible( currentRun, room, encounterData ) then
+					table.insert( eligibleEncounters, encounterData )
+					if IsEncounterForced( currentRun, room, encounterData ) then
+						table.insert( forcedEncounters, encounterData )
+					end
+				end
+			end
+		else
+			for encounterName, encounterData in pairs( EncounterData ) do
+				if IsEncounterEligible( currentRun, room, encounterData ) then
+					table.insert( eligibleEncounters, encounterData )
+					if IsEncounterForced( currentRun, room, encounterData ) then
+						table.insert( forcedEncounters, encounterData )
+					end
+				end
+			end
+		end
+
+		local roomName = room.Name
+		if roomName == nil then
+			roomName = GetKey(RoomData, room)
+		end
+
+		if roomName == nil then
+			roomName = tostring(room.HelpTextId)..":"..tostring(room.Type)..":"..tostring(room.LegalEncounters[1])
+		end
+
+		DebugAssert({ Condition = not IsEmpty( eligibleEncounters ) or not IsEmpty(forcedEncounters), Text = "No encounters available for "..tostring(roomName).."!" })
+
+		if not IsEmpty( forcedEncounters ) then
+			encounterData = GetRandomValue( forcedEncounters )
+		else
+			encounterData = GetRandomValue( eligibleEncounters )
+		end
+
+		if encounterData.EnemySet ~= nil then
+			for k, enemyName in pairs(encounterData.EnemySet) do
+				if EnemyData[enemyName].ForceIntroduction and not HasEncounterBeenCompleted(EnemyData[enemyName].RequiredIntroEncounter) then
+					encounterData = EncounterData[EnemyData[enemyName].RequiredIntroEncounter]
+				end
+			end
+		end
+	end
+
+	local encounter = SetupEncounter(encounterData, room)
+
+	return encounter
+end)

@@ -138,6 +138,7 @@ new features :
 added extra hammer upgrades
 currently adds Hestia's secret gunpowder recipe : requires Adamant Rail - Aspect of Hestia
 Empowered shots deal 300% total damage and have 150% range, max ammo reduced to 2, reload duration +100%, can't dash anymore
+added force thanatos, enable to always encounter thanatos in a run, includes max spawn, spawn location and ignore requirements options
 
 changed features :
 

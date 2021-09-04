@@ -218,8 +218,16 @@ PQOL =
 			-- RunProgress = resources used during a run like boons and hammers
 			-- Set RewardType to 1 for MetaProgress, 2 for RunProgress
 			-- Please not that some rooms have a hard set reward type and won't be affected
-			Enabled = true,
+			Enabled = false,
 			RewardType = 1,
+		},
+		ForceThanatos =
+		{
+			-- Enable to always encounter Thanatos in a run
+			Enabled = true,
+			SpawnLocation = 0, -- 0 = anywhere, 1 = Tartarus, 2 = Asphodel, 3 = Elysium
+			MaxEncounters = 1, -- -1 = unlimited
+			IgnoreRequirements = false, -- when enabled any room can have Thanatos appear except forced encounters (bosses etc), ignores SpawnLocation
 		},
 	}
 }
