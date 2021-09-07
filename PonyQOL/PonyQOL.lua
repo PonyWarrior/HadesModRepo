@@ -3321,38 +3321,40 @@ if PQOL.Config.BossNumericHealth.Enabled then
 end
 
 if PQOL.Config.CompleteAllBounties.Enabled then
-	--Complete all bounties
-
 	function CompleteAllAvailableBounties()
-		if GameState.SpentShrinePointsCache ~= nil and GameState.RecordClearedShrineThreshold ~= nil then
-			DebugPrint({Text="@PonyQOL Trying to complete all bounties!"})
-			local activeShrinePoints = GameState.SpentShrinePointsCache - 1
-			local weaponName = GetEquippedWeapon()
-			local roomName = CurrentRun.CurrentRoom.GenusName or CurrentRun.CurrentRoom.Name
-			if weaponName == nil
-				or roomName == nil
-				or GameState.RecordClearedShrineThreshold[weaponName] == nil
-				or GameState.RecordClearedShrineThreshold[weaponName][roomName] == nil
-				or activeShrinePoints <= GameState.RecordClearedShrineThreshold[weaponName][roomName]
-				then
-				return
-			end
-			while activeShrinePoints > GameState.RecordClearedShrineThreshold[weaponName][roomName] do
-				local consumableName = GetRandomValue(RewardStoreData.SuperMetaProgress)
-				local offsetY = RandomInt(0, 100)
-				local offsetX = RandomInt(0, 100)
-				local consumableId = SpawnObstacle({ Name = consumableName.Name, DestinationId = CurrentRun.Hero.ObjectId, Group = "Standing", OffsetX = offsetX, OffsetY = offsetY })
-				local consumable = CreateConsumableItem( consumableId, consumableName.Name, 0 )
-
-				GameState.RecordClearedShrineThreshold[weaponName][roomName] = GetLastRoomClearedShrinePointThreshold( weaponName, roomName ) + ShrineClearData.ClearThreshold
-				GameState.RecordLastClearedShrineReward[weaponName][roomName][GetLastRoomClearedShrinePointThreshold( weaponName, roomName )] = consumableName.Name
-				wait(0.1)
-			end
+		DebugPrint({Text="@PonyQOL Trying to complete all bounties!"})
+		local activeShrinePoints = GameState.SpentShrinePointsCache or 0
+		local weaponName = GetEquippedWeapon()
+		local roomName = CurrentRun.CurrentRoom.GenusName or CurrentRun.CurrentRoom.Name
+		local rewardName = CurrentRun.CurrentRoom.ChosenRewardType
+		if not GameState.RecordClearedShrineThreshold then
+			GameState.RecordClearedShrineThreshold = {}
 		end
-	end
-else
-	function CompleteAllAvailableBounties()
-		-- do nothing
+		if not GameState.RecordClearedShrineThreshold[weaponName] then
+			GameState.RecordClearedShrineThreshold[weaponName] = {}
+		end
+		if not GameState.RecordLastClearedShrineReward then
+			GameState.RecordLastClearedShrineReward = {}
+		end
+		if not GameState.RecordLastClearedShrineReward[weaponName] then
+			GameState.RecordLastClearedShrineReward[weaponName] = {}
+		end
+		if not GameState.RecordLastClearedShrineReward[weaponName][roomName] or type(GameState.RecordLastClearedShrineReward[weaponName][roomName]) ~= "table" then
+			GameState.RecordLastClearedShrineReward[weaponName][roomName] = {}
+		end
+		if not GameState.RecordClearedShrineThreshold[weaponName][roomName] then
+			GameState.RecordClearedShrineThreshold[weaponName][roomName] = 0
+		end
+		while activeShrinePoints > GameState.RecordClearedShrineThreshold[weaponName][roomName] do
+			local offsetY = RandomInt(0, 100)
+			local offsetX = RandomInt(0, 100)
+			local consumableId = SpawnObstacle({ Name = rewardName, DestinationId = CurrentRun.Hero.ObjectId, Group = "Standing", OffsetX = offsetX, OffsetY = offsetY })
+			local consumable = CreateConsumableItem( consumableId, rewardName, 0 )
+
+			GameState.RecordClearedShrineThreshold[weaponName][roomName] = GetLastRoomClearedShrinePointThreshold( weaponName, roomName ) + ShrineClearData.ClearThreshold
+			GameState.RecordLastClearedShrineReward[weaponName][roomName][GetLastRoomClearedShrinePointThreshold( weaponName, roomName )] = rewardName
+			wait(0.1)
+		end
 	end
 end
 
@@ -3857,7 +3859,6 @@ if PQOL.Config.CustomPerRunLoot.Enabled then
 			end
 		end
 	end
-
 	if PQOL.Config.CustomPerRunLoot.HermesCap ~= 2 then
 		local newCap = PQOL.Config.CustomPerRunLoot.HermesCap
 		if newCap > 2 then
@@ -3882,7 +3883,6 @@ if PQOL.Config.CustomPerRunLoot.Enabled then
 			end
 		end
 	end
-
 	if PQOL.Config.CustomPerRunLoot.GodCap ~= 4 then
 		function ReachedMaxGods( excludedGods )
 			excludedGods = excludedGods or {}
