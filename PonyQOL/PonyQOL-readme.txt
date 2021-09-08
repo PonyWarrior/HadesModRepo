@@ -155,6 +155,7 @@ some features which were supposed to be disabled by default were not
 fixed issues :
 
 FishingDoorLocker prevented you from catching fish
+CustomPerRunLoot hammer and hermes caps not working properly
 
 other :
 

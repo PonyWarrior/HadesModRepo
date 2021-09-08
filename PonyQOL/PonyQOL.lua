@@ -3882,7 +3882,7 @@ if PQOL.Config.CustomPerRunLoot.Enabled then
 		if newCap > 2 then
 			for i, loot in pairs(RewardStoreData.RunProgress) do
 				if loot.Name == "WeaponUpgrade" and loot.GameStateRequirements.RequiredFalseConsumablesThisRun == nil then
-					loot.RequiredMaxWeaponUpgrades = newCap - 1
+					loot.GameStateRequirements.RequiredMaxWeaponUpgrades = newCap
 					break
 				end
 			end
@@ -3906,7 +3906,7 @@ if PQOL.Config.CustomPerRunLoot.Enabled then
 		if newCap > 2 then
 			for i, loot in pairs(RewardStoreData.RunProgress) do
 				if loot.Name == "HermesUpgrade" then
-					loot.RequiredMaxHermesUpgrades = newCap - 1
+					loot.GameStateRequirements.RequiredMaxHermesUpgrades = newCap
 					break
 				end
 			end
