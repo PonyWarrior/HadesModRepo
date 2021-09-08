@@ -3323,7 +3323,7 @@ end
 if PQOL.Config.CompleteAllBounties.Enabled then
 	function CompleteAllAvailableBounties()
 		DebugPrint({Text="@PonyQOL Trying to complete all bounties!"})
-		local activeShrinePoints = GameState.SpentShrinePointsCache or 0
+		local activeShrinePoints = GameState.SpentShrinePointsCache
 		local weaponName = GetEquippedWeapon()
 		local roomName = CurrentRun.CurrentRoom.GenusName or CurrentRun.CurrentRoom.Name
 		local rewardName = CurrentRun.CurrentRoom.ChosenRewardType
@@ -3344,18 +3344,53 @@ if PQOL.Config.CompleteAllBounties.Enabled then
 		end
 		if not GameState.RecordClearedShrineThreshold[weaponName][roomName] then
 			GameState.RecordClearedShrineThreshold[weaponName][roomName] = 0
+			GameState.RecordLastClearedShrineReward[weaponName][roomName][0] = rewardName
 		end
-		while activeShrinePoints > GameState.RecordClearedShrineThreshold[weaponName][roomName] do
-			local offsetY = RandomInt(0, 100)
-			local offsetX = RandomInt(0, 100)
-			local consumableId = SpawnObstacle({ Name = rewardName, DestinationId = CurrentRun.Hero.ObjectId, Group = "Standing", OffsetX = offsetX, OffsetY = offsetY })
-			local consumable = CreateConsumableItem( consumableId, rewardName, 0 )
+		-- check if player is more than 1 heat above record
+		if (activeShrinePoints - GameState.RecordClearedShrineThreshold[weaponName][roomName]) > 1 then
+			local skippedFirstReward = false
+			local rewardcount = 0
+			thread( InCombatText, CurrentRun.Hero.ObjectId, "Rewarding additional bounties", 1.8, { ShadowScale = 1.2 } )
+			wait(1.0)
+			while activeShrinePoints > GameState.RecordClearedShrineThreshold[weaponName][roomName] do
+				if skippedFirstReward then
+					local offsetY = RandomInt(0, 100)
+					local offsetX = RandomInt(0, 100)
+					local consumableId = SpawnObstacle({ Name = rewardName, DestinationId = CurrentRun.Hero.ObjectId, Group = "Standing", OffsetX = offsetX, OffsetY = offsetY })
+					local consumable = CreateConsumableItem( consumableId, rewardName, 0 )
+					rewardcount = rewardcount + 1
+				else
+					skippedFirstReward = true
+				end
 
-			GameState.RecordClearedShrineThreshold[weaponName][roomName] = GetLastRoomClearedShrinePointThreshold( weaponName, roomName ) + ShrineClearData.ClearThreshold
-			GameState.RecordLastClearedShrineReward[weaponName][roomName][GetLastRoomClearedShrinePointThreshold( weaponName, roomName )] = rewardName
-			wait(0.1)
+				GameState.RecordClearedShrineThreshold[weaponName][roomName] = GetLastRoomClearedShrinePointThreshold( weaponName, roomName ) + ShrineClearData.ClearThreshold
+				GameState.RecordLastClearedShrineReward[weaponName][roomName][GetLastRoomClearedShrinePointThreshold( weaponName, roomName )] = rewardName
+				wait(0.1)
+			end
+			thread( InCombatText, CurrentRun.Hero.ObjectId, rewardcount.." additional bounties rewarded", 1.8, { ShadowScale = 1.2 } )
 		end
 	end
+
+	-- original function causes problems
+	ModUtil.BaseOverride("IsRoomFirstClearOverShrinePointThreshold", function (weaponName, currentRun, roomName)
+		--mod start
+		local activeShrinePoints = GameState.SpentShrinePointsCache or 0
+		--mod end
+
+		if activeShrinePoints == 0 then
+			-- special case for zero heat
+			local firstClear = true
+			if GameState.RecordLastClearedShrineReward and GameState.RecordLastClearedShrineReward[weaponName] and GameState.RecordLastClearedShrineReward[weaponName][roomName] and GameState.RecordLastClearedShrineReward[weaponName][roomName][0] then
+				firstClear = false
+			end
+			return firstClear
+		end
+
+		if GetCurrentRunClearedShrinePointThreshold( weaponName ) > GetMaximumAllocatableShrinePoints() then
+			return false
+		end
+		return activeShrinePoints >= GetLastRoomClearedShrinePointThreshold( weaponName, roomName ) + ShrineClearData.ClearThreshold
+	end)
 end
 
 if PQOL.Config.PostBossWeaponSelect.Enabled then
