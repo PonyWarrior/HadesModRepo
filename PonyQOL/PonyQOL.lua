@@ -178,47 +178,53 @@ if PQOL.Config.BoonList.Enabled then
     --Add Hammer boon list
     --Add weapon boon lists
     --Display extra info in boon list
-    table.insert(BoonInfoScreenData.Ordering, "WeaponUpgrade")
-    table.insert(BoonInfoScreenData.Ordering, "SwordWeapon")
-    table.insert(BoonInfoScreenData.Ordering, "BowWeapon")
-    table.insert(BoonInfoScreenData.Ordering, "ShieldWeapon")
-    table.insert(BoonInfoScreenData.Ordering, "SpearWeapon")
-    table.insert(BoonInfoScreenData.Ordering, "GunWeapon")
-    table.insert(BoonInfoScreenData.Ordering, "FistWeapon")
-    table.insert(BoonInfoScreenData.Ordering, "NPC_Charon_01")
-    local swordUpgrades = {}
-    local bowUpgrades = {}
-    local shieldUpgrades = {}
-    local spearUpgrades = {}
-    local gunUpgrades = {}
-    local fistUpgrades = {}
-    for i, upgrade in pairs(LootData.WeaponUpgrade.Traits) do
-        if TraitData[upgrade].RequiredWeapon == "SwordWeapon" then
-            table.insert(swordUpgrades, upgrade)
-        elseif TraitData[upgrade].RequiredWeapon == "BowWeapon" then
-            table.insert(bowUpgrades, upgrade)
-        elseif TraitData[upgrade].RequiredWeapon == "ShieldWeapon" then
-            table.insert(shieldUpgrades, upgrade)
-        elseif TraitData[upgrade].RequiredWeapon == "SpearWeapon" then
-            table.insert(spearUpgrades, upgrade)
-        elseif TraitData[upgrade].RequiredWeapon == "GunWeapon" then
-            table.insert(gunUpgrades, upgrade)
-        elseif TraitData[upgrade].RequiredWeapon == "FistWeapon" then
-            table.insert(fistUpgrades, upgrade)
-        end
-    end
-    local charonUpgrades = StoreData.RoomShop.Traits
-    for i, offer in pairs(StoreData.RoomShop.HealingOffers.WeightedList) do
-        table.insert(charonUpgrades, offer.Name)
-    end
-    BoonInfoScreenData.SortedTraitIndex["WeaponUpgrade"] = LootData.WeaponUpgrade.Traits
-    BoonInfoScreenData.SortedTraitIndex["SwordWeapon"] = swordUpgrades
-    BoonInfoScreenData.SortedTraitIndex["BowWeapon"] = bowUpgrades
-    BoonInfoScreenData.SortedTraitIndex["ShieldWeapon"] = shieldUpgrades
-    BoonInfoScreenData.SortedTraitIndex["SpearWeapon"] = spearUpgrades
-    BoonInfoScreenData.SortedTraitIndex["GunWeapon"] = gunUpgrades
-    BoonInfoScreenData.SortedTraitIndex["FistWeapon"] = fistUpgrades
-    BoonInfoScreenData.SortedTraitIndex["NPC_Charon_01"] = charonUpgrades
+	function PQOL.InsertExtraBoonLists()
+		table.insert(BoonInfoScreenData.Ordering, "WeaponUpgrade")
+		table.insert(BoonInfoScreenData.Ordering, "SwordWeapon")
+		table.insert(BoonInfoScreenData.Ordering, "BowWeapon")
+		table.insert(BoonInfoScreenData.Ordering, "ShieldWeapon")
+		table.insert(BoonInfoScreenData.Ordering, "SpearWeapon")
+		table.insert(BoonInfoScreenData.Ordering, "GunWeapon")
+		table.insert(BoonInfoScreenData.Ordering, "FistWeapon")
+		table.insert(BoonInfoScreenData.Ordering, "NPC_Charon_01")
+		local swordUpgrades = {}
+		local bowUpgrades = {}
+		local shieldUpgrades = {}
+		local spearUpgrades = {}
+		local gunUpgrades = {}
+		local fistUpgrades = {}
+		for i, upgrade in pairs(LootData.WeaponUpgrade.Traits) do
+			if TraitData[upgrade].RequiredWeapon == "SwordWeapon" then
+				table.insert(swordUpgrades, upgrade)
+			elseif TraitData[upgrade].RequiredWeapon == "BowWeapon" then
+				table.insert(bowUpgrades, upgrade)
+			elseif TraitData[upgrade].RequiredWeapon == "ShieldWeapon" then
+				table.insert(shieldUpgrades, upgrade)
+			elseif TraitData[upgrade].RequiredWeapon == "SpearWeapon" then
+				table.insert(spearUpgrades, upgrade)
+			elseif TraitData[upgrade].RequiredWeapon == "GunWeapon" then
+				table.insert(gunUpgrades, upgrade)
+			elseif TraitData[upgrade].RequiredWeapon == "FistWeapon" then
+				table.insert(fistUpgrades, upgrade)
+			end
+		end
+		local charonUpgrades = StoreData.RoomShop.Traits
+		for i, offer in pairs(StoreData.RoomShop.HealingOffers.WeightedList) do
+			table.insert(charonUpgrades, offer.Name)
+		end
+		BoonInfoScreenData.SortedTraitIndex["WeaponUpgrade"] = LootData.WeaponUpgrade.Traits
+		BoonInfoScreenData.SortedTraitIndex["SwordWeapon"] = swordUpgrades
+		BoonInfoScreenData.SortedTraitIndex["BowWeapon"] = bowUpgrades
+		BoonInfoScreenData.SortedTraitIndex["ShieldWeapon"] = shieldUpgrades
+		BoonInfoScreenData.SortedTraitIndex["SpearWeapon"] = spearUpgrades
+		BoonInfoScreenData.SortedTraitIndex["GunWeapon"] = gunUpgrades
+		BoonInfoScreenData.SortedTraitIndex["FistWeapon"] = fistUpgrades
+		BoonInfoScreenData.SortedTraitIndex["NPC_Charon_01"] = charonUpgrades
+
+		DebugPrint({Text="@Pony QOL: Extra boon lists loaded"})
+	end
+
+	ModUtil.LoadOnce(PQOL.InsertExtraBoonLists)
 
     function CreateTraitRequirements( traitName )
         local screen = ScreenAnchors.BoonInfoScreen
