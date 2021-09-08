@@ -149,3 +149,13 @@ added warning message to fishing door locker
 fixed issues :
 
 some features which were supposed to be disabled by default were not
+
+2.6.1 
+
+fixed issues :
+
+FishingDoorLocker prevented you from catching fish
+
+other :
+
+general code improvement

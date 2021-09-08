@@ -3359,6 +3359,7 @@ if PQOL.Config.CompleteAllBounties.Enabled then
 			thread( InCombatText, CurrentRun.Hero.ObjectId, "Rewarding additional bounties", 1.8, { ShadowScale = 1.2 } )
 			wait(1.0)
 			while activeShrinePoints > GameState.RecordClearedShrineThreshold[weaponName][roomName] do
+				-- skipping first reward as the game already gives it
 				if skippedFirstReward then
 					local offsetY = RandomInt(0, 100)
 					local offsetX = RandomInt(0, 100)
@@ -4230,8 +4231,9 @@ if PQOL.Config.FishingDoorLocker.Enabled then
 	end)
 
 	ModUtil.WrapBaseFunction("FishingEndPresentation", function(baseFunc, fishingAnimationPointId)
+		baseFunc(fishingAnimationPointId)
 		UnlockRoomExits( CurrentRun, CurrentRun.CurrentRoom )
-		return baseFunc(fishingAnimationPointId)
+		return
 	end)
 end
 
@@ -4572,6 +4574,15 @@ if PQOL.Config.GoldenUrnWarning.Enabled then
 			end
 		end
 	end)
+
+	-- ModUtil.Context.Wrap("HandleBreakableSwap", function()
+	-- 	ModUtil.Path.Wrap("RecordObjectState", function(baseFunc, room, id, property, value)
+	-- 		if property == "MoneyDropOnDeath" then
+	-- 			thread(GoldenUrnWarning)
+	-- 		end
+	-- 		return baseFunc(room, id, property, value)
+	-- 	end)
+	-- end)
 
 	function GoldenUrnWarning()
 		wait(1.0)
