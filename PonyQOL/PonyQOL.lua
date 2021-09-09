@@ -3333,6 +3333,7 @@ if PQOL.Config.CompleteAllBounties.Enabled then
 		local weaponName = GetEquippedWeapon()
 		local roomName = CurrentRun.CurrentRoom.GenusName or CurrentRun.CurrentRoom.Name
 		local rewardName = CurrentRun.CurrentRoom.ChosenRewardType
+		local dontSkipFirstReward = false
 		if not GameState.RecordClearedShrineThreshold then
 			GameState.RecordClearedShrineThreshold = {}
 		end
@@ -3349,8 +3350,10 @@ if PQOL.Config.CompleteAllBounties.Enabled then
 			GameState.RecordLastClearedShrineReward[weaponName][roomName] = {}
 		end
 		if not GameState.RecordClearedShrineThreshold[weaponName][roomName] then
+			-- exception for 0 heat
 			GameState.RecordClearedShrineThreshold[weaponName][roomName] = 0
 			GameState.RecordLastClearedShrineReward[weaponName][roomName][0] = rewardName
+			dontSkipFirstReward = true
 		end
 		-- check if player is more than 1 heat above record
 		if (activeShrinePoints - GameState.RecordClearedShrineThreshold[weaponName][roomName]) > 1 then
@@ -3360,7 +3363,7 @@ if PQOL.Config.CompleteAllBounties.Enabled then
 			wait(1.0)
 			while activeShrinePoints > GameState.RecordClearedShrineThreshold[weaponName][roomName] do
 				-- skipping first reward as the game already gives it
-				if skippedFirstReward then
+				if skippedFirstReward or dontSkipFirstReward then
 					local offsetY = RandomInt(0, 100)
 					local offsetX = RandomInt(0, 100)
 					local consumableId = SpawnObstacle({ Name = rewardName, DestinationId = CurrentRun.Hero.ObjectId, Group = "Standing", OffsetX = offsetX, OffsetY = offsetY })
