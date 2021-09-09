@@ -150,7 +150,11 @@ fixed issues :
 
 some features which were supposed to be disabled by default were not
 
-2.6.1 
+2.6.1
+
+new features :
+
+Gameplay : any extra last stand charges are now consumed before regular ones from the mirror
 
 fixed issues :
 

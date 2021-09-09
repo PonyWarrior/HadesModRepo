@@ -157,7 +157,7 @@ PQOL =
 			RoundValues = false,
 			DisplayMode = 1,
 		},
-		RoomObjectSpawnChances = 
+		RoomObjectSpawnChances =
 		{
 			-- Allows you to set a custom spawn chance for all room objects
 			-- Disabling this disables everything

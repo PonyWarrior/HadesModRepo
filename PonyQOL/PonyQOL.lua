@@ -43,6 +43,70 @@ if PQOL.Config.Gameplay.Enabled then
         return baseFunc(lootData, args)
 	end)
 
+	-- Make extra last stand charges be used first
+	ModUtil.BaseOverride("CheckLastStand", function (victim, triggerArgs)
+		if not HasLastStand( victim ) then
+			return false
+		end
+	
+		CancelOpeningCodex()
+		CancelFishing()
+		DisableCombatControls()
+	
+		local lastStandData = PQOL.PickLastStand(victim.LastStands)
+		local weaponName = lastStandData.WeaponName
+		local lastStandHealth = lastStandData.HealAmount or 0
+		local lastStandFraction = lastStandData.HealFraction or 0
+		lastStandFraction = lastStandFraction + GetTotalHeroTraitValue( "LastStandHealFraction" )
+	
+		CurrentRun.Hero.LastStandsUsed = (CurrentRun.Hero.LastStandsUsed or 0) + 1
+	
+		ClearEffect({ Id = CurrentRun.Hero.ObjectId, Name = "StyxPoison" })
+		BlockEffect({ Id = CurrentRun.Hero.ObjectId, Name = "StyxPoison", Duration = 0.75 })
+		SetPlayerInvulnerable("LastStand")
+	
+		triggerArgs.HasLastStand = HasLastStand( victim )
+		ExpireProjectiles({ ExcludeNames = WeaponSets.ExpireProjectileExcludeProjectileNames })
+	
+		PlayerLastStandPresentationStart( triggerArgs )
+	
+		PlayerLastStandHeal( victim, triggerArgs, lastStandHealth, lastStandFraction )
+	
+		if GetNumLastStands( victim ) <= 0 and lastStandData.LastStandTimer == nil then
+			thread( InCombatText, CurrentRun.Hero.ObjectId, "Hint_LastChance", 1.5, { PreDelay = 0.5, ShadowScale = 0.66 })
+			PlaySound({ Name = "/SFX/Menu Sounds/PortraitEmoteFiredUpLASTCHANCE", Delay = 0.5 })
+		end
+		if lastStandData.LastStandTimer then
+			thread( DamageAfterInterval, lastStandData.LastStandTimer, 1000 )
+		end
+		thread( UpdateHealthUI, triggerArgs )
+	
+		PlayerLastStandPresentationEnd()
+	
+		EnableCombatControls()
+		if weaponName ~= nil then
+			FireWeaponFromUnit({ Weapon = weaponName, Id= victim.ObjectId, DestinationId = victim.ObjectId, AutoEquip = true })
+		end
+	
+		wait( 1.0, RoomThreadName )
+	
+	
+		SetPlayerVulnerable("LastStand")
+		return true
+	end)
+	
+	function PQOL.PickLastStand(lastStands)
+		local lastStand = nil
+		for i, lastStandData in pairs(lastStands) do
+			if lastStandData.Icon ~= "ExtraLifeZag" then
+				lastStand = table.remove(lastStands, i)
+				return lastStand
+			end
+		end
+		lastStand = table.remove(lastStands)
+		return lastStand
+	end
+
 	if PQOL.Config.Gameplay.GilgameshChanges.Enabled then
 		for i, property in pairs(TraitData.FistDetonateTrait.PropertyChanges) do
 			if property.EffectName == "FistDetonationDamage" and property.EffectProperty == "Amount" then
@@ -4592,4 +4656,3 @@ if PQOL.Config.GoldenUrnWarning.Enabled then
 		InCombatText(CurrentRun.Hero.ObjectId, "A golden urn has appeared in this room", 1.8, { ShadowScale = 1.2 } )
 	end
 end
-
