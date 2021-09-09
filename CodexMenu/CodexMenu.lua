@@ -1,6 +1,10 @@
 
 CodexMenuData =
 {
+	HestiaUpgrade =
+	{
+		"HestiaWeaponTrait", "HestiaRangedTrait", "HestiaRushTrait", "HestiaSecondaryTrait", "HestiaRetaliateTrait", "HestiaShoutTrait",
+	},
 	ZeusUpgrade =
 	{
 	  "ZeusWeaponTrait", "ZeusRushTrait", "ZeusRangedTrait", "ZeusSecondaryTrait", "ZeusShoutTrait",
@@ -1368,6 +1372,206 @@ function ModDebugPrint(text, delay)
 	end
 end
 
+BuildMenuScreen = { Components = {} }
+BuildMenuData = {
+	BuildMenuScreen =
+	{
+		Buttons =
+		{
+			OpenBuildMaker =
+			{
+				Name = "OpenBuildMakerButton",
+				Title = "Open Build Maker",
+				Function = "OpenBuildMaker"
+			},
+			OpenBuildMenu =
+			{
+				Name = "OpenBuildMenuButton",
+				Title = "View Saved Builds",
+				Function = "OpenBuildMenu"
+			},
+		},
+	},
+}
+
+function OpenBuildMenu()
+	ScreenAnchors.BuildMenu = DeepCopyTable(BuildMenuScreen)
+	local screen = ScreenAnchors.BuildMenu
+	local components = screen.Components
+	screen.Title = "Codex Menu Build Menu"
+	screen.Name = "BuildMenuScreen"
+	OnScreenOpened({ Flag = screen.Name, PersistCombatUI = true })
+	SetConfigOption({ Name = "UseOcclusion", Value = false })
+	FreezePlayerUnit()
+	EnableShopGamepadCursor()
+	PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
+	--Background
+	components.BackgroundDim = CreateScreenComponent({ Name = "rectangle01", Group = "BuildMenu" })
+	components.Background = CreateScreenComponent({ Name = "BlankObstacle", Group = "BuildMenu" })
+	components.TitleAnchor = CreateScreenComponent({ Name = "BlankObstacle", Group = "BuildMenu" })
+	SetScale({ Id = components.BackgroundDim.Id, Fraction = 4 })
+	SetColor({ Id = components.BackgroundDim.Id, Color = { 69, 69, 69, 255 } })
+	--Title
+	CreateTextBox({ Id = components.TitleAnchor.Id, Text = screen.Title, FontSize = 34,
+	OffsetX = 0, OffsetY = -500, Color = Color.White, Font = "SpectralSCLight",
+	ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
+	--Close button
+	components.CloseButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "BuildMenu" })
+	Attach({ Id = components.CloseButton.Id, DestinationId = components.Background.Id, OffsetX = 0, OffsetY = 500 })
+	components.CloseButton.OnPressedFunctionName = "CloseBuildMenu"
+	components.CloseButton.ControlHotkey = "Cancel"
+	--Display
+	if BuildMenuData[screen.Name] ~= nil then
+		if BuildMenuData[screen.Name].Buttons ~= nil then
+			local index = 1
+			for i, button in pairs(BuildMenuData[screen.Name].Buttons) do
+				local rowstartX = -750
+				local rowstartY = -400
+				local rowoffset = 100
+				local columnoffset = 300
+				local numperrow = 4
+				local offsetX = rowstartX + columnoffset*((index-1) % numperrow)
+				local offsetY = rowstartY + rowoffset*(math.floor((index-1)/numperrow))
+				index = index + 1
+
+				components[button.Name] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BuildMenu", Scale = 0.3 })
+				components[button.Name].OnPressedFunctionName = button.Function
+				components[button.Name].ToDestroy = true
+				Attach({Id = components[button.Name].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
+				CreateTextBox({ Id = components[button.Name].Id, Text = button.Title, FontSize = 22,
+				OffsetX = 0, OffsetY = 0, Color = Color.White, Font = "AlegreyaSansSCLight", Justification = "Center" })
+			end
+		end
+	end
+	--End
+	screen.KeepOpen = true
+	thread(HandleWASDInput, screen)
+	HandleScreenInput(screen)
+end
+
+function OpenBuildMaker(screen, button)
+	CleanScreen(screen, button)
+	local components = screen.Components
+	ModifyTextBox({Id = components.TitleAnchor.Id, Text = "Codex Menu Build Maker"})
+
+	components.ReturnButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "BuildMenu" })
+	components.ReturnButton.OnPressedFunctionName = "ReturnToBuildMenu"
+	components.ReturnButton.ToDestroy = true
+	Attach({ Id = components.ReturnButton.Id, DestinationId = components.Background.Id, OffsetX = -100, OffsetY = 500 })
+	SetColor({Id = components.ReturnButton.Id, Color = Color.LightBlue})
+end
+
+function ReturnToBuildMenu(screen, button)
+	CleanScreen(screen, button)
+	local components = screen.Components
+	ModifyTextBox({Id = components.TitleAnchor.Id, Text = screen.Title})
+	if BuildMenuData[screen.Name] ~= nil then
+		if BuildMenuData[screen.Name].Buttons ~= nil then
+			local index = 1
+			for i, button in pairs(BuildMenuData[screen.Name].Buttons) do
+				local rowstartX = -750
+				local rowstartY = -400
+				local rowoffset = 100
+				local columnoffset = 300
+				local numperrow = 4
+				local offsetX = rowstartX + columnoffset*((index-1) % numperrow)
+				local offsetY = rowstartY + rowoffset*(math.floor((index-1)/numperrow))
+				index = index + 1
+
+				components[button.Name] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BuildMenu", Scale = 0.3 })
+				components[button.Name].OnPressedFunctionName = button.Function
+				components[button.Name].ToDestroy = true
+				Attach({Id = components[button.Name].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
+				CreateTextBox({ Id = components[button.Name].Id, Text = button.Title, FontSize = 22,
+				OffsetX = 0, OffsetY = 0, Color = Color.White, Font = "AlegreyaSansSCLight", Justification = "Center" })
+			end
+		end
+	end
+end
+
+function CleanScreen(screen, button)
+	if screen == nil then
+		return
+	end
+
+	local ToDestroy = {}
+	for i, component in pairs(screen.Components) do
+		if component.ToDestroy then
+			table.insert(ToDestroy, component.Id)
+		end
+	end
+
+	if ToDestroy ~= nil then
+		Destroy({Ids = ToDestroy})
+	end
+end
+
+function CloseBuildMenu(screen, button)
+  DisableShopGamepadCursor()
+  SetConfigOption({ Name = "FreeFormSelectWrapY", Value = false })
+  SetConfigOption({ Name = "UseOcclusion", Value = true })
+  CloseScreen(GetAllIds(screen.Components), 0.1)
+  PlaySound({ Name = "/SFX/Menu Sounds/GeneralWhooshMENU" })
+  ScreenAnchors.BuildMenu = nil
+  UnfreezePlayerUnit()
+  screen.KeepOpen = false
+  OnScreenClosed({ Flag = screen.Name })
+end
+
+function SaveState()
+	if CurrentRun.Hero.Traits ~= nil then
+		local wp = GetEquippedWeapon()
+		if GameState.LastInteractedWeaponUpgrade ~= nil and GetWeaponUpgradeTrait( GameState.LastInteractedWeaponUpgrade.WeaponName, GameState.LastInteractedWeaponUpgrade.ItemIndex ) ~= nil then
+			GameState.CodexMenuSavedState = { Traits = {}, Weapon = wp, Aspect = { Name = GetWeaponUpgradeTrait(wp, GameState.LastWeaponUpgradeData[wp].Index), Rarity = GetRarityKey(GetWeaponUpgradeLevel(wp, GetEquippedWeaponTraitIndex(wp))) }, Keepsake = GameState.LastAwardTrait, Assist = GameState.LastAssistTrait, }
+		else
+			GameState.CodexMenuSavedState = { Traits = {}, Weapon = wp, Keepsake = GameState.LastAwardTrait, Assist = GameState.LastAssistTrait, }
+			GameState.CodexMenuSavedState.Aspect = { Name = nil, Rarity = nil}
+		end
+		for i, traitData in pairs( CurrentRun.Hero.Traits ) do
+			if traitData.Name ~= GameState.CodexMenuSavedState.Weapon and traitData.Name ~= GameState.CodexMenuSavedState.Aspect.Name
+			and traitData.Name ~= GameState.CodexMenuSavedState.Keepsake and traitData.Name ~= GameState.CodexMenuSavedState.Assist then
+				table.insert(GameState.CodexMenuSavedState.Traits, { Name = traitData.Name, Rarity = traitData.Rarity, })
+			end
+		end
+	end
+end
+
+function LoadState()
+	if GameState.CodexMenuSavedState ~= nil then
+		RemoveAllTraits()
+		if GameState.LastAwardTrait == "ReincarnationTrait" then
+				RemoveLastStand( CurrentRun.Hero, "ReincarnationTrait" )
+				CurrentRun.Hero.MaxLastStands = CurrentRun.Hero.MaxLastStands - 1
+		end
+		EquipPlayerWeapon( WeaponData[GameState.CodexMenuSavedState.Weapon], { PreLoadBinks = true } )
+		GameState.LastInteractedWeaponUpgrade = { WeaponName = GetEquippedWeapon(), ItemIndex = GetEquippedWeaponTraitIndex( GetEquippedWeapon() ) }
+		EquipKeepsake(CurrentRun.Hero, GameState.CodexMenuSavedState.Keepsake)
+
+		EquipAssist(CurrentRun.Hero, GameState.CodexMenuSavedState.Assist)
+		if GameState.CodexMenuSavedState.Aspect.Name ~= nil then
+			AddTraitToHero({ TraitName = GameState.CodexMenuSavedState.Aspect.Name, Rarity = GameState.CodexMenuSavedState.Aspect.Rarity })
+		end
+		for i, traitData in pairs( GameState.CodexMenuSavedState.Traits ) do
+			AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = traitData.Name, Rarity = traitData.Rarity }) })
+		end
+	end
+end
+
+
+OnAnyLoad{"RoomPreRun", function(triggerArgs)
+    if GameState.BuildData == nil then
+      InitializeBuildData()
+    end
+end}
+
+function InitializeBuildData()
+	GameState.BuildData =
+	{
+		CustomBuilds = {},
+		PreSetBuilds = {},
+	}
+end
+
 OnControlPressed{ "Confirm",
 	function( triggerArgs )
 		CodexMain(triggerArgs)
@@ -1378,6 +1582,7 @@ local FishTable = CodexOrdering.Fish.Order
 local WeaponTable = CodexOrdering.Weapons.Order
 local BoonTable =
 {
+	"HestiaUpgrade",
 	"TrialUpgrade",
 	"ZeusUpgrade",
 	"PoseidonUpgrade",
@@ -1465,49 +1670,19 @@ local CommandTable =
 		OpenSellTraitMenu()
 	end,
 	NPC_Orpheus_01 = function()
-		--Save state
 		CloseCodexScreen()
-		if CurrentRun.Hero.Traits ~= nil then
-			local wp = GetEquippedWeapon()
-			if GameState.LastInteractedWeaponUpgrade ~= nil and GetWeaponUpgradeTrait( GameState.LastInteractedWeaponUpgrade.WeaponName, GameState.LastInteractedWeaponUpgrade.ItemIndex ) ~= nil then
-				GameState.CodexMenuSavedState = { Traits = {}, Weapon = wp, Aspect = { Name = GetWeaponUpgradeTrait(wp, GameState.LastWeaponUpgradeData[wp].Index), Rarity = GetRarityKey(GetWeaponUpgradeLevel(wp, GetEquippedWeaponTraitIndex(wp))) }, Keepsake = GameState.LastAwardTrait, Assist = GameState.LastAssistTrait, }
-			else
-				GameState.CodexMenuSavedState = { Traits = {}, Weapon = wp, Keepsake = GameState.LastAwardTrait, Assist = GameState.LastAssistTrait, }
-				GameState.CodexMenuSavedState.Aspect = { Name = nil, Rarity = nil}
-			end
-			for i, traitData in pairs( CurrentRun.Hero.Traits ) do
-				if traitData.Name ~= GameState.CodexMenuSavedState.Weapon and traitData.Name ~= GameState.CodexMenuSavedState.Aspect.Name
-				and traitData.Name ~= GameState.CodexMenuSavedState.Keepsake and traitData.Name ~= GameState.CodexMenuSavedState.Assist then
-					table.insert(GameState.CodexMenuSavedState.Traits, { Name = traitData.Name, Rarity = traitData.Rarity, })
-				end
-			end
-		end
+		SaveState()
 	end,
 	NPC_Patroclus_01 = function()
 		CloseCodexScreen()
-		if GameState.CodexMenuSavedState ~= nil then
-			RemoveAllTraits()
-			if GameState.LastAwardTrait == "ReincarnationTrait" then
-					RemoveLastStand( CurrentRun.Hero, "ReincarnationTrait" )
-					CurrentRun.Hero.MaxLastStands = CurrentRun.Hero.MaxLastStands - 1
-			end
-			EquipPlayerWeapon( WeaponData[GameState.CodexMenuSavedState.Weapon], { PreLoadBinks = true } )
-			GameState.LastInteractedWeaponUpgrade = { WeaponName = GetEquippedWeapon(), ItemIndex = GetEquippedWeaponTraitIndex( GetEquippedWeapon() ) }
-			EquipKeepsake(CurrentRun.Hero, GameState.CodexMenuSavedState.Keepsake)
-
-			EquipAssist(CurrentRun.Hero, GameState.CodexMenuSavedState.Assist)
-			if GameState.CodexMenuSavedState.Aspect.Name ~= nil then
-				AddTraitToHero({ TraitName = GameState.CodexMenuSavedState.Aspect.Name, Rarity = GameState.CodexMenuSavedState.Aspect.Rarity })
-			end
-			for i, traitData in pairs( GameState.CodexMenuSavedState.Traits ) do
-				AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = traitData.Name, Rarity = traitData.Rarity }) })
-			end
-
-
-		end
+		LoadState()
 	end,
 	NPC_Eurydice_01 = function()
 		OpenBoonManager()
+	end,
+	NPC_Sisyphus_01 = function ()
+		CloseCodexScreen()
+		OpenBuildMenu()
 	end,
 }
 
