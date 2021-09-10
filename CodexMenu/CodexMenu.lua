@@ -1372,6 +1372,11 @@ function ModDebugPrint(text, delay)
 	end
 end
 
+ModUtil.RegisterMod("BuildManager")
+
+local SavedBuilds = ModUtil.PathGet( "ModData.BuildManager.SavedBuilds" ) or { }
+ModUtil.PathSet( "ModData.BuildManager.SavedBuilds", SavedBuilds )
+
 BuildMenuScreen = { Components = {} }
 BuildMenuData = {
 	BuildMenuScreen =
@@ -1382,13 +1387,81 @@ BuildMenuData = {
 			{
 				Name = "OpenBuildMakerButton",
 				Title = "Open Build Maker",
-				Function = "OpenBuildMaker"
+				Function = "OpenBuildMaker",
+				Index = 1,
+				Buttons =
+				{
+					BuildMakerOverview =
+					{
+						Name = "BuildMakerOverviewButton",
+						Title = "Show build overview",
+						Function = "BuildMakerOverview",
+						Index = 1,
+					},
+					BuildMakerMirror =
+					{
+						Name = "BuildMakerMirrorButton",
+						Title = "Choose mirror upgrades",
+						Function = "BuildMakerMirror",
+						Index = 2,
+					},
+					BuildMakerWeapon =
+					{
+						Name = "BuildMakerWeaponButton",
+						Title = "Choose weapon and aspect",
+						Function = "BuildMakerWeapon",
+						Index = 3,
+					},
+					BuildMakerKeepsake =
+					{
+						Name = "BuildMakerKeepsakeButton",
+						Title = "Choose keepsake and summon",
+						Function = "BuildMakerKeepsake",
+						Index = 4,
+					},
+					BuildMakerBoons =
+					{
+						Name = "BuildMakerBoonsButton",
+						Title = "Pick boons",
+						Function = "BuildMakerBoons",
+						Index = 5,
+					},
+					BuildMakerPact =
+					{
+						Name = "BuildMakerPactButton",
+						Title = "Choose pact options",
+						Function = "BuildMakerPact",
+						Index = 6,
+					},
+					BuildMakerContractor = 
+					{
+						Name = "BuildMakerContractorButton",
+						Title = "Choose contractor upgrades",
+						Function = "BuildMakerContractor",
+						Index = 7,
+					},
+					BuildMakerImport =
+					{
+						Name = "BuildMakerImportButton",
+						Title = "Import current build",
+						Function = "BuildMakerImport",
+						Index = 8,
+					},
+					BuildMakerSave = 
+					{
+						Name = "BuildMakerSaveButton",
+						Title = "Save build",
+						Function = "BuildMakerSave",
+						Index = 9,
+					}
+				}
 			},
 			OpenBuildMenu =
 			{
-				Name = "OpenBuildMenuButton",
+				Name = "OpenBuildViewerButton",
 				Title = "View Saved Builds",
-				Function = "OpenBuildMenu"
+				Function = "OpenBuildViewer",
+				Index = 2,
 			},
 		},
 	},
@@ -1423,18 +1496,18 @@ function OpenBuildMenu()
 	--Display
 	if BuildMenuData[screen.Name] ~= nil then
 		if BuildMenuData[screen.Name].Buttons ~= nil then
-			local index = 1
 			for i, button in pairs(BuildMenuData[screen.Name].Buttons) do
-				local rowstartX = -750
+				local index = button.Index
+				local rowstartX = 0
 				local rowstartY = -400
 				local rowoffset = 100
 				local columnoffset = 300
-				local numperrow = 4
+				local numperrow = 1
 				local offsetX = rowstartX + columnoffset*((index-1) % numperrow)
 				local offsetY = rowstartY + rowoffset*(math.floor((index-1)/numperrow))
-				index = index + 1
 
 				components[button.Name] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BuildMenu", Scale = 0.3 })
+				SetScaleX({Id = components[button.Name].Id, Fraction = 1.5})
 				components[button.Name].OnPressedFunctionName = button.Function
 				components[button.Name].ToDestroy = true
 				Attach({Id = components[button.Name].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
@@ -1453,6 +1526,75 @@ function OpenBuildMaker(screen, button)
 	CleanScreen(screen, button)
 	local components = screen.Components
 	ModifyTextBox({Id = components.TitleAnchor.Id, Text = "Codex Menu Build Maker"})
+	PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
+	components.ReturnButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "BuildMenu" })
+	components.ReturnButton.OnPressedFunctionName = "ReturnToBuildMenu"
+	components.ReturnButton.ToDestroy = true
+	Attach({ Id = components.ReturnButton.Id, DestinationId = components.Background.Id, OffsetX = -100, OffsetY = 500 })
+	SetColor({Id = components.ReturnButton.Id, Color = Color.LightBlue})
+
+	local newBuild = {}
+	for i, button in pairs(BuildMenuData.BuildMenuScreen.Buttons.OpenBuildMaker.Buttons) do
+		local index = button.Index
+		local rowstartX = 0
+		local rowstartY = -400
+		local rowoffset = 100
+		local columnoffset = 300
+		local numperrow = 1
+		local offsetX = rowstartX + columnoffset*((index-1) % numperrow)
+		local offsetY = rowstartY + rowoffset*(math.floor((index-1)/numperrow))
+
+		components[button.Name] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BuildMenu", Scale = 0.3 })
+		SetScaleX({Id = components[button.Name].Id, Fraction = 1.5})
+		components[button.Name].OnPressedFunctionName = button.Function
+		components[button.Name].ToDestroy = true
+		Attach({Id = components[button.Name].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
+		CreateTextBox({ Id = components[button.Name].Id, Text = button.Title, FontSize = 22,
+		OffsetX = 0, OffsetY = 0, Color = Color.White, Font = "AlegreyaSansSCLight", Justification = "Center" })
+	end
+end
+
+function BuildMakerOverview(screen, button)
+
+end
+
+function BuildMakerMirror(screen, button)
+
+end
+
+function BuildMakerWeapon(screen, button)
+
+end
+
+function BuildMakerKeepsake(screen, button)
+
+end
+
+function BuildMakerBoons(screen, button)
+
+end
+
+function BuildMakerPact(screen, button)
+
+end
+
+function BuildMakerContractor(screen, button)
+
+end
+
+function BuildMakerImport(screen, button)
+
+end
+
+function BuildMakerSave(screen, button)
+
+end
+
+function OpenBuildViewer(screen, button)
+	CleanScreen(screen, button)
+	local components = screen.Components
+	ModifyTextBox({Id = components.TitleAnchor.Id, Text = "Codex Menu Build Viewer"})
+	PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
 
 	components.ReturnButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "BuildMenu" })
 	components.ReturnButton.OnPressedFunctionName = "ReturnToBuildMenu"
@@ -1465,6 +1607,8 @@ function ReturnToBuildMenu(screen, button)
 	CleanScreen(screen, button)
 	local components = screen.Components
 	ModifyTextBox({Id = components.TitleAnchor.Id, Text = screen.Title})
+	PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
+
 	if BuildMenuData[screen.Name] ~= nil then
 		if BuildMenuData[screen.Name].Buttons ~= nil then
 			local index = 1
