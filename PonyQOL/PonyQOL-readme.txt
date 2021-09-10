@@ -154,12 +154,15 @@ some features which were supposed to be disabled by default were not
 
 new features :
 
-Gameplay : any extra last stand charges are now consumed before regular ones from the mirror
+Gameplay: any extra last stand charges are now consumed before regular ones from the mirror
+CompleteAllBounties: added two in game messages, one warning you additional bounties will be rewarded,
+and a second telling you how many additional bounties were rewarded
 
 fixed issues :
 
 FishingDoorLocker prevented you from catching fish
 CustomPerRunLoot hammer and hermes caps not working properly
+CompleteAllBounties now finally works properly
 
 other :
 
