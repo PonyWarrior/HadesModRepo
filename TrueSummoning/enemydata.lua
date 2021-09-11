@@ -2,10 +2,13 @@ UnitSetData.Enemies.MegSummon =
 {
     InheritFrom = { "BaseVulnerableEnemy"},
     Portrait = "Portrait_FurySister01_Default_01",
+    Name = "MegSummon",
     RequiredKill = false,
     DropItemsOnDeath = false,
     UseShrineUpgrades = false,
 	AlwaysTraitor = true,
+	IgnoreAutoLock = true,
+	BlockWrathGain = true,
     AnimOffsetZ = 260,
     MaxHealth = 1000,
     AISetupDelay = 1.5,
@@ -26,7 +29,7 @@ UnitSetData.Enemies.MegSummon =
     --RepulseOnMeleeInvulnerableHit = 400,
     IgnoreInvincibubbleOnHit = true,
 
-    -- AdditionalEnemySetupFunctionName = "TrueSummoning.SelectSupportAIs",
+    AdditionalEnemySetupFunctionName = "TrueSummoning.SelectSupportAIs",
 
     DefaultAIData =
     {
@@ -35,15 +38,10 @@ UnitSetData.Enemies.MegSummon =
 
     IncomingDamageModifiers =
     {
-        -- {
-        --     Name = "BaseVulnerability",
-        --     NonPlayerMultiplier = 8,
-        --     Multiplicative = true,
-        -- },
         {
             Name = "Innate",
             PlayerMultiplier = 0,
-        },
+        }
     },
 
     AIOptions =
@@ -52,11 +50,10 @@ UnitSetData.Enemies.MegSummon =
     },
     PostAggroAI = AttackerAI,
 
-    WeaponOptions = { "HarpyLunge" },
-    -- WeaponOptions = { "HarpyLunge", "HarpyWhipWhirl", "HarpyLightning", "HarpyBeam" },
+    -- WeaponOptions = { "HarpyLunge" },
+    WeaponOptions = { "HarpyLunge", "HarpyWhipWhirl", "HarpyLightning", "HarpyBeam" },
     DisarmedWeapon = "HarpyLunge",
 
-    ShrineMetaUpgradeName = "BossDifficultyShrineUpgrade",
     SupportAIWeaponSetOptions = { "Tisiphone", "Alecto" },
     SupportUnitName = "MegSupportUnit",
 

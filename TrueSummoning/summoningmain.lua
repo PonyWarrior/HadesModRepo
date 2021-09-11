@@ -3,18 +3,31 @@
 --Interface
 --Give boon to summon
 --Give commands to summon
+--Disable autolock on summon
 
 ModUtil.RegisterMod("TrueSummoning")
 
-SaveIgnores["TrueSummoning"] = true
-
-local TrueSummoningData = ModUtil.PathGet( "ModData.TrueSummoningData" ) or { }
-ModUtil.PathSet( "ModData.TrueSummoningData", TrueSummoningData )
+local TrueSummoningData = ModUtil.Mod.Data(TrueSummoning)
 
 TrueSummoning.SummonUpgradeData =
 {
 	MegSummon =
 	{
+		Name = "Megaera",
+		LevelUp =
+		{
+			Health = 50,
+			DamageTakenFromPlayerMultiplier = -0.02,
+		},
+		LevelUnlocks =
+		{
+			
+		},
+		Stats =
+		{
+			Health = 1000,
+			DamageTakenFromPlayerMultiplier = 0.5,
+		},
 		Weapons =
 		{
 			HarpyLunge =
@@ -38,8 +51,8 @@ TrueSummoning.SummonUpgradeData =
 			HarpyBeam =
 			{
 				Name = "HarpyBeam",
-				DisplayName = "Triple Energy Beam",
-				Description = "Megaera stands still and fires 3 continuous beams of energy spheres in front of her in a cone, each sphere that hits an enemy damages it then dissipates."
+				DisplayName = "Quintuple Energy Beam",
+				Description = "Megaera stands still and fires 5 continuous beams of energy spheres in front of her in a cone, each sphere that hits an enemy damages it then dissipates."
 			}
 		},
 		AssistWeapons =
@@ -58,13 +71,13 @@ TrueSummoning.SummonUpgradeData =
 				SummonAlectoWhipShot =
 				{
 					Name = "SummonAlectoWhipShot",
-					DisplayName = "Hate Spike",
-					Description = "Alecto summons a spike of hate, damaging enemies in a small area after a short duration.",
+					DisplayName = "Spike",
+					Description = "Alecto summons a spike, damaging enemies in a small area after a short duration.",
 				},
 				SummonAlectoLightningChase =
 				{
 					Name = "SummonAlectoLightningChase",
-					DisplayName = "Chasing Tornado of Hate",
+					DisplayName = "Chasing Tornado",
 					Description = "Alecto summons a tornado of hate, chasing and repeatedly damaging enemies in a small area."
 				}
 			},
@@ -74,13 +87,41 @@ TrueSummoning.SummonUpgradeData =
 
 SummonMenuScreen = { Components = {} }
 
+function TrueSummoning.InitializeSummonData()
+	TrueSummoningData.Summons =
+	{
+		MegSummon =
+		{
+			Name = TrueSummoning.SummonUpgradeData.MegSummon.Name,
+			Level = 0,
+			Health = TrueSummoning.SummonUpgradeData.MegSummon.Stats.Health,
+			DamageTakenFromPlayerMultiplier = TrueSummoning.SummonUpgradeData.MegSummon.Stats.DamageTakenFromPlayerMultiplier,
+			Weapons = {},
+			AssistWeapons = {},
+			UnlockedAssists = false,
+		}
+	}
+	table.insert(TrueSummoningData.Summons.MegSummon.Weapons, TrueSummoning.SummonUpgradeData.MegSummon.Weapons.HarpyLunge)
+end
+
+function TrueSummoning.LevelUp(summon)
+	for _, summonData in pairs (TrueSummoning.SummonUpgradeData) do
+		if summonData.Name == summon.Name then
+			local lvl = "_"..summon.Level
+			
+		end
+	end
+end
+
 function TrueSummoning.MegaeraAssist()
+	if IsEmpty(TrueSummoningData) then
+		TrueSummoning.InitializeSummonData()
+	end
     local summondata = EnemyData.MegSummon
-    local newSummon = DeepCopyTable( summondata )
-    newSummon.AIOptions = summondata.AIOptions
-    newSummon.BlocksLootInteraction = false
+    local newSummon = TrueSummoning.SetupNewSummon(summondata)
+
     newSummon.ObjectId = SpawnUnit({
-            Name = summondata.Name,
+            Name = newSummon.Name,
             Group = "Standing",
             DestinationId = CurrentRun.Hero.ObjectId, OffsetX = 0, OffsetY = 0 })
     SetupEnemyObject( newSummon, CurrentRun )
@@ -92,10 +133,38 @@ function TrueSummoning.MegaeraAssist()
 	-- newSummon.OnFireWeapons[weaponName] = {}
 	-- newSummon.OnFireWeapons[weaponName][onFireWeapon] = true
 
-	TrueSummoning.InheritHeroTraits(CurrentRun.Hero, newSummon)
+	-- TrueSummoning.InheritHeroTraits(CurrentRun.Hero, newSummon)
 
     CurrentRun.CurrentRoom.TauntTargetId = newSummon.ObjectId
 	TrueSummoning.ActiveSummon = newSummon
+end
+
+function TrueSummoning.SetupNewSummon(summonData)
+	local newSummon = DeepCopyTable(summonData)
+	local newSummonData = TrueSummoningData.Summons[newSummon.Name]
+	newSummon.AIOptions = summonData.AIOptions
+    newSummon.BlocksLootInteraction = false
+	newSummon.MaxHealth = newSummonData.Health
+	newSummon.IncomingDamageModifiers =
+	{
+        {
+            Name = "Innate",
+            PlayerMultiplier = newSummonData.DamageTakenFromPlayerMultiplier
+        }
+    }
+	newSummon.WeaponOptions = {}
+	for _, weapon in pairs(newSummonData.Weapons) do
+		table.insert(newSummon.WeaponOptions, weapon.Name)
+	end
+
+	if newSummonData.UnlockedAssists then
+	else
+		newSummon.AdditionalEnemySetupFunctionName = nil
+		newSummon.SupportAIWeaponSetOptions = nil
+		newSummon.SupportUnitName = nil
+	end
+
+	return newSummon
 end
 
 function TrueSummoning.InheritHeroTraits(hero, summon)
@@ -294,6 +363,20 @@ function GetTargetId( enemy, aiData )
 		targetId = newTargetId
 	end
 
+	--mod start
+	if enemy.ObjectId == CurrentRun.CurrentRoom.TauntTargetId or enemy.SupportUnitName ~= nil then
+		local eligibleIds = {}
+		for enemyId, requiredKillEnemy in pairs( RequiredKillEnemies ) do
+			if requiredKillEnemy ~= enemy and requiredKillEnemy.StoredAmmo ~= nil and not IsInvulnerable({ Id = requiredKillEnemy.ObjectId }) then
+				table.insert(eligibleIds, enemyId)
+			end
+		end
+		if not IsEmpty(eligibleIds) then
+			targetId = GetClosest({ Id = enemy.ObjectId, DestinationIds = eligibleIds, Distance = 1500, IgnoreHomingIneligible = true, IgnoreSelf = true, IgnoreInvulnerable = true })
+		end
+	end
+	--mod end
+
 	if aiData.AnchorTargetIdAfterFirstTick and aiData.AnchorTargetId == nil then
 		aiData.AnchorTargetId = targetId
 	end
@@ -337,7 +420,7 @@ function TrueSummoning.OpenSummonMenu()
 	ScreenAnchors.SummonMenuScreen = DeepCopyTable(SummonMenuScreen)
 	local screen = ScreenAnchors.SummonMenuScreen
 	local components = screen.Components
-	local title = "Alter of Summoning"
+	local title = "Altar of Summoning"
 	screen.Name = "SummonMenuScreen"
 	OnScreenOpened({ Flag = screen.Name, PersistCombatUI = true })
 	SetConfigOption({ Name = "UseOcclusion", Value = false })
@@ -359,15 +442,25 @@ function TrueSummoning.OpenSummonMenu()
 	components.CloseButton.OnPressedFunctionName = "TrueSummoning.CloseSummonMenu"
 	components.CloseButton.ControlHotkey = "Cancel"
 	--Display
-	components.SummonPortrait = CreateScreenComponent({ Name = "BlankObstacle", Group = "SummonMenu" })
-	Attach({Id = components.SummonPortrait.Id, DestinationId = components.Background.Id, OffsetX = -500, OffsetY = 100})
-	SetAnimation({DestinationId = components.SummonPortrait.Id, Name = "Portrait_FurySister01_Default_01", Scale = 0.7})
+		local temp = 0
+		components.SummonPortrait = CreateScreenComponent({ Name = "BlankObstacle", Group = "SummonMenu" })
+		Attach({Id = components.SummonPortrait.Id, DestinationId = components.Background.Id, OffsetX = -500, OffsetY = 100})
+		SetAnimation({DestinationId = components.SummonPortrait.Id, Name = "Portrait_FurySister01_Default_01", Scale = 0.7})
 
-	CreateTextBox({ Id = components.SummonPortrait.Id, Text = "Harpy",
-	Font = "CaesarDressing", FontSize = 22, ShadowRed = 0, ShadowBlue = 0, ShadowGreen = 0,
-	OutlineColor = {0, 0, 0, 1}, OutlineThickness = 2,
-	ShadowAlpha = 1.0, ShadowBlur = 0, ShadowOffsetY = 3, ShadowOffsetX = 0, Justification = "Center", OffsetY = -400,})
+		CreateTextBox({ Id = components.SummonPortrait.Id, Text = "Harpy",
+		Font = "CaesarDressing", FontSize = 22, ShadowRed = 0, ShadowBlue = 0, ShadowGreen = 0,
+		OutlineColor = {0, 0, 0, 1}, OutlineThickness = 2,
+		ShadowAlpha = 1.0, ShadowBlur = 0, ShadowOffsetY = 3, ShadowOffsetX = 0, Justification = "Center", OffsetY = -400,})
 
+		CreateTextBox({ Id = components.Background.Id, Text = "Statistics", FontSize = 24,
+		OffsetX = 400, OffsetY = -300, Color = Color.White, Font = "SpectralSCLight", Justification = "Center" })
+
+		CreateTextBox({ Id = components.Background.Id, Text = "Health : "..TrueSummoning.SummonUpgradeData.MegSummon.Stats.Health, FontSize = 21,
+		OffsetX = 0, OffsetY = -220, Color = Color.White, Font = "AlegreyaSansSCBold", Justification = "Left" })
+
+		temp = TrueSummoning.SummonUpgradeData.MegSummon.Stats.DamageTakenFromPlayerMultiplier * 100
+		CreateTextBox({ Id = components.Background.Id, Text = "Damage received from Zagreus : "..temp.."%", FontSize = 21,
+		OffsetX = 0, OffsetY = -190, Color = Color.White, Font = "AlegreyaSansSCBold", Justification = "Left" })
 	--End
 	screen.KeepOpen = true
 	thread(HandleWASDInput, screen)

@@ -1,13 +1,13 @@
 {
-    Units = [
-    "_append"
-    {
-      Name = "MegSummon"
-      InheritFrom = "Harpy"
-    }
-    {
-      Name = "MegSupportUnit"
-      InheritFrom = "HarpySupportUnit"
-    }
-    ]
+  Units = [
+  "_append"
+  {
+    Name = "MegSummon"
+    InheritFrom = "Harpy"
+  }
+  {
+    Name = "MegSupportUnit"
+    InheritFrom = "HarpySupportUnit"
+  }
+  ]
 }

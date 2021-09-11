@@ -1,7 +1,7 @@
 Import "summoningmain.lua"
-Import "traitdata.lua"
 To "Scripts/TraitData.lua"
-Import "enemydata.lua"
+Import "traitdata.lua"
 To "Scripts/EnemyData.lua"
-Import "enemies.sjson"
+Import "enemydata.lua"
 To "Game/Units/Enemies.sjson
+SJSON "enemies.sjson"
