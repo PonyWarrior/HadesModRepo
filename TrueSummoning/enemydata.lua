@@ -26,7 +26,6 @@ UnitSetData.Enemies.MegSummon =
 
     Material = "Organic",
     HealthBarOffsetY = -275,
-    --RepulseOnMeleeInvulnerableHit = 400,
     IgnoreInvincibubbleOnHit = true,
 
     AdditionalEnemySetupFunctionName = "TrueSummoning.SelectSupportAIs",
@@ -50,7 +49,6 @@ UnitSetData.Enemies.MegSummon =
     },
     PostAggroAI = AttackerAI,
 
-    -- WeaponOptions = { "HarpyLunge" },
     WeaponOptions = { "HarpyLunge", "HarpyWhipWhirl", "HarpyLightning", "HarpyBeam" },
     DisarmedWeapon = "HarpyLunge",
 

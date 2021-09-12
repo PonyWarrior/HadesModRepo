@@ -7,8 +7,6 @@
 
 ModUtil.RegisterMod("TrueSummoning")
 
-local TrueSummoningData = ModUtil.Mod.Data(TrueSummoning)
-
 TrueSummoning.SummonUpgradeData =
 {
 	MegSummon =
@@ -21,11 +19,46 @@ TrueSummoning.SummonUpgradeData =
 		},
 		LevelUnlocks =
 		{
-			
+			[5] =
+			{
+				Weapon = "HarpyWhipWhirl"
+			},
+			[10] = 
+			{
+				Weapon = "HarpyLightning"
+			},
+			[15] =
+			{
+				Weapon = "HarpyBeam"
+			},
+			[20] =
+			{
+				Assist =
+				{
+					Name = "Alecto",
+					Weapon = "SummonAlectoWhipShot"
+				}
+			},
+			[25] =
+			{
+				Assist =
+				{
+					Name = "Tisiphone",
+					Weapon = "SummonTisiphoneBombingRun"
+				}
+			},
+			[30] =
+			{
+				Assist =
+				{
+					Name = "Alecto",
+					Weapon = "SummonAlectoLightningChase"
+				}
+			}
 		},
 		Stats =
 		{
-			Health = 1000,
+			Health = 400,
 			DamageTakenFromPlayerMultiplier = 0.5,
 		},
 		Weapons =
@@ -88,7 +121,7 @@ TrueSummoning.SummonUpgradeData =
 SummonMenuScreen = { Components = {} }
 
 function TrueSummoning.InitializeSummonData()
-	TrueSummoningData.Summons =
+	TrueSummoning.Data.Summons =
 	{
 		MegSummon =
 		{
@@ -101,20 +134,45 @@ function TrueSummoning.InitializeSummonData()
 			UnlockedAssists = false,
 		}
 	}
-	table.insert(TrueSummoningData.Summons.MegSummon.Weapons, TrueSummoning.SummonUpgradeData.MegSummon.Weapons.HarpyLunge)
+	table.insert(TrueSummoning.Data.Summons.MegSummon.Weapons, TrueSummoning.SummonUpgradeData.MegSummon.Weapons.HarpyLunge)
 end
 
-function TrueSummoning.LevelUp(summon)
+function TrueSummoning.LevelUp()
+	if CurrentRun.CurrentRoom.Summon == nil or GameState.SpentShrinePointsCache == nil then
+		return
+	end
+
+	local summon = TrueSummoning.Data.Summons[CurrentRun.CurrentRoom.Summon.Name]
+
+	if summon.Level >= GameState.SpentShrinePointsCache then
+		return
+	end
+	
 	for _, summonData in pairs (TrueSummoning.SummonUpgradeData) do
 		if summonData.Name == summon.Name then
-			local lvl = "_"..summon.Level
-			
+			if (GameState.SpentShrinePointsCache - summon.Level) > 1 then
+			else
+				summon.Level = summon.Level + 1
+				summon.Health = summon.Health + summonData.LevelUp.Health
+				summon.DamageTakenFromPlayerMultiplier = summon.DamageTakenFromPlayerMultiplier + summonData.LevelUp.DamageTakenFromPlayerMultiplier
+			end
+
+			if summonData.LevelUnlocks[summon.Level] ~= nil then
+				local unlockData = summonData.LevelUnlocks[summon.Level]
+				if unlockData.Weapon then
+					table.insert(summon.Weapons, summonData.Weapons[unlockData.Weapon])
+				end
+				if unlockData.Assist then
+					table.insert(summon.AssistWeapons, summonData.AssistWeapons[unlockData.Assist.Name][unlockData.Assist.Weapon])
+					summon.UnlockedAssists = true
+				end
+			end
 		end
 	end
 end
 
 function TrueSummoning.MegaeraAssist()
-	if IsEmpty(TrueSummoningData) then
+	if IsEmpty(TrueSummoning.Data) then
 		TrueSummoning.InitializeSummonData()
 	end
     local summondata = EnemyData.MegSummon
@@ -134,14 +192,14 @@ function TrueSummoning.MegaeraAssist()
 	-- newSummon.OnFireWeapons[weaponName][onFireWeapon] = true
 
 	-- TrueSummoning.InheritHeroTraits(CurrentRun.Hero, newSummon)
-
+	
+	CurrentRun.CurrentRoom.Summon = newSummon
     CurrentRun.CurrentRoom.TauntTargetId = newSummon.ObjectId
-	TrueSummoning.ActiveSummon = newSummon
 end
 
 function TrueSummoning.SetupNewSummon(summonData)
 	local newSummon = DeepCopyTable(summonData)
-	local newSummonData = TrueSummoningData.Summons[newSummon.Name]
+	local newSummonData = TrueSummoning.Data.Summons[newSummon.Name]
 	newSummon.AIOptions = summonData.AIOptions
     newSummon.BlocksLootInteraction = false
 	newSummon.MaxHealth = newSummonData.Health
@@ -158,6 +216,9 @@ function TrueSummoning.SetupNewSummon(summonData)
 	end
 
 	if newSummonData.UnlockedAssists then
+		for _, assistWeapon in pairs(newSummonData.AssistWeapons) do
+			
+		end
 	else
 		newSummon.AdditionalEnemySetupFunctionName = nil
 		newSummon.SupportAIWeaponSetOptions = nil
@@ -427,6 +488,10 @@ function TrueSummoning.OpenSummonMenu()
 	FreezePlayerUnit()
 	EnableShopGamepadCursor()
 	PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
+
+	if TrueSummoning.Data == nil or IsEmpty(TrueSummoning.Data) then
+		TrueSummoning.InitializeSummonData()
+	end
 	--Background
 	components.BackgroundDim = CreateScreenComponent({ Name = "rectangle01", Group = "SummonMenu" })
 	components.Background = CreateScreenComponent({ Name = "BlankObstacle", Group = "SummonMenu" })
@@ -442,7 +507,7 @@ function TrueSummoning.OpenSummonMenu()
 	components.CloseButton.OnPressedFunctionName = "TrueSummoning.CloseSummonMenu"
 	components.CloseButton.ControlHotkey = "Cancel"
 	--Display
-		local temp = 0
+		local summonData = TrueSummoning.Data.Summons.MegSummon
 		components.SummonPortrait = CreateScreenComponent({ Name = "BlankObstacle", Group = "SummonMenu" })
 		Attach({Id = components.SummonPortrait.Id, DestinationId = components.Background.Id, OffsetX = -500, OffsetY = 100})
 		SetAnimation({DestinationId = components.SummonPortrait.Id, Name = "Portrait_FurySister01_Default_01", Scale = 0.7})
@@ -455,12 +520,31 @@ function TrueSummoning.OpenSummonMenu()
 		CreateTextBox({ Id = components.Background.Id, Text = "Statistics", FontSize = 24,
 		OffsetX = 400, OffsetY = -300, Color = Color.White, Font = "SpectralSCLight", Justification = "Center" })
 
-		CreateTextBox({ Id = components.Background.Id, Text = "Health : "..TrueSummoning.SummonUpgradeData.MegSummon.Stats.Health, FontSize = 21,
-		OffsetX = 0, OffsetY = -220, Color = Color.White, Font = "AlegreyaSansSCBold", Justification = "Left" })
+		CreateTextBox({ Id = components.Background.Id, Text = "Level : "..summonData.Level, FontSize = 21,
+		OffsetX = 0, OffsetY = -220, Color = Color.White, Font = "AlegreyaSansSCRegular", Justification = "Left" })
 
-		temp = TrueSummoning.SummonUpgradeData.MegSummon.Stats.DamageTakenFromPlayerMultiplier * 100
-		CreateTextBox({ Id = components.Background.Id, Text = "Damage received from Zagreus : "..temp.."%", FontSize = 21,
-		OffsetX = 0, OffsetY = -190, Color = Color.White, Font = "AlegreyaSansSCBold", Justification = "Left" })
+		CreateTextBox({ Id = components.Background.Id, Text = "Health : "..summonData.Health, FontSize = 21,
+		OffsetX = 0, OffsetY = -190, Color = Color.White, Font = "AlegreyaSansSCRegular", Justification = "Left" })
+
+		CreateTextBox({ Id = components.Background.Id, Text = "Damage received from Zagreus : "..(summonData.DamageTakenFromPlayerMultiplier * 100).."%", FontSize = 21,
+		OffsetX = 0, OffsetY = -160, Color = Color.White, Font = "AlegreyaSansSCRegular", Justification = "Left" })
+
+		CreateTextBox({ Id = components.Background.Id, Text = "Techniques", FontSize = 24,
+		OffsetX = 400, OffsetY = -80, Color = Color.White, Font = "SpectralSCLight", Justification = "Center" })
+
+		local index = 0
+		for _, weapon in pairs(summonData.Weapons) do
+			local incrementY = 40
+			local offsetY = index * 110
+			index = index + 1
+
+			CreateTextBox({ Id = components.Background.Id, Text = weapon.DisplayName, FontSize = 21,
+			OffsetX = 0, OffsetY = offsetY, Color = Color.White, Font = "AlegreyaSansSCRegular", Justification = "Left" })
+
+			CreateTextBox({ Id = components.Background.Id, Text = weapon.Description, FontSize = 19,
+			OffsetX = 0, OffsetY = offsetY+ incrementY, Color = Color.White, Font = "AlegreyaSansSCRegular", Justification = "Left", Width = 900 })
+	
+		end
 	--End
 	screen.KeepOpen = true
 	thread(HandleWASDInput, screen)
