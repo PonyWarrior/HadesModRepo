@@ -1,9 +1,9 @@
 --TODO :
---Upgrade system
---Interface
---Give boon to summon
---Give commands to summon
---Disable autolock on summon
+--Upgrade system 30%
+--Interface 30%
+--Give boon to summon 10%
+--Give commands to summon 10%
+--Disable autolock on summon 0%
 
 ModUtil.RegisterMod("TrueSummoning")
 
@@ -94,6 +94,7 @@ TrueSummoning.SummonUpgradeData =
 			{
 				SummonTisiphoneBombingRun =
 				{
+					Owner = "Tisiphone",
 					Name = "SummonTisiphoneBombingRun",
 					DisplayName = "Desolation",
 					Description = "Tisiphone flies over enemies and brings down explosions in a massive area, damaging all enemies hit."
@@ -103,6 +104,7 @@ TrueSummoning.SummonUpgradeData =
 			{
 				SummonAlectoWhipShot =
 				{
+					Owner = "Alecto",
 					Name = "SummonAlectoWhipShot",
 					DisplayName = "Spike",
 					Description = "Alecto summons a spike, damaging enemies in a small area after a short duration.",
@@ -150,23 +152,24 @@ function TrueSummoning.LevelUp()
 	
 	for _, summonData in pairs (TrueSummoning.SummonUpgradeData) do
 		if summonData.Name == summon.Name then
-			if (GameState.SpentShrinePointsCache - summon.Level) > 1 then
-			else
+			local lvlcount = (GameState.SpentShrinePointsCache - summon.Level)
+			for i = lvlcount, 1, -1 do
 				summon.Level = summon.Level + 1
 				summon.Health = summon.Health + summonData.LevelUp.Health
 				summon.DamageTakenFromPlayerMultiplier = summon.DamageTakenFromPlayerMultiplier + summonData.LevelUp.DamageTakenFromPlayerMultiplier
-			end
 
-			if summonData.LevelUnlocks[summon.Level] ~= nil then
-				local unlockData = summonData.LevelUnlocks[summon.Level]
-				if unlockData.Weapon then
-					table.insert(summon.Weapons, summonData.Weapons[unlockData.Weapon])
-				end
-				if unlockData.Assist then
-					table.insert(summon.AssistWeapons, summonData.AssistWeapons[unlockData.Assist.Name][unlockData.Assist.Weapon])
-					summon.UnlockedAssists = true
+				if summonData.LevelUnlocks[summon.Level] ~= nil then
+					local unlockData = summonData.LevelUnlocks[summon.Level]
+					if unlockData.Weapon then
+						table.insert(summon.Weapons, summonData.Weapons[unlockData.Weapon])
+					end
+					if unlockData.Assist then
+						table.insert(summon.AssistWeapons, summonData.AssistWeapons[unlockData.Assist.Name][unlockData.Assist.Weapon])
+						summon.UnlockedAssists = true
+					end
 				end
 			end
+			summon.DamageTakenFromPlayerMultiplier = Clamp(summon.DamageTakenFromPlayerMultiplier, 0, 0.5)
 		end
 	end
 end
@@ -193,9 +196,17 @@ function TrueSummoning.MegaeraAssist()
 
 	-- TrueSummoning.InheritHeroTraits(CurrentRun.Hero, newSummon)
 	
-	CurrentRun.CurrentRoom.Summon = newSummon
+	CurrentRun.CurrentRoom.Summon = { Name = newSummon.Name, ObjectId = newSummon.ObjectId }
     CurrentRun.CurrentRoom.TauntTargetId = newSummon.ObjectId
 end
+
+ModUtil.Path.Wrap( "CreateLevelDisplay", function (baseFunc, newEnemy, currentRun)
+	if newEnemy.Name == "MegSummon" or newEnemy.Name == "MegSupportUnit" then
+		newEnemy.Outline.Id = newEnemy.ObjectId
+        AddOutline( newEnemy.Outline )
+	end
+	return baseFunc(newEnemy, currentRun)
+end)
 
 function TrueSummoning.SetupNewSummon(summonData)
 	local newSummon = DeepCopyTable(summonData)
@@ -216,8 +227,33 @@ function TrueSummoning.SetupNewSummon(summonData)
 	end
 
 	if newSummonData.UnlockedAssists then
+		newSummon.SupportAINames = {}
+		newSummon.AIStages =
+		{
+			{
+				RandomAIFunctionNames = { "AttackerAI" },
+	
+				AddSupportAIWeaponOptions =
+				{
+					Tisiphone = {},
+					Alecto = {},
+				},
+	
+				AIData =
+				{
+					AIEndHealthThreshold = 0.75,
+				},
+			}
+		}
 		for _, assistWeapon in pairs(newSummonData.AssistWeapons) do
-			
+			if assistWeapon.Owner == "Tisiphone" then
+				table.insert(newSummon.AIStages[1].AddSupportAIWeaponOptions.Tisiphone, assistWeapon.Name)
+			elseif assistWeapon.Owner == "Alecto" then
+				table.insert(newSummon.AIStages[1].AddSupportAIWeaponOptions.Alecto, assistWeapon.Name)
+			end
+			if not Contains(newSummon.SupportAIWeaponSetOptions, assistWeapon.Owner) then
+				table.insert(newSummon.SupportAIWeaponSetOptions, assistWeapon.Owner)
+			end
 		end
 	else
 		newSummon.AdditionalEnemySetupFunctionName = nil
@@ -291,16 +327,11 @@ function TrueSummoning.InheritHeroTraits(hero, summon)
 end
 
 function TrueSummoning.SelectSupportAIs(summon, currentRun)
-    local debug = true
 	summon.SupportAINames = summon.SupportAINames or {}
 
-	if debug then
-		local supportCount = 2
-		for i=1, supportCount, 1 do
-			local supportAIName = RemoveRandomValue(summon.SupportAIWeaponSetOptions)
-			table.insert(summon.SupportAINames, supportAIName)
-			currentRun.SupportAINames[supportAIName] = true
-		end
+	for _, supportAIName in pairs(summon.SupportAIWeaponSetOptions) do
+		table.insert(summon.SupportAINames, supportAIName)
+		currentRun.SupportAINames[supportAIName] = true
 	end
 end
 
@@ -426,6 +457,7 @@ function GetTargetId( enemy, aiData )
 
 	--mod start
 	if enemy.ObjectId == CurrentRun.CurrentRoom.TauntTargetId or enemy.SupportUnitName ~= nil then
+		DebugPrint({Text = enemy.Name or enemy.SupportUnitName})
 		local eligibleIds = {}
 		for enemyId, requiredKillEnemy in pairs( RequiredKillEnemies ) do
 			if requiredKillEnemy ~= enemy and requiredKillEnemy.StoredAmmo ~= nil and not IsInvulnerable({ Id = requiredKillEnemy.ObjectId }) then
@@ -503,7 +535,7 @@ function TrueSummoning.OpenSummonMenu()
 	ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
 	--Close button
 	components.CloseButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.6, Group = "SummonMenu" })
-	Attach({ Id = components.CloseButton.Id, DestinationId = components.Background.Id, OffsetX = 0, OffsetY = 500 })
+	Attach({ Id = components.CloseButton.Id, DestinationId = components.Background.Id, OffsetX = -50, OffsetY = 500 })
 	components.CloseButton.OnPressedFunctionName = "TrueSummoning.CloseSummonMenu"
 	components.CloseButton.ControlHotkey = "Cancel"
 	--Display
@@ -518,33 +550,41 @@ function TrueSummoning.OpenSummonMenu()
 		ShadowAlpha = 1.0, ShadowBlur = 0, ShadowOffsetY = 3, ShadowOffsetX = 0, Justification = "Center", OffsetY = -400,})
 
 		CreateTextBox({ Id = components.Background.Id, Text = "Statistics", FontSize = 24,
-		OffsetX = 400, OffsetY = -300, Color = Color.White, Font = "SpectralSCLight", Justification = "Center" })
+		OffsetX = 400, OffsetY = -420, Color = Color.White, Font = "SpectralSCLight", Justification = "Center" })
 
 		CreateTextBox({ Id = components.Background.Id, Text = "Level : "..summonData.Level, FontSize = 21,
-		OffsetX = 0, OffsetY = -220, Color = Color.White, Font = "AlegreyaSansSCRegular", Justification = "Left" })
+		OffsetX = 0, OffsetY = -380, Color = Color.White, Font = "AlegreyaSansSCRegular", Justification = "Left" })
 
 		CreateTextBox({ Id = components.Background.Id, Text = "Health : "..summonData.Health, FontSize = 21,
-		OffsetX = 0, OffsetY = -190, Color = Color.White, Font = "AlegreyaSansSCRegular", Justification = "Left" })
+		OffsetX = 0, OffsetY = -350, Color = Color.White, Font = "AlegreyaSansSCRegular", Justification = "Left" })
 
 		CreateTextBox({ Id = components.Background.Id, Text = "Damage received from Zagreus : "..(summonData.DamageTakenFromPlayerMultiplier * 100).."%", FontSize = 21,
-		OffsetX = 0, OffsetY = -160, Color = Color.White, Font = "AlegreyaSansSCRegular", Justification = "Left" })
+		OffsetX = 0, OffsetY = -320, Color = Color.White, Font = "AlegreyaSansSCRegular", Justification = "Left" })
 
 		CreateTextBox({ Id = components.Background.Id, Text = "Techniques", FontSize = 24,
-		OffsetX = 400, OffsetY = -80, Color = Color.White, Font = "SpectralSCLight", Justification = "Center" })
+		OffsetX = 400, OffsetY = -240, Color = Color.White, Font = "SpectralSCLight", Justification = "Center" })
 
 		local index = 0
+		local offsetY
+		local techniques = {}
 		for _, weapon in pairs(summonData.Weapons) do
+			table.insert(techniques, weapon)
+		end
+		for _, assistWeapon in pairs(summonData.AssistWeapons) do
+			table.insert(techniques, assistWeapon)
+		end
+		for _, technique in pairs(techniques) do
 			local incrementY = 40
-			local offsetY = index * 110
+			offsetY = -200 + (index * 110)
 			index = index + 1
 
-			CreateTextBox({ Id = components.Background.Id, Text = weapon.DisplayName, FontSize = 21,
+			CreateTextBox({ Id = components.Background.Id, Text = technique.DisplayName, FontSize = 21,
 			OffsetX = 0, OffsetY = offsetY, Color = Color.White, Font = "AlegreyaSansSCRegular", Justification = "Left" })
 
-			CreateTextBox({ Id = components.Background.Id, Text = weapon.Description, FontSize = 19,
-			OffsetX = 0, OffsetY = offsetY+ incrementY, Color = Color.White, Font = "AlegreyaSansSCRegular", Justification = "Left", Width = 900 })
-	
+			CreateTextBox({ Id = components.Background.Id, Text = technique.Description, FontSize = 19,
+			OffsetX = 0, OffsetY = offsetY + incrementY, Color = Color.White, Font = "AlegreyaSansSCRegular", Justification = "Left", Width = 900 })
 		end
+
 	--End
 	screen.KeepOpen = true
 	thread(HandleWASDInput, screen)

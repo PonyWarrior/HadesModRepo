@@ -43,6 +43,16 @@ UnitSetData.Enemies.MegSummon =
         }
     },
 
+    Outline =
+	{
+		R = 255,
+        G = 17,
+        B = 0,
+        Opacity = 0.8,
+        Thickness = 1,
+        Threshold = 0.6,
+	},
+
     AIOptions =
     {
         AggroAI,
@@ -54,12 +64,6 @@ UnitSetData.Enemies.MegSummon =
 
     SupportAIWeaponSetOptions = { "Tisiphone", "Alecto" },
     SupportUnitName = "MegSupportUnit",
-
-    SpawnOptions =
-    {
-        "HeavyMelee",
-        "LightRanged",
-    },
 
     AIEndHealthThreshold = 0.75,
     AIStages =
@@ -82,265 +86,6 @@ UnitSetData.Enemies.MegSummon =
             AIData =
             {
                 AIEndHealthThreshold = 0.75,
-            },
-        },
-        {
-            RandomAIFunctionNames = { "AttackerAI" },
-            EquipRandomWeapon = { "HarpyLightning", "HarpyBeam" },
-            TransitionFunction = "BossStageTransition",
-            TransitionAnimation = "FuryShieldedStart",
-
-            AIData =
-            {
-                AIEndHealthThreshold = 0.50,
-            },
-
-            StageTransitionVoiceLines =
-            {
-                {
-                    RandomRemaining = true,
-                    BreakIfPlayed = true,
-                    PreLineWait = 0.75,
-                    CooldownTime = 20,
-                    CooldownName = "MegSpokeRecently",
-                    RequiredFalseTextLines = { "MegaeraGift10" },
-                    SuccessiveChanceToPlay = 0.33,
-
-                    -- We're not finished yet.
-                    { Cue = "/VO/MegaeraField_0113" },
-                    -- We're only getting started.
-                    { Cue = "/VO/MegaeraField_0114" },
-                    -- I'll make you suffer.
-                    { Cue = "/VO/MegaeraField_0116" },
-                    -- Best not get overconfident.
-                    { Cue = "/VO/MegaeraField_0118" },
-                    -- You've got a lot of nerve.
-                    { Cue = "/VO/MegaeraField_0122" },
-                    -- I don't think so.
-                    { Cue = "/VO/MegaeraField_0276" },
-                    -- You're weak, Zag.
-                    { Cue = "/VO/MegaeraField_0277", ConsecutiveDeathsInRoom = { Name = "A_Boss01", Count = 2, }, },
-                    -- Weak.
-                    { Cue = "/VO/MegaeraField_0278", ConsecutiveDeathsInRoom = { Name = "A_Boss01", Count = 1, }, },
-                    -- Not a chance.
-                    { Cue = "/VO/MegaeraField_0279", ConsecutiveDeathsInRoom = { Name = "A_Boss01", Count = 2, }, },
-                    -- I think not.
-                    { Cue = "/VO/MegaeraField_0280" },
-                    -- Fool.
-                    { Cue = "/VO/MegaeraField_0281" },
-                    -- Pshh.
-                    { Cue = "/VO/MegaeraField_0282" },
-                    -- You can't hurt me.
-                    { Cue = "/VO/MegaeraField_0283" },
-                },
-                {
-                    RandomRemaining = true,
-                    BreakIfPlayed = true,
-                    PreLineWait = 0.75,
-                    CooldownTime = 20,
-                    CooldownName = "MegSpokeRecently",
-                    RequiredTextLines = { "MegaeraGift10" },
-                    SuccessiveChanceToPlay = 0.33,
-
-                    -- That's it.
-                    { Cue = "/VO/MegaeraField_0290" },
-                    -- All right.
-                    { Cue = "/VO/MegaeraField_0291" },
-                    -- Don't you dare hold back.
-                    { Cue = "/VO/MegaeraField_0652" },
-                    -- Now we're getting somewhere.
-                    { Cue = "/VO/MegaeraField_0653" },
-                    -- Think you can keep this up?
-                    { Cue = "/VO/MegaeraField_0649" },
-                    -- We aren't finished here.
-                    { Cue = "/VO/MegaeraField_0655" },
-                    -- You haven't got me yet.
-                    { Cue = "/VO/MegaeraField_0656" },
-                    -- I think not.
-                    { Cue = "/VO/MegaeraField_0280" },
-                    -- Pshh.
-                    { Cue = "/VO/MegaeraField_0282" },
-                    -- You can't hurt me.
-                    { Cue = "/VO/MegaeraField_0283" },
-                    -- I don't think so.
-                    { Cue = "/VO/MegaeraField_0276" },
-                    -- No.
-                    { Cue = "/VO/MegaeraField_0780" },
-                    -- I don't think so.
-                    { Cue = "/VO/MegaeraField_0781" },
-                },
-            },
-        },
-        {
-            RandomAIFunctionNames = { "AttackerAI" },
-            -- EquipRandomWeapon = { "HarpySpawns" },
-            TransitionFunction = "BossStageTransition",
-            TransitionAnimation = "FuryShieldedStart",
-            --CombatText = "PoweredUp",
-
-            AddSupportAIWeaponOptions =
-            {
-                -- Tisiphone
-                Tisiphone = {
-                    -- "SummonTisiphoneFog"
-                },
-                -- Alecto
-                Alecto = {
-                    "SummonAlectoLightningChase"
-                },
-            },
-            AIData =
-            {
-                AIEndHealthThreshold = 0.25,
-            },
-
-            StageTransitionVoiceLines =
-            {
-                {
-                    RandomRemaining = true,
-                    BreakIfPlayed = true,
-                    PreLineWait = 0.75,
-                    SuccessiveChanceToPlay = 0.75,
-                    CooldownTime = 12,
-                    CooldownName = "MegSpokeRecently",
-
-                    -- Wretches of Tartarus, to me!
-                    { Cue = "/VO/MegaeraField_0106" },
-                    -- Wretches of the Underworld, to me!
-                    { Cue = "/VO/MegaeraField_0107" },
-                    -- Hear me, on my authority!
-                    { Cue = "/VO/MegaeraField_0108" },
-                    -- In the name of Hades!
-                    { Cue = "/VO/MegaeraField_0109" },
-                    -- Hear me, you wretched shades!
-                    { Cue = "/VO/MegaeraField_0110" },
-                    -- I need some backup, now!
-                    { Cue = "/VO/MegaeraField_0111" },
-                    -- Let's see you handle this!
-                    { Cue = "/VO/MegaeraField_0112" },
-                    -- I need backup, now!
-                    { Cue = "/VO/MegaeraField_0284" },
-                    -- Come, wretches!
-                    { Cue = "/VO/MegaeraField_0285" },
-                    -- Requesting backup, damn it!
-                    { Cue = "/VO/MegaeraField_0286" },
-                    -- Come and kill him, wretches!
-                    { Cue = "/VO/MegaeraField_0287" },
-                    -- Wretches, bring him down!
-                    { Cue = "/VO/MegaeraField_0288" },
-                    -- Meet some of my friends.
-                    { Cue = "/VO/MegaeraField_0289" },
-                    -- Wretches of Tartarus, I summon you!
-                    { Cue = "/VO/MegaeraField_0642" },
-                    -- Hear me, Wretches, and come fight with me!
-                    { Cue = "/VO/MegaeraField_0643" },
-                    -- Back me up, Wretches of Tartarus, right now!
-                    { Cue = "/VO/MegaeraField_0644" },
-                    -- All right, you wretched shades, appear!
-                    { Cue = "/VO/MegaeraField_0645" },
-                    -- Hope you don't mind if I invited a few friends?
-                    { Cue = "/VO/MegaeraField_0646", RequiredTextLines = { "MegaeraGift10" } },
-                    -- Requesting immediate assistance!
-                    { Cue = "/VO/MegaeraField_0647" },
-                    -- Requesting backup, Tartarus entryway!
-                    { Cue = "/VO/MegaeraField_0648" },
-                    -- Requesting backup, now!
-                    { Cue = "/VO/MegaeraField_0782" },
-                    -- Wretches of Tartarus, come in!
-                    { Cue = "/VO/MegaeraField_0783" },
-                    -- Requesting backup!
-                    { Cue = "/VO/MegaeraField_0784" },
-                    -- Come, Wretches!
-                    { Cue = "/VO/MegaeraField_0785" },
-                    -- Come, Wretches! On my authority!
-                    { Cue = "/VO/MegaeraField_0786" },
-                    -- Wretches, now!
-                    { Cue = "/VO/MegaeraField_0787" },
-                    -- Here, Wretches!
-                    { Cue = "/VO/MegaeraField_0788" },
-                },
-
-            },
-        },
-        {
-            RandomAIFunctionNames = { "AttackerAI" },
-            EquipRandomWeapon = { "HarpyLightning", "HarpyBeam" },
-            TransitionFunction = "BossStageTransition",
-            TransitionAnimation = "FuryShieldedStart",
-            AIData =
-            {
-                AIEndHealthThreshold = 0.0,
-            },
-            StageTransitionVoiceLines =
-            {
-                {
-                    RandomRemaining = true,
-                    BreakIfPlayed = true,
-                    PreLineWait = 0.75,
-                    CooldownTime = 12,
-                    SuccessiveChanceToPlay = 0.33,
-                    CooldownName = "MegSpokeRecently",
-                    RequiredFalseTextLines = { "MegaeraGift10" },
-
-                    -- You're going to pay for this.
-                    { Cue = "/VO/MegaeraField_0115" },
-                    -- I am not finished yet.
-                    { Cue = "/VO/MegaeraField_0117" },
-                    -- This isn't over yet.
-                    { Cue = "/VO/MegaeraField_0119" },
-                    -- I will not let you win.
-                    { Cue = "/VO/MegaeraField_0120" },
-                    -- You haven't beat me yet.
-                    { Cue = "/VO/MegaeraField_0121" },
-                    -- That's it.
-                    { Cue = "/VO/MegaeraField_0290" },
-                    -- All right.
-                    { Cue = "/VO/MegaeraField_0291" },
-                    -- Let's end this.
-                    { Cue = "/VO/MegaeraField_0292" },
-                    -- This ends here.
-                    { Cue = "/VO/MegaeraField_0293" },
-                    -- I'm not through with you yet.
-                    { Cue = "/VO/MegaeraField_0294" },
-                    -- Enough of this.
-                    { Cue = "/VO/MegaeraField_0295" },
-                    -- We aren't finished here.
-                    { Cue = "/VO/MegaeraField_0655" },
-                    -- You haven't got me yet.
-                    { Cue = "/VO/MegaeraField_0656" },
-                },
-                {
-                    RandomRemaining = true,
-                    BreakIfPlayed = true,
-                    PreLineWait = 0.75,
-                    CooldownTime = 12,
-                    SuccessiveChanceToPlay = 0.2,
-                    CooldownName = "MegSpokeRecently",
-                    RequiredTextLines = { "MegaeraGift10" },
-
-                    -- This isn't over yet.
-                    { Cue = "/VO/MegaeraField_0119" },
-                    -- That's it.
-                    { Cue = "/VO/MegaeraField_0290" },
-                    -- All right.
-                    { Cue = "/VO/MegaeraField_0291" },
-                    -- Let's end this.
-                    { Cue = "/VO/MegaeraField_0292" },
-                    -- This ends here.
-                    { Cue = "/VO/MegaeraField_0293" },
-                    -- I'm not through with you yet.
-                    { Cue = "/VO/MegaeraField_0294" },
-                    -- I'm not finished with you yet.
-                    { Cue = "/VO/MegaeraField_0650" },
-                    -- You've gotten stronger, Zag.
-                    { Cue = "/VO/MegaeraField_0651" },
-                    -- You used to be a total pushover.
-                    { Cue = "/VO/MegaeraField_0654" },
-                    -- How did you get this tough.
-                    { Cue = "/VO/MegaeraField_0657" },
-                    -- Enough, let's finish this.
-                    { Cue = "/VO/MegaeraField_0658" },
-                },
             },
         },
     },
@@ -1215,10 +960,21 @@ UnitSetData.Enemies.MegSummon =
 UnitSetData.Enemies.MegSupportUnit =
 {
     InheritFrom = { "IsNeutral" },
+    Name = "MegSupportUnit",
     DamageType = "Enemy",
     RequiredKill = false,
     HideHealthBar = true,
 	AlwaysTraitor = true,
+
+    Outline =
+	{
+		R = 255,
+        G = 17,
+        B = 0,
+        Opacity = 0.8,
+        Thickness = 1,
+        Threshold = 0.6,
+	},
 
     DefaultAIData =
     {
