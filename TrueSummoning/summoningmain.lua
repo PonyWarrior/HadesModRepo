@@ -111,6 +111,7 @@ TrueSummoning.SummonUpgradeData =
 				},
 				SummonAlectoLightningChase =
 				{
+					Owner = "Alecto",
 					Name = "SummonAlectoLightningChase",
 					DisplayName = "Chasing Tornado",
 					Description = "Alecto summons a tornado of hate, chasing and repeatedly damaging enemies in a small area."
