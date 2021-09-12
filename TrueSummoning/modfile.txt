@@ -5,3 +5,5 @@ To "Scripts/EnemyData.lua"
 Import "enemydata.lua"
 To "Game/Units/Enemies.sjson
 SJSON "enemies.sjson"
+To "Scripts/EncounterData.lua"
+Import "encounterdata.lua"

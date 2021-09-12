@@ -201,6 +201,7 @@ function TrueSummoning.MegaeraAssist()
     CurrentRun.CurrentRoom.TauntTargetId = newSummon.ObjectId
 end
 
+-- Outline
 ModUtil.Path.Wrap( "CreateLevelDisplay", function (baseFunc, newEnemy, currentRun)
 	if newEnemy.Name == "MegSummon" or newEnemy.Name == "MegSupportUnit" then
 		newEnemy.Outline.Id = newEnemy.ObjectId
@@ -242,7 +243,7 @@ function TrueSummoning.SetupNewSummon(summonData)
 	
 				AIData =
 				{
-					AIEndHealthThreshold = 0.75,
+					AIEndHealthThreshold = 0.0,
 				},
 			}
 		}
