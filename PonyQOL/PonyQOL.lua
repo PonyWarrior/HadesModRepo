@@ -4656,3 +4656,36 @@ if PQOL.Config.GoldenUrnWarning.Enabled then
 		InCombatText(CurrentRun.Hero.ObjectId, "A golden urn has appeared in this room", 1.8, { ShadowScale = 1.2 } )
 	end
 end
+
+if PQOL.Config.UnlockHiddenAspects.Enabled then
+	ModUtil.LoadOnce(function ()
+		if PQOL.Config.UnlockHiddenAspects.UnlockAll then
+			TextLinesRecord["NyxRevealsArthurAspect01"] = true
+			TextLinesRecord["AchillesRevealsGuanYuAspect01"] = true
+			TextLinesRecord["ZeusRevealsLuciferAspect01"] = true
+			TextLinesRecord["ArtemisRevealsRamaAspect01"] = true
+			TextLinesRecord["ChaosRevealsBeowulfAspect01"] = true
+			TextLinesRecord["MinotaurRevealsGilgameshAspect01"] = true
+		else
+			if PQOL.Config.UnlockHiddenAspects.UnlockArthur then
+				TextLinesRecord["NyxRevealsArthurAspect01"] = true
+			end
+			if PQOL.Config.UnlockHiddenAspects.UnlockGuanYu then
+				TextLinesRecord["AchillesRevealsGuanYuAspect01"] = true
+			end
+			if PQOL.Config.UnlockHiddenAspects.UnlockLucifer then
+				TextLinesRecord["ZeusRevealsLuciferAspect01"] = true
+			end
+			if PQOL.Config.UnlockHiddenAspects.UnlockRama then
+				TextLinesRecord["ArtemisRevealsRamaAspect01"] = true
+			end
+			if PQOL.Config.UnlockHiddenAspects.UnlockBeowulf then
+				TextLinesRecord["ChaosRevealsBeowulfAspect01"] = true
+			end
+			if PQOL.Config.UnlockHiddenAspects.UnlockGilgamesh then
+				TextLinesRecord["MinotaurRevealsGilgameshAspect01"] = true
+			end
+		end
+		SaveCheckpoint()
+	end)
+end

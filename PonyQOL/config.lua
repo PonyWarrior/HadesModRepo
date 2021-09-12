@@ -233,6 +233,20 @@ PQOL =
 		{
 			-- When enabled a warning appears at the start of an encounter if a golden urn spawned in the room
 			Enabled = true,
+		},
+		UnlockHiddenAspects =
+		{
+			-- Enable to unlock any or all hidden aspects
+			-- Switch UnlockAll to true to unlock all hidden aspects
+			-- Or switch any individual aspect to true to unlock it
+			Enabled = false,
+			UnlockAll = false,
+			UnlockArthur = false,
+			UnlockGuanYu = false,
+			UnlockLucifer = false,
+			UnlockRama = false,
+			UnlockBeowulf = false,
+			UnlockGilgamesh = false,
 		}
 	}
 }
