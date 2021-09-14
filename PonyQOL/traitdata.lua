@@ -168,10 +168,12 @@ if PQOL.Config.Gameplay.Enabled then
 
     if PQOL.Config.Gameplay.BetterBalance.Enabled then
         local config = PQOL.Config.Gameplay.BetterBalance
-
+        local temp
+        --Frost Strike
         TraitData.DemeterWeaponTrait.AddOutgoingDamageModifiers.ValidWeaponMultiplier.BaseValue = config.FrostStrikeBaseDamage
+        --Frost Flourish
         TraitData.DemeterSecondaryTrait.AddOutgoingDamageModifiers.ValidWeaponMultiplier.BaseValue = config.FrostFlourishBaseDamage
-
+        --Mistral Dash
         table.insert(TraitData.DemeterRushTrait.PropertyChanges,
         {
             WeaponNames = WeaponSets.HeroRushWeapons,
@@ -180,7 +182,6 @@ if PQOL.Config.Gameplay.Enabled then
             ChangeValue = config.MistralDashHitCount * 0.5,
             ChangeType = "Absolute"
         })
-
         -- Killing Freeze
         if config.KillingFreezePommable then
             TraitData.MaximumChillBonusSlow.RequiredFalseTrait = nil
@@ -207,7 +208,7 @@ if PQOL.Config.Gameplay.Enabled then
         if config.RavenousWillPommable then
             TraitData.ZeroAmmoBonusTrait.RequiredFalseTrait = nil
         end
-        
+        --  Demeter's aid
         for _, propertyChange in pairs(TraitData.DemeterShoutTrait.PropertyChanges) do
             if propertyChange.BaseMin ~= nil and propertyChange.BaseMin == 10 then
                 propertyChange.BaseMin = config.DemeterAidBaseDamage
@@ -221,24 +222,20 @@ if PQOL.Config.Gameplay.Enabled then
             ChangeType = "Multiply",
             ExcludeLinked = true,
         })
-
         -- Cold Embrace
         TraitData.SelfLaserTrait.AddOutgoingDamageModifiers.ValidWeaponMultiplier.BaseValue = config.ColdEmbraceBonusDamage
-
         -- Freezing Vortex
         for _, propertyChange in pairs(TraitData.StationaryRiftTrait.PropertyChanges) do
             if propertyChange.BaseValue ~= nil and propertyChange.BaseValue == -23 then
                 propertyChange.BaseValue = config.FreezingVortexSizeChange
             end
         end
-
         -- Blizzard Shot
         for _, propertyChange in pairs(TraitData.BlizzardOrbTrait.PropertyChanges) do
             if propertyChange.BaseValue ~= nil and propertyChange.BaseValue == 20 then
                 propertyChange.BaseValue = config.BlizzardShotShardDamage
             end
         end
-
         -- Guan Yu
         for _, propertyChange in pairs(TraitData.SpearSpinTravel.PropertyChanges) do
             -- Dash attack
@@ -256,6 +253,94 @@ if PQOL.Config.Gameplay.Enabled then
             -- Combo attack 3
             elseif propertyChange.ChangeValue ~= nil and propertyChange.ChangeValue == 100 then
                 propertyChange.ChangeValue = config.GuanYuComboAttack3Damage
+            end
+        end
+        -- Zagreus Shield
+        if config.ZagreusShieldIncreaseSpecialDamage then
+            for _, propertyChange in pairs(TraitData.ShieldBaseUpgradeTrait.PropertyChanges) do
+                propertyChange.WeaponNames = { "ShieldWeapon", "ShieldWeaponDash", "ShieldThrow" }
+            end
+        end
+        --Parting Shot
+        if config.PartingShotUniversalBackstab then
+            temp = nil
+        else
+            temp = WeaponSets.HeroNonPhysicalWeapons
+        end
+        TraitData.CastBackstabTrait.AddOutgoingDamageModifiers =
+        {
+            ValidWeapons = temp,
+			HitVulnerabilityMultiplier = { BaseValue = config.PartingShotBonusDamage, SourceIsMultiplier = true },
+			ExtractValues =
+			{
+				{
+					Key = "HitVulnerabilityMultiplier",
+					ExtractAs = "TooltipDamageBonus",
+					Format = "PercentDelta",
+				},
+			}
+        }
+        --Nemesis Sword
+        table.insert(TraitData.SwordCriticalParryTrait.PropertyChanges, 
+        {
+                WeaponNames = { "SwordWeapon", "SwordWeapon2", "SwordWeapon3" },
+                WeaponProperty = "ChargeTime",
+                ChangeValue = config.SwordComboAttacksChargeTime,
+                SourceIsMultiplier = true,
+                ChangeType = "Multiply",
+                ExcludeLinked = true,
+            })
+        table.insert(TraitData.SwordCriticalParryTrait.PropertyChanges, 
+        {
+                WeaponName = "SwordWeapon3",
+                ProjectileProperty = "ImpactVelocity",
+                ChangeValue = config.SwordThrustKnockBack,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            })
+        table.insert(TraitData.SwordCriticalParryTrait.PropertyChanges, 
+        {
+                WeaponName = "SwordWeapon",
+                EffectName = "SwordDisable",
+                EffectProperty = "Duration",
+                ChangeValue = config.SwordSlashDisabledDuration,
+                SourceIsMultiplier = true,
+                ChangeType = "Multiply",
+                ExcludeLinked = true,
+            })
+
+        --Poseidon Sword
+        table.insert(TraitData.DislodgeAmmoTrait.PropertyChanges, 
+        {
+                WeaponNames = { "SwordWeapon", "SwordWeapon2", "SwordWeapon3" },
+                WeaponProperty = "ChargeTime",
+                ChangeValue = config.SwordComboAttacksChargeTime,
+                SourceIsMultiplier = true,
+                ChangeType = "Multiply",
+                ExcludeLinked = true,
+            })
+        table.insert(TraitData.DislodgeAmmoTrait.PropertyChanges, 
+        {
+                WeaponName = "SwordWeapon3",
+                ProjectileProperty = "ImpactVelocity",
+                ChangeValue = config.SwordThrustKnockBack,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            })
+        table.insert(TraitData.DislodgeAmmoTrait.PropertyChanges, 
+        {
+                WeaponName = "SwordWeapon",
+                EffectName = "SwordDisable",
+                EffectProperty = "Duration",
+                ChangeValue = config.SwordSlashDisabledDuration,
+                SourceIsMultiplier = true,
+                ChangeType = "Multiply",
+                ExcludeLinked = true,
+            })
+        -- Hades Spear
+        for _, propertyChange in pairs(TraitData.SpearWeaveTrait.PropertyChanges) do
+            if propertyChange.BaseValue ~= nil and propertyChange.BaseValue == 0.30 then
+                propertyChange.BaseValue = config.HadesSpearBaseSweepBuff
             end
         end
     end

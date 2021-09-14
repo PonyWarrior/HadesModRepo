@@ -216,6 +216,19 @@ if PQOL.Config.Gameplay.Enabled then
 			end
 		end
 	end
+	if PQOL.Config.Gameplay.BetterBalance.HadesSpearGlobalSweepBuff then
+		ModUtil.BaseOverride("MarkTargetSpinApply", function (triggerArgs)
+			if not triggerArgs.Reapplied then
+				local validWeapons = WeaponSets.HeroAllWeapons
+		
+				AddIncomingDamageModifier( triggerArgs.TriggeredByTable,
+				{
+					Name = triggerArgs.EffectName,
+					GlobalMultiplier = triggerArgs.Modifier
+				})
+			end
+		end)
+	end
 end
 
 if PQOL.Config.BoonList.Enabled then

@@ -116,15 +116,27 @@ PQOL =
 					RavenousWillPommable = false, -- vanilla false
 					DemeterAidBaseDamage = 15, -- vanilla 10
 					DemeterAidExpansionSpeed = 1.5, -- vanilla 1.0 (100%)
-					ColdEmbraceBonusDamage = 1.6, -- vanilla 1.3 (+30%)
-					FreezingVortexSizeChange = 23, -- vanilla -23 (-15%)
-					BlizzardShotShardDamage = 40, -- vanilla 20
 					-- Guan Yu
 					GuanYuComboAttack1Damage = 60, -- vanilla 40
 					GuanYuComboAttack2Damage = 80, -- vanilla 60
 					GuanYuComboAttack3Damage = 200, -- vanilla 100
 					GuanYuDashAttackDamage = 50, -- vanilla 30
 					GuanYuSpecialDamage = 60, -- vanilla 45
+					-- Zagreus Shield
+					ZagreusShieldIncreaseSpecialDamage = true, -- vanilla false
+					-- Duo Boons
+					ColdEmbraceBonusDamage = 1.6, -- vanilla 1.3 (+30%)
+					FreezingVortexSizeChange = 23, -- vanilla -23 (-15%)
+					BlizzardShotShardDamage = 40, -- vanilla 20
+					PartingShotUniversalBackstab = true, -- vanilla false
+					PartingShotBonusDamage = 1.60, -- vanilla 1.35 (+35%)
+					-- Swords
+					SwordComboAttacksChargeTime = 0.5, -- vanilla 1.0
+					SwordThrustKnockBack = 0, -- vanilla 3000
+					SwordSlashDisabledDuration = 2.0, -- vanilla 1.0 = 5 frames
+					-- Hades Spear
+					HadesSpearGlobalSweepBuff = true, -- vanilla false
+					HadesSpearBaseSweepBuff = 0.3, -- vanilla 0.3
 			},
 		},
 		BloodRefund =
