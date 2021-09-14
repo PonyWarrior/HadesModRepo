@@ -174,6 +174,15 @@ if PQOL.Config.Gameplay.Enabled then
         --Frost Flourish
         TraitData.DemeterSecondaryTrait.AddOutgoingDamageModifiers.ValidWeaponMultiplier.BaseValue = config.FrostFlourishBaseDamage
         --Mistral Dash
+        if config.MistralDashHitCount > 1 then
+            TraitData.DemeterRushTrait.ModTextOverride = "DemeterRushTrait_Modded"
+            TraitData.DemeterRushTrait.HitCount = config.MistralDashHitCount
+            table.insert(TraitData.DemeterRushTrait.ExtractValues, 
+        {
+                Key = "HitCount",
+                ExtractAs = "TooltipTickRate"
+            })
+        end
         table.insert(TraitData.DemeterRushTrait.PropertyChanges,
         {
             WeaponNames = WeaponSets.HeroRushWeapons,
@@ -225,6 +234,9 @@ if PQOL.Config.Gameplay.Enabled then
         -- Cold Embrace
         TraitData.SelfLaserTrait.AddOutgoingDamageModifiers.ValidWeaponMultiplier.BaseValue = config.ColdEmbraceBonusDamage
         -- Freezing Vortex
+        if config.FreezingVortexSizeChange > 0 then
+            TraitData.StationaryRiftTrait.ModTextOverride = "StationaryRiftTrait_Modded"
+        end
         for _, propertyChange in pairs(TraitData.StationaryRiftTrait.PropertyChanges) do
             if propertyChange.BaseValue ~= nil and propertyChange.BaseValue == -23 then
                 propertyChange.BaseValue = config.FreezingVortexSizeChange
@@ -257,6 +269,7 @@ if PQOL.Config.Gameplay.Enabled then
         end
         -- Zagreus Shield
         if config.ZagreusShieldIncreaseSpecialDamage then
+            TraitData.ShieldBaseUpgradeTrait.ModTextOverride = "ShieldBaseUpgradeTrait_Modded"
             for _, propertyChange in pairs(TraitData.ShieldBaseUpgradeTrait.PropertyChanges) do
                 propertyChange.WeaponNames = { "ShieldWeapon", "ShieldWeaponDash", "ShieldThrow" }
             end
@@ -264,6 +277,7 @@ if PQOL.Config.Gameplay.Enabled then
         --Parting Shot
         if config.PartingShotUniversalBackstab then
             temp = nil
+            TraitData.CastBackstabTrait.ModTextOverride = "CastBackstabTrait_Modded"
         else
             temp = WeaponSets.HeroNonPhysicalWeapons
         end
@@ -338,6 +352,9 @@ if PQOL.Config.Gameplay.Enabled then
                 ExcludeLinked = true,
             })
         -- Hades Spear
+        if config.HadesSpearGlobalSweepBuff then
+            TraitData.SpearWeaveTrait.ModTextOverride = "SpearWeaveTrait_Modded"
+        end
         for _, propertyChange in pairs(TraitData.SpearWeaveTrait.PropertyChanges) do
             if propertyChange.BaseValue ~= nil and propertyChange.BaseValue == 0.30 then
                 propertyChange.BaseValue = config.HadesSpearBaseSweepBuff
