@@ -2227,6 +2227,9 @@ if PQOL.Config.Pact.Enabled then
 		CloseShrineUpgradeScreen(screen, button)
 		OpenShrineUpgradeMenu()
 	end
+
+	-- Lets you pick Personal Liability in a non hell mode save
+	MetaUpgradeData.NoInvulnerabilityShrineUpgrade.GameStateRequirements = nil
 end
 
 if PQOL.Config.Commendations.Enabled then

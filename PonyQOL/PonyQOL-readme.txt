@@ -175,3 +175,4 @@ new features :
 added UnlockHiddenAspects, lets you unlock any or all hidden aspect
 Gameplay: added BetterBalance sub-module, which implements popular balance change requests
 all changes can be configured and tweeked
+Pact: you can now pick the Personal Liability pact option in a non hell mode save
