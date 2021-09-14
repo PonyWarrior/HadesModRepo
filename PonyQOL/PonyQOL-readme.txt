@@ -173,3 +173,5 @@ general code improvement
 new features :
 
 added UnlockHiddenAspects, lets you unlock any or all hidden aspect
+Gameplay: added BetterBalance sub-module, which implements popular balance change requests
+all changes can be configured and tweeked

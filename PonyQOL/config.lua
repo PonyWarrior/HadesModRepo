@@ -70,6 +70,7 @@ PQOL =
 			-- When enabled :
 			-- Can no longer roll Demeter's Nourished Soul with Lasting Consequences 4 Pact option
 			-- Lucifer beam now destroys projectiles (only the base of the beam destroys projectiles, like it works with reflect)
+			-- Any extra last stand charges are now consumed before regular ones from the mirror
 			Enabled = true,
 			GilgameshChanges =
 			{
@@ -102,6 +103,22 @@ PQOL =
 					-- Can't dash anymore
 					Enabled = true,
 				},
+			},
+			BetterBalance =
+			{
+				Enabled = true,
+					-- Demeter
+					FrostStrikeBaseDamage = 1.4, -- vanilla 1.4 (+40%)
+					FrostFlourishBaseDamage = 1.6, -- vanilla 1.6 (+60%)
+					MistralDashHitCount = 3, -- vanilla 1
+					KillingFreezePommable = true, -- vanilla false
+					ArcticBlastPommable = true, -- vanilla false
+					RavenousWillPommable = false, -- vanilla false
+					DemeterAidBaseDamage = 15, -- vanilla 10
+					DemeterAidExpansionSpeed = 1.5, -- vanilla 1.0 (100%)
+					ColdEmbraceBonusDamage = 1.6, -- vanilla 1.3 (+30%)
+					FreezingVortexSizeChange = 23, -- vanilla -23 (-15%)
+					BlizzardShotShardDamage = 40, -- vanilla 20
 			},
 		},
 		BloodRefund =
