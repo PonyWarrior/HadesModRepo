@@ -238,5 +238,25 @@ if PQOL.Config.Gameplay.Enabled then
                 propertyChange.BaseValue = config.BlizzardShotShardDamage
             end
         end
+
+        -- Guan Yu
+        for _, propertyChange in pairs(TraitData.SpearSpinTravel.PropertyChanges) do
+            -- Dash attack
+            if propertyChange.ChangeValue ~= nil and propertyChange.ChangeValue == 30 then
+                propertyChange.ChangeValue = config.GuanYuDashAttackDamage
+            -- Combo attack 1
+            elseif propertyChange.ChangeValue ~= nil and propertyChange.ChangeValue == 40 then
+                propertyChange.ChangeValue = config.GuanYuComboAttack1Damage
+            -- Special
+            elseif propertyChange.ChangeValue ~= nil and propertyChange.ChangeValue == 45 then
+                propertyChange.ChangeValue = config.GuanYuSpecialDamage
+            -- Combo attack 2
+            elseif propertyChange.ChangeValue ~= nil and propertyChange.ChangeValue == 60 then
+                propertyChange.ChangeValue = config.GuanYuComboAttack2Damage
+            -- Combo attack 3
+            elseif propertyChange.ChangeValue ~= nil and propertyChange.ChangeValue == 100 then
+                propertyChange.ChangeValue = config.GuanYuComboAttack3Damage
+            end
+        end
     end
 end

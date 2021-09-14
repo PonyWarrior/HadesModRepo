@@ -119,6 +119,12 @@ PQOL =
 					ColdEmbraceBonusDamage = 1.6, -- vanilla 1.3 (+30%)
 					FreezingVortexSizeChange = 23, -- vanilla -23 (-15%)
 					BlizzardShotShardDamage = 40, -- vanilla 20
+					-- Guan Yu
+					GuanYuComboAttack1Damage = 60, -- vanilla 40
+					GuanYuComboAttack2Damage = 80, -- vanilla 60
+					GuanYuComboAttack3Damage = 200, -- vanilla 100
+					GuanYuDashAttackDamage = 50, -- vanilla 30
+					GuanYuSpecialDamage = 60, -- vanilla 45
 			},
 		},
 		BloodRefund =
