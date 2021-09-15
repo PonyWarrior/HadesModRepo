@@ -2,10 +2,14 @@ SaveIgnores["ChallengeData"] = true
 
 ChallengeData =
 {
+    --Template
+
+
+
     Challenge1 =
     {
-        Name = "Challenge 1",
-        Description = "Skip Tartarus and start directly in Asphodel. Can you survive the heat of Asphodel with only your starting boon?",
+        Name = "Tartarus skip",
+        Description = "Zagreus jumped a bit further from the window and landed in Asphodel. Can you survive the heat of Asphodel with only your starting boon?",
         Author = "PonyWarrior",
         SetupFunction = "Challenge1",
         HasHardMode = true,
@@ -16,7 +20,7 @@ ChallengeData =
 
     Challenge1_Hard =
     {
-        Name = "Challenge 1 Hard Mode",
+        Name = "Tartarus skip - Hard Mode",
         Description = "You thought that was too easy? Try again but with a pitiful health pool and in hell mode. Good luck!",
         SetupFunction = "Challenge1",
         HasHardMode = false,
@@ -38,4 +42,38 @@ ChallengeData =
         --     },
         -- },
     },
+
+    BossRush =
+    {
+        Name = "Boss Rush",
+        Description = "Fight the Fury, Bone Hydra, Heroes of Elysium and Hades one after the other as fast as you can with one of the build provided.",
+        Author = "PonyWarrior",
+        HasHardMode = false,
+        IsHardMode = false,
+        HellMode = false,
+        SetupFunction = "ChallengeMod.BossRushRoomset",
+        RestoreRoomData = true,
+    },
+
+    -- BossRush_Hard =
+    -- {
+    --     Name = "Boss Rush - Hard Mode",
+    --     Description = "Fight the Furies, Bone Hydra, Heroes of Elysium and Hades one after the other as fast as you can with one of the build provided, with Extreme Measures.",
+    --     Author = "PonyWarrior",
+    --     HasHardMode = false,
+    --     IsHardMode = true,
+    --     HellMode = false,
+    --     SetupFunction = "ChallengeMod.BossRushSetup",
+    --     UseCustomRoomSet = true,
+    --     CustomRoomSet =
+    --     {
+    --     },
+    --     ForcePactOptions =
+    --     {
+    --         {
+    --             Name = "BossDifficultyShrineUpgrade",
+    --             Level = 4
+    --         },
+    --     },
+    -- },
 }

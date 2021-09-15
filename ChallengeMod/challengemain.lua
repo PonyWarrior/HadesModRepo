@@ -1,8 +1,36 @@
+ModUtil.RegisterMod("ChallengeMod")
 
 ChallengeSelection = { Components = {} }
 ChallengeDetails = { Components = {} }
 
-OnAnyLoad{"RoomPreRun", function(triggerArgs) 
+local HellModePactOptions =
+{
+  {
+    Name = "EnemyDamageShrineUpgrade",
+    Level = 5,
+  },
+  {
+    Name = "HealingReductionShrineUpgrade",
+    Level = 4,
+  },
+  {
+    Name = "EnemyCountShrineUpgrade",
+    Level = 3,
+  },
+  {
+    Name = "EnemyHealthShrineUpgrade",
+    Level = 2,
+  },
+  {
+    Name = "NoInvulnerabilityShrineUpgrade",
+    Level = 1,
+  },
+}
+
+OnAnyLoad{"RoomPreRun", function(triggerArgs)
+    if GameState.BuildData == nil then
+      InitializeBuildData()
+    end
     local selector = DeepCopyTable( ObstacleData.SecretDoor )
     selector.ObjectId = SpawnObstacle({ Name = "ShrinePointDoor", Group = "FX_Terrain", DestinationId = CurrentRun.Hero.ObjectId, AttachedTable = selector, OffsetX = -1250, OffsetY = -1150 })
     SetupObstacle( selector )
@@ -194,37 +222,22 @@ function CloseChallengeDetails(screen, button)
   OnScreenClosed({ Flag = screen.Name })
 end
 
+local RoomDataBackup
+local RoomSetDataBackup
+
 function HandleChallenge(screen, button)
   local challenge = button.Challenge
+  if challenge.RestoreRoomData then
+	GameState.RestoreRoomData = true
+	RoomDataBackup = DeepCopyTable(RoomData)
+	RoomSetDataBackup = DeepCopyTable(RoomSetData)
+  end
   if challenge.SetupFunction ~= nil then
     _G[challenge.SetupFunction]()
   end
 
   if challenge.HellMode then
     --Switching the hell mode flag on doesnt automatically add the pact options so I do it manually instead
-    local HellModePactOptions =
-    {
-      {
-        Name = "EnemyDamageShrineUpgrade",
-        Level = 5,
-      },
-      {
-        Name = "HealingReductionShrineUpgrade",
-        Level = 4,
-      },
-      {
-        Name = "EnemyCountShrineUpgrade",
-        Level = 3,
-      },
-      {
-        Name = "EnemyHealthShrineUpgrade",
-        Level = 2,
-      },
-      {
-        Name = "NoInvulnerabilityShrineUpgrade",
-        Level = 1,
-      },
-    }
     if challenge.ForcedPactOptions == nil then
       challenge.ForcedPactOptions = HellModePactOptions
     else
@@ -270,17 +283,30 @@ function HandleChallenge(screen, button)
   end
 
   StartOver()
-
-  UnblockCombatUI("Overlook")
-  EnableCombatControls()
-  PanCamera({ Id = CurrentRun.Hero.ObjectId, Duration = 1.5, FromCurrentLocation = true })
-  FocusCamera({ Fraction = 1.0, Duration = 1.5, ZoomType = "Ease" })
-  SetSoundCueValue({ Id = MusicId, Names = { "LowPass" }, Value = 0.0, Duration = 0.5 })
-  SetSoundCueValue({ Id = MusicId, Names = { "Keys" }, Value = 1.0, Duration = 1.5 })
-  SetVolume({ Id = MusicId, Value = 1, Duration = 1.5 })
-  PlaySound({ Name = "/Leftovers/World Sounds/MapZoomInShortHigh" })
-  ClearCameraFocusOverride()
-  ShowCombatUI()
-  ModifyTextBox({ Id = ScreenAnchors.OverlookText, FadeTarget = 0, FadeDuration = 0.2 })
-  killTaggedThreads( "OverlookThread" )
+  ChallengeMod.CleanUpUI()
 end
+
+function ChallengeMod.CleanUpUI()
+	UnblockCombatUI("Overlook")
+	EnableCombatControls()
+	PanCamera({ Id = CurrentRun.Hero.ObjectId, Duration = 1.5, FromCurrentLocation = true })
+	FocusCamera({ Fraction = 1.0, Duration = 1.5, ZoomType = "Ease" })
+	SetSoundCueValue({ Id = MusicId, Names = { "LowPass" }, Value = 0.0, Duration = 0.5 })
+	SetSoundCueValue({ Id = MusicId, Names = { "Keys" }, Value = 1.0, Duration = 1.5 })
+	SetVolume({ Id = MusicId, Value = 1, Duration = 1.5 })
+	PlaySound({ Name = "/Leftovers/World Sounds/MapZoomInShortHigh" })
+	ClearCameraFocusOverride()
+	ShowCombatUI()
+	ModifyTextBox({ Id = ScreenAnchors.OverlookText, FadeTarget = 0, FadeDuration = 0.2 })
+	killTaggedThreads( "OverlookThread" )
+end
+
+ModUtil.Path.Wrap("StartDeathLoopPresentation", function (baseFunc, currentRun)
+	if GameState.RestoreRoomData and RoomDataBackup ~= nil and RoomSetDataBackup ~= nil then
+		DebugPrint({Text="@ChallengeMod: Restoring Room Data"})
+		RoomData = RoomDataBackup
+		RoomSetData = RoomSetDataBackup
+		GameState.RestoreRoomData = nil
+	end
+	return baseFunc(currentRun)
+end)
