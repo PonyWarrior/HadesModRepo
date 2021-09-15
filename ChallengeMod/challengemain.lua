@@ -242,7 +242,7 @@ function HandleChallenge(screen, button)
       challenge.ForcedPactOptions = HellModePactOptions
     else
       for i, option in pairs (HellModePactOptions) do
-        table.insert(option, challenge.ForcedPactOptions)
+        table.insert(challenge.ForcedPactOptions, option)
       end
     end
   end
@@ -310,3 +310,22 @@ ModUtil.Path.Wrap("StartDeathLoopPresentation", function (baseFunc, currentRun)
 	end
 	return baseFunc(currentRun)
 end)
+
+-- remove this when ellom publishes his mod
+ModUtil.WrapBaseFunction("ShowRunIntro", function( baseFunc )
+	return
+    baseFunc()
+end)
+
+ModUtil.WrapBaseFunction("EndEarlyAccessPresentation", function ( baseFunc )
+	CurrentRun.ActiveBiomeTimer = false
+
+	thread( Kill, CurrentRun.Hero )
+	wait( 0.15 )
+
+	FadeIn({ Duration = 0.5 })
+	return
+
+    baseFunc()
+end)
+--

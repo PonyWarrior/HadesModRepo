@@ -34,7 +34,7 @@ ChallengeData =
                 IsAbsolute = true,
             },
         },
-        -- ForcePactOptions =
+        -- ForcedPactOptions =
         -- {
         --     {
         --         Name = "ShopPrices",
@@ -48,32 +48,28 @@ ChallengeData =
         Name = "Boss Rush",
         Description = "Fight the Fury, Bone Hydra, Heroes of Elysium and Hades one after the other as fast as you can with one of the build provided.",
         Author = "PonyWarrior",
-        HasHardMode = false,
+        HasHardMode = true,
+        HardMode = "BossRush_Hard",
         IsHardMode = false,
         HellMode = false,
         SetupFunction = "ChallengeMod.BossRushRoomset",
         RestoreRoomData = true,
     },
 
-    -- BossRush_Hard =
-    -- {
-    --     Name = "Boss Rush - Hard Mode",
-    --     Description = "Fight the Furies, Bone Hydra, Heroes of Elysium and Hades one after the other as fast as you can with one of the build provided, with Extreme Measures.",
-    --     Author = "PonyWarrior",
-    --     HasHardMode = false,
-    --     IsHardMode = true,
-    --     HellMode = false,
-    --     SetupFunction = "ChallengeMod.BossRushSetup",
-    --     UseCustomRoomSet = true,
-    --     CustomRoomSet =
-    --     {
-    --     },
-    --     ForcePactOptions =
-    --     {
-    --         {
-    --             Name = "BossDifficultyShrineUpgrade",
-    --             Level = 4
-    --         },
-    --     },
-    -- },
+    BossRush_Hard =
+    {
+        Description = "Fight the Furies, Bone Hydra, Heroes of Elysium and Hades one after the other as fast as you can with one of the build provided, with Extreme Measures, Hell Mode and no midbiome rooms.",
+        HasHardMode = false,
+        IsHardMode = true,
+        HellMode = true,
+        SetupFunction = "ChallengeMod.BossRushRoomsetHard",
+        RestoreRoomData = true,
+        ForcedPactOptions =
+        {
+            {
+                Name = "BossDifficultyShrineUpgrade",
+                Level = 4
+            },
+        },
+    },
 }
