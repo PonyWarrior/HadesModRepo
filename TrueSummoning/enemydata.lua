@@ -9,6 +9,7 @@ UnitSetData.Enemies.MegSummon =
 	AlwaysTraitor = true,
 	IgnoreAutoLock = true,
 	BlockWrathGain = true,
+	CanStoreAmmo = false,
     AnimOffsetZ = 260,
     MaxHealth = 1000,
     AISetupDelay = 1.5,
