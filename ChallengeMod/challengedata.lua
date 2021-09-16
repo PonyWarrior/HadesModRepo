@@ -1,6 +1,4 @@
-SaveIgnores["ChallengeData"] = true
-
-ChallengeData =
+ChallengeMod.ChallengeData =
 {
     --Template
     Challenge1 =

@@ -10,21 +10,21 @@
     --  },
     --@subparam HellMode: Adds Hell Mode challenges to ForcedPactOptions
     --@subparam SetupFunction: calls name of function from global when button to start challenge pressed  
-    --@subparam Description: The rich text descritpion in the window that pops up
+    --@subparam Description: The rich text Description in the window that pops up
     --@subparam HardMode: Adds a hard mode on initalization (pass in a ChallengeObject generated from this function)
 function ChallengeMod.GenerateChallengeObject(name, args)
     local challengeObject = {}
 
     challengeObject.Name = name
-    challengeObject.Descritpion = args.Description
+    challengeObject.Description = args.Description
     challengeObject.Author = args.Author
     challengeObject.HellMode = args.HellMode
     challengeObject.SetupFunction = args.SetupFunction
     challengeObject.RestoreRoomData = true
 
-    if type(args.HardMode) == "table" then
+    if args.HardMode ~= nil and type(args.HardMode) == "table" then
         challengeObject.HardMode = args.HardMode
-    else
+    elseif args.HardMode ~= nil then
         error("Incorrect HardMode arg type, Incorrect type: " .. type(args.HardMode) .. " requires type table")
     end
 
@@ -113,7 +113,7 @@ function ChallengeMod.ChangeChallengeHardModeField(id, fieldName, newValue)
             error("challenge with id ".. id .." has no HardMode", 2)
         else
             if ChallengeMod.ChallengeData[id].HardMode[fieldName] == nil or type(newValue) == type(ChallengeMod.ChallengeData[id].HardMode[fieldName]) then
-                ChallengeMod.ChallengeData[id][fieldName] = newValue
+                ChallengeMod.ChallengeData[id].HardMode[fieldName] = newValue
             else
                 error("incorrect type when changing challenge with id " .. id .. "'s HardMode value " .. fieldName .. " Old Type: " .. type(ChallengeMod.ChallengeData[id].HardMode[fieldName]) .. ", New Type" .. type(newValue), 2)
             end
