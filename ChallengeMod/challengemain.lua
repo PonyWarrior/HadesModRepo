@@ -28,9 +28,6 @@ local HellModePactOptions =
 }
 
 OnAnyLoad{"RoomPreRun", function(triggerArgs)
-    if GameState.BuildData == nil then
-      InitializeBuildData()
-    end
     local selector = DeepCopyTable( ObstacleData.SecretDoor )
     selector.ObjectId = SpawnObstacle({ Name = "ShrinePointDoor", Group = "FX_Terrain", DestinationId = CurrentRun.Hero.ObjectId, AttachedTable = selector, OffsetX = -1250, OffsetY = -1150 })
     SetupObstacle( selector )
@@ -117,8 +114,8 @@ function OpenChallengeDetailsScreen(dummy, button)
   local subtitle = "Challenge Name"
   local challenge = button.Challenge
   local hardmode = nil
-  if challenge.HasHardMode then
-    hardmode = ChallengeData[challenge.HardMode]
+  if challenge.HardMode then
+    hardmode = challenge.HardMode
   end
   screen.Name = "ChallengeDetails"
   screen.RowStartX = -600
@@ -173,7 +170,7 @@ function OpenChallengeDetailsScreen(dummy, button)
         ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
     })
 
-    if challenge.HasHardMode then
+    if hardmode ~= nil then
       --Hard Mode
       CreateTextBox({ Id = components.Background.Id, Text = "Hard Mode", FontSize = 24,
       OffsetX = -20, OffsetY = 50, Color = Color.Red, Font = "SpectralSCLight",
