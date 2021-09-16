@@ -149,7 +149,7 @@ local RealGodNames = {
 SaveIgnores["CodexMenuData"] = true
 
 -- ModUtil part
-if ModUtil ~= nil and PQOL == nil then
+if ModUtil ~= nil then
     local mod = "CodexMenu"
 
     ModUtil.WrapBaseFunction( "SetupMap", function(baseFunc)
@@ -1781,6 +1781,7 @@ local CommandTable =
 	end,
 	NPC_Achilles_01 = function()
 		if IsSuperValid() then
+			CloseCodexScreen()
 			wait(1, RoomThreadName)
 			BuildSuperMeter(CurrentRun, 100)
 			CommenceSuperMove()
