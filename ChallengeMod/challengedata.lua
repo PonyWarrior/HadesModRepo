@@ -16,14 +16,21 @@ ChallengeData =
             Description = "You thought that was too easy? Try again but with a pitiful health pool and in hell mode. Good luck!",
             SetupFunction = "Challenge1",
             HellMode = true,
-            PlayerModifiers =
+            RestoreRoomData = true,
+            Trait =
             {
+                Icon = "Shop_BedroomDecor",
+                Name = "ChallengeMode",
+		        MaxHealthMultiplier = 0.2,
+                PropertyChanges =
                 {
-                    TargetProperty = "MaxHealth",
-                    Value = 10,
-                    IsAbsolute = true,
+                    {
+                        LuaProperty = "MaxHealth",
+                        ChangeValue = 0.2,
+                        ChangeType = "Multiply",
+                    },
                 },
-            },
+            }
         },
     },
 

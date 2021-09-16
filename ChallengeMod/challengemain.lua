@@ -266,22 +266,88 @@ function HandleChallenge(screen, button)
     end
   end
 
-  if challenge.PlayerModifiers ~= nil then
-    for i, modifier in pairs (challenge.PlayerModifiers) do
-      if modifier.TargetProperty == "MaxHealth" then
-        if modifier.IsMultiplier then
-          HeroData.DefaultHero.MaxHealthMultiplier = modifier.Value
-        elseif modifier.IsAbsolute then
-          HeroData.DefaultHero.MaxHealth = modifier.Value
-        elseif modifier.IsFlat then
-          HeroData.DefaultHero.MaxHealth = HeroData.DefaultHero.MaxHealth + modifier.Value
-        end
-      end
+  if challenge.Trait then
+    ChallengeMod.SetupChallengeTrait({Trait = challenge.Trait})
+    local func = function ()
+        wait(6.0)
+        AddTraitToHero({ TraitName = "ChallengeMode" })
     end
+    thread(func)
   end
 
   StartOver()
+
   ChallengeMod.CleanUpUI()
+end
+
+function ChallengeMod.SetupChallengeTrait(args)
+    local newTrait = args.Trait
+    if newTrait == nil then
+        return
+    end
+
+    TraitData.ChallengeMode = newTrait
+    local traitData = TraitData.ChallengeMode
+
+    ProcessDataInheritance( traitData, TraitData )
+    if traitData.PropertyChanges ~= nil then
+        for k, propertyChange in pairs( traitData.PropertyChanges ) do
+            AddFormattedPercentageChangeValues(propertyChange)
+        end
+    end
+    if traitData.EnemyPropertyChanges ~= nil then
+        for k, propertyChange in pairs( traitData.EnemyPropertyChanges ) do
+            AddFormattedPercentageChangeValues(propertyChange)
+        end
+    end
+    AddFormattedPercentageChangeValues(traitData)
+
+    if not traitData.ExcludeLinked then
+        traitData.LegalOnFireWeapons = AddLinkedWeapons( traitData.LegalOnFireWeapons )
+        traitData.LegalOnDamageWeapons = AddLinkedWeapons( traitData.LegalOnDamageWeapons )
+        if traitData.DamageOnFireWeapons and not traitData.DamageOnFireWeapons.ExcludeLinked then
+            traitData.DamageOnFireWeapons.WeaponNames = AddLinkedWeapons( traitData.DamageOnFireWeapons.WeaponNames )
+        end
+        if traitData.AddOutgoingDamageModifiers then
+            if traitData.AddOutgoingDamageModifiers.ValidWeapons then
+                if not traitData.AddOutgoingDamageModifiers.ExcludeLinked then
+                    traitData.AddOutgoingDamageModifiers.ValidWeapons = AddLinkedWeapons( traitData.AddOutgoingDamageModifiers.ValidWeapons )
+                end
+                traitData.AddOutgoingDamageModifiers.ValidWeaponsLookup = ToLookup( traitData.AddOutgoingDamageModifiers.ValidWeapons )
+            end
+            if traitData.AddOutgoingDamageModifiers.ValidEnchantments and not traitData.AddOutgoingDamageModifiers.ExcludeLinked then
+                for key, weaponNames in pairs(traitData.AddOutgoingDamageModifiers.ValidEnchantments.TraitDependentWeapons ) do
+                    traitData.AddOutgoingDamageModifiers.ValidEnchantments.TraitDependentWeapons[key] = AddLinkedWeapons( weaponNames )
+                end
+
+                if traitData.AddOutgoingDamageModifiers.ValidEnchantments.ValidWeapons then
+                    traitData.AddOutgoingDamageModifiers.ValidEnchantments.ValidWeapons = AddLinkedWeapons( traitData.AddOutgoingDamageModifiers.ValidEnchantments.ValidWeapons )
+                end
+            end
+            if traitData.AddOutgoingDamageModifiers.EmptySlotValidData then
+                for key, weaponNames in pairs(traitData.AddOutgoingDamageModifiers.EmptySlotValidData) do
+                    traitData.AddOutgoingDamageModifiers.EmptySlotValidData[key] = AddLinkedWeapons( weaponNames )
+                end
+            end
+
+        end
+    end
+
+    if traitData.WeaponDataOverride then
+        for weaponName, weaponData in pairs(traitData.WeaponDataOverride) do
+
+            if weaponData.Sounds ~= nil and weaponData.Sounds.ChargeSounds ~= nil then
+                for k, soundElement in pairs( weaponData.Sounds.ChargeSounds ) do
+                    if soundElement.StoppedBy ~= nil then
+                        soundElement.StoppedByLookup = soundElement.StoppedByLookup or {}
+                        for k, eventName in pairs( soundElement.StoppedBy ) do
+                            soundElement.StoppedByLookup[eventName] = true
+                        end
+                    end
+                end
+            end
+        end
+    end
 end
 
 function ChallengeMod.CleanUpUI()
