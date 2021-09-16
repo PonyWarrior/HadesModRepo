@@ -80,7 +80,7 @@ function OpenChallengeSelectionScreen()
   components.CloseButton.ControlHotkey = "Cancel"
   --Display
   local index = 1
-  for key, challenge in pairs (ChallengeData) do
+  for key, challenge in pairs (ChallengeMod.ChallengeData) do
     if challenge.IsHardMode then
       -- don't display hard modes on this screen
     else
