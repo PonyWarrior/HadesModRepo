@@ -1374,9 +1374,6 @@ end
 
 ModUtil.RegisterMod("BuildManager")
 
-local SavedBuilds = ModUtil.PathGet( "ModData.BuildManager.SavedBuilds" ) or { }
-ModUtil.PathSet( "ModData.BuildManager.SavedBuilds", SavedBuilds )
-
 BuildMenuScreen = { Components = {} }
 BuildMenuData = {
 	BuildMenuScreen =
@@ -1473,6 +1470,9 @@ function OpenBuildMenu()
 	local components = screen.Components
 	screen.Title = "Codex Menu Build Menu"
 	screen.Name = "BuildMenuScreen"
+    if BuildManager.Data.SavedBuilds == nil then
+        BuildManager.Data.SavedBuilds = {}
+    end
 	OnScreenOpened({ Flag = screen.Name, PersistCombatUI = true })
 	SetConfigOption({ Name = "UseOcclusion", Value = false })
 	FreezePlayerUnit()
@@ -1533,7 +1533,54 @@ function OpenBuildMaker(screen, button)
 	Attach({ Id = components.ReturnButton.Id, DestinationId = components.Background.Id, OffsetX = -100, OffsetY = 500 })
 	SetColor({Id = components.ReturnButton.Id, Color = Color.LightBlue})
 
-	local newBuild = {}
+	screen.Build = CreateNewBuild()
+
+	for i, button in pairs(BuildMenuData.BuildMenuScreen.Buttons.OpenBuildMaker.Buttons) do
+		local index = button.Index
+		local rowstartX = 0
+		local rowstartY = -400
+		local rowoffset = 100
+		local columnoffset = 300
+		local numperrow = 1
+		local offsetX = rowstartX + columnoffset*((index-1) % numperrow)
+		local offsetY = rowstartY + rowoffset*(math.floor((index-1)/numperrow))
+
+		components[button.Name] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BuildMenu", Scale = 0.3 })
+		SetScaleX({Id = components[button.Name].Id, Fraction = 1.5})
+		components[button.Name].OnPressedFunctionName = button.Function
+		components[button.Name].ToDestroy = true
+		Attach({Id = components[button.Name].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
+		CreateTextBox({ Id = components[button.Name].Id, Text = button.Title, FontSize = 22,
+		OffsetX = 0, OffsetY = 0, Color = Color.White, Font = "AlegreyaSansSCLight", Justification = "Center" })
+	end
+end
+
+function CreateNewBuild()
+	local newBuild =
+	{
+		Weapon = "",
+		Aspect = {},
+		Keepsake = "",
+		Assist = "",
+		MirrorUpgrades = {},
+		PactOptions = {},
+		Boons = {},
+		ContractorUpgrades = {},
+	}
+	return newBuild
+end
+
+function ReturnToBuildMaker(screen, button)
+	CleanScreen(screen, button)
+	local components = screen.Components
+	ModifyTextBox({Id = components.TitleAnchor.Id, Text = "Codex Menu Build"})
+	PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
+	components.ReturnButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "BuildMenu" })
+	components.ReturnButton.OnPressedFunctionName = "ReturnToBuildMenu"
+	components.ReturnButton.ToDestroy = true
+	Attach({ Id = components.ReturnButton.Id, DestinationId = components.Background.Id, OffsetX = -100, OffsetY = 500 })
+	SetColor({Id = components.ReturnButton.Id, Color = Color.LightBlue})
+
 	for i, button in pairs(BuildMenuData.BuildMenuScreen.Buttons.OpenBuildMaker.Buttons) do
 		local index = button.Index
 		local rowstartX = 0
@@ -1555,6 +1602,22 @@ function OpenBuildMaker(screen, button)
 end
 
 function BuildMakerOverview(screen, button)
+	CleanScreen(screen, button)
+	local components = screen.Components
+	ModifyTextBox({Id = components.TitleAnchor.Id, Text = "Codex Menu Build Overview"})
+	PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
+	components.ReturnButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "BuildMenu" })
+	components.ReturnButton.OnPressedFunctionName = "ReturnToBuildMaker"
+	components.ReturnButton.ToDestroy = true
+	Attach({ Id = components.ReturnButton.Id, DestinationId = components.Background.Id, OffsetX = -100, OffsetY = 500 })
+	SetColor({Id = components.ReturnButton.Id, Color = Color.LightBlue})
+
+    local build = screen.Build
+
+    if build.Weapon ~= "" then
+        
+    end
+
 
 end
 
@@ -1571,7 +1634,16 @@ function BuildMakerKeepsake(screen, button)
 end
 
 function BuildMakerBoons(screen, button)
-
+    CleanScreen(screen, button)
+	local components = screen.Components
+	ModifyTextBox({Id = components.TitleAnchor.Id, Text = "Boon Picker"})
+	PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
+	components.ReturnButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "BuildMenu" })
+	components.ReturnButton.OnPressedFunctionName = "ReturnToBuildMaker"
+	components.ReturnButton.ToDestroy = true
+	Attach({ Id = components.ReturnButton.Id, DestinationId = components.Background.Id, OffsetX = -100, OffsetY = 500 })
+	SetColor({Id = components.ReturnButton.Id, Color = Color.LightBlue})
+    
 end
 
 function BuildMakerPact(screen, button)
@@ -1583,11 +1655,29 @@ function BuildMakerContractor(screen, button)
 end
 
 function BuildMakerImport(screen, button)
+	local build = screen.Build
 
+	build.Weapon = GetEquippedWeapon()
+	if GameState.LastInteractedWeaponUpgrade ~= nil and GetWeaponUpgradeTrait( GameState.LastInteractedWeaponUpgrade.WeaponName, GameState.LastInteractedWeaponUpgrade.ItemIndex ) ~= nil then
+		build.Aspect = { Name = GetWeaponUpgradeTrait(build.Weapon, GameState.LastWeaponUpgradeData[build.Weapon].Index), Rarity = GetRarityKey(GetWeaponUpgradeLevel(build.Weapon, GetEquippedWeaponTraitIndex(build.Weapon))) }
+	end
+	build.Keepsake = GameState.LastAwardTrait
+	build.Assist = GameState.LastAssistTrait
+
+	for i, traitData in pairs( CurrentRun.Hero.Traits ) do
+		if traitData.Name ~= build.Weapon and traitData.Name ~= build.Aspect.Name
+		and traitData.Name ~= build.Keepsake and traitData.Name ~= build.Assist then
+			table.insert(build.Boons, { Name = traitData.Name, Rarity = traitData.Rarity, })
+		end
+	end
+
+    screen.Build = build
 end
 
 function BuildMakerSave(screen, button)
-
+    if screen.Build ~= nil and not Contains(BuildManager.Data.SavedBuilds, screen.Build) then
+        table.insert(BuildManager.Data.SavedBuilds, screen.Build)
+    end
 end
 
 function OpenBuildViewer(screen, button)
@@ -1611,18 +1701,18 @@ function ReturnToBuildMenu(screen, button)
 
 	if BuildMenuData[screen.Name] ~= nil then
 		if BuildMenuData[screen.Name].Buttons ~= nil then
-			local index = 1
 			for i, button in pairs(BuildMenuData[screen.Name].Buttons) do
-				local rowstartX = -750
+				local index = button.Index
+				local rowstartX = 0
 				local rowstartY = -400
 				local rowoffset = 100
 				local columnoffset = 300
-				local numperrow = 4
+				local numperrow = 1
 				local offsetX = rowstartX + columnoffset*((index-1) % numperrow)
 				local offsetY = rowstartY + rowoffset*(math.floor((index-1)/numperrow))
-				index = index + 1
 
 				components[button.Name] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BuildMenu", Scale = 0.3 })
+				SetScaleX({Id = components[button.Name].Id, Fraction = 1.5})
 				components[button.Name].OnPressedFunctionName = button.Function
 				components[button.Name].ToDestroy = true
 				Attach({Id = components[button.Name].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
