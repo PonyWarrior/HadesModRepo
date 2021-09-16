@@ -22,8 +22,6 @@ function ChallengeMod.BossRushRoomset()
     RoomData.A_Boss03.EligibleRewards = {}
 
     RoomData.A_PostBoss01.LinkedRoom = "B_Boss01"
-    RoomData.A_PostBoss02.LinkedRoom = "B_Boss01"
-    RoomData.A_PostBoss03.LinkedRoom = "B_Boss01"
 
     RoomData.B_Boss01.RemoveTimerBlock = "InterBiome"
     RoomData.B_Boss01.EligibleRewards = {}
