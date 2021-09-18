@@ -153,64 +153,8 @@ end)
 
 OnControlPressed{ "Shout",
 function(triggerArgs)
-    --Debug area
-    -- LoadAltarBoons()
-    -- AddTraitToHero({TraitName = "ZeusShoutTrait"})
-    -- BuildSuperMeter(CurrentRun, 100)
-    -- CommenceSuperMove()
-    -- UpdateSuperDamageBonus()
-    -- thread( MarkObjectiveComplete, "EXMove" )
-    -- RemoveTrait( CurrentRun.Hero, "ZeusShoutTrait" )
 
-    -- AddTraitToHero({TraitName = "PoseidonShoutTrait"})
-    -- BuildSuperMeter(CurrentRun, 100)
-    -- CommenceSuperMove()
-    -- UpdateSuperDamageBonus()
-    -- thread( MarkObjectiveComplete, "EXMove" )
-    -- RemoveTrait( CurrentRun.Hero, "PoseidonShoutTrait" )
-
-    -- AddTraitToHero({TraitName = "AthenaShoutTrait"})
-    -- BuildSuperMeter(CurrentRun, 100)
-    -- CommenceSuperMove()
-    -- UpdateSuperDamageBonus()
-    -- thread( MarkObjectiveComplete, "EXMove" )
-    -- RemoveTrait( CurrentRun.Hero, "AthenaShoutTrait" )
-
-    -- AddTraitToHero({TraitName = "AphroditeShoutTrait"})
-    -- BuildSuperMeter(CurrentRun, 100)
-    -- CommenceSuperMove()
-    -- UpdateSuperDamageBonus()
-    -- thread( MarkObjectiveComplete, "EXMove" )
-    -- RemoveTrait( CurrentRun.Hero, "AphroditeShoutTrait" )
-
-    -- AddTraitToHero({TraitName = "ArtemisShoutTrait"})
-    -- BuildSuperMeter(CurrentRun, 100)
-    -- CommenceSuperMove()
-    -- UpdateSuperDamageBonus()
-    -- thread( MarkObjectiveComplete, "EXMove" )
-    -- RemoveTrait( CurrentRun.Hero, "ArtemisShoutTrait" )
-
-    -- AddTraitToHero({TraitName = "AresShoutTrait"})
-    -- BuildSuperMeter(CurrentRun, 100)
-    -- CommenceSuperMove()
-    -- UpdateSuperDamageBonus()
-    -- thread( MarkObjectiveComplete, "EXMove" )
-    -- RemoveTrait( CurrentRun.Hero, "AresShoutTrait" )
-
-    -- AddTraitToHero({TraitName = "DionysusShoutTrait"})
-    -- BuildSuperMeter(CurrentRun, 100)
-    -- CommenceSuperMove()
-    -- UpdateSuperDamageBonus()
-    -- thread( MarkObjectiveComplete, "EXMove" )
-    -- RemoveTrait( CurrentRun.Hero, "DionysusShoutTrait" )
-
-    -- AddTraitToHero({TraitName = "DemeterShoutTrait"})
-    -- BuildSuperMeter(CurrentRun, 100)
-    -- CommenceSuperMove()
-    -- UpdateSuperDamageBonus()
-    -- thread( MarkObjectiveComplete, "EXMove" )
-    -- RemoveTrait( CurrentRun.Hero, "DemeterShoutTrait" )
-    ValidateCheckpoint({ Valid = true })
+    -- ValidateCheckpoint({ Valid = true })
 
 end}
 
@@ -233,6 +177,7 @@ function SpawnAltar()
         end
         CurrentRun.CurrentRoom.BlockKeepsakeMenu = true
         local altar = DeepCopyTable( ObstacleData.GiftRack )
+        altar.UseText = "{I} Open Altar"
         altar.ObjectId = SpawnObstacle({ Name = "GiftRack", Group = "FX_Terrain", DestinationId = CurrentRun.Hero.ObjectId, AttachedTable = altar, OffsetX = 500, OffsetY = 0 })
 		SetScale({ Id = altar.ObjectId, Fraction = 0.2 })
         SetupObstacle( altar )
@@ -470,7 +415,9 @@ function CreateGodAltarButtons(screen, godName)
             if ZagreusUpgrade.Data.Boons[godName][1] ~= nil and ZagreusUpgrade.Data.Boons[godName][1].Name == itemName then
                 color = LootData[godName].LootColor or Color.Gray
             end
-
+            --button border
+            SetColor({ Id = components[purchaseButtonKey].Id, Color = color })
+            
             components[purchaseButtonKey.."Patch"] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu", X = offsetX + iconOffsetX + patchOffsetX, Y = offsetY })
             components[purchaseButtonKey.."Patch"].ToDestroy = true
             components[purchaseButtonKey.."Patch"].TempToDestroy = true
@@ -692,18 +639,32 @@ end
 OnAnyLoad{function()
     -- AddResource("SuperLockKeys", 1000, "Item")
 
-    -- ZagreusUpgradeData = ZagreusUpgradeData
     LoadAltarBoons()
 end}
 
-for i, trait in pairs (TraitData) do
-    if trait.RarityLevels ~= nil and trait.RarityLevels.Legendary == nil then
-        TraitData[i].RarityLevels.Incomplete =
-        {
-            Multiplier = 0.75,
-        }
+ModUtil.LoadOnce(function ()
+    --Add Incomplete rarity
+    for i, trait in pairs (TraitData) do
+        if trait.RarityLevels ~= nil and trait.RarityLevels.Legendary == nil then
+            local temp 
+            if trait.RarityLevels.Common.Multiplier ~= nil then
+                temp = trait.RarityLevels.Common.Multiplier * 0.75
+                TraitData[i].RarityLevels.Incomplete =
+                {
+                    Multiplier = temp,
+                }
+            else
+                temp = trait.RarityLevels.Common.MinMultiplier * 0.75
+                TraitData[i].RarityLevels.Incomplete =
+                {
+                    MinMultiplier = temp,
+                    MaxMultiplier = temp,
+                }
+            end
+
+        end
     end
-end
+end)
 
 function ShowNextGodAltarPage(screen, button)
     if screen.StartingIndex == 0 then
