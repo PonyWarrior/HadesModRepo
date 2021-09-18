@@ -14,5 +14,9 @@
       DisplayName = "Upgrade to {$TempTextData.NextRarity} \n {$TempTextData.Amount}{!Icons.SuperLockKeySmall}"
       OverwriteLocalization = true
     }
+    {
+        Id = "Altar_Loaded"
+        DisplayName = "Divinity received from {$TempTextData.God}"
+    }
     ]
 }
