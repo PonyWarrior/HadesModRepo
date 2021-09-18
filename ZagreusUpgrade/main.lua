@@ -172,7 +172,7 @@ function SpawnAltar()
         end
     end
     if unlocked then
-        if ZagreusUpgrade.Data == nil or IsEmpty(ZagreusUpgrade.Data) then
+        if ModData.ZagreusUpgrade.Data == nil or IsEmpty(ModData.ZagreusUpgrade.Data) then
             ZagreusUpgrade.InitializeModData()
         end
         CurrentRun.CurrentRoom.BlockKeepsakeMenu = true
@@ -190,7 +190,7 @@ OnUsed{ "Altar", function()
 end}
 
 function ZagreusUpgrade.InitializeModData()
-    ZagreusUpgrade.Data = ZagreusUpgradeData
+    ModData.ZagreusUpgrade.Data = ZagreusUpgradeData
 end
 
 function ShowAltarScreen()
@@ -402,7 +402,7 @@ function CreateGodAltarButtons(screen, godName)
 
             local upgradeData = nil
             local upgradeTitle = GetTraitTooltipTitle( TraitData[itemName] )
-            upgradeData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = itemName, Rarity = ZagreusUpgrade.Data.Altar[godName].Rarity })
+            upgradeData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = itemName, Rarity = ModData.ZagreusUpgrade.Data.Altar[godName].Rarity })
             tooltipData = upgradeData
             SetTraitTextData( tooltipData )
             local upgradeDescription = GetTraitTooltip( tooltipData , { Default = upgradeData.Title })
@@ -412,7 +412,7 @@ function CreateGodAltarButtons(screen, godName)
             local traitNum = GetTraitCount(CurrentRun.Hero, upgradeData)
 
             local color = Color["BoonPatch" .. upgradeData.Rarity ] or Color.Gray
-            if ZagreusUpgrade.Data.Boons[godName][1] ~= nil and ZagreusUpgrade.Data.Boons[godName][1].Name == itemName then
+            if ModData.ZagreusUpgrade.Data.Boons[godName][1] ~= nil and ModData.ZagreusUpgrade.Data.Boons[godName][1].Name == itemName then
                 color = LootData[godName].LootColor or Color.Gray
             end
             --button border
@@ -450,7 +450,7 @@ function CreateGodAltarButtons(screen, godName)
 
             -- if slot already taken by another god display a small icon
             if upgradeData.Slot and IsSlotTaken(upgradeData) then
-                for god, boons in pairs(ZagreusUpgrade.Data.Boons) do
+                for god, boons in pairs(ModData.ZagreusUpgrade.Data.Boons) do
                     if boons[1] ~= nil and boons[1].Slot and boons[1].Slot == upgradeData.Slot then
                         if boons[1].Name ~= upgradeData.Name then
                             components[purchaseButtonKey.."IconSlotTaken"] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu", X = offsetX + iconOffsetX - 45, Y = offsetY + 45 })
@@ -536,20 +536,20 @@ function HandleBoonAltarClick(screen, button)
     local godName = button.God
 
     -- unselect currently selected boon
-    if ZagreusUpgrade.Data.Boons[godName][1] ~= nil and ZagreusUpgrade.Data.Boons[godName][1].Name == traitData.Name then
-        ZagreusUpgrade.Data.Boons[godName] = {}
+    if ModData.ZagreusUpgrade.Data.Boons[godName][1] ~= nil and ModData.ZagreusUpgrade.Data.Boons[godName][1].Name == traitData.Name then
+        ModData.ZagreusUpgrade.Data.Boons[godName] = {}
     else
     -- select new boon
         if traitData.Slot and IsSlotTaken(traitData) then
             -- remove boons in the same slot
-            for i, boons in pairs(ZagreusUpgrade.Data.Boons) do
+            for i, boons in pairs(ModData.ZagreusUpgrade.Data.Boons) do
                 if boons[1] ~= nil and boons[1].Slot and boons[1].Slot == traitData.Slot then
-                    ZagreusUpgrade.Data.Boons[i] = {}
+                    ModData.ZagreusUpgrade.Data.Boons[i] = {}
                 end
             end
         end
-        ZagreusUpgrade.Data.Boons[godName] = {}
-        ZagreusUpgrade.Data.Boons[godName][1] = traitData
+        ModData.ZagreusUpgrade.Data.Boons[godName] = {}
+        ModData.ZagreusUpgrade.Data.Boons[godName][1] = traitData
     end
 
     DestroyTempButtons(screen)
@@ -559,7 +559,7 @@ end
 function IsSlotTaken(traitData)
     local occupiedSlots = {}
 
-    for i, boons in pairs(ZagreusUpgrade.Data.Boons) do
+    for i, boons in pairs(ModData.ZagreusUpgrade.Data.Boons) do
         if boons[1] ~= nil and boons[1].Name ~= traitData.Name then
             if boons[1].Slot then
                 occupiedSlots[boons[1].Slot] = true
@@ -618,11 +618,9 @@ function BuildLegalAltarTraitList(godName)
 end
 
 function LoadAltarBoons()
-    if CurrentDeathAreaRoom ~= nil then
-        return
-    end
-    wait(5)
-    for god, boons in pairs(ZagreusUpgrade.Data.Boons) do
+    --wait for hero to exist
+    wait(6)
+    for god, boons in pairs(ModData.ZagreusUpgrade.Data.Boons) do
         if boons ~= nil then
             if boons[1] ~= nil and not HeroHasTrait(boons[1].Name) and not IsSlotTaken(boons[1]) then
 			    thread( InCombatText, CurrentRun.Hero.ObjectId, "Altar_Loaded", 1, { ShadowScale = 1.05, LuaKey = "TempTextData", LuaValue = { God = god }, TextColor = LootData[god].LootColor } )
@@ -635,11 +633,14 @@ function LoadAltarBoons()
     end
 end
 
+ModUtil.Path.Wrap("StartOver", function (baseFunc)
+    thread(LoadAltarBoons)
+    return baseFunc()
+end)
 
 OnAnyLoad{function()
     -- AddResource("SuperLockKeys", 1000, "Item")
 
-    LoadAltarBoons()
 end}
 
 ModUtil.LoadOnce(function ()
@@ -677,7 +678,7 @@ function ShowNextGodAltarPage(screen, button)
 end
 
 function GetNextGodAltarRarity(godName)
-    local altar = ZagreusUpgrade.Data.Altar[godName]
+    local altar = ModData.ZagreusUpgrade.Data.Altar[godName]
     if altar.Rarity == "Incomplete" then
         return "Common"
     elseif altar.Rarity == "Common" then
@@ -692,12 +693,12 @@ function GetNextGodAltarRarity(godName)
 end
 
 function GetNextGodAltarUpgradeCost(godName)
-    local altar = ZagreusUpgrade.Data.Altar[godName]
+    local altar = ModData.ZagreusUpgrade.Data.Altar[godName]
     return altar.Level * 5
 end
 
 function GodAltarUpgrade(screen, button)
-    local altar = ZagreusUpgrade.Data.Altar[button.God]
+    local altar = ModData.ZagreusUpgrade.Data.Altar[button.God]
     local cost = GetNextGodAltarUpgradeCost(button.God)
     local rarity = GetNextGodAltarRarity(button.God)
 
