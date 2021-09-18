@@ -1,5 +1,5 @@
 
-ZagreusUpgradeData =
+local ZagreusUpgradeData =
 {
     Altar =
     {
@@ -69,8 +69,6 @@ ZagreusUpgradeData =
     },
 }
 
-SaveIgnores["ZagreusUpgradeData"] = true
-
 local AltarScreen = { Components = {} }
 
 
@@ -104,19 +102,37 @@ local Portraits =
 
 local Sounds =
 {
-    "/SFX/ZeusBoonThunder",
-    "/SFX/PoseidonBoonWaveCrash",
-    "/SFX/AthenaBoonHolyShield",
-    "/SFX/AphroditeBoonLoveChimes",
-    "/SFX/ArtemisBoonArrow",
-    "/SFX/AresBoonBattle",
-    "/SFX/DionysusBoonWineLaugh",
-    "/SFX/HermesBoonWhoosh",
-    "/SFX/DemeterBoonFrost",
-    "/Leftovers/Menu Sounds/SkillUpgradeConfirm",
+    Entrance =
+    {
+        "/SFX/ZeusBoonThunder",
+        "/SFX/PoseidonBoonWaveCrash",
+        "/SFX/AthenaBoonHolyShield",
+        "/SFX/AphroditeBoonLoveChimes",
+        "/SFX/ArtemisBoonArrow",
+        "/SFX/AresBoonBattle",
+        "/SFX/DionysusBoonWineLaugh",
+        "/SFX/HermesBoonWhoosh",
+        "/SFX/DemeterBoonFrost",
+        "/Leftovers/Menu Sounds/SkillUpgradeConfirm",
+    },
+    Shout =
+    {
+        ZeusUpgrade = "/VO/ZagreusField_2234",
+        PoseidonUpgrade = "/VO/ZagreusField_2236",
+        AthenaUpgrade = "/VO/ZagreusField_2238",
+        AphroditeUpgrade = "/VO/ZagreusField_2244",
+        ArtemisUpgrade = "/VO/ZagreusField_2242",
+        AresUpgrade = "/VO/ZagreusField_2240",
+        DionysusUpgrade = "/VO/ZagreusField_2246",
+        HermesUpgrade = "/VO/ZagreusField_1925",
+        DemeterUpgrade = "/VO/ZagreusField_2997",
+        TrialUpgrade = "/VO/ZagreusHome_0328",
+    }
 }
 
 local mod = "ZagreusUpgrade"
+ModUtil.RegisterMod(mod)
+SaveIgnores[mod] = true
 
 ModUtil.WrapBaseFunction( "SetupMap", function(baseFunc)
     DebugPrint({Text = "@"..mod.." Loading all god packages!"})
@@ -194,6 +210,8 @@ function(triggerArgs)
     -- UpdateSuperDamageBonus()
     -- thread( MarkObjectiveComplete, "EXMove" )
     -- RemoveTrait( CurrentRun.Hero, "DemeterShoutTrait" )
+    ValidateCheckpoint({ Valid = true })
+
 end}
 
 table.insert(DeathLoopData.DeathAreaBedroom.UnthreadedEvents,
@@ -210,6 +228,9 @@ function SpawnAltar()
         end
     end
     if unlocked then
+        if ZagreusUpgrade.Data == nil or IsEmpty(ZagreusUpgrade.Data) then
+            ZagreusUpgrade.InitializeModData()
+        end
         CurrentRun.CurrentRoom.BlockKeepsakeMenu = true
         local altar = DeepCopyTable( ObstacleData.GiftRack )
         altar.ObjectId = SpawnObstacle({ Name = "GiftRack", Group = "FX_Terrain", DestinationId = CurrentRun.Hero.ObjectId, AttachedTable = altar, OffsetX = 500, OffsetY = 0 })
@@ -223,8 +244,12 @@ OnUsed{ "Altar", function()
     ShowAltarScreen()
 end}
 
+function ZagreusUpgrade.InitializeModData()
+    ZagreusUpgrade.Data = ZagreusUpgradeData
+end
 
 function ShowAltarScreen()
+
   ScreenAnchors.AltarScreen = DeepCopyTable(AltarScreen)
   local screen = ScreenAnchors.AltarScreen
   screen.StartingIndex = 0
@@ -326,7 +351,7 @@ function OpenGodAltarPanel(screen, button)
     SetAlpha({ Ids = ToDestroy, Fraction = 0, Duration = 1.0 })
     SetScale({ Ids = { components[button.Image].Id }, Fraction = 1.5, Duration = 1.0})
     Move({ Ids = { components[button.Image].Id }, OffsetX = 150, OffsetY = ScreenCenterY, Duration = 1 })
-    PlaySound({ Name = Sounds[index]})
+    PlaySound({ Name = Sounds.Entrance[index]})
 
     wait(1)
     Destroy({Ids = ToDestroy})
@@ -432,7 +457,7 @@ function CreateGodAltarButtons(screen, godName)
 
             local upgradeData = nil
             local upgradeTitle = GetTraitTooltipTitle( TraitData[itemName] )
-            upgradeData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = itemName, Rarity = ZagreusUpgradeData.Altar[godName].Rarity })
+            upgradeData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = itemName, Rarity = ZagreusUpgrade.Data.Altar[godName].Rarity })
             tooltipData = upgradeData
             SetTraitTextData( tooltipData )
             local upgradeDescription = GetTraitTooltip( tooltipData , { Default = upgradeData.Title })
@@ -442,7 +467,7 @@ function CreateGodAltarButtons(screen, godName)
             local traitNum = GetTraitCount(CurrentRun.Hero, upgradeData)
 
             local color = Color["BoonPatch" .. upgradeData.Rarity ] or Color.Gray
-            if ZagreusUpgradeData.Boons[godName][1] ~= nil and ZagreusUpgradeData.Boons[godName][1].Name == itemName then
+            if ZagreusUpgrade.Data.Boons[godName][1] ~= nil and ZagreusUpgrade.Data.Boons[godName][1].Name == itemName then
                 color = LootData[godName].LootColor or Color.Gray
             end
 
@@ -478,7 +503,7 @@ function CreateGodAltarButtons(screen, godName)
 
             -- if slot already taken by another god display a small icon
             if upgradeData.Slot and IsSlotTaken(upgradeData) then
-                for god, boons in pairs(ZagreusUpgradeData.Boons) do
+                for god, boons in pairs(ZagreusUpgrade.Data.Boons) do
                     if boons[1] ~= nil and boons[1].Slot and boons[1].Slot == upgradeData.Slot then
                         if boons[1].Name ~= upgradeData.Name then
                             components[purchaseButtonKey.."IconSlotTaken"] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu", X = offsetX + iconOffsetX - 45, Y = offsetY + 45 })
@@ -564,20 +589,20 @@ function HandleBoonAltarClick(screen, button)
     local godName = button.God
 
     -- unselect currently selected boon
-    if ZagreusUpgradeData.Boons[godName][1] ~= nil and ZagreusUpgradeData.Boons[godName][1].Name == traitData.Name then
-        ZagreusUpgradeData.Boons[godName] = {}
+    if ZagreusUpgrade.Data.Boons[godName][1] ~= nil and ZagreusUpgrade.Data.Boons[godName][1].Name == traitData.Name then
+        ZagreusUpgrade.Data.Boons[godName] = {}
     else
     -- select new boon
         if traitData.Slot and IsSlotTaken(traitData) then
             -- remove boons in the same slot
-            for i, boons in pairs(ZagreusUpgradeData.Boons) do
+            for i, boons in pairs(ZagreusUpgrade.Data.Boons) do
                 if boons[1] ~= nil and boons[1].Slot and boons[1].Slot == traitData.Slot then
-                    ZagreusUpgradeData.Boons[i] = {}
+                    ZagreusUpgrade.Data.Boons[i] = {}
                 end
             end
         end
-        ZagreusUpgradeData.Boons[godName] = {}
-        ZagreusUpgradeData.Boons[godName][1] = traitData
+        ZagreusUpgrade.Data.Boons[godName] = {}
+        ZagreusUpgrade.Data.Boons[godName][1] = traitData
     end
 
     DestroyTempButtons(screen)
@@ -587,11 +612,17 @@ end
 function IsSlotTaken(traitData)
     local occupiedSlots = {}
 
-    for i, boons in pairs(ZagreusUpgradeData.Boons) do
-        if boons[1] ~= nil then
+    for i, boons in pairs(ZagreusUpgrade.Data.Boons) do
+        if boons[1] ~= nil and boons[1].Name ~= traitData.Name then
             if boons[1].Slot then
                 occupiedSlots[boons[1].Slot] = true
             end
+        end
+    end
+
+    for i, trait in pairs(CurrentRun.Hero.Traits) do
+        if trait.Slot then
+            occupiedSlots[trait.Slot] = true
         end
     end
 
@@ -640,10 +671,18 @@ function BuildLegalAltarTraitList(godName)
 end
 
 function LoadAltarBoons()
-    for _, boons in pairs(ZagreusUpgradeData.Boons) do
+    if CurrentDeathAreaRoom ~= nil then
+        return
+    end
+    wait(5)
+    for god, boons in pairs(ZagreusUpgrade.Data.Boons) do
         if boons ~= nil then
-            if boons[1] ~= nil and not HeroHasTrait(boons[1].Name) then
+            if boons[1] ~= nil and not HeroHasTrait(boons[1].Name) and not IsSlotTaken(boons[1]) then
+			    thread( InCombatText, CurrentRun.Hero.ObjectId, "Altar_Loaded", 1, { ShadowScale = 1.05, LuaKey = "TempTextData", LuaValue = { God = god }, TextColor = LootData[god].LootColor } )
+                PlaySound({ Name = LootData[god].EventEndSound})
+                -- PlaySound({ Name = Sounds.Shout[god]})
                 AddTraitToHero({ TraitData = boons[1] })
+                wait(1)
             end
         end
     end
@@ -651,13 +690,10 @@ end
 
 
 OnAnyLoad{function()
-    AddResource("SuperLockKeys", 1000, "Item")
+    -- AddResource("SuperLockKeys", 1000, "Item")
 
     -- ZagreusUpgradeData = ZagreusUpgradeData
-    if not CurrentRun.AltarBoonsLoaded then
-        LoadAltarBoons()
-        CurrentRun.AltarBoonsLoaded = true
-    end
+    LoadAltarBoons()
 end}
 
 for i, trait in pairs (TraitData) do
@@ -680,7 +716,7 @@ function ShowNextGodAltarPage(screen, button)
 end
 
 function GetNextGodAltarRarity(godName)
-    local altar = ZagreusUpgradeData.Altar[godName]
+    local altar = ZagreusUpgrade.Data.Altar[godName]
     if altar.Rarity == "Incomplete" then
         return "Common"
     elseif altar.Rarity == "Common" then
@@ -695,12 +731,12 @@ function GetNextGodAltarRarity(godName)
 end
 
 function GetNextGodAltarUpgradeCost(godName)
-    local altar = ZagreusUpgradeData.Altar[godName]
+    local altar = ZagreusUpgrade.Data.Altar[godName]
     return altar.Level * 5
 end
 
 function GodAltarUpgrade(screen, button)
-    local altar = ZagreusUpgradeData.Altar[button.God]
+    local altar = ZagreusUpgrade.Data.Altar[button.God]
     local cost = GetNextGodAltarUpgradeCost(button.God)
     local rarity = GetNextGodAltarRarity(button.God)
 
