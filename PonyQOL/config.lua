@@ -103,6 +103,17 @@ PQOL =
 					-- Can't dash anymore
 					Enabled = true,
 				},
+                BowChainPerfectShotTrait =
+                {
+                    -- Echoing Perfection
+                    -- Requires any bow
+                    -- Perfect shots empower subsequent perfect shots by 25%
+                    -- Stacks up to 10 times
+                    -- Effect is lost when failing a perfect shot 
+                    Enabled = true,
+                    BonusDamagePerShot = 0.25, -- default 0.25 = +25%
+                    BonusCap = 10, -- default 10
+                }
 			},
 			BetterBalance =
 			{

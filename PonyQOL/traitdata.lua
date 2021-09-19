@@ -164,6 +164,32 @@ if PQOL.Config.Gameplay.Enabled then
                 },
             }
         end
+        if PQOL.Config.Gameplay.ExtraHammers.SuperGunManualReloadTrait.Enabled then
+            local config = PQOL.Config.Gameplay.ExtraHammers.BowChainPerfectShotTrait
+            TraitData.BowChainPerfectShotTrait =
+            {
+                InheritFrom = { "WeaponTrait" },
+                Icon = "Weapon_Bow_06",
+                RequiredWeapon = "BowWeapon",
+                RequiredFalseTraits = {"BowTapFireTrait"},
+                BonusDamagePerShot = config.BonusDamagePerShot,
+                BonusCap = config.BonusCap,
+                ExtractValues =
+                {
+                    {
+                        Key = "BonusDamagePerShot",
+                        ExtractAs = "TooltipDamageBonus",
+						Format = "Percent",
+				        SkipAutoExtract = true
+                    },
+                    {
+                        Key = "BonusCap",
+                        ExtractAs = "TooltipBonusCap",
+				        SkipAutoExtract = true
+                    }
+                }
+            }
+        end
     end
 
     if PQOL.Config.Gameplay.BetterBalance.Enabled then

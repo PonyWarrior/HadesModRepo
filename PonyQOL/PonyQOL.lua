@@ -217,6 +217,42 @@ if PQOL.Config.Gameplay.Enabled then
 				end
 			end
 		end
+		if PQOL.Config.Gameplay.ExtraHammers.BowChainPerfectShotTrait.Enabled then
+            local config = PQOL.Config.Gameplay.ExtraHammers.BowChainPerfectShotTrait
+            WeaponData.BowWeapon.Combo = true
+            WeaponData.BowWeaponDash.Combo = true
+            ModUtil.Path.Wrap("CheckComboPowers", function (baseFunc, victim, attacker, triggerArgs, sourceWeaponData)
+                baseFunc(victim, attacker, triggerArgs, sourceWeaponData)
+                if sourceWeaponData.Combo and HeroHasTrait("BowChainPerfectShotTrait") then
+                    if triggerArgs.IsPerfectCharge then
+                        attacker.PerfectShotComboCount = attacker.PerfectShotComboCount + 1
+                        CreateAnimation({ Name = "SkillProcFeedbackFx", DestinationId = CurrentRun.Hero.ObjectId, Scale = 1.2, Color = Color.Gray })
+                    else
+                        attacker.PerfectShotComboCount = 0
+                    end
+                    attacker.PerfectShotComboCount = Clamp(attacker.PerfectShotComboCount, 0, config.BonusCap)
+                    local combo = attacker.PerfectShotComboCount
+                    local multiplier = config.BonusDamagePerShot
+                    local base = 1.167
+                    local baseDash = 1.25
+
+                    local value1 = base * ( 1 + (combo * multiplier))
+                    local value2 = baseDash * (1 + (combo * multiplier))
+
+
+                    SetWeaponProperty({ WeaponName = "BowWeapon", DestinationId = CurrentRun.Hero.ObjectId,
+                    Property = "PerfectChargeDamageMultiplier", Value = value1, ValueChangeType = "Absolute" })
+
+                    SetWeaponProperty({ WeaponName = "BowWeaponDash", DestinationId = CurrentRun.Hero.ObjectId,
+                    Property = "PerfectChargeDamageMultiplier", Value = value2, ValueChangeType = "Absolute" })
+                end
+            end)
+
+            ModUtil.Path.Wrap("SetupHeroObject", function (baseFunc, currentRun, applyLuaUpgrades)
+                baseFunc(currentRun, applyLuaUpgrades)
+                currentRun.Hero.PerfectShotComboCount = 0
+            end)
+        end
 	end
 	if PQOL.Config.Gameplay.BetterBalance.Enabled then
 		if PQOL.Config.Gameplay.BetterBalance.HadesSpearGlobalSweepBuff then

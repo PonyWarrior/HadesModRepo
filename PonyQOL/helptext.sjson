@@ -21,6 +21,11 @@
         Description = "{#MarketScreenDescriptionFormat} After you manually {$Keywords.ManualReload}, your next shot is massively empowered. However, maximum ammo is reduced, reloading is slower and you can't {$Keywords.Dash}.{#PreviousFormat} \n {!Icons.Bullet}{#PropertyFormat}Empowered Shot Total Damage: \Column 380 {#UpgradeFormat}{$TooltipData.TooltipDamageBonus}%"
         }
         {
+        Id = "BowChainPerfectShotTrait"
+        DisplayName = "Echoing Perfection"
+        Description = "Each subsequent {$Keywords.PowerShot} deals {#AltUpgradeFormat}{$TooltipData.TooltipDamageBonus}%{#PreviousFormat} more damage capping at {#UpgradeFormat}{$TooltipData.TooltipBonusCap}{#PreviousFormat} times. This bonus is lost when failing to execute a {$Keywords.PowerShot} and hitting an enemy."
+        }
+        {
         Id = "SpearWeaveTrait_Modded"
         DisplayName = "Aspect of Hades"
         Description = "Your {$Keywords.Spin} becomes {$Keywords.HadesAspect} and enemies hit by your {$Keywords.HadesAspect} take increased damage from all sources. \n {!Icons.Bullet}{#PropertyFormat}Bonus Damage: \Column 380 {#UpgradeFormat}{$TooltipData.TooltipDamage:P}"
