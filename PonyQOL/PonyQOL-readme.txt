@@ -170,6 +170,9 @@ general code improvement
 
 2.6.2
 
+fixed issues :
+Gameplay: extra last stand charges are no longer consumed before Stubborn Defiance
+
 new features :
 
 added UnlockHiddenAspects, lets you unlock any or all hidden aspect

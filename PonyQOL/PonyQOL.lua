@@ -97,12 +97,14 @@ if PQOL.Config.Gameplay.Enabled then
 	
 	function PQOL.PickLastStand(lastStands)
 		local lastStand = nil
-		for i, lastStandData in pairs(lastStands) do
-			if lastStandData.Icon ~= "ExtraLifeZag" then
-				lastStand = table.remove(lastStands, i)
-				return lastStand
-			end
-		end
+        if not IsMetaUpgradeActive("ExtraChanceReplenishMetaUpgrade") then
+            for i, lastStandData in pairs(lastStands) do
+                if lastStandData.Icon ~= "ExtraLifeZag" then
+                    lastStand = table.remove(lastStands, i)
+                    return lastStand
+                end
+            end
+        end
 		lastStand = table.remove(lastStands)
 		return lastStand
 	end
