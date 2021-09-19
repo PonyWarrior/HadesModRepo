@@ -1,0 +1,40 @@
+{
+    Texts = [
+        "_append"
+        {
+        Id = "SuperGunManualReloadTrait"
+        DisplayName = "Hestia's Secret Gunpowder Recipe"
+        Description = "{#MarketScreenDescriptionFormat} After you manually {$Keywords.ManualReload}, your next shot is massively empowered. However, maximum ammo is reduced, reloading is slower and you can't {$Keywords.Dash}.{#PreviousFormat} \n {!Icons.Bullet}{#PropertyFormat}Empowered Shot Total Damage: \Column 380 {#UpgradeFormat}{$TooltipData.TooltipDamageBonus}%"
+        }
+        {
+        Id = "BowChainPerfectShotTrait"
+        DisplayName = "Echoing Perfection"
+        Description = "Each subsequent {$Keywords.PowerShot} deals {#AltUpgradeFormat}{$TooltipData.TooltipDamageBonus}%{#PreviousFormat} more damage capping at {#UpgradeFormat}{$TooltipData.TooltipBonusCap}{#PreviousFormat} times. This bonus is lost when failing to execute a {$Keywords.PowerShot} and hitting an enemy."
+        }
+        {
+        Id = "SpearWeaveTrait_Modded"
+        DisplayName = "Aspect of Hades"
+        Description = "Your {$Keywords.Spin} becomes {$Keywords.HadesAspect} and enemies hit by your {$Keywords.HadesAspect} take increased damage from all sources. \n {!Icons.Bullet}{#PropertyFormat}Bonus Damage: \Column 380 {#UpgradeFormat}{$TooltipData.TooltipDamage:P}"
+        }
+        {
+        Id = "CastBackstabTrait_Modded"
+        DisplayName = "Parting Shot"
+        Description = "Your {$Keywords.Cast} can backstab and all backstab damage is increased. \n {!Icons.Bullet}{#PropertyFormat}Bonus Backstab Damage: \Column 380 {$TooltipData.DisplayDelta1}"
+        }
+        {
+        Id = "ShieldBaseUpgradeTrait_Modded"
+        DisplayName = "Aspect of Zagreus"
+        Description = "The form in which the shield of chaos first revealed itself.\n {!Icons.Bullet}{#PropertyFormat}{$Keywords.Attack}, {$Keywords.BlinkStrike} & {$Keywords.Special} Damage: \Column 380 {#UpgradeFormat}+{$TooltipData.TooltipDamage}"
+        }
+        {
+        Id = "StationaryRiftTrait_Modded"
+        DisplayName = "Freezing Vortex"
+        Description = "Your {$Keywords.Cast} inflicts {$Keywords.Chill} and is bigger, but moves slower. \n {!Icons.Bullet}{#PropertyFormat}{$Keywords.BladeRift} Size: \Column 380 {#PenaltyFormat}{$TooltipData.TooltipAoE}%"
+        }
+        {
+        Id = "DemeterRushTrait_Modded"
+        DisplayName = "Mistral Dash"
+        Description = "Your {$Keywords.Dash} freezes a patch of ground, inflicting {$Keywords.Chill} multiple times. \n {!Icons.Bullet}{#PropertyFormat}Gust Damage: \Column 380 {$TooltipData.DisplayDelta2} \n {!Icons.Bullet}{#PropertyFormat}Number of hits: \Column 380 {$TooltipData.DisplayDelta1}"
+        }
+    ]
+}

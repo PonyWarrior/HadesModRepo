@@ -1,6 +1,6 @@
-if PQOL.Config.Gameplay.Enabled then
-    if PQOL.Config.Gameplay.ExtraHammers.Enabled then
-        if PQOL.Config.Gameplay.ExtraHammers.SuperGunManualReloadTrait.Enabled then
+if PAB.Config.Gameplay.Enabled then
+    if PAB.Config.Gameplay.ExtraHammers.Enabled then
+        if PAB.Config.Gameplay.ExtraHammers.SuperGunManualReloadTrait.Enabled then
             TraitData.SuperGunManualReloadTrait =
             {
                 InheritFrom = { "WeaponTrait" },
@@ -164,8 +164,8 @@ if PQOL.Config.Gameplay.Enabled then
                 },
             }
         end
-        if PQOL.Config.Gameplay.ExtraHammers.SuperGunManualReloadTrait.Enabled then
-            local config = PQOL.Config.Gameplay.ExtraHammers.BowChainPerfectShotTrait
+        if PAB.Config.Gameplay.ExtraHammers.SuperGunManualReloadTrait.Enabled then
+            local config = PAB.Config.Gameplay.ExtraHammers.BowChainPerfectShotTrait
             TraitData.BowChainPerfectShotTrait =
             {
                 InheritFrom = { "WeaponTrait" },
@@ -192,8 +192,8 @@ if PQOL.Config.Gameplay.Enabled then
         end
     end
 
-    if PQOL.Config.Gameplay.BetterBalance.Enabled then
-        local config = PQOL.Config.Gameplay.BetterBalance
+    if PAB.Config.Gameplay.BetterBalance.Enabled then
+        local config = PAB.Config.Gameplay.BetterBalance
         local temp
         --Frost Strike
         TraitData.DemeterWeaponTrait.AddOutgoingDamageModifiers.ValidWeaponMultiplier.BaseValue = config.FrostStrikeBaseDamage
