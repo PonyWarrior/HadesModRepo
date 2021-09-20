@@ -34,7 +34,8 @@ local TextLineGroups =
         "InteractTextLineSets", "GiftTextLineSets"
 
     },
-    NPC_Skelly_01 =
+    --Skelly
+    TrainingMelee =
     {
         "InteractTextLineSets", "GiftTextLineSets"
 
@@ -143,7 +144,7 @@ function DialogManager.DisplayTextLineGroups(components)
         components[name].OnPressedFunctionName = "DialogManager.ShowTextlinesScreen"
         components[name].ToDestroy = true
         components[name].TextLines = textlines
-        if UnitSetData.NPCs[name] then
+        if UnitSetData.NPCs[name] or UnitSetData.Enemies[name] then
             components[name].Name = name
         end
         Attach({Id = components[name].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
@@ -183,11 +184,18 @@ function DialogManager.ShowTextlines(components, textlines, name)
             local offsetY = rowstartY + rowoffset*(math.floor((index-1)/numperrow))
             index = index + 1
 
+            local data
+            if UnitSetData.NPCs[name] then
+                data = UnitSetData.NPCs[name][textline]
+            else
+                data = UnitSetData.Enemies[name][textline]
+            end
+
             components[textline] = CreateScreenComponent({ Name = "BoonSlot1", Group = "DialogManager", Scale = 0.3 })
             SetScaleX({Id = components[textline].Id, Fraction = 1.5})
             components[textline].OnPressedFunctionName = "DialogManager.ShowTextlinesScreenAlt"
             components[textline].ToDestroy = true
-            components[textline].TextLines = UnitSetData.NPCs[name][textline]
+            components[textline].TextLines = data
             Attach({Id = components[textline].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
             CreateTextBox({ Id = components[textline].Id, Text = textline, FontSize = 22,
             OffsetX = 0, OffsetY = 0, Color = color, Font = "AlegreyaSansSCLight", Justification = "Center" })
@@ -239,43 +247,73 @@ function DialogManager.ShowTextlinesScreenAlt(screen, button)
 	Attach({ Id = components.ReturnButton.Id, DestinationId = components.Background.Id, OffsetX = -100, OffsetY = 500 })
 	SetColor({Id = components.ReturnButton.Id, Color = Color.LightBlue})
 
+    screen.StartingIndex = 1
+    screen.MaxIndex = 69
     screen.CurrentTextLines = button.TextLines
-    DialogManager.ShowTextlinesAlt(components, button.TextLines)
+    DialogManager.ShowTextlinesAlt(screen, button.TextLines)
 end
 
-function DialogManager.ShowTextlinesAlt(components , textlines)
-    local index = 1
-    for textline, _ in pairs(textlines) do
-        local color = Color.White
-        local rowstartX = -700
-        local rowstartY = -400
-        local rowoffset = 50
-        local columnoffset = 450
-        local numperrow = 4
-        local offsetX = rowstartX + columnoffset*((index-1) % numperrow)
-        local offsetY = rowstartY + rowoffset*(math.floor((index-1)/numperrow))
-        index = index + 1
+function DialogManager.ShowTextlinesAlt(screen , textlines)
+    local components = screen.Components
 
-        -- Already seen dialog
-        if TextLinesRecord[textline] then
-            color = Color.LightGreen
-        end
-
-        -- Dialog is in the forced pool
-        if ForceEvent ~= nil and ForceEvent[textline] then
-            color = Color.LightBlue
-        end
-
-        components[textline] = CreateScreenComponent({ Name = "BoonSlot1", Group = "DialogManager", Scale = 0.3 })
-        SetScaleX({Id = components[textline].Id, Fraction = 1.5})
-        components[textline].OnPressedFunctionName = "DialogManager.MakeTextLineForced"
-        components[textline].ToDestroy = true
-        components[textline].TextLine = textline
-        components[textline].Alt = true
-        Attach({Id = components[textline].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
-        CreateTextBox({ Id = components[textline].Id, Text = textline, FontSize = 19,
-        OffsetX = 0, OffsetY = 0, Color = color, Font = "AlegreyaSansSCLight", Justification = "Center" })
+    if TableLength(textlines) > screen.MaxIndex then
+        components.PageButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "BuildMenu" })
+        components.PageButton.OnPressedFunctionName = "DialogManager.SwitchPage"
+        components.PageButton.ToDestroy = true
+        Attach({ Id = components.PageButton.Id, DestinationId = components.Background.Id, OffsetX = 100, OffsetY = 500 })
+        SetColor({Id = components.PageButton.Id, Color = Color.LightGreen})
     end
+
+    local index = 1
+    local count = 1
+    for textline, _ in pairs(textlines) do
+        if count >= screen.StartingIndex then
+            if index >= screen.MaxIndex then
+                break
+            end
+            local color = Color.White
+            local rowstartX = -700
+            local rowstartY = -400
+            local rowoffset = 50
+            local columnoffset = 450
+            local numperrow = 4
+            local offsetX = rowstartX + columnoffset*((index-1) % numperrow)
+            local offsetY = rowstartY + rowoffset*(math.floor((index-1)/numperrow))
+            index = index + 1
+
+            -- Already seen dialog
+            if TextLinesRecord[textline] then
+                color = Color.LightGreen
+            end
+
+            -- Dialog is in the forced pool
+            if ForceEvent ~= nil and ForceEvent[textline] then
+                color = Color.LightBlue
+            end
+
+            components[textline] = CreateScreenComponent({ Name = "BoonSlot1", Group = "DialogManager", Scale = 0.3 })
+            SetScaleX({Id = components[textline].Id, Fraction = 1.5})
+            SetScaleY({Id = components[textline].Id, Fraction = 0.8})
+            components[textline].OnPressedFunctionName = "DialogManager.MakeTextLineForced"
+            components[textline].ToDestroy = true
+            components[textline].TextLine = textline
+            components[textline].Alt = true
+            Attach({Id = components[textline].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
+            CreateTextBox({ Id = components[textline].Id, Text = textline, FontSize = 19,
+            OffsetX = 0, OffsetY = 0, Color = color, Font = "AlegreyaSansSCLight", Justification = "Center" })
+        end
+        count = count + 1
+    end
+end
+
+function DialogManager.SwitchPage(screen, button)
+    DialogManager.CleanScreen(screen)
+    if screen.StartingIndex == 1 then
+        screen.StartingIndex = 69
+    else
+        screen.StartingIndex = 1
+    end
+    DialogManager.ShowTextlinesAlt(screen, screen.CurrentTextLines)
 end
 
 function DialogManager.ReturnToDialogManagerScreen(screen, button)
@@ -334,9 +372,10 @@ function DialogManager.MakeTextLineForced(screen, button)
 
     DialogManager.CleanScreen(screen)
     if button.Alt then
-        DialogManager.ShowTextlinesAlt(screen.Components, screen.CurrentTextLines)
+        DialogManager.ShowTextlinesAlt(screen, screen.CurrentTextLines)
+    else
+        DialogManager.ShowTextlines(screen.Components, screen.CurrentTextLines)
     end
-    DialogManager.ShowTextlines(screen.Components, screen.CurrentTextLines)
 end
 
 ModUtil.BaseOverride("ForcePlayTextLines", function (source, textLinesName )
