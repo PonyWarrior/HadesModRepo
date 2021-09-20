@@ -9,23 +9,71 @@ local TextLineGroups =
         "ChaosRevealsBeowulfAspect01",
         "MinotaurRevealsGilgameshAspect01"
     },
-}
-
-local DialogManagerData =
-{
-    DialogManagerScreen =
+    Keepsakes =
     {
-        Buttons =
-        {
-            HiddenAspects =
-            {
-                Name = "OpenBuildMakerButton",
-				Title = "Open Build Maker",
-				Function = "OpenBuildMaker",
-				Index = 1,
-            }
-        }
-    }
+        "AchillesGift01",
+        "AchillesGift07_A",
+        "SkellyGift01",
+        "SkellyGift07",
+        "SisyphusGift01",
+        "SisyphusGift07_A",
+        "MegaeraGift01",
+        "MegaeraGift07",
+        "ThanatosGift01",
+        "ThanatosGift07_A",
+        "DusaGift01",
+        "DusaGift07",
+    },
+    NPC_Hades_01 =
+    {
+        "InteractTextLineSets", "GiftTextLineSets"
+
+    },
+    NPC_Sisyphus_01 =
+    {
+        "InteractTextLineSets", "GiftTextLineSets"
+
+    },
+    NPC_Skelly_01 =
+    {
+        "InteractTextLineSets", "GiftTextLineSets"
+
+    },
+    NPC_Achilles_01 =
+    {
+        "InteractTextLineSets", "GiftTextLineSets"
+
+    },
+    --Megaera
+    NPC_FurySister_01 =
+    {
+        "InteractTextLineSets", "GiftTextLineSets"
+
+    },
+    NPC_Dusa_01 =
+    {
+        "InteractTextLineSets", "GiftTextLineSets"
+
+    },
+    NPC_Cerberus_01 =
+    {
+        "InteractTextLineSets", "GiftTextLineSets"
+
+    },
+    NPC_Nyx_01 =
+    {
+        "InteractTextLineSets", "GiftTextLineSets"
+
+    },
+    NPC_Hypnos_01 =
+    {
+        "InteractTextLineSets", "GiftTextLineSets"
+
+    },
+    NPC_Thanatos_01 =
+    {
+        "InteractTextLineSets", "GiftTextLineSets"
+    },
 }
 
 -- we can't wrap callbacks so a hack is needed to prevent the game from concatenating a table
@@ -81,20 +129,23 @@ end
 function DialogManager.DisplayTextLineGroups(components)
     local index = 1
     for name, textlines in pairs(TextLineGroups) do
-        local rowstartX = -700
+        local rowstartX = -650
         local rowstartY = -400
         local rowoffset = 100
-        local columnoffset = 300
-        local numperrow = 7
+        local columnoffset = 325
+        local numperrow = 5
         local offsetX = rowstartX + columnoffset*((index-1) % numperrow)
         local offsetY = rowstartY + rowoffset*(math.floor((index-1)/numperrow))
         index = index + 1
 
         components[name] = CreateScreenComponent({ Name = "BoonSlot1", Group = "DialogManager", Scale = 0.3 })
-        SetScaleX({Id = components[name].Id, Fraction = 1.5})
+        SetScaleX({Id = components[name].Id, Fraction = 1.2})
         components[name].OnPressedFunctionName = "DialogManager.ShowTextlinesScreen"
         components[name].ToDestroy = true
         components[name].TextLines = textlines
+        if UnitSetData.NPCs[name] then
+            components[name].Name = name
+        end
         Attach({Id = components[name].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
         CreateTextBox({ Id = components[name].Id, Text = name, FontSize = 22,
         OffsetX = 0, OffsetY = 0, Color = Color.White, Font = "AlegreyaSansSCLight", Justification = "Center" })
@@ -106,23 +157,99 @@ function DialogManager.ShowTextlinesScreen(screen, button)
 	local components = screen.Components
 	ModifyTextBox({Id = components.TitleAnchor.Id, Text = ""})
 	PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
+    if components.ReturnButton ~= nil then
+        Destroy({Id = components.ReturnButton.Id})
+    end
 	components.ReturnButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "BuildMenu" })
 	components.ReturnButton.OnPressedFunctionName = "DialogManager.ReturnToDialogManagerScreen"
-	components.ReturnButton.ToDestroy = true
 	Attach({ Id = components.ReturnButton.Id, DestinationId = components.Background.Id, OffsetX = -100, OffsetY = 500 })
 	SetColor({Id = components.ReturnButton.Id, Color = Color.LightBlue})
 
     screen.CurrentTextLines = button.TextLines
-    DialogManager.ShowTextlines(components, button.TextLines)
+    DialogManager.ShowTextlines(components, button.TextLines, button.Name)
 end
 
-function DialogManager.ShowTextlines(components, textlines)
+function DialogManager.ShowTextlines(components, textlines, name)
     local index = 1
-    for _, textline in pairs(textlines) do
+    if name ~= nil then
+        for _, textline in pairs(textlines) do
+            local color = Color.White
+            local rowstartX = -700
+            local rowstartY = -400
+            local rowoffset = 100
+            local columnoffset = 450
+            local numperrow = 4
+            local offsetX = rowstartX + columnoffset*((index-1) % numperrow)
+            local offsetY = rowstartY + rowoffset*(math.floor((index-1)/numperrow))
+            index = index + 1
+
+            components[textline] = CreateScreenComponent({ Name = "BoonSlot1", Group = "DialogManager", Scale = 0.3 })
+            SetScaleX({Id = components[textline].Id, Fraction = 1.5})
+            components[textline].OnPressedFunctionName = "DialogManager.ShowTextlinesScreenAlt"
+            components[textline].ToDestroy = true
+            components[textline].TextLines = UnitSetData.NPCs[name][textline]
+            Attach({Id = components[textline].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
+            CreateTextBox({ Id = components[textline].Id, Text = textline, FontSize = 22,
+            OffsetX = 0, OffsetY = 0, Color = color, Font = "AlegreyaSansSCLight", Justification = "Center" })
+        end
+    else
+        for _, textline in pairs(textlines) do
+            local color = Color.White
+            local rowstartX = -700
+            local rowstartY = -400
+            local rowoffset = 50
+            local columnoffset = 450
+            local numperrow = 4
+            local offsetX = rowstartX + columnoffset*((index-1) % numperrow)
+            local offsetY = rowstartY + rowoffset*(math.floor((index-1)/numperrow))
+            index = index + 1
+
+            -- Already seen dialog
+            if TextLinesRecord[textline] then
+                color = Color.LightGreen
+            end
+
+            -- Dialog is in the forced pool
+            if ForceEvent ~= nil and ForceEvent[textline] then
+                color = Color.LightBlue
+            end
+
+            components[textline] = CreateScreenComponent({ Name = "BoonSlot1", Group = "DialogManager", Scale = 0.3 })
+            SetScaleX({Id = components[textline].Id, Fraction = 1.5})
+            components[textline].OnPressedFunctionName = "DialogManager.MakeTextLineForced"
+            components[textline].ToDestroy = true
+            components[textline].TextLine = textline
+            Attach({Id = components[textline].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
+            CreateTextBox({ Id = components[textline].Id, Text = textline, FontSize = 22,
+            OffsetX = 0, OffsetY = 0, Color = color, Font = "AlegreyaSansSCLight", Justification = "Center" })
+        end
+    end
+end
+
+function DialogManager.ShowTextlinesScreenAlt(screen, button)
+    DialogManager.CleanScreen(screen, button)
+	local components = screen.Components
+	ModifyTextBox({Id = components.TitleAnchor.Id, Text = ""})
+	PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
+    if components.ReturnButton ~= nil then
+        Destroy({Id = components.ReturnButton.Id})
+    end
+	components.ReturnButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "BuildMenu" })
+	components.ReturnButton.OnPressedFunctionName = "DialogManager.ReturnToDialogManagerScreen"
+	Attach({ Id = components.ReturnButton.Id, DestinationId = components.Background.Id, OffsetX = -100, OffsetY = 500 })
+	SetColor({Id = components.ReturnButton.Id, Color = Color.LightBlue})
+
+    screen.CurrentTextLines = button.TextLines
+    DialogManager.ShowTextlinesAlt(components, button.TextLines)
+end
+
+function DialogManager.ShowTextlinesAlt(components , textlines)
+    local index = 1
+    for textline, _ in pairs(textlines) do
         local color = Color.White
         local rowstartX = -700
         local rowstartY = -400
-        local rowoffset = 100
+        local rowoffset = 50
         local columnoffset = 450
         local numperrow = 4
         local offsetX = rowstartX + columnoffset*((index-1) % numperrow)
@@ -144,8 +271,9 @@ function DialogManager.ShowTextlines(components, textlines)
         components[textline].OnPressedFunctionName = "DialogManager.MakeTextLineForced"
         components[textline].ToDestroy = true
         components[textline].TextLine = textline
+        components[textline].Alt = true
         Attach({Id = components[textline].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
-        CreateTextBox({ Id = components[textline].Id, Text = textline, FontSize = 22,
+        CreateTextBox({ Id = components[textline].Id, Text = textline, FontSize = 19,
         OffsetX = 0, OffsetY = 0, Color = color, Font = "AlegreyaSansSCLight", Justification = "Center" })
     end
 end
@@ -155,7 +283,10 @@ function DialogManager.ReturnToDialogManagerScreen(screen, button)
 	local components = screen.Components
 	ModifyTextBox({Id = components.TitleAnchor.Id, Text = screen.Title})
 	PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
-
+    if components.ReturnButton ~= nil then
+        Destroy({Id = components.ReturnButton.Id})
+    end
+    
     screen.CurrentTextLines = nil
     DialogManager.DisplayTextLineGroups(components)
 end
@@ -196,14 +327,15 @@ function DialogManager.MakeTextLineForced(screen, button)
 
     local textline = button.TextLine
     if ForceEvent[textline] then
-        -- table.remove(ForceEvent, textline)
         ForceEvent[textline] = nil
     else
-        -- table.insert(ForceEvent, textline)
         ForceEvent[textline] = true
     end
 
     DialogManager.CleanScreen(screen)
+    if button.Alt then
+        DialogManager.ShowTextlinesAlt(screen.Components, screen.CurrentTextLines)
+    end
     DialogManager.ShowTextlines(screen.Components, screen.CurrentTextLines)
 end
 
