@@ -1,0 +1,3 @@
+Import "dialogmanager.lua"
+To "Game/Text/en/Helptext.en.sjson"
+SJSON "helptext.en.sjson"
