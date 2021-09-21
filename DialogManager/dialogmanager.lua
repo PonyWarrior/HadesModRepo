@@ -51,6 +51,14 @@ local TextLineGroups =
         "InteractTextLineSets", "GiftTextLineSets"
 
     },
+    Harpy2 =
+    {
+        "BossPresentationTextLineSets"
+    },
+    Harpy3 =
+    {
+        "BossPresentationTextLineSets"
+    },
     NPC_Dusa_01 =
     {
         "InteractTextLineSets", "GiftTextLineSets"
@@ -72,6 +80,78 @@ local TextLineGroups =
 
     },
     NPC_Thanatos_01 =
+    {
+        "InteractTextLineSets", "GiftTextLineSets"
+    },
+    NPC_Charon_01 =
+    {
+        "InteractTextLineSets", "GiftTextLineSets"
+    },
+    TrialUpgrade =
+    {
+        "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
+    },
+    ZeusUpgrade =
+    {
+        "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
+    },
+    PoseidonUpgrade =
+    {
+        "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
+    },
+    AthenaUpgrade =
+    {
+        "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
+    },
+    AphroditeUpgrade =
+    {
+        "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
+    },
+    ArtemisUpgrade =
+    {
+        "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
+    },
+    AresUpgrade =
+    {
+        "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
+    },
+    DionysusUpgrade =
+    {
+        "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
+    },
+    HermesUpgrade =
+    {
+        "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
+    },
+    DemeterUpgrade =
+    {
+        "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
+    },
+    NPC_Orpheus_01 =
+    {
+        "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
+    },
+    NPC_Eurydice_01 =
+    {
+        "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
+    },
+    NPC_Patroclus_01 =
+    {
+        "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
+    },
+    Theseus =
+    {
+        "BossPresentationTextLineSets"
+    },
+    Minotaur =
+    {
+        "BossPresentationPriorityIntroTextLineSets", "BossPresentationIntroTextLineSets", "BossPresentationTextLineSets"
+    },
+    NPC_Persephone_01 =
+    {
+        "InteractTextLineSets"
+    },
+    NPC_Persephone_Home_01 =
     {
         "InteractTextLineSets", "GiftTextLineSets"
     },
@@ -144,7 +224,7 @@ function DialogManager.DisplayTextLineGroups(components)
         components[name].OnPressedFunctionName = "DialogManager.ShowTextlinesScreen"
         components[name].ToDestroy = true
         components[name].TextLines = textlines
-        if UnitSetData.NPCs[name] or UnitSetData.Enemies[name] then
+        if UnitSetData.NPCs[name] or UnitSetData.Enemies[name] or LootData[name] then
             components[name].Name = name
         end
         Attach({Id = components[name].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
@@ -187,8 +267,10 @@ function DialogManager.ShowTextlines(components, textlines, name)
             local data
             if UnitSetData.NPCs[name] then
                 data = UnitSetData.NPCs[name][textline]
-            else
+            elseif UnitSetData.Enemies[name] then
                 data = UnitSetData.Enemies[name][textline]
+            else
+                data = LootData[name][textline]
             end
 
             components[textline] = CreateScreenComponent({ Name = "BoonSlot1", Group = "DialogManager", Scale = 0.3 })
@@ -381,9 +463,9 @@ end
 ModUtil.BaseOverride("ForcePlayTextLines", function (source, textLinesName )
     local possibleSets =
 	{
-		"OnUsedTextLineSets", "InteractTextLineSets", "RepeatableTextLineSets",
+		"OnUsedTextLineSets", "InteractTextLineSets", "RepeatableTextLineSets", "SuperPriorityPickupTextLineSets",
 		"PriorityPickupTextLineSets", "PickupTextLineSets", "RejectionTextLines", "MakeUpTextLines", "BoughtTextLines", "GiftTextLineSets",
-		"BossPresentationIntroTextLineSets", "BossPresentationTextLineSets", "BossPresentationRepeatableTextLineSets",
+		"BossPresentationIntroTextLineSets", "BossPresentationTextLineSets", "BossPresentationRepeatableTextLineSets", "BossPresentationPriorityIntroTextLineSets"
 	}
     for textline, i in pairs (textLinesName)do
         DebugPrint({Text=textline})
