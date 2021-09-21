@@ -202,7 +202,7 @@ if PAB.Config.Gameplay.Enabled then
             WeaponData.BowWeaponDash.Combo = true
             ModUtil.Path.Wrap("CheckComboPowers", function (baseFunc, victim, attacker, triggerArgs, sourceWeaponData)
                 baseFunc(victim, attacker, triggerArgs, sourceWeaponData)
-                if sourceWeaponData.Combo and HeroHasTrait("BowChainPerfectShotTrait") then
+                if sourceWeaponData ~= nil and sourceWeaponData.Combo and HeroHasTrait("BowChainPerfectShotTrait") then
                     if triggerArgs.IsPerfectCharge then
                         attacker.PerfectShotComboCount = attacker.PerfectShotComboCount + 1
                         CreateAnimation({ Name = "SkillProcFeedbackFx", DestinationId = CurrentRun.Hero.ObjectId, Scale = 1.2, Color = Color.Gray })
