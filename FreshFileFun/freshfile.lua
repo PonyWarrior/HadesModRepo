@@ -33,6 +33,7 @@ if FreshFileFun.Config.Enabled then
     if FreshFileFun.Config.ForceBestBuild.Enabled then
         ModUtil.Path.Wrap("SetupRoomReward", function (baseFunc, currentRun, room, previouslyChosenRewards, args)
             if not FreshFileFun.MercifulEndDone then
+                room.RewardStoreName = "RunProgress"
                 room.ChosenRewardType = "Boon"
                 room.ForceLootName = "AresUpgrade"
                 if not FreshFileFun.AthenaDone then
