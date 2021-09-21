@@ -21,114 +21,74 @@ local lookUpTable =
 }
 
 function FreshFileFun.LoadShrineUpgrades()
-    for upgrade, upgradeData in pairs(FreshFileFun.Config.Pact) do
+    for upgrade, upgradeData in pairs(FreshFileFun.Config.Pact.Options) do
         if upgradeData.Enabled then
             shrineUpgrades[lookUpTable[upgrade]] = upgradeData.Level
         end
     end
-
     GameState.MetaUpgrades = shrineUpgrades
 end
 
-ModUtil.BaseOverride("StartNewGame", function ()
-    DebugAssert({ Condition = GameState == nil, "Overwriting existing game state!" })
-
-	GameState = {}
-	GameState.WeaponHistory = {}
-	GameState.WeaponsTouched = {}
-	GameState.WeaponsUnlocked = {}
-	GameState.RunHistory = {}
-	GameState.MetaUpgrades = {}
-	GameState.WeaponKills = {}
-	GameState.LootPickups = {}
-	GameState.TraitsTaken = {}
-	GameState.QuestsViewed = {}
-	GameState.QuestStatus = {}
-
-	GameState.Cosmetics = {}
-	GameState.CosmeticsViewed = {}
-	GameState.CosmeticsAdded = {}
-	GameState.MusicTracksViewed = {}
-	-- Default starting cosmetics
-	AddCosmetic( "Cosmetic_DrapesRed" )
-	AddCosmetic( "Cosmetic_LaurelsRed" )
-	AddCosmetic( "Cosmetic_WallWeaponBident" )
-	AddCosmetic( "Cosmetic_SouthHallTrimBrown" )
-	AddCosmetic( "Cosmetic_HouseCandles01" )
-	AddCosmetic( "/Music/MusicPlayer/MainThemeMusicPlayer" )
-	AddCosmetic( "/Music/MusicPlayer/MusicExploration4MusicPlayer" )
-
-	GameState.ScreensViewed = {}
-
-	GameState.NPCInteractions = {}
-	GameState.ItemInteractions = {}
-	GameState.EnemySpawns = {}
-	GameState.EnemyKills = {}
-	GameState.EnemyEliteAttributeKills = {}
-	GameState.EnemyDamage = {}
-	GameState.CompletedObjectiveSets = {}
-	GameState.ObjectivesCompleted = {}
-	GameState.ObjectivesFailed = {}
-	GameState.LastObjectiveCompletedRun = {}
-	GameState.LastObjectiveFailedRun = {}
-	GameState.HintsShown = {}
-	GameState.Resources = {}
-	GameState.LifetimeResourcesGained = {}
-	GameState.LifetimeResourcesSpent = {}
-	GameState.ShrinePointClearsComplete = {}
-	GameState.HeardGhostLines = {}
-	GameState.KeepsakeChambers = {}
-	GameState.ActiveMutators = {}
-	GameState.Onslaughts = {}
-	GameState.EncountersOccurredCache = {}
-	GameState.EncountersCompletedCache = {}
-	GameState.RoomCountCache = {}
-	GameState.WeaponUnlocks = {}
-	GameState.AssistUnlocks = {}
-	GameState.LastWeaponUpgradeData = {}
-	GameState.RecordClearedShrineThreshold = {}
-	GameState.RecordLastClearedShrineReward = {}
-	GameState.ClearedWithMetaUpgrades = {}
-	GameState.SpeechRecordContexts = {}
-	GameState.MetaUpgradesUnlocked = {}
-	GameState.MetaUpgradeStagesUnlocked = 0
-	GameState.MetaUpgradesSelected = {}
-	GameState.MetaUpgradeState = {}
-
-	for metaUpgradeName, metaUpgradeData in pairs( MetaUpgradeData ) do
-		if metaUpgradeData.Starting then
-			GameState.MetaUpgradesUnlocked[metaUpgradeName] = true
-		end
-	end
-	for k, metaUpgradeChoices  in pairs( MetaUpgradeOrder ) do
-		GameState.MetaUpgradesSelected[k] = metaUpgradeChoices[1]
-	end
-
-	InitializeGiftData()
-	GameState.ReturnedRandomEligibleSourceNames = {}
-	GameState.PlayedRandomRunIntroData = {}
-	GameState.PlayedRandomRunOutroData = {}
-	GameState.Flags = {}
-	if GetConfigOptionValue({ Name = "KioskMode" }) then
-		GameState.Flags.KioskMode = true
-	else
-		GameState.Flags.DefaultMode = true
-	end
-	if GetConfigOptionValue({ Name = "HardMode" }) then
-		GameState.Flags.HardMode = true
-		for name, amount in pairs( HeroData.DefaultHero.HardModeForcedMetaUpgrades ) do
-			GameState.MetaUpgrades[name] = amount
-		end
-		for name, amount in pairs( HeroData.DefaultHero.HardModeStartingResources ) do
-			GameState.Resources[name] = (GameState.Resources[name] or 0) + round( amount )
-			--AddResource( name, amount, "HardMode", { Silent = true } )
-		end
-	end
-	GameState.EasyModeLevel = 0
-    --mod start
-    FreshFileFun.LoadShrineUpgrades()
-    --mod end
-	if CurrentRun == nil then
-		StartNewRun()
-	end
-end)
+if FreshFileFun.Config.Enabled then
+    if FreshFileFun.Config.ForceBestBuild.Enabled then
+        ModUtil.Path.Wrap("SetupRoomReward", function (baseFunc, currentRun, room, previouslyChosenRewards, args)
+            if not FreshFileFun.MercifulEndDone then
+                room.ChosenRewardType = "Boon"
+                room.ForceLootName = "AresUpgrade"
+                if not FreshFileFun.AthenaDone then
+                    room.ForceLootName = "AthenaUpgrade"
+                end
+            end
+            baseFunc(currentRun, room, previouslyChosenRewards, args)
+        end)
+        
+        ModUtil.Path.Wrap("HandleLootPickup", function (baseFunc, currentRun, loot)
+            if loot.Name == "AthenaUpgrade" and not FreshFileFun.AthenaDone and not FreshFileFun.SkippedFirstAthena then
+                FreshFileFun.SkippedFirstAthena = true
+                AddTraitToHero({ TraitName = "ForceAthenaBoonTrait_Modded", SkipNewTraitHighlight = true })
+            elseif loot.Name == "AthenaUpgrade" and FreshFileFun.SkippedFirstAthena and not FreshFileFun.AthenaDone then
+                loot.UpgradeOptions =
+                {
+                    {
+                        Type = "Trait",
+                        ItemName = "AthenaSecondaryTrait",
+                        Rarity = "Epic",
+                    },
+                }
+                FreshFileFun.AthenaDone = true
+                RemoveTrait( CurrentRun.Hero, "ForceAthenaBoonTrait_Modded" )
+                AddTraitToHero({ TraitName = "ForceAresBoonTrait_Modded", SkipNewTraitHighlight = true })
+            elseif loot.Name == "AresUpgrade" and not FreshFileFun.AresDone then
+                loot.UpgradeOptions =
+                {
+                    {
+                        Type = "Trait",
+                        ItemName = "AresWeaponTrait",
+                        Rarity = "Epic",
+                    },
+                }
+                FreshFileFun.AresDone = true
+                RemoveTrait( CurrentRun.Hero, "ForceAresBoonTrait_Modded" )
+            elseif loot.Name == "AthenaUpgrade" or loot.Name == "AresUpgrade" then
+                if FreshFileFun.AthenaDone and FreshFileFun.AresDone and not FreshFileFun.MercifulEndDone then
+                    loot.UpgradeOptions =
+                    {
+                        {
+                            Type = "Trait",
+                            ItemName = "TriggerCurseTrait",
+                            Rarity = "Legendary",
+                        },
+                    }
+                    FreshFileFun.MercifulEndDone = true
+                end
+            end
+            baseFunc(currentRun, loot)
+        end)
+    end
+    if FreshFileFun.Config.Pact.Enabled then
+        ModUtil.Path.Wrap("StartNewRun", function (baseFunc, prevRun, args)
+            FreshFileFun.LoadShrineUpgrades()
+            baseFunc(prevRun, args)
+        end)
+    end
+end
