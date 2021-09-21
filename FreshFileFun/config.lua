@@ -9,7 +9,7 @@ FreshFileFun =
         Pact =
         {   
             -- Disabling this disables all pact options
-            Enabled = true,
+            Enabled = false,
             Options =
             {
                 HardLabor =
@@ -34,7 +34,7 @@ FreshFileFun =
                 },
                 ExtremeMeasures =
                 {
-                    Enabled = true,
+                    Enabled = false,
                     Level = 4, -- max 4
                 },
                 CalisthenicsProgram =

@@ -1,4 +1,4 @@
 Top Import "config.lua"
-Import "freshfilefun.lua"
+Import "freshfile.lua"
 To "Scripts/TraitData.lua"
 Import "traitdata.lua"
