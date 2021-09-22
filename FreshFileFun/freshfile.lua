@@ -1,6 +1,6 @@
 local shrineUpgrades = {}
 
-local lookUpTable =
+local pactLookupTable =
 {
     HardLabor = "EnemyDamageShrineUpgrade",
     LastingConsequences = "HealingReductionShrineUpgrade",
@@ -20,10 +20,74 @@ local lookUpTable =
     PersonalLiability = "NoInvulnerabilityShrineUpgrade"
 }
 
+local weaponLookupTable =
+{
+    [1] = "SwordWeapon",
+    [2] = "BowWeapon",
+    [3] = "SpearWeapon",
+    [4] = "ShieldWeapon",
+    [5] = "GunWeapon",
+    [6] = "FistWeapon"
+}
+
+local aspectLookupTable =
+{
+    SwordWeapon =
+    {
+        [1] = "SwordBaseUpgradeTrait",
+        [2] = "SwordCriticalParryTrait",
+        [3] = "DislodgeAmmoTrait",
+        [4] = "SwordConsecrationTrait"
+    },
+    BowWeapon =
+    {
+        [1] = "BowBaseUpgradeTrait",
+        [2] = "BowMarkHomingTrait",
+        [3] = "DislodgeAmmoTrait",
+        [4] = "BowBondTrait"
+    },
+    SpearWeapon =
+    {
+        [1] = "SpearBaseUpgradeTrait",
+        [2] = "SpearTeleportTrait",
+        [3] = "BowLoadAmmoTrait",
+        [4] = "SpearSpinTravel"
+    },
+    ShieldWeapon =
+    {
+        [1] = "ShieldBaseUpgradeTrait",
+        [2] = "ShieldRushBonusProjectileTrait",
+        [3] = "ShieldTwoShieldTrait",
+        [4] = "ShieldLoadAmmoTrait"
+    },
+    GunWeapon =
+    {
+        [1] = "GunBaseUpgradeTrait",
+        [2] = "GunGrenadeSelfEmpowerTrait",
+        [3] = "GunManualReloadTrait",
+        [4] = "GunLoadedGrenadeTrait"
+    },
+    FistWeapon =
+    {
+        [1] = "FistBaseUpgradeTrait",
+        [2] = "FistVacuumTrait",
+        [3] = "FistWeaveTrait",
+        [4] = "FistDetonateTrait"
+    },
+    Rarity =
+    {
+        [1] = "Common",
+        [2] = "Rare",
+        [3] = "Epic",
+        [4] = "Heroic",
+        [5] = "Legendary"
+    }
+}
+
 function FreshFileFun.LoadShrineUpgrades()
     for upgrade, upgradeData in pairs(FreshFileFun.Config.Pact.Options) do
         if upgradeData.Enabled then
-            shrineUpgrades[lookUpTable[upgrade]] = upgradeData.Level
+            shrineUpgrades[pactLookupTable[upgrade]] = upgradeData.Level
         end
     end
     GameState.MetaUpgrades = shrineUpgrades
@@ -90,6 +154,23 @@ if FreshFileFun.Config.Enabled then
         ModUtil.Path.Wrap("StartNewRun", function (baseFunc, prevRun, args)
             FreshFileFun.LoadShrineUpgrades()
             baseFunc(prevRun, args)
+        end)
+    end
+    if FreshFileFun.Config.WeaponSelector.Enabled then
+        local config = FreshFileFun.Config.WeaponSelector
+        -- Prevent user input error from crashing the game
+        Clamp(config.Weapon, 1, 6)
+        Clamp(config.Aspect, 1, 4)
+        Clamp(config.AspectRarity, 1, 5)
+
+        local weapon = weaponLookupTable[config.Weapon]
+        local aspect = aspectLookupTable[weapon][config.Aspect]
+        local aspectRarity = aspectLookupTable.Rarity[config.AspectRarity]
+
+        ModUtil.LoadOnce(function ()
+            EquipPlayerWeapon( WeaponData[weapon], { PreLoadBinks = true, SkipEquipLines = true } )
+            GameState.LastInteractedWeaponUpgrade = { WeaponName = weapon, ItemIndex = GetEquippedWeaponTraitIndex(weapon) }
+            AddTraitToHero({ TraitName = aspect, Rarity = aspectRarity })
         end)
     end
 end

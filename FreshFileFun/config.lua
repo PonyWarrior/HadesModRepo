@@ -94,6 +94,13 @@ FreshFileFun =
                 },
             }
         },
+        WeaponSelector =
+        {
+            Enabled = true,
+            Weapon = 1, -- Sword = 1; Bow = 2; Spear = 3; Shield = 4; Rail = 5; Fists = 6
+            Aspect = 1, -- Any Zagreus = 1; Nemesis/Achilles/Chaos/Chiron/Talos/Eris = 2; Poseidon/Hades/Zeus/Hera/Demeter/Hestia = 3; Arthur/GuanYu/Beowulf/Rama/Gilgamesh/Lucifer = 4;
+            AspectRarity = 1, -- 1 = Common; 2 = Rare; 3 = Epic; 4 = Heroic; 5 = Legendary
+        },
         ForceBestBuild =
         {
             --When enabled you will get :
