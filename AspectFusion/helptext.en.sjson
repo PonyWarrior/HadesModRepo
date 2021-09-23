@@ -6,5 +6,10 @@
         DisplayName = "Final Form Stygius"
         Description = "The final form of Stygius. Combines the powers of Zagreus, Nemesis, Poseidon and Arthur at full strength."
         }
+        {
+        Id = "UltraFistTrait"
+        DisplayName = "Final Form Malphon"
+        Description = "The final form of Malphon. Combines the powers of Zagreus, Talos, Demeter and Gilgamesh at full strength."
+        }
     ]
 }

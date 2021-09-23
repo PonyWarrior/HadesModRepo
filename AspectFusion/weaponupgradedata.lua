@@ -11,4 +11,17 @@ if AspectFusion.Config.Enabled then
         BonusEquippedKitAnimation = "WeaponSwordAlt03FloatingIdleOffBonus",
         Image = "Codex_Portrait_SwordAlt03"
     }
+    WeaponUpgradeData.FistWeapon[5] =
+    {
+        Costs = { 0, 0, 0, 0, 0 },
+        MaxUpgradeLevel = 0,
+        StartsUnlocked = true,
+        TraitName = "UltraFistTrait",
+        EquippedKitAnimation = "WeaponFistsAlt03FloatingIdleOff",
+        UnequippedKitAnimation = "WeaponFistsAlt03FloatingIdle",
+        BonusUnequippedKitAnimation = "WeaponFistsAlt03FloatingIdleBonus",
+        BonusEquippedKitAnimation = "WeaponFistsAlt03FloatingIdleOffBonus",
+        Image = "Codex_Portrait_FistAlt03",
+        UnequipFunctionName = "RemoveFistDetonateDash",
+    }
 end

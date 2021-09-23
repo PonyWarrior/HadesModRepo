@@ -480,4 +480,43 @@ OnWeaponFired{ "SwordParry",
 	end
 }
 
+-- Ultra Fists
+ModUtil.Path.Wrap("CheckComboPowers", function (baseFunc, victim, attacker, triggerArgs, sourceWeaponData )
+    baseFunc(victim, attacker, triggerArgs, sourceWeaponData)
+    if sourceWeaponData == nil or sourceWeaponData.ComboPoints == nil or sourceWeaponData.ComboPoints <= 0 then
+		return
+	end
+
+	if triggerArgs.EffectName ~= nil then
+		-- Effects never generate combo points for now
+		return
+	end
+
+	if victim.NoComboPoints then
+		return
+	end
+
+    if not HeroHasTrait( "UltraFistTrait" ) then
+		return
+	end
+
+	attacker.ComboCount = (attacker.ComboCount or 0) + sourceWeaponData.ComboPoints
+
+	if attacker.ComboCount >= attacker.ComboThreshold and not attacker.ComboReady then
+		attacker.ComboReady = true
+		SetWeaponProperty({ WeaponName = "FistWeaponSpecial", DestinationId = CurrentRun.Hero.ObjectId, Property = "NumProjectiles", Value = 2 + GetTotalHeroTraitValue("BonusSpecialHits") })
+		SetWeaponProperty({ WeaponName = "FistWeaponSpecial", DestinationId = CurrentRun.Hero.ObjectId, Property = "FireFx2", Value = "FistUppercutSpecial" })
+		if HeroHasTrait( "FistSpecialFireballTrait" ) then
+			SetWeaponProperty({ WeaponName = "FistWeaponSpecial", DestinationId = CurrentRun.Hero.ObjectId, Property = "ProjectileInterval", Value = 0.08 })
+		else
+			SetWeaponProperty({ WeaponName = "FistWeaponSpecial", DestinationId = CurrentRun.Hero.ObjectId, Property = "ProjectileInterval", Value = 0.03 })
+		end
+		SetWeaponProperty({ WeaponName = "FistWeaponSpecialDash", DestinationId = CurrentRun.Hero.ObjectId, Property = "NumProjectiles", Value = 1 + GetTotalHeroTraitValue("BonusSpecialHits") })
+		SetWeaponProperty({ WeaponName = "FistWeaponSpecialDash", DestinationId = CurrentRun.Hero.ObjectId, Property = "ProjectileInterval", Value = 0.03 })
+		SetWeaponProperty({ WeaponName = "FistWeaponSpecialDash", DestinationId = CurrentRun.Hero.ObjectId, Property = "FireFx2", Value = "FistUppercutSpecial" })
+
+		ComboReadyPresentation( attacker, triggerArgs )
+	end
+end)
+
 end

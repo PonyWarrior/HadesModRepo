@@ -825,6 +825,1282 @@ if AspectFusion.Config.Enabled then
 		},
 	}
 
+    TraitData.UltraFistTrait =
+    {
+        Icon = "Weapon_Fist_16",
+        InheritFrom = { "WeaponEnchantmentTrait" },
+        PostWeaponUpgradeScreenAnimation = "ZagreusFistAlt03FlashKick_ReturnToIdle",
+        PostWeaponUpgradeScreenAngle = 208,
+        RequiredWeapons = { "FistWeapon", "FistWeaponSpecial" },
+        RequiredFalseTrait = "FistWeaveTrait",
+        Frame = "MetaUpgrade",
+        CustomRarityName = "Fusion",
+		CustomRarityColor = {3, 94, 252, 255},
+        -- Talos
+        PreEquipWeapons = {"RushRuptureWeapon", "FistDetonationWeapon", "MarkRuptureApplicator", "FistSpecialVacuum"},
+        WeaponBinks =
+        {
+            "ZagreusFistAlt03Idle_Bink",
+            "ZagreusFistAlt03ClawL_Bink",
+            "ZagreusFistAlt03ClawR_Bink",
+            "ZagreusFistAlt03AerialUpperCut_Bink",
+            "ZagreusFistAlt03DashAttack_Bink",
+            "ZagreusFistAlt03Dash_Bink",
+            "ZagreusFistAlt03Run_Bink",
+            "ZagreusFistAlt03RunStop_Bink",
+            "ZagreusFistAlt03FlashKick_Bink",
+            "ZagreusFistAlt03Grab_Bink",
+            "ZagreusFistAlt03DashUpperCut_Bink",
+            "ZagreusFistAlt03DashUpperClaw_Bink",
+        },
+        WeaponDataOverride =
+        {
+            -- FistWeapon =
+            -- {
+            --     WeaponBinks =
+            --     {
+            --         "ZagreusFistAlt03Idle_Bink",
+            --         "ZagreusFistAlt03ClawL_Bink",
+            --         "ZagreusFistAlt03ClawR_Bink",
+            --         "ZagreusFistAlt03AerialUpperCut_Bink",
+            --         "ZagreusFistAlt03DashAttack_Bink",
+            --         "ZagreusFistAlt03Dash_Bink",
+            --         "ZagreusFistAlt03Run_Bink",
+            --         "ZagreusFistAlt03RunStop_Bink",
+            --         "ZagreusFistAlt03FlashKick_Bink",
+            --         "ZagreusFistAlt03Grab_Bink",
+            --         "ZagreusFistAlt03DashUpperCut_Bink",
+            --         "ZagreusFistAlt03DashUpperClaw_Bink",
+            --     },
+
+            --     HitSimSlowCooldown = 0.2,
+            --     HitSimSlowParameters =
+            --     {
+            --         { ScreenPreWait = 0.02, Fraction = 0.01, LerpTime = 0 },
+            --         { ScreenPreWait = 0.02, Fraction = 0.7, LerpTime = 0.0 },
+            --         { ScreenPreWait = 0.06, Fraction = 1.0, LerpTime = 0.0 },
+            --     },
+
+            --     Sounds =
+            --     {
+            --         FireSounds =
+            --         {
+            --             { Name = "/VO/ZagreusEmotes/EmoteHeavyFistDashAttack" },
+            --             { Name = "/SFX/Player Sounds/ZagreusClawSwipe" },
+            --         },
+            --         ImpactSounds =
+            --         {
+            --             Invulnerable = "/SFX/SwordWallHitClank",
+            --             Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
+            --             Bone = "/SFX/MetalBoneSmash",
+            --             Brick = "/SFX/MetalStoneClang",
+            --             Stone = "/SFX/MetalStoneClang",
+            --             Organic = "/SFX/StabSplatterSmall",
+            --             StoneObstacle = "/SFX/SwordWallHitClank",
+            --             BrickObstacle = "/SFX/SwordWallHitClank",
+            --             MetalObstacle = "/SFX/SwordWallHitClank",
+            --             BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
+            --         },
+            --     },
+
+            -- },
+
+            -- FistWeapon2 =
+            -- {	
+            --     HitSimSlowCooldown = 0.2,
+            --     HitSimSlowParameters =
+            --     {
+            --         { ScreenPreWait = 0.02, Fraction = 0.01, LerpTime = 0 },
+            --         { ScreenPreWait = 0.02, Fraction = 0.7, LerpTime = 0.0 },
+            --         { ScreenPreWait = 0.06, Fraction = 1.0, LerpTime = 0.0 },
+            --     },
+            --     Sounds =
+            --     {
+            --         FireSounds =
+            --         {
+            --             { Name = "/VO/ZagreusEmotes/EmoteHeavyFistDashAttack" },
+            --             { Name = "/SFX/Player Sounds/ZagreusClawSwipe" },
+            --         },
+            --         ImpactSounds =
+            --         {
+            --             Invulnerable = "/SFX/SwordWallHitClank",
+            --             Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
+            --             Bone = "/SFX/MetalBoneSmash",
+            --             Brick = "/SFX/MetalStoneClang",
+            --             Stone = "/SFX/MetalStoneClang",
+            --             Organic = "/SFX/StabSplatterSmall",
+            --             StoneObstacle = "/SFX/SwordWallHitClank",
+            --             BrickObstacle = "/SFX/SwordWallHitClank",
+            --             MetalObstacle = "/SFX/SwordWallHitClank",
+            --             BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
+            --         },
+            --     },
+            -- },
+
+            -- FistWeapon3 =
+            -- {
+            --     HitSimSlowCooldown = 0.2,
+            --     HitSimSlowParameters =
+            --     {
+            --         { ScreenPreWait = 0.02, Fraction = 0.01, LerpTime = 0 },
+            --         { ScreenPreWait = 0.02, Fraction = 0.70, LerpTime = 0.0 },
+            --         { ScreenPreWait = 0.06, Fraction = 1.0, LerpTime = 0.0 },
+            --     },
+
+            --     Sounds =
+            --     {
+            --         FireSounds =
+            --         {
+            --             { Name = "/VO/ZagreusEmotes/EmoteHeavyFistDashAttack" },
+            --             { Name = "/SFX/Player Sounds/ZagreusClawSwipe" },
+            --         },
+            --         ImpactSounds =
+            --         {
+            --             Invulnerable = "/SFX/SwordWallHitClank",
+            --             Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
+            --             Bone = "/SFX/MetalBoneSmash",
+            --             Brick = "/SFX/MetalStoneClang",
+            --             Stone = "/SFX/MetalStoneClang",
+            --             Organic = "/SFX/StabSplatterSmall",
+            --             StoneObstacle = "/SFX/SwordWallHitClank",
+            --             BrickObstacle = "/SFX/SwordWallHitClank",
+            --             MetalObstacle = "/SFX/SwordWallHitClank",
+            --             BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
+            --         },
+            --     },
+
+            -- },
+
+            -- FistWeapon4 =
+            -- {
+            --     HitSimSlowCooldown = 0.2,
+            --     HitSimSlowParameters =
+            --     {
+            --         { ScreenPreWait = 0.02, Fraction = 0.01, LerpTime = 0 },
+            --         { ScreenPreWait = 0.02, Fraction = 0.7, LerpTime = 0.0 },
+            --         { ScreenPreWait = 0.06, Fraction = 1.0, LerpTime = 0.0 },
+            --     },
+
+            --     Sounds =
+            --     {
+            --         FireSounds =
+            --         {
+            --             { Name = "/VO/ZagreusEmotes/EmoteHeavyFistDashAttack" },
+            --             { Name = "/SFX/Player Sounds/ZagreusClawSwipe" },
+            --         },
+            --         ImpactSounds =
+            --         {
+            --             Invulnerable = "/SFX/SwordWallHitClank",
+            --             Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
+            --             Bone = "/SFX/MetalBoneSmash",
+            --             Brick = "/SFX/MetalStoneClang",
+            --             Stone = "/SFX/MetalStoneClang",
+            --             Organic = "/SFX/StabSplatterSmall",
+            --             StoneObstacle = "/SFX/SwordWallHitClank",
+            --             BrickObstacle = "/SFX/SwordWallHitClank",
+            --             MetalObstacle = "/SFX/SwordWallHitClank",
+            --             BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
+            --         },
+            --     },
+
+            -- },
+
+            -- FistWeapon5 =
+            -- {
+            --     HitSimSlowCooldown = 0.2,
+            --     HitSimSlowParameters =
+            --     {
+            --         { ScreenPreWait = 0.02, Fraction = 0.01, LerpTime = 0 },
+            --         { ScreenPreWait = 0.02, Fraction = 0.7, LerpTime = 0.0 },
+            --         { ScreenPreWait = 0.06, Fraction = 1.0, LerpTime = 0.0 },
+            --     },
+
+            --     Sounds =
+            --     {
+            --         FireSounds =
+            --         {
+            --             { Name = "/VO/ZagreusEmotes/EmotePowerAttacking_Fist5" },
+            --             { Name = "/SFX/Player Sounds/ZagreusClawSwipe" },
+            --         },
+            --         ImpactSounds =
+            --         {
+            --             Invulnerable = "/SFX/SwordWallHitClank",
+            --             Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
+            --             Bone = "/SFX/MetalBoneSmash",
+            --             Brick = "/SFX/MetalStoneClang",
+            --             Stone = "/SFX/MetalStoneClang",
+            --             Organic = "/SFX/StabSplatterSmall",
+            --             StoneObstacle = "/SFX/SwordWallHitClank",
+            --             BrickObstacle = "/SFX/SwordWallHitClank",
+            --             MetalObstacle = "/SFX/SwordWallHitClank",
+            --             BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
+            --         },
+
+            --     },
+
+            -- },
+
+            FistWeaponSpecial =
+            {
+                Sounds =
+                {
+                    ChargeSounds =
+                    {
+                        { Name = "/VO/ZagreusEmotes/EmoteCharging_Bow" },
+                    },
+                    FireSounds =
+                    {
+                        { Name = "/VO/ZagreusEmotes/EmoteHeavyFistSpecial" },
+                        { Name = "/SFX/Player Sounds/ZagreusFistBigWhoosh" },
+                    },
+                    ImpactSounds =
+                    {
+                        Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
+                        Bone = "/SFX/FistImpactBig",
+                        Brick = "/SFX/FistImpactBig",
+                        Stone = "/SFX/FistImpactBig",
+                        Organic = "/SFX/FistImpactBig",
+                        StoneObstacle = "/SFX/FistImpactSmall",
+                        BrickObstacle = "/SFX/FistImpactSmall",
+                        MetalObstacle = "/SFX/FistImpactSmall",
+                        BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
+                    },
+                },
+            },
+
+            FistWeaponDash =
+            {
+                Sounds =
+                {
+                    FireSounds =
+                    {
+                        { Name = "/VO/ZagreusEmotes/EmoteAttacking_Fist2" },
+                        { Name = "/SFX/Player Sounds/ZagreusShieldThrow" },
+                    },
+                    ImpactSounds =
+                    {
+                        Invulnerable = "/SFX/SwordWallHitClank",
+                        Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
+                        Bone = "/SFX/MetalBoneSmash",
+                        Brick = "/SFX/MetalStoneClang",
+                        Stone = "/SFX/MetalStoneClang",
+                        Organic = "/SFX/StabSplatterSmall",
+                        StoneObstacle = "/SFX/SwordWallHitClank",
+                        BrickObstacle = "/SFX/SwordWallHitClank",
+                        MetalObstacle = "/SFX/SwordWallHitClank",
+                        BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
+                    },
+                },
+            },
+
+            FistWeaponSpecialDash =
+            {
+                HitSimSlowCooldown = 0.2,
+                HitSimSlowParameters =
+                {
+                    { ScreenPreWait = 0.04, Fraction = 0.02, LerpTime = 0.0 },
+                    { ScreenPreWait = 0.06, Fraction = 0.10, LerpTime = 0.03 },
+                    { ScreenPreWait = 0.02, Fraction = 1.0, LerpTime = 0.1 },
+                },
+
+                Sounds =
+                {
+                    FireSounds =
+                    {
+                        { Name = "/VO/ZagreusEmotes/EmoteHeavyFistDashUpper" },
+                        { Name = "/SFX/Player Sounds/ZagreusFistBigWhoosh" },
+                        { Name = "/SFX/Player Sounds/ZagreusShieldThrow" },
+                    },
+                    ImpactSounds =
+                    {
+                        Invulnerable = "/SFX/SwordWallHitClank",
+                        Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
+                        Bone = "/SFX/MetalBoneSmash",
+                        Brick = "/SFX/MetalStoneClang",
+                        Stone = "/SFX/MetalStoneClang",
+                        Organic = "/SFX/StabSplatterSmall",
+                        StoneObstacle = "/SFX/SwordWallHitClank",
+                        BrickObstacle = "/SFX/SwordWallHitClank",
+                        MetalObstacle = "/SFX/SwordWallHitClank",
+                        BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
+                    },
+                },
+            },
+
+            RushWeapon =
+            {
+                Sounds =
+                {
+                    FireSounds =
+                    {
+                        { Name = "/VO/ZagreusEmotes/EmoteAttacking_Fist1" },
+                        { Name = "/SFX/Enemy Sounds/Exalted/ExaltedDash" },
+                    },
+                },
+            },
+
+        },
+        -- Talos
+        AddRush =
+        {
+            FunctionName = "FistVacuumRush",
+            FunctionArgs =
+            {
+                Duration = 0.2,
+            },
+            RunOnce = true,
+        },
+        OnWeaponChargeFunctions =
+        {
+            ValidWeapons = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+            FunctionName = "CheckVacuumNearbyEnemy",
+            FunctionArgs =
+            {
+                Range = 800,				-- Vacuum distance
+                DistanceBuffer = 130,		-- Space to leave between player and enemy
+                RushDistanceBuffer = 300,
+                AutoLockArc = 60,
+            },
+        },
+        -- Demeter
+        BonusSpecialHits = {
+            BaseValue = 5,
+        },
+        OnEnemyDamagedFunction = 
+        {
+            Name = "CheckFistDetonation",
+        },
+        AddOutgoingDamageModifiers =
+        {
+            -- Somewhat hacky but ensures detonateion isn't boosted by own status effect @alice
+            ValidWeaponMultiplier = 0.75,
+            Additive = true,
+            ValidEffects = { "FistDetonationDamage" },
+        },
+        PropertyChanges =
+        {
+            -- FistDetonationWeapon
+            {
+                WeaponName = "FistDetonationWeapon",
+                EffectName = "FistDetonationDamage",
+                EffectProperty = "Amount",
+                BaseValue = 400,
+                ChangeType = "Add",
+                ExtractValue =
+                {
+                    ExtractAs = "TooltipDamage",
+                },
+            },
+            {
+                WeaponName = "FistDetonationWeapon",
+                EffectName = "MarkRuptureTarget",
+                EffectProperty = "Modifier",
+                ChangeValue = 0.5,
+                ChangeType = "Add",
+                ExtractValue =
+                {
+                    ExtractAs = "TooltipDamageBonus",
+                    Format = "Percent",
+                },
+            },
+            {
+                WeaponName = "FistDetonationWeapon",
+                EffectName = "DetonationDamageTaken",
+                EffectProperty = "Modifier",
+                ChangeValue = 0.25,
+                ChangeType = "Add",
+                ExtractValue =
+                {
+                    ExtractAs = "TooltipDamageTaken",
+                    Format = "Percent",			
+                },
+            },
+            {
+                WeaponName = "FistDetonationWeapon",
+                EffectName = "MarkRuptureTarget",
+                EffectProperty = "Duration",
+                ChangeValue = 4,
+                ChangeType = "Absolute",
+                ExtractDuration = "ExtractDuration",
+                ExtractValue =
+                {
+                    ExtractAs = "TooltipDuration",
+                },
+            },
+            {
+                WeaponName = "FistDetonationWeapon",
+                EffectName = "DetonationSlow",
+                EffectProperty = "Duration",
+                DeriveValueFrom = "ExtractDuration"
+            },
+            {
+                WeaponName = "FistDetonationWeapon",
+                EffectName = "FistDetonationDamage",
+                EffectProperty = "Duration",
+                ChangeValue = 3.95, -- Should be 0.05 lower than duration defined above.
+                ChangeType = "Absolute",
+            },
+            {
+                WeaponName = "FistDetonationWeapon",
+                EffectName = "DetonationDamageTaken",
+                EffectProperty = "Duration",
+                DeriveValueFrom = "ExtractDuration"
+            },
+            -- Dash Weapon Changes
+            {
+                WeaponNames = WeaponSets.HeroRushWeapons,
+                WeaponProperty = "WeaponRange",
+                ChangeValue = 0.75,
+                ChangeType = "Multiply",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = WeaponSets.HeroRushWeapons,
+                WeaponProperty = "ClipSize",
+                ChangeValue = 2,
+                ChangeType = "Add",
+                ExcludeLinked = true,
+                {
+                    ExtractAs = "TooltipBonusDashes",
+                }
+            },
+            {
+                WeaponNames = WeaponSets.HeroRushWeapons,
+                WeaponProperty = "ClipRegenInterval",
+                ChangeValue = 1.2,
+                ChangeType = "Multiply",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = WeaponSets.HeroRushWeapons,
+                WeaponProperty = "BlinkDuration",
+                ChangeValue = 0.8,
+                ChangeType = "Multiply",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = WeaponSets.HeroRushWeapons,
+                WeaponProperty = "IgnoreTriggerLockDuringCooldown",
+                ChangeValue = true,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = WeaponSets.HeroRushWeapons,
+                WeaponProperty = "FullyAutomatic",
+                ChangeValue = true,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = WeaponSets.HeroRushWeapons,
+                WeaponProperty = "Cooldown",
+                ChangeValue = 0.17,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = WeaponSets.HeroRushWeapons,
+                EffectName = "RushWeaponInvulnerable",
+                EffectProperty = "Duration",
+                ChangeValue = 0.8,
+                ChangeType = "Multiply",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = WeaponSets.HeroRushWeapons,
+                EffectName = "RushWeaponImmuneToForce",
+                EffectProperty = "Duration",
+                ChangeValue = 0.8,
+                ChangeType = "Multiply",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = WeaponSets.HeroRushWeapons,
+                EffectName = "RushWeaponDisableMove",
+                EffectProperty = "Duration",
+                ChangeValue = 0.8,
+                ChangeType = "Multiply",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = WeaponSets.HeroRushWeapons,
+                EffectName = "RushWeaponSelfGrip",
+                EffectProperty = "Active",
+                ChangeValue = false,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = WeaponSets.HeroRushWeapons,
+                EffectName = "RushWeaponSelfSlow",
+                EffectProperty = "Active",
+                ChangeValue = false,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = WeaponSets.HeroRushWeapons,
+                EffectName = "RushWeaponDisableRotation",
+                EffectProperty = "Active",
+                ChangeValue = false,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+
+            {
+                WeaponNames = WeaponSets.HeroRushWeapons,
+                ProjectileProperty = "DamageLow",
+                ChangeValue = 0,
+                ChangeType = "Add",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = WeaponSets.HeroRushWeapons,
+                ProjectileProperty = "DamageHigh",
+                ChangeValue = 0,
+                ChangeType = "Add",
+                ExcludeLinked = true,
+            },
+
+            -- Gilgamesh Dash
+            {
+                WeaponNames = { "RushWeapon" },
+                WeaponProperty = "FireGraphic",
+                ChangeValue = "ZagreusFistAlt03DashNoCollide",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "RushWeapon" },
+                WeaponProperty = "UnblockedBlinkFx",
+                ChangeValue = "null",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+
+            -- Gilgamesh Attack
+            -- {
+            --     WeaponNames = { "FistWeapon", "FistWeapon3", "FistWeapon5" },
+            --     WeaponProperty = "Projectile",
+            --     ChangeValue = "FistWeaponClawL",
+            --     ChangeType = "Absolute",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponNames = { "FistWeapon2", "FistWeapon4" },
+            --     WeaponProperty = "Projectile",
+            --     ChangeValue = "FistWeaponClawR",
+            --     ChangeType = "Absolute",
+            --     ExcludeLinked = true,
+            -- },
+
+            -- {
+            --     WeaponNames = { "FistWeapon", "FistWeapon3", "FistWeapon5" },
+            --     WeaponProperty = "ChargeStartAnimation",
+            --     ChangeValue = "ZagreusFistAlt03ClawL_Start",
+            --     ChangeType = "Absolute",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponNames = { "FistWeapon", "FistWeapon3", "FistWeapon5" },
+            --     WeaponProperty = "FireGraphic",
+            --     ChangeValue = "ZagreusFistAlt03ClawL_Fire",
+            --     ChangeType = "Absolute",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponNames = { "FistWeapon2", "FistWeapon4" },
+            --     WeaponProperty = "ChargeStartAnimation",
+            --     ChangeValue = "ZagreusFistAlt03ClawR_Start",
+            --     ChangeType = "Absolute",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponNames = { "FistWeapon2", "FistWeapon4" },
+            --     WeaponProperty = "FireGraphic",
+            --     ChangeValue = "ZagreusFistAlt03ClawR_Fire",
+            --     ChangeType = "Absolute",
+            --     ExcludeLinked = true,
+            -- },
+
+            -- {
+            --     WeaponNames = { "FistWeapon2", "FistWeapon3", "FistWeapon4", "FistWeapon5" },
+            --     WeaponProperty = "ControlWindow",
+            --     ChangeValue = 0.5,
+            --     ChangeType = "Absolute",
+            --     ExcludeLinked = true,
+            -- },
+
+            -- {
+            --     WeaponNames = { "FistWeapon" },
+            --     WeaponProperty = "ChargeTime",
+            --     ChangeValue = 0.21,
+            --     ChangeType = "Absolute",
+            --     ExcludeLinked = true,
+            -- },
+
+            -- {
+            --     WeaponNames = { "FistWeapon2", },
+            --     WeaponProperty = "ChargeTime",
+            --     ChangeValue = 0.14,
+            --     ChangeType = "Absolute",
+            --     ExcludeLinked = true,
+            -- },
+
+            -- {
+            --     WeaponNames = { "FistWeapon3", },
+            --     WeaponProperty = "ChargeTime",
+            --     ChangeValue = 0.14,
+            --     ChangeType = "Absolute",
+            --     ExcludeLinked = true,
+            -- },
+
+            -- {
+            --     WeaponNames = { "FistWeapon4" },
+            --     WeaponProperty = "ChargeTime",
+            --     ChangeValue = 0.13,
+            --     ChangeType = "Absolute",
+            --     ExcludeLinked = true,
+            -- },
+
+            -- {
+            --     WeaponNames = { "FistWeapon5" },
+            --     WeaponProperty = "ChargeTime",
+            --     ChangeValue = 0.12,
+            --     ChangeType = "Absolute",
+            --     ExcludeLinked = true,
+            -- },
+            
+            -- {
+            --     WeaponNames = { "FistWeapon" },
+            --     EffectName = "FistDisable",
+            --     EffectProperty = "Duration",
+            --     ChangeValue = 3.0,
+            --     ChangeType = "Multiply",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponNames = { "FistWeapon" },
+            --     EffectName = "FistDisableAndLockTrigger",
+            --     EffectProperty = "Duration",
+            --     ChangeValue = 3.0,
+            --     ChangeType = "Multiply",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponNames = { "FistWeapon2" },
+            --     EffectName = "FistDisable2",
+            --     EffectProperty = "Duration",
+            --     ChangeValue = 3.0,
+            --     ChangeType = "Multiply",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponNames = { "FistWeapon2" },
+            --     EffectName = "FistDisableAndLockTrigger2",
+            --     EffectProperty = "Duration",
+            --     ChangeValue = 3.0,
+            --     ChangeType = "Multiply",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponNames = { "FistWeapon3" },
+            --     EffectName = "FistDisable3",
+            --     EffectProperty = "Duration",
+            --     ChangeValue = 3.0,
+            --     ChangeType = "Multiply",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponNames = { "FistWeapon3" },
+            --     EffectName = "FistDisableAndLockTrigger3",
+            --     EffectProperty = "Duration",
+            --     ChangeValue = 3.0,
+            --     ChangeType = "Multiply",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponNames = { "FistWeapon4" },
+            --     EffectName = "FistDisable4",
+            --     EffectProperty = "Duration",
+            --     ChangeValue = 3.0,
+            --     ChangeType = "Multiply",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponNames = { "FistWeapon4" },
+            --     EffectName = "FistDisableAndLockTrigger4",
+            --     EffectProperty = "Duration",
+            --     ChangeValue = 3.0,
+            --     ChangeType = "Multiply",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponNames = { "FistWeapon5" },
+            --     EffectName = "FistDisable5",
+            --     EffectProperty = "Duration",
+            --     ChangeValue = 3.0,
+            --     ChangeType = "Multiply",
+            --     ExcludeLinked = true,
+            -- },
+
+            -- {
+            --     WeaponNames = { "FistWeapon5" },
+            --     EffectName = "FistDetonateMoveDisable",
+            --     EffectProperty = "Active",
+            --     ChangeValue = true,
+            --     ChangeType = "Absolute",
+            --     ExcludeLinked = true,
+            -- },
+            
+            -- {
+            --     WeaponNames = { "FistWeapon" },
+            --     EffectName = "FistSelfSelfSlowFire",
+            --     EffectProperty = "Modifier",
+            --     ChangeValue = 0.1,
+            --     ChangeType = "Absolute",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponNames = { "FistWeapon" },
+            --     EffectName = "FistSelfSlowCharge",
+            --     EffectProperty = "Modifier",
+            --     ChangeValue = 0.05,
+            --     ChangeType = "Absolute",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponNames = { "FistWeapon" },
+            --     EffectName = "FistSelfSlowCharge",
+            --     EffectProperty = "Duration",
+            --     ChangeValue = 1.5,
+            --     ChangeType = "Multiply",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponNames = { "FistWeapon" },
+            --     EffectName = "FistSelfSelfSlowFire",
+            --     EffectProperty = "Duration",
+            --     ChangeValue = 1.5,
+            --     ChangeType = "Multiply",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponNames = { "FistWeapon2" },
+            --     EffectName = "FistSwordSelfSlowFire2",
+            --     EffectProperty = "Modifier",
+            --     ChangeValue = 0.1,
+            --     ChangeType = "Absolute",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponNames = { "FistWeapon2" },
+            --     EffectName = "FistSelfSlowCharge2",
+            --     EffectProperty = "Modifier",
+            --     ChangeValue = 0.05,
+            --     ChangeType = "Absolute",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponNames = { "FistWeapon2" },
+            --     EffectName = "FistSelfSlowCharge2",
+            --     EffectProperty = "Duration",
+            --     ChangeValue = 1.5,
+            --     ChangeType = "Multiply",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponNames = { "FistWeapon2" },
+            --     EffectName = "FistSwordSelfSlowFire2",
+            --     EffectProperty = "Duration",
+            --     ChangeValue = 1.5,
+            --     ChangeType = "Multiply",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponNames = { "FistWeapon3" },
+            --     EffectName = "FistSwordSelfSlowFire3",
+            --     EffectProperty = "Modifier",
+            --     ChangeValue = 0.1,
+            --     ChangeType = "Absolute",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponNames = { "FistWeapon3" },
+            --     EffectName = "FistSelfSlowCharge3",
+            --     EffectProperty = "Modifier",
+            --     ChangeValue = 0.05,
+            --     ChangeType = "Absolute",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponNames = { "FistWeapon3" },
+            --     EffectName = "FistSelfSlowCharge3",
+            --     EffectProperty = "Duration",
+            --     ChangeValue = 1.5,
+            --     ChangeType = "Multiply",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponNames = { "FistWeapon3" },
+            --     EffectName = "FistSwordSelfSlowFire3",
+            --     EffectProperty = "Duration",
+            --     ChangeValue = 1.5,
+            --     ChangeType = "Multiply",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponNames = { "FistWeapon4" },
+            --     EffectName = "FistSwordSelfSlowFire4",
+            --     EffectProperty = "Modifier",
+            --     ChangeValue = 0.1,
+            --     ChangeType = "Absolute",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponNames = { "FistWeapon4" },
+            --     EffectName = "FistSelfSlowCharge4",
+            --     EffectProperty = "Modifier",
+            --     ChangeValue = 0.05,
+            --     ChangeType = "Absolute",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponNames = { "FistWeapon4" },
+            --     EffectName = "FistSelfSlowCharge4",
+            --     EffectProperty = "Duration",
+            --     ChangeValue = 1.5,
+            --     ChangeType = "Multiply",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponNames = { "FistWeapon4" },
+            --     EffectName = "FistSwordSelfSlowFire4",
+            --     EffectProperty = "Duration",
+            --     ChangeValue = 1.5,
+            --     ChangeType = "Multiply",
+            --     ExcludeLinked = true,
+            -- },
+            -- --[[
+            -- {
+            --     WeaponNames = { "FistWeapon", "FistWeapon2", "FistWeapon3", "FistWeapon4", "FistWeapon5" },
+            --     WeaponProperty = "ChargeCancelMovement",
+            --     ChangeValue = true,
+            --     ChangeType = "Aboslute",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponNames = { "FistWeapon2", "FistWeapon3", "FistWeapon4", "FistWeapon5" },
+            --     WeaponProperty = "BlockMoveInput",
+            --     ChangeValue = true,
+            --     ChangeType = "Aboslute",
+            --     ExcludeLinked = true,
+            -- },
+            -- ]]
+
+
+            -- {
+            --     WeaponNames = { "FistWeapon", "FistWeapon3", "FistWeapon5" },
+            --     WeaponProperty = "FireFx",
+            --     ChangeValue = "ClawSwipe",
+            --     ChangeType = "Absolute",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponNames = { "FistWeapon2", "FistWeapon4" },
+            --     WeaponProperty = "FireFx",
+            --     ChangeValue = "ClawSwipeFlipped",
+            --     ChangeType = "Absolute",
+            --     ExcludeLinked = true,
+            -- },
+            --fff
+
+            -- Gilgamesh Dash Attack
+            {
+                WeaponNames = { "FistWeaponDash" },
+                WeaponProperty = "Projectile",
+                ChangeValue = "FistWeaponClawDash",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "FistWeaponDash" },
+                WeaponProperty = "ChargeStartAnimation",
+                ChangeValue = "ZagreusFistAlt03DashAttack_Charge",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "FistWeaponDash" },
+                WeaponProperty = "FireGraphic",
+                ChangeValue = "ZagreusFistAlt03DashAttack_Fire",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "FistWeaponDash" },
+                WeaponProperty = "ChargeTime",
+                ChangeValue = 0.08,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "FistWeaponDash" },
+                EffectName = "FistDashDisable",
+                EffectProperty = "Duration",
+                ChangeValue = 1.5,
+                ChangeType = "Multiply",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "FistWeaponDash" },
+                EffectName = "FistDashDisable3",
+                EffectProperty = "Duration",
+                ChangeValue = 1.5,
+                ChangeType = "Multiply",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "FistWeaponDash" },
+                EffectName = "FistDashDisable",
+                EffectProperty = "RequestTriggerLock",
+                ChangeValue = false,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "FistWeaponDash" },
+                EffectName = "FistDashDisable3",
+                EffectProperty = "RequestTriggerLock",
+                ChangeValue = false,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            --[[
+            {
+                WeaponNames = { "FistWeaponDashClaw" },
+                ProjectileProperty = "DamageLow",
+                ChangeValue = 2.0,
+                ChangeType = "Multiply",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "FistWeaponDash" },
+                ProjectileProperty = "DamageHigh",
+                ChangeValue = 2.0,
+                ChangeType = "Multiply",
+                ExcludeLinked = true,
+            },
+            ]]
+            {
+                WeaponNames = { "FistWeaponClawDash" },
+                ProjectileProperty = "StartFx",
+                ChangeValue = "ClawSwipeFlippedDash",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },			
+
+            -- Gilgamesh Special
+
+            {
+                WeaponNames = { "FistWeaponSpecial" },
+                WeaponProperty = "ChargeStartAnimation",
+                ChangeValue = "ZagreusFistAlt03AerialUpperCut_Start",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "FistWeaponSpecial" },
+                WeaponProperty = "FireGraphic",
+                ChangeValue = "ZagreusFistAlt03AerialUpperCut_Fire",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "FistWeaponSpecial" },
+                WeaponProperty = "FireFx",
+                ChangeValue = "ClawSwipeUppercut",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            --[[
+            {
+                WeaponNames = { "FistWeaponSpecial" },
+                WeaponProperty = "ChargeTime",
+                ChangeValue = 1.23,
+                ChangeType = "Multiply",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "FistWeaponSpecial" },
+                ProjectileProperty = "DamageLow",
+                ChangeValue = 1.68,
+                ChangeType = "Multiply",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "FistWeaponSpecial" },
+                ProjectileProperty = "DamageHigh",
+                ChangeValue = 1.68,
+                ChangeType = "Multiply",
+                ExcludeLinked = true,
+            },
+            ]]
+
+            -- Gilgamesh Dash Special
+
+            {
+                WeaponNames = { "FistWeaponSpecialDash" },
+                WeaponProperty = "ChargeTime",
+                ChangeValue = 0.17,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "FistWeaponDash" },
+                EffectName = "FistDashDisable",
+                EffectProperty = "RequestTriggerLock",
+                ChangeValue = true,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "FistWeaponDash" },
+                EffectName = "FistDashDisable3",
+                EffectProperty = "RequestTriggerLock",
+                ChangeValue = true,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "FistWeaponSpecialDash" },
+                WeaponProperty = "ChargeStartAnimation",
+                ChangeValue = "ZagreusFistAlt03DashUpperCut_Start",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "FistWeaponSpecialDash" },
+                WeaponProperty = "FireGraphic",
+                ChangeValue = "ZagreusFistAlt03DashUpperCut_Fire",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+
+            {
+                WeaponNames = { "FistWeaponSpecialDash" },
+                EffectName = "FistSpecialDashDisable",
+                EffectProperty = "Duration",
+                ChangeValue = 1.4,
+                ChangeType = "Multiply",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "FistWeaponSpecialDash" },
+                EffectName = "FistSpecialDashDisable2",
+                EffectProperty = "Duration",
+                ChangeValue = 1.4,
+                ChangeType = "Multiply",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "FistWeaponSpecialDash" },
+                EffectName = "FistSpecialDashDisable3",
+                EffectProperty = "Duration",
+                ChangeValue = 2.0,
+                ChangeType = "Multiply",
+                ExcludeLinked = true,
+            },
+
+            {
+                TraitName = "FistTeleportSpecialTrait",
+                WeaponNames = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+                WeaponProperty = "ChargeStartAnimation",
+                ChangeValue = "ZagreusFistAlt03FlashKick_Start",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                TraitName = "FistTeleportSpecialTrait",
+                WeaponNames = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+                WeaponProperty = "FireGraphic",
+                ChangeValue = "ZagreusFistAlt03FlashKick_Fire",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                TraitName = "FistSpecialFireballTrait",
+                WeaponNames = { "FistWeaponSpecial" },
+                WeaponProperty = "ChargeStartAnimation",
+                ChangeValue = "ZagreusFistAlt02Grab_Start",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                TraitName = "FistSpecialFireballTrait",
+                WeaponNames = { "FistWeaponSpecial" },
+                WeaponProperty = "FireGraphic",
+                ChangeValue = "ZagreusFistAlt03Grab_Fire",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+
+            {
+                WeaponNames = { "FistWeaponSpecialDash" },
+                WeaponProperty = "FireFx",
+                ChangeValue = "ClawSwipeUppercutSpecial",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+
+            --[[
+            {
+                WeaponNames = { "FistWeaponSpecialDash" },
+                ProjectileProperty = "DamageLow",
+                ChangeValue = 1.25,
+                ChangeType = "Multiply",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "FistWeaponSpecialDash" },
+                ProjectileProperty = "DamageHigh",
+                ChangeValue = 1.25,
+                ChangeType = "Multiply",
+                ExcludeLinked = true,
+            },
+            ]]
+
+            --[[
+            {
+                TraitName = "FistHeavyAttackTrait",
+                WeaponName = "FistWeapon2",
+                WeaponProperty = "FireGraphic",
+                ChangeValue = "ZagreusFistAlt02DashHayMaker_Fire",
+                ChangeType = "Absolute",
+            },
+            {
+                TraitName = "FistHeavyAttackTrait",
+                WeaponName = "FistWeapon3",
+                WeaponProperty = "ChargeStartAnimation",
+                ChangeValue = "ZagreusFistAlt02Grab_Start",
+                ChangeType = "Absolute",
+            },
+            {
+                TraitName = "FistHeavyAttackTrait",
+                WeaponName = "FistWeapon3",
+                WeaponProperty = "FireGraphic",
+                ChangeValue = "ZagreusFistAlt02Grab_Fire",
+                ChangeType = "Absolute",
+            },
+            ]]
+
+            -- Zagreus Aspect
+
+            {
+                LifeProperty = "DodgeChance",
+                ChangeValue = 0.15,
+                ChangeType = "Add",
+                DataValue = false,
+                ExtractValue =
+                {
+                    ExtractAs = "TooltipChance",
+                    Format = "Percent"
+                },
+            },
+
+            -- Talos Aspect
+
+            {
+                WeaponNames = { "FistSpecialVacuum" },
+                EffectName = "MarkTargetFist",
+                EffectProperty = "Active",
+                ChangeValue = true,
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "FistSpecialVacuum" },
+                EffectName = "MarkTargetFist",
+                EffectProperty = "Modifier",
+                BaseValue = 0.40,
+                ChangeType = "Add",
+                ExtractValue =
+                {
+                    ExtractAs = "TooltipDamage",
+                    Format = "Percent"
+                },
+                DeriveSource = "DeriveSource"
+            },
+            {
+                WeaponNames = { "FistSpecialVacuum" },
+                EffectName = "MarkTargetFist",
+                EffectProperty = "Duration",
+                ChangeValue = 6,
+                ChangeType = "Absolute",
+                ExtractValue =
+                {
+                    ExtractAs = "TooltipDuration",
+                    SkipAutoExtract = true,
+                },
+                DeriveSource = "DeriveSource"
+            },
+            {
+                WeaponNames = { "FistSpecialVacuum" },
+                ProjectileProperty = "DamageLow",
+                ChangeValue = 20,
+                ExtractValue =
+                {
+                    ExtractAs = "TooltipPullDamage",
+                    SkipAutoExtract = true,
+                },
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "FistSpecialVacuum" },
+                ProjectileProperty = "DamageHigh",
+                DeriveValueFrom = "DamageLow",
+                ExcludeLinked = true,
+            },
+    
+            {
+                WeaponNames = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+                WeaponProperty = "ChargeStartAnimation",
+                ChangeValue = "ZagreusFistAlt02Grab_Start",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+    
+            {
+                WeaponNames = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+                WeaponProperty = "ChargeTime",
+                ChangeValue = 0.24,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+                WeaponProperty = "AutoLock",
+                ChangeValue = true,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+                WeaponProperty = "AutoLockArcDistance",
+                ChangeValue = 220,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+                WeaponProperty = "AutoLockRange",
+                ChangeValue = 800,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+        }
+    }
+
     -- Boon animation changes
     ModUtil.LoadOnce(function ()
         for traitName, traitData in pairs(TraitData) do
