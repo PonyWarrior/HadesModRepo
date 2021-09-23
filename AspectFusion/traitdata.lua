@@ -4293,6 +4293,682 @@ if AspectFusion.Config.Enabled then
 		},
 	}
 
+    TraitData.UltraBowTrait =
+	{
+        Frame = "MetaUpgrade",
+        CustomRarityName = "Fusion",
+		CustomRarityColor = {3, 94, 252, 255},
+		Icon = "Weapon_Bow_14",
+		InheritFrom = { "WeaponEnchantmentTrait" },
+        PreEquipWeapons = { "LoadAmmoApplicator" },
+        RequiredWeapons = { "BowWeapon" },
+		PostWeaponUpgradeScreenAnimation = "ZagreusBowRamaHeavyShotFireEnd",
+		PostWeaponUpgradeScreenAngle = 205,
+		WeaponBinks =
+		{
+			"ZagreusBowRama_Bink",
+			"ZagreusBowRamaRun_Bink",
+			"ZagreusBowRamaRunStop_Bink",
+			"ZagreusBowRamaRapidFire_Bink",
+			"ZagreusBowRamaRapidLoop_Bink",
+			"ZagreusBowRamaHeavyShot_Bink",
+			"ZagreusBowRamaDashShot_Bink",
+		},
+		WeaponDataOverride =
+		{
+			BowWeapon =
+			{
+				FireScreenshake = { Distance = 3, Speed = 400, FalloffSpeed = 1200, Duration = 0.25 },
+
+				WeaponBinks =
+				{
+					"ZagreusBowRamaDash_Bink",
+					"ZagreusBowRama_Bink",
+					"ZagreusBowRamaRun_Bink",
+					"ZagreusBowRamaRunStop_Bink",
+					"ZagreusBowRamaRapidFire_Bink",
+					"ZagreusBowRamaRapidLoop_Bink",
+					"ZagreusBowRamaHeavyShot_Bink",
+					"ZagreusBowRamaDashShot_Bink",
+				},
+
+				HitSimSlowCooldown = 0.3,
+				HitSimSlowParameters =
+				{
+					{ ScreenPreWait = 0.04, Fraction = 0.03, LerpTime = 0.0 },
+					{ ScreenPreWait = 0.02, Fraction = 0.20, LerpTime = 0.06 },
+					{ ScreenPreWait = 0.02, Fraction = 1.00, LerpTime = 0.07 },
+				},
+
+				Sounds =
+				{
+					FireSounds =
+					{
+						PerfectChargeSounds =
+						{
+							{ Name = "/SFX/Player Sounds/ZagreusCriticalFire" },
+							{ Name = "/VO/ZagreusEmotes/EmoteHeavyBowPowerAttack" },
+							{ Name = "/SFX/Player Sounds/ZagreusBowFireRamaSitar" },
+						},
+						ImperfectChargeSounds =
+						{
+							{ Name = "/VO/ZagreusEmotes/EmoteHeavyBowAttack"},
+							{ Name = "/SFX/Player Sounds/ZagreusBowFireRamaSitar" },
+						},
+						LoadedSounds =
+						{
+							{ Name = "/SFX/Player Sounds/ZagreusBloodshotFire" },
+						},
+						{ Name = "/Leftovers/SFX/AuraOn"},
+					},
+					ChargeSounds =
+					{
+						{
+							Name = "/VO/ZagreusEmotes/EmoteHeavyBowCharge",
+							StoppedBy = { "ChargeCancel", "TriggerRelease", "Fired" },
+							SetPitchToPropertyValue = "ChargeTime",
+						},
+					},
+					ImpactSounds =
+					{
+						Invulnerable = "/SFX/SwordWallHitClank",
+						Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
+						Bone = "/SFX/ArrowMetalBoneSmash",
+						Brick = "/SFX/ArrowMetalStoneClang",
+						Stone = "/SFX/ArrowMetalStoneClang",
+						Organic = "/SFX/ArrowImpactSplatter",
+						StoneObstacle = "/SFX/ArrowWallHitClankSmall",
+						BrickObstacle = "/SFX/ArrowWallHitClankSmall",
+						MetalObstacle = "/SFX/ArrowWallHitClankSmall",
+						BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
+					},
+				},
+
+			},
+			BowWeaponDash =
+			{
+				FireScreenshake = { Distance = 3, Speed = 300, FalloffSpeed = 1200, Duration = 0.15 },
+
+				HitSimSlowCooldown = 0.3,
+				HitSimSlowParameters =
+				{
+					{ ScreenPreWait = 0.02, Fraction = 0.03, LerpTime = 0.0 },
+					{ ScreenPreWait = 0.02, Fraction = 0.20, LerpTime = 0.06 },
+					{ ScreenPreWait = 0.02, Fraction = 1.00, LerpTime = 0.07 },
+				},
+			},
+			BowSplitShot =
+			{
+				FireRumbleParameters =
+				{
+					{ ScreenPreWait = 0.02, RightFraction = 0.225, Duration = 0.16 },
+				},
+
+				Sounds =
+				{
+					FireSounds =
+					{
+						{ Name = "/VO/ZagreusEmotes/EmoteHeavyBowFlurry", },
+						{ Name = "/SFX/Player Sounds/ZagreusSplitShotRamaSitar"},
+					},
+					ImpactSounds =
+					{
+						Invulnerable = "/SFX/SwordWallHitClank",
+						Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
+						Bone = "/SFX/ArrowMetalBoneSmash",
+						Brick = "/SFX/ArrowMetalStoneClang",
+						Stone = "/SFX/ArrowMetalStoneClang",
+						Organic = "/SFX/ArrowImpactSplatter",
+						StoneObstacle = "/SFX/ArrowWallHitClankSmall",
+						BrickObstacle = "/SFX/ArrowWallHitClankSmall",
+						MetalObstacle = "/SFX/ArrowWallHitClankSmall",
+						BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
+					},
+				},
+			},
+		},
+        SetupFunction =
+        {
+            Name = "SetupAmmoLoad",
+            Args =
+            {
+                MaxCount = 99,
+            },
+            RunOnce = true,
+        },
+        AmmoReclaimTimeDivisor =
+        {
+            BaseValue = 3.125,
+            SourceIsMultiplier = true,
+        },
+        OverrideWeaponFireNames =
+        {
+            RangedWeapon = "nil",
+            LoadAmmoApplicator = "RangedWeapon",
+        },
+		BondDamageShareData =
+		{
+			Multiplier = {	BaseValue = 0.6 },
+			WeaponNames = { "BowWeapon", "BowWeaponDash"} ,
+			AlliedDamageMultiplier = 0.1,
+		},
+		PropertyChanges =
+		{
+            -- Zagreus
+            {
+                WeaponNames = { "BowWeapon", "BowWeaponDash" },
+                ProjectileProperty = "CriticalHitChance",
+                BaseMin = 0.15,
+                BaseMax = 0.15,
+                ChangeType = "Add",
+            },
+            -- Rama
+			{
+				WeaponNames = { "BowSplitShot" },
+				EffectName = "MarkBondTarget",
+				EffectProperty = "Active",
+				ChangeValue = true,
+			},
+			-- main shot modifications
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash"},
+				ProjectileProperty = "Scale",
+				ChangeValue = 3,
+				ChangeType = "Multiply",
+				ExcludeLinked = true,
+				ExtractValue =
+				{
+					ExtractAs = "TooltipWidth",
+					Format = "PercentDelta",
+					SkipAutoExtract = true,
+				}
+			},
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash"},
+				ProjectileProperty = "ExtentScale",
+				ChangeValue = 2,
+				ChangeType = "Add",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				ProjectileProperty = "AttachedAnim",
+				ChangeValue = "RamaWideShot",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			-- {
+			-- 	WeaponNames = { "BowWeapon", "BowWeaponDash" },
+			-- 	WeaponProperty = "ChargeTime",
+			-- 	ChangeValue = 2.1,
+			-- 	ChangeType = "Multiply",
+			-- 	ExcludeLinked = true,
+			-- },
+			-- {
+			-- 	WeaponNames = { "BowWeapon", "BowWeaponDash" },
+			-- 	WeaponProperty = "MinChargeToFire",
+			-- 	ChangeValue = 0.13,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				WeaponProperty = "ChargeDamageMultiplier",
+				ChangeValue = 2.0,
+				ChangeType = "Multiply",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				WeaponProperty = "PerfectChargeDamageMultiplier",
+				ChangeValue = 1.25,
+				ChangeType = "Multiply",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				WeaponProperty = "ChargeRangeMultiplier",
+				ChangeValue = 1.15,
+				ChangeType = "Multiply",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponName = "BowWeapon",
+				WeaponProperty = "MinChargeStartFx",
+				ChangeValue = "BowChargeRama",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponName = "BowWeaponDash",
+				WeaponProperty = "ChargeStartFx",
+				ChangeValue = "BowChargeRamaDash",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "BowWeapon",
+				EffectName = "BowWeaponDisable",
+				EffectProperty = "Duration",
+				ChangeValue = 1.3,
+				ChangeType = "Multiply",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "BowWeapon",
+				EffectName = "BowWeaponDisableCancelable",
+				EffectProperty = "Duration",
+				ChangeValue = 2.0,
+				ChangeType = "Multiply",
+				ExcludeLinked = true,
+			},
+			--[[
+			{
+				WeaponNames = { "BowWeapon", "BowWeaponDash" },
+				ProjectileProperty = "AttachedAnim",
+				ChangeValue = "RamaWideShot",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			]]
+			-- split shot modifications
+			-- {
+			-- 	WeaponNames = { "BowSplitShot" },
+			-- 	ProjectileProperty = "DamageLow",
+			-- 	ChangeValue = 5,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- 	SplitShoutDamageSource = "SplitShotDamageSource",
+			-- 	ExtractValue =
+			-- 	{
+			-- 		ExtractAs = "SpecialDamage",
+			-- 		SkipAutoExtract = true,
+			-- 	},
+			-- },
+			-- {
+			-- 	WeaponNames = { "BowSplitShot" },
+			-- 	ProjectileProperty = "DamageHigh",
+			-- 	DeriveValueFrom = "SplitShotDamageSource",
+			-- },
+			-- {
+			-- 	WeaponNames = { "BowSplitShot" },
+			-- 	WeaponProperty = "ProjectileAngleOffsetMin",
+			-- 	ChangeValue = -1 * math.rad(4),
+			-- 	--ChangeValue = 0,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+			-- {
+			-- 	WeaponNames = { "BowSplitShot" },
+			-- 	WeaponProperty = "ProjectileAngleOffsetMax",
+			-- 	ChangeValue = math.rad(4),
+			-- 	--ChangeValue = 0,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+			-- {
+			-- 	WeaponNames = { "BowSplitShot" },
+			-- 	WeaponProperty = "ProjectileAngleOffset",
+			-- 	ChangeValue = 0,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+			{
+				WeaponNames = { "BowSplitShot" },
+				ProjectileProperty = "NoJumpTargetRandomSpread",
+				ChangeValue = 90,
+				ChangeType = "Absolute",
+			},
+			-- {
+			-- 	WeaponNames = { "BowSplitShot" },
+			-- 	WeaponProperty = "NumProjectiles",
+			-- 	ChangeValue = 3,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+			-- {
+			-- 	WeaponNames = { "BowSplitShot" },
+			-- 	WeaponProperty = "ProjectileInterval",
+			-- 	ChangeValue = 1.5,
+			-- 	ChangeType = "Multiply",
+			-- 	ExcludeLinked = true,
+			-- },
+			-- {
+			-- 	WeaponNames = { "BowSplitShot" },
+			-- 	WeaponProperty = "ProjectileInterval",
+			-- 	ChangeValue = 1.5,
+			-- 	ChangeType = "Multiply",
+			-- 	ExcludeLinked = true,
+			-- },
+
+			{
+				WeaponNames = { "BowSplitShot" },
+				WeaponProperty = "AutoLock",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				WeaponProperty = "AutoLockRange",
+				ChangeValue = 1000,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				WeaponProperty = "AutoLockArcDistance",
+				ChangeValue = math.rad(90),
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			-- {
+			-- 	WeaponName = "BowSplitShot",
+			-- 	EffectName = "SplitShotDisable",
+			-- 	EffectProperty = "Duration",
+			-- 	ChangeValue = 0.65,
+			-- 	ChangeType = "Multiply",
+			-- },
+			-- {
+			-- 	WeaponName = "BowSplitShot",
+			-- 	EffectName = "SplitShotDisableFast",
+			-- 	EffectProperty = "Duration",
+			-- 	ChangeValue = 0.65,
+			-- 	ChangeType = "Multiply",
+			-- },
+			-- {
+			-- 	WeaponName = "BowSplitShot",
+			-- 	EffectName = "SplitShotDisableCancelable",
+			-- 	EffectProperty = "Duration",
+			-- 	ChangeValue = 0.5,
+			-- 	ChangeType = "Multiply",
+			-- },
+			-- {
+			-- 	WeaponName = "BowSplitShot",
+			-- 	EffectName = "SplitShotDisableFastCancelable",
+			-- 	EffectProperty = "Duration",
+			-- 	ChangeValue = 0.5,
+			-- 	ChangeType = "Multiply",
+			-- },
+			-- {
+			-- 	WeaponName = "BowSplitShot",
+			-- 	WeaponProperty = "ChargeTime",
+			-- 	ChangeValue = 0.18,
+			-- 	ChangeType = "Absolute",
+			-- },
+
+			{
+				WeaponNames = { "BowSplitShot" },
+				ProjectileProperty = "NumJumps",
+				ChangeValue = 1,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+				ExtractValue =
+				{
+					ExtractAs = "BonusJumps",
+					SkipAutoExtract = true,
+				}
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				ProjectileProperty = "BounceWhenOutOfJumpTargets",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				ProjectileProperty = "JumpRange",
+				ChangeValue = 500,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "BowSplitShot" },
+				ProjectileProperty = "Fuse",
+				ChangeValue = 0.75,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			-- {
+			-- 	WeaponName = "BowSplitShot",
+			-- 	WeaponProperty = "ChargeStartAnimation",
+			-- 	ChangeValue = "ZagreusBowRamaRapidLoop_Start",
+			-- 	ChangeType = "Absolute",
+			-- },
+			-- {
+			-- 	WeaponName = "BowSplitShot",
+			-- 	WeaponProperty = "FireGraphic",
+			-- 	ChangeValue = "ZagreusBowRamaRapidLoop_Fire",
+			-- 	ChangeType = "Absolute",
+			-- },
+			-- {
+			-- 	WeaponName = "BowSplitShot",
+			-- 	EffectName = "OnHitStun",
+			-- 	EffectProperty = "Active",
+			-- 	ChangeValue = false,
+			-- 	ChangeType = "Absolute",
+			-- },
+			-- -- tap fire properties
+			-- {
+			-- 	WeaponNames = { "BowSplitShot" },
+			-- 	WeaponProperty = "LockTriggerForCharge",
+			-- 	ChangeValue = true,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+
+			-- {
+			-- 	WeaponNames = { "BowSplitShot" },
+			-- 	WeaponProperty = "FireOnRelease",
+			-- 	ChangeValue = false,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+
+			-- {
+			-- 	WeaponNames = { "BowSplitShot" },
+			-- 	WeaponProperty = "FullyAutomatic",
+			-- 	ChangeValue = true,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+
+			-- {
+			-- 	WeaponNames = { "BowSplitShot" },
+			-- 	WeaponProperty = "ForceReleaseOnFire",
+			-- 	ChangeValue = false,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+			-- {
+			-- 	WeaponNames = { "BowSplitShot" },
+			-- 	WeaponProperty = "AllowExternalForceRelease",
+			-- 	ChangeValue = false,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+			-- {
+			-- 	WeaponNames = { "BowSplitShot" },
+			-- 	WeaponProperty = "ForceReleaseWeaponOnFire",
+			-- 	ChangeValue = "null",
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+
+			-- {
+			-- 	WeaponNames = { "BowSplitShot" },
+			-- 	WeaponProperty = "ShowFreeAimLine",
+			-- 	ChangeValue = false,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+
+			-- {
+			-- 	WeaponNames = { "BowSplitShot" },
+			-- 	WeaponProperty = "MinChargeToFire",
+			-- 	ChangeValue = 1.0,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+
+			-- {
+			-- 	WeaponNames = { "BowSplitShot" },
+			-- 	WeaponProperty = "ReloadTime",
+			-- 	ChangeValue = 0.35,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+
+			{
+				WeaponName = "BowWeapon",
+				WeaponProperty = "ClipSize",
+				ChangeValue = 0,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponName = "BowWeapon",
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusBowRamaHeavyShotStart",
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "BowWeapon",
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusBowRamaHeavyShotFire",
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "BowWeapon",
+				WeaponProperty = "ChargeCancelGraphic",
+				ChangeValue = "ZagreusBowRamaHeavyShotStartCancel",
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "BowWeaponDash",
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusBowRamaDashShot_Start",
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "BowWeaponDash",
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusBowRamaDashShot_Fire",
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "BowWeaponDash",
+				WeaponProperty = "ChargeCancelGraphic",
+				ChangeValue = "ZagreusBowRamaDashShot_Cancel",
+				ChangeType = "Absolute",
+			},
+            -- Chiron
+            {
+                WeaponNames = { "BowWeapon", "BowWeaponDash" },
+                EffectName = "MarkTarget",
+                EffectProperty = "Active",
+                ChangeValue = true,
+            },
+            -- Hera
+            {
+                WeaponName = "RangedWeapon",
+                WeaponProperty = "IgnoreOwnerAttackDisabled",
+                ChangeValue = true,
+                ChangeType = "Absolute",
+            },
+            {
+                WeaponName = "RangedWeapon",
+                WeaponProperty = "Cooldown",
+                ChangeValue = 0,
+                ChangeType = "Absolute",
+            },
+            {
+                WeaponName = "RangedWeapon",
+                WeaponProperty = "ChargeTime",
+                ChangeValue = 0,
+                ChangeType = "Absolute",
+            },
+            {
+                WeaponName = "RangedWeapon",
+                WeaponProperty = "SelfVelocity",
+                ChangeValue = 0,
+                ChangeType = "Absolute",
+            },
+            {
+                WeaponName = "RangedWeapon",
+                WeaponProperty = "FireGraphic",
+                ChangeValue = "null",
+                ChangeType = "Absolute",
+            },
+            {
+                WeaponName = "RangedWeapon",
+                WeaponProperty = "AllowMultiFireRequest",
+                ChangeValue = true,
+                ChangeType = "Absolute",
+            },
+            {
+                WeaponName = "RangedWeapon",
+                WeaponProperty = "RootOwnerWhileFiring",
+                ChangeValue = false,
+                ChangeType = "Absolute",
+            },
+            {
+                WeaponName = "RangedWeapon",
+                WeaponProperty = "ChargeStartAnimation",
+                ChangeValue = "null",
+                ChangeType = "Absolute",
+            },
+            {
+                WeaponName = "RangedWeapon",
+                WeaponProperty = "SetCompleteAngleOnFire",
+                ChangeValue = false,
+                ChangeType = "Absolute",
+            },
+            {
+                WeaponName = "RangedWeapon",
+                WeaponProperty = "IgnoreForceCooldown",
+                ChangeValue = true,
+                ChangeType = "Absolute"
+            },
+            {
+                WeaponName = "RangedWeapon",
+                EffectName = "RangedDisable",
+                EffectProperty = "Active",
+                ChangeValue = false,
+            },
+            {
+                WeaponName = "RangedWeapon",
+                EffectName = "RangedDisableCancelable",
+                EffectProperty = "Active",
+                ChangeValue = false,
+            },
+            {
+                WeaponName = "RangedWeapon",
+                WeaponProperty = "AllowExternalForceRelease",
+                ChangeValue = false,
+                ChangeType = "Absolute",
+            },
+		},
+    ExtractValues =
+    {
+      {
+        ExtractAs = "TooltipBondDuration",
+        SkipAutoExtract = true,
+        External = true,
+        BaseType = "Effect",
+        WeaponName = "SwordWeapon",
+        BaseName = "MarkBondTarget",
+        BaseProperty = "Duration",
+      },
+    }
+	}
+
     -- Trait specific changes
     ModUtil.LoadOnce(function ()
         for traitName, traitData in pairs(TraitData) do
@@ -4363,6 +5039,24 @@ if AspectFusion.Config.Enabled then
                                 propertyCopyChaos.ProjectileName = "ChaosShieldThrow"
                             end
                             table.insert(traitData.PropertyChanges, propertyCopyChaos)
+                        end
+                    elseif property.TraitName ~= nil and property.TraitName == "BowBondTrait" then
+                        local legal = false
+                        local propertyCopy = DeepCopyTable(property)
+                        propertyCopy.TraitName = "UltraBowTrait"
+
+                        if propertyCopy.WeaponName == nil or propertyCopy.WeaponName == "BowSplitShot" then
+                        else
+                            legal = true
+                        end
+
+                        if propertyCopy.WeaponNames == nil or Contains(propertyCopy.WeaponNames, "BowSplitShot") then
+                        else
+                            legal = true
+                        end
+
+                        if legal then
+                            table.insert(traitData.PropertyChanges, propertyCopy)
                         end
                     end
                 end

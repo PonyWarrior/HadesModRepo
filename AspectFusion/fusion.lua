@@ -679,3 +679,84 @@ OnWeaponFailedToFire{ function( triggerArgs )
 
 	end}
 end
+
+-- ultra bow
+
+ModUtil.Path.Wrap("DamageEnemy", function (baseFunc, victim, triggerArgs )
+    baseFunc(victim, triggerArgs )
+    local sourceWeaponData = triggerArgs.AttackerWeaponData
+	local attacker = triggerArgs.AttackerTable
+    if sourceWeaponData ~= nil and HeroHasTrait("UltraBowTrait") and not triggerArgs.PureDamage and not IsEmpty(ActiveEnemies) and ( not victim.SkipModifiers or victim.BondAlwaysApplies) then
+		local shareData = GetHeroTraitValues("BondDamageShareData")[1]
+		local enemyIds = GetAllKeys( ActiveEnemies )
+		for index, id in pairs(enemyIds) do
+			local enemy = ActiveEnemies[id]
+			if enemy and not enemy.IsDead and IsEmpty( enemy.InvulnerableFlags ) and IsEmpty ( enemy.PersistentInvulnerableFlags )
+				and enemy.ActiveEffects and enemy.ActiveEffects.MarkBondTarget and Contains(shareData.WeaponNames, sourceWeaponData.Name ) and not triggerArgs.EffectName then
+				local damageAmount = triggerArgs.DamageAmount * shareData.Multiplier
+				if HeroData.DefaultHero.HeroAlliedUnits[ enemy.Name ] and shareData.AlliedDamageMultiplier then
+					damageAmount = damageAmount * shareData.AlliedDamageMultiplier
+				end
+				Damage( enemy, { EffectName = "DamageShare", DamageAmount = damageAmount, Silent = false, PureDamage = true } )
+			end
+		end
+	end
+end)
+
+ModUtil.Path.Wrap("LoadAmmo", function (baseFunc)
+    baseFunc()
+    if not CurrentRun.CurrentRoom.LoadedAmmo or not HeroHasTrait( "UltraBowTrait" ) then
+		return
+	end
+
+	CurrentRun.CurrentRoom.ValidVolleys = CurrentRun.CurrentRoom.ValidVolleys or {}
+	local currentBowVolley = GetWeaponProperty({ Id = CurrentRun.Hero.ObjectId, WeaponName = "BowWeapon", Property = "Volley" }) or 0
+	local currentBowDashVolley = GetWeaponProperty({ Id = CurrentRun.Hero.ObjectId, WeaponName = "BowWeaponDash", Property = "Volley" }) or 0
+	local nextLoadedAmmoVolley = 0
+
+	for i, value in pairs( CurrentRun.CurrentRoom.ValidVolleys ) do
+		if value.BowWeapon == currentBowVolley + 1 and value.BowWeaponDash == currentBowDashVolley + 1 then
+			nextLoadedAmmoVolley = nextLoadedAmmoVolley + 1
+		end
+	end
+
+	PlaySound({ Name = "/Leftovers/SFX/HarpDash", Id = CurrentRun.Hero.ObjectId })
+	thread( PlayVoiceLines, HeroVoiceLines.LoadingAmmoVoiceLines, true )
+		if ScreenAnchors.AmmoIndicatorUI then
+		local offsetX = 380
+		local offsetY = -50
+		ScreenAnchors.SelfStoredAmmo =  ScreenAnchors.SelfStoredAmmo or {}
+		offsetX = offsetX + ( #ScreenAnchors.SelfStoredAmmo * 22 )
+		local screenId = CreateScreenObstacle({ Name = "BlankObstacle", Group = "Combat_UI", DestinationId = ScreenAnchors.HealthBack, X = 10 + offsetX, Y = ScreenHeight - 50 + offsetY })
+		SetThingProperty({ Property = "SortMode", Value = "Id", DestinationId = screenId })
+		table.insert( ScreenAnchors.SelfStoredAmmo, screenId )
+		SetAnimation({ Name = "SelfStoredAmmoIcon", DestinationId = screenId })
+	end
+
+	local storedAmmoData =
+	{
+		Count = 1,
+		ForceMin = 300,
+		ForceMax = 500,
+		AttackerId = CurrentRun.Hero.ObjectId,
+		WeaponName = "SelfLoadAmmoApplicator",
+		Id = _worldTime
+	}
+	CurrentRun.Hero.StoredAmmo = CurrentRun.Hero.StoredAmmo or {}
+	table.insert( CurrentRun.Hero.StoredAmmo, storedAmmoData )
+	thread( UpdateAmmoUI )
+
+
+	if nextLoadedAmmoVolley < CurrentRun.CurrentRoom.MaxLoadedAmmo then
+		IncrementTableValue( CurrentRun.CurrentRoom, "LoadedAmmo" )
+		table.insert( CurrentRun.CurrentRoom.ValidVolleys,
+		{
+			BowWeapon = currentBowVolley + 1,
+			BowWeaponDash = currentBowDashVolley + 1,
+		})
+		thread( UpdateAmmoUI )
+	else
+		thread( InCombatText, CurrentRun.Hero.ObjectId, "CombatText_MaxLoaded" )
+		RunWeaponMethod({ Id = CurrentRun.Hero.ObjectId, Weapon = "RangedWeapon", Method = "AddAmmo", Parameters = { 1 } })
+	end
+end)
