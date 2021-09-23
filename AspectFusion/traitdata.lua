@@ -2101,21 +2101,1566 @@ if AspectFusion.Config.Enabled then
         }
     }
 
-    -- Boon animation changes
+    TraitData.UltraShieldTrait =
+	{
+		InheritFrom = { "WeaponEnchantmentTrait" },
+		Icon = "Weapon_Shield_15",
+		RequiredWeapons = { "ShieldWeapon", "RangedWeapon" },
+		PostWeaponUpgradeScreenAnimation = "ZagreusShieldBeowulfIdle",
+		PostWeaponUpgradeScreenAngle = 180,
+		PreEquipWeapons = { "SelfLoadAmmoApplicator", "ShieldThrowProjectileBonusApplicator", "ChaosShieldThrow" },
+        Frame = "MetaUpgrade",
+        CustomRarityName = "Fusion",
+		CustomRarityColor = {3, 94, 252, 255},
+        AmmoDropData =
+		{
+			AmmoDropForceMin = 160,
+			AmmoDropForceMax = 190,
+			AmmoDropUpwardForceMin = 1000,
+			AmmoDropUpwardForceMax = 1030,
+		},
+		AnimDefinitions =
+		{
+			Default =
+			{
+				Unloaded =
+				{
+					Graphic = "ShieldRush3DBeowulf",
+					DissipateGraphic = "ShieldRush3DBeowulf-Out",
+					StartFx = "null",
+					StartFx2 = "null",
+					AttachedAnim = "null",
+				},
+				Loaded =
+				{
+					Graphic = "ShieldRush3DBeowulf",
+					DissipateGraphic = "ShieldRush3DBeowulf-Out",
+					StartFx = "null",
+					StartFx2 = "null",
+					AttachedAnim = "ShieldRush3DBeowulfMax",
+				},
+			},
+
+			ArtemisWeaponTrait =
+			{
+				Unloaded =
+				{
+					Graphic = "ShieldRush3DBeowulf-Artemis",
+					DissipateGraphic = "ShieldRush3DBeowulf-Out-Artemis",
+					StartFx = "null",
+					StartFx2 = "null",
+					AttachedAnim = "null",
+				},
+				Loaded =
+				{
+					Graphic = "ShieldRush3DBeowulf-Artemis",
+					DissipateGraphic = "ShieldRush3DBeowulf-Out-Artemis",
+					StartFx = "null",
+					StartFx2 = "null",
+					AttachedAnim = "ShieldRush3DBeowulfMax-Artemis",
+				},
+			},
+
+			AphroditeWeaponTrait =
+			{
+				Unloaded =
+				{
+					Graphic = "ShieldRush3DBeowulf-Aphrodite",
+					DissipateGraphic = "ShieldRush3DBeowulf-Out-Aphrodite",
+					StartFx = "null",
+					StartFx2 = "null",
+					AttachedAnim = "null",
+				},
+				Loaded =
+				{
+					Graphic = "ShieldRush3DBeowulf-Aphrodite",
+					DissipateGraphic = "ShieldRush3DBeowulf-Out-Aphrodite",
+					StartFx = "null",
+					StartFx2 = "null",
+					AttachedAnim = "ShieldRush3DBeowulfMax-Aphrodite",
+				},
+			},
+
+			AresWeaponTrait =
+			{
+				Unloaded =
+				{
+					Graphic = "ShieldRush3DBeowulf-Ares",
+					DissipateGraphic = "ShieldRush3DBeowulf-Out-Ares",
+					StartFx = "null",
+					StartFx2 = "null",
+					AttachedAnim = "null",
+				},
+				Loaded =
+				{
+					Graphic = "ShieldRush3DBeowulf-Ares",
+					DissipateGraphic = "ShieldRush3DBeowulf-Out-Ares",
+					StartFx = "null",
+					StartFx2 = "null",
+					AttachedAnim = "ShieldRush3DBeowulfMax-Ares",
+				},
+			},
+
+			AthenaWeaponTrait =
+			{
+				Unloaded =
+				{
+					Graphic = "ShieldRush3DBeowulf-Athena",
+					DissipateGraphic = "ShieldRush3DBeowulf-Out-Athena",
+					StartFx = "null",
+					StartFx2 = "null",
+					AttachedAnim = "null",
+				},
+				Loaded =
+				{
+					Graphic = "ShieldRush3DBeowulf-Athena",
+					DissipateGraphic = "ShieldRush3DBeowulf-Out-Athena",
+					StartFx = "null",
+					StartFx2 = "null",
+					AttachedAnim = "ShieldRush3DBeowulfMax-Athena",
+				},
+			},
+
+
+			DemeterWeaponTrait =
+			{
+				Unloaded =
+				{
+					Graphic = "ShieldRush3DBeowulf-Demeter",
+					DissipateGraphic = "ShieldRush3DBeowulf-Out-Demeter",
+					StartFx = "null",
+					StartFx2 = "null",
+					AttachedAnim = "null",
+				},
+				Loaded =
+				{
+					Graphic = "ShieldRush3DBeowulf-Demeter",
+					DissipateGraphic = "ShieldRush3DBeowulf-Out-Demeter",
+					StartFx = "null",
+					StartFx2 = "null",
+					AttachedAnim = "ShieldRush3DBeowulfMax-Demeter",
+				},
+			},
+
+			DionysusWeaponTrait =
+			{
+				Unloaded =
+				{
+					Graphic = "ShieldRush3DBeowulf-Dionysus",
+					DissipateGraphic = "ShieldRush3DBeowulf-Out-Dionysus",
+					StartFx = "null",
+					StartFx2 = "null",
+					AttachedAnim = "null",
+				},
+				Loaded =
+				{
+					Graphic = "ShieldRush3DBeowulf-Dionysus",
+					DissipateGraphic = "ShieldRush3DBeowulf-Out-Dionysus",
+					StartFx = "null",
+					StartFx2 = "null",
+					AttachedAnim = "ShieldRush3DBeowulfMax-Dionysus",
+				},
+			},
+
+			PoseidonWeaponTrait =
+			{
+				Unloaded =
+				{
+					Graphic = "ShieldRush3DBeowulf-Poseidon",
+					DissipateGraphic = "ShieldRush3DBeowulf-Out-Poseidon",
+					StartFx = "null",
+					StartFx2 = "null",
+					AttachedAnim = "null",
+				},
+				Loaded =
+				{
+					Graphic = "ShieldRush3DBeowulf-Poseidon",
+					DissipateGraphic = "ShieldRush3DBeowulf-Out-Poseidon",
+					StartFx = "null",
+					StartFx2 = "null",
+					AttachedAnim = "ShieldRush3DBeowulfMax-Poseidon",
+				},
+			},
+
+			ZeusWeaponTrait =
+			{
+				Unloaded =
+				{
+					Graphic = "ShieldRush3DBeowulf-Zeus",
+					DissipateGraphic = "ShieldRush3DBeowulf-Out-Zeus",
+					StartFx = "null",
+					StartFx2 = "null",
+					AttachedAnim = "null",
+				},
+				Loaded =
+				{
+					Graphic = "ShieldRush3DBeowulf-Zeus",
+					DissipateGraphic = "ShieldRush3DBeowulf-Out-Zeus",
+					StartFx = "null",
+					StartFx2 = "null",
+					AttachedAnim = "ShieldRush3DBeowulfMax-Zeus",
+				},
+			},
+
+
+		},
+		OverrideWeaponFireNames =
+		{
+			RangedWeapon = "nil",
+			SelfLoadAmmoApplicator = "RangedWeapon",
+		},
+		OnProjectileDeathFunction =
+		{
+			Name = "ShieldFireClear",
+			Args = {
+				Interval = 0.17,
+			},
+		},
+		SetupFunction =
+		{
+			Name = "SetupSelfAmmoLoad",
+			Args = { Duration = 3 },
+			RunOnce = true,
+		},
+		AddIncomingDamageModifiers =
+		{
+			GlobalMultiplier = 1.10,
+			ExtractValues =
+			{
+				{
+					Key = "GlobalMultiplier",
+					ExtractAs = "TooltipDamageTaken",
+					Format = "PercentDelta",
+					SkipAutoExtract = true
+				},
+			}
+		},
+		AddOutgoingDamageModifiers =
+		{
+			ValidWeapons = { "ShieldWeaponRush" },
+			LoadedAmmoMultiplier = { BaseValue = 2.0, SourceIsMultiplier = true },
+			ExcludeLinked = true,
+			ExtractValues =
+			{
+				{
+					Key = "LoadedAmmoMultiplier",
+					ExtractAs = "TooltipDamageIncrease",
+					Format = "PercentDelta",
+				}
+			},
+		},
+		WeaponBinks =
+		{
+			"ZagreusShieldBeowulfQuickAttack_Bink",
+			"ZagreusShieldBeowulfDashAttack_Bink",
+			"ZagreusShieldBeowulfAttack_Bink",
+			"ZagreusShieldBeowulfHeavyBullRush_Bink",
+            -- zeus shield throws
+            "ZagreusShield02ThrowReceive_Bink",
+            "ZagreusShield02HeavyThrow_Bink",
+            --
+			"ZagreusShieldBeowulfIdle_Bink",
+			"ZagreusShieldBeowulfRun_Bink",
+			"ZagreusShieldBeowulfRunStop_Bink",
+			"ZagreusShieldHeavyPound_Bink",
+			"ZagreusShieldHeavyThrowNoCatch_Bink",
+		},
+		WeaponDataOverride =
+		{
+			ShieldWeapon =
+			{
+				WeaponBinks =
+				{
+					"ZagreusShieldBeowulfQuickAttack_Bink",
+					"ZagreusShieldBeowulfDashAttack_Bink",
+					"ZagreusShieldBeowulfAttack_Bink",
+					"ZagreusShieldBeowulfHeavyBullRush_Bink",
+                    -- zeus shield throws
+                    "ZagreusShield02ThrowReceive_Bink",
+                    "ZagreusShield02HeavyThrow_Bink",
+                    "ZagreusShieldHeavyThrowNoCatch_Bink",
+                    --
+					"ZagreusShieldBeowulfIdle_Bink",
+					"ZagreusShieldBeowulfRun_Bink",
+					"ZagreusShieldBeowulfRunStop_Bink",
+					"ZagreusShieldHeavyPound_Bink",
+					"ZagreusShieldHeavyThrowNoCatch_Bink",
+				},
+
+				HitSimSlowCooldown = 0.2,
+				HitSimSlowParameters =
+				{
+
+					{ ScreenPreWait = 0.03, Fraction = 0.02, LerpTime = 0 },
+					{ ScreenPreWait = 0.02, Fraction = 0.10, LerpTime = 0 },
+					{ ScreenPreWait = 0.03, Fraction = 1.00, LerpTime = 0 },
+				},
+
+				Sounds =
+				{
+					ChargeSounds =
+					{
+						{
+							Name = "/VO/ZagreusEmotes/EmoteCharging_Bow",
+							StoppedBy = { "ChargeCancel", "Fired" }
+						}
+					},
+					FireSounds =
+					{
+						{ Name = "/VO/ZagreusEmotes/EmoteHeavyShieldAttack" },
+						{ Name = "/SFX/Player Sounds/ZagreusShieldSwipe" },
+						{ Name = "" },
+
+					},
+					ImpactSounds =
+					{
+						Invulnerable = "/SFX/SwordWallHitClank",
+						Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
+						Bone = "/SFX/MetalBoneSmashSHIELD",
+						Brick = "/SFX/MetalStoneClangSHIELD",
+						Stone = "/SFX/MetalStoneClangSHIELD",
+						Organic = "/SFX/MetalOrganicHitSHIELD",
+						StoneObstacle = "/SFX/Player Sounds/ShieldObstacleHit",
+						BrickObstacle = "/SFX/Player Sounds/ShieldObstacleHit",
+						MetalObstacle = "/SFX/Player Sounds/ShieldObstacleHit",
+						BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
+					},
+				},
+			},
+            -- Zeus shield throws
+            ShieldThrowDash =
+            {
+                RecallWeaponsOnFailToFire = {"ShieldThrow", "ChaosShieldThrow"},
+            },
+            ShieldThrow =
+            {
+                RecallWeaponsOnFailToFire = {"ShieldThrow", "ChaosShieldThrow"},
+                NotReadySound = "/SFX/Player Sounds/ZagreusShieldReturn",
+    
+                Sounds =
+                {
+                    FireSounds =
+                    {
+                        { Name = "/VO/ZagreusEmotes/EmoteRanged" },
+                        { Name = "/SFX/Player Sounds/ZagreusBowFire" },
+                        { Name = "/SFX/Player Sounds/ZagreusSpearThrow" },
+                    },
+                    ImpactSounds =
+                    {
+                        Invulnerable = "/SFX/SwordWallHitClank",
+                        Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
+                        Bone = "/SFX/Player Sounds/ElectricZapSmall",
+                        Brick = "/SFX/Player Sounds/ElectricZapSmall",
+                        Stone = "/SFX/Player Sounds/ElectricZapSmall",
+                        Organic = "/SFX/Player Sounds/ElectricZapSmall",
+                        StoneObstacle = "/SFX/Player Sounds/ElectricZapSmall",
+                        BrickObstacle = "/SFX/Player Sounds/ElectricZapSmall",
+                        MetalObstacle = "/SFX/Player Sounds/ElectricZapSmall",
+                        BushObstacle = "/SFX/Player Sounds/ElectricZapSmall",
+                    },
+                },
+            },
+			ShieldWeaponDash =
+			{
+				Sounds =
+				{
+					FireSounds =
+					{
+						{ Name = "/VO/ZagreusEmotes/EmoteAttacking_ShieldThrow" },
+						{ Name = "/SFX/Player Sounds/ZagreusShieldSwipe" },
+					},
+					ImpactSounds =
+					{
+						Invulnerable = "/SFX/SwordWallHitClank",
+						Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
+						Bone = "/SFX/MetalBoneSmashSHIELD",
+						Brick = "/SFX/MetalStoneClangSHIELD",
+						Stone = "/SFX/MetalStoneClangSHIELD",
+						Organic = "/SFX/MetalOrganicHitSHIELD",
+						StoneObstacle = "/SFX/Player Sounds/ShieldObstacleHit",
+						BrickObstacle = "/SFX/Player Sounds/ShieldObstacleHit",
+						MetalObstacle = "/SFX/Player Sounds/ShieldObstacleHit",
+						BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
+					},
+				},
+			},
+			ShieldWeaponRush =
+			{
+				Sounds =
+				{
+					FireSounds =
+					{
+						PerfectChargeSounds =
+						{
+							{ Name = "/SFX/Player Sounds/ZagreusCriticalFire" },
+							{ Name = "/SFX/Player Sounds/ZagreusBowFire" },
+						},
+						{ Name = "/VO/ZagreusEmotes/EmoteHeavyShieldRush" },
+						{ Name = "/SFX/Player Sounds/ZagreusShieldRush" },
+					},
+					ChargeSounds =
+					{
+						{ Name = "/VO/ZagreusEmotes/EmoteHeavyShieldBlock" },
+						{ Name = "/SFX/Player Sounds/ZagreusHeavyShieldStomp" },
+						{
+							Name = "/SFX/Player Sounds/ZagreusWeaponChargeup",
+							Key = "ShieldWeaponRush",
+							StoppedBy = { "ChargeCancel", "TriggerRelease", "Fired" },
+						},
+					},
+					ImpactSounds =
+					{
+						Invulnerable = "/SFX/SwordWallHitClank",
+						Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
+						Bone = "/SFX/MetalBoneSmashSHIELD",
+						Brick = "/SFX/MetalStoneClangSHIELD",
+						Stone = "/SFX/MetalStoneClangSHIELD",
+						Organic = "/SFX/MetalOrganicHitSHIELD",
+						StoneObstacle = "/SFX/Player Sounds/ShieldObstacleHit",
+						BrickObstacle = "/SFX/Player Sounds/ShieldObstacleHit",
+						MetalObstacle = "/SFX/Player Sounds/ShieldObstacleHit",
+						BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
+					},
+				},
+			}
+		},
+		BaseLoadedRushScale = 1.20,
+		LoadedRushRarityMultiplier = 1,
+		PropertyChanges =
+		{
+			-- Slow heavy shield Rush
+
+			{
+				WeaponNames = { "ShieldWeaponRush" },
+				ProjectileProperty = "DamageLow",
+				ChangeValue = 50,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+				DeriveSource = "ShieldRushDamage",
+			},
+			{
+				WeaponNames = { "ShieldWeaponRush" },
+				ProjectileProperty = "DamageHigh",
+				DeriveValueFrom = "ShieldRushDamage"
+			},
+
+			{
+				WeaponName = "ShieldWeaponRush",
+				WeaponProperty = "ChargeDamageMultiplier",
+				ChangeValue = 1.0,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "ShieldWeaponRush",
+				WeaponProperty = "ChargeVelocityMultiplier",
+				ChangeValue = 4.0,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponNames = { "ShieldWeaponRush" },
+				ProjectileProperty = "ImpactVelocity",
+				ChangeValue = 0.65,
+				ChangeType = "Multiply",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "ShieldWeaponRush" },
+				ProjectileProperty = "ImpactVelocityCap",
+				ChangeValue = 0.65,
+				ChangeType = "Multiply",
+				ExcludeLinked = true,
+			},
+			--[[
+			{
+				WeaponName = "ShieldWeaponRush",
+				WeaponProperty = "SelfVelocity",
+				ChangeValue = 600,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "ShieldWeaponRush",
+				EffectName = "ShieldWeaponHalt",
+				EffectProperty = "Duration",
+				ChangeValue = 0.18,
+				ChangeType = "Absolute",
+			},
+			]]
+
+			{
+				WeaponName = "ShieldWeaponRush",
+				WeaponProperty = "MinChargeToFire",
+				ChangeValue = 0.6,
+				ChangeType = "Multiply",
+			},
+			-- {
+			-- 	WeaponName = "ShieldWeaponRush",
+			-- 	WeaponProperty = "ChargeTime",
+			-- 	ChangeValue = 1.5,
+			-- 	ChangeType = "Multiply",
+			-- },
+			{
+				WeaponName = "ShieldWeaponRush",
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusShieldBeowulfHeavyBullRush_Charge",
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "ShieldWeaponRush",
+				WeaponProperty = "ChargeCancelGraphic",
+				ChangeValue = "ZagreusShieldBeowulfAttackChargeCancel",
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "ShieldWeaponRush",
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusShieldBeowulfHeavyBullRush_Fire",
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "ShieldWeaponRush",
+				EffectName = "ShieldSelfInvulnerableRush",
+				EffectProperty = "AngleCoverage",
+				ChangeValue = math.rad(225),
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "ShieldWeaponRush",
+				EffectName = "ShieldSelfReflectRush",
+				EffectProperty = "AngleCoverage",
+				ChangeValue = math.rad(225),
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "ShieldWeaponRush",
+				EffectName = "ShieldSelfInvulnerableRush",
+				EffectProperty = "AngleCoverageOffset",
+				ChangeValue = -math.rad(45),
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "ShieldWeaponRush",
+				EffectName = "ShieldSelfReflectRush",
+				EffectProperty = "AngleCoverageOffset",
+				ChangeValue = -math.rad(45),
+				ChangeType = "Absolute",
+			},
+
+			-- Main attack
+
+			{
+				WeaponName = "ShieldWeapon",
+				WeaponProperty = "ChargeTime",
+				ChangeValue = 0.16,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "ShieldWeapon",
+				WeaponProperty = "MinChargeToFire",
+				ChangeValue = 1.0,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "ShieldWeapon",
+				WeaponProperty = "BlockMoveInput",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "ShieldWeapon",
+				EffectName = "ShieldDisableAttack",
+				EffectProperty = "DisableMove",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "ShieldWeapon", "ShieldWeaponDash" },
+				ProjectileProperty = "DamageLow",
+				ChangeValue = 40,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "ShieldWeapon", "ShieldWeaponDash" },
+				ProjectileProperty = "DamageHigh",
+				ChangeValue = 40,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "ShieldWeapon", "ShieldWeaponDash" },
+				ProjectileProperty = "ImpactVelocity",
+				ChangeValue = 1800,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "ShieldWeapon", "ShieldWeaponDash" },
+				ProjectileProperty = "ImpactVelocityCap",
+				ChangeValue = 1800,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			--[[
+			{
+				WeaponName = "ShieldWeapon",
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusShieldBeowulfHeavyThrow_Charge",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			]]
+			{
+				WeaponName = "ShieldWeapon",
+				EffectName = "ShieldSelfSlowFire",
+				EffectProperty = "Duration",
+				ChangeValue = 0.5,
+				ChangeType = "Multiply",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "ShieldWeapon",
+				EffectName = "ShieldDisableAttack",
+				EffectProperty = "Duration",
+				ChangeValue = 1.45,
+				ChangeType = "Multiply",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "ShieldWeaponRush",
+				WeaponProperty = "ControlWindow",
+				ChangeValue = 1.45,
+				ChangeType = "Multiply",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "ShieldWeapon",
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusShieldHeavyPound_Charge",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "ShieldWeapon",
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusShieldHeavyPound_Fire",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "ShieldWeapon",
+				ProjectileProperty = "DetonateGraphic",
+				ChangeValue = "BeowulfShieldSlam",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "ShieldWeapon",
+				ProjectileProperty = "DamageRadius",
+				ChangeValue = 220,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "ShieldWeapon",
+				ProjectileProperty = "Fuse",
+				ChangeValue = 0.11,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+
+			-- Dash attack
+
+			-- {
+			-- 	WeaponName = "ShieldWeaponDash",
+			-- 	WeaponProperty = "ChargeTime",
+			-- 	ChangeValue = 0.12,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+			{
+				WeaponName = "ShieldWeaponDash",
+				WeaponProperty = "MinChargeToFire",
+				ChangeValue = 1.0,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "ShieldWeaponDash",
+				EffectName = "ShieldSelfSlowFireBeowulf",
+				EffectProperty = "Active",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			 {
+				WeaponName = "ShieldWeaponDash",
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusShieldBeowulfPunchFast_Charge",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+		 	 },
+
+			 {
+				WeaponName = "ShieldWeaponDash",
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusShieldBeowulfPunchFast",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+		 	 },
+
+			-- One target slower shield Throw
+
+			-- {
+			-- 	WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
+			-- 	ProjectileProperty = "ImpactVelocity",
+			-- 	ChangeValue = 900,
+			-- 	ChangeType = "Add",
+			-- },
+			-- {
+			-- 	WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
+			-- 	ProjectileProperty = "ImpactVelocityCap",
+			-- 	ChangeValue = 900,
+			-- 	ChangeType = "Add",
+			-- },
+			--[[
+			{
+				WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
+				ProjectileProperty = "NumJumps",
+				ChangeValue = 1,
+				ChangeType = "Absolute",
+			},
+			]]
+			-- {
+			-- 	WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
+			-- 	WeaponProperty= "ChargeTime",
+			-- 	ChangeValue = 0.3,
+			-- 	ChangeType = "Absolute",
+			-- },
+			-- {
+			-- 	WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
+			-- 	WeaponProperty= "ShowFreeAimLine",
+			-- 	ChangeValue = false,
+			-- 	ChangeType = "Absolute",
+			-- },
+			-- {
+			-- 	WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
+			-- 	WeaponProperty= "MinChargeToFire",
+			-- 	ChangeValue = 1.0,
+			-- 	ChangeType = "Absolute",
+			-- },
+			-- {
+			-- 	WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
+			-- 	ProjectileProperty= "StartDelay",
+			-- 	ChangeValue = 0.12,
+			-- 	ChangeType = "Absolute",
+			-- },
+			-- {
+			-- 	WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
+			-- 	EffectName = "OnHitStun",
+			-- 	EffectProperty = "Duration",
+			-- 	ChangeValue = 0.7,
+			-- 	ChangeType = "Absolute",
+			-- },
+			-- {
+			-- 	WeaponNames = { "ShieldThrow" },
+			-- 	WeaponProperty = "MinChargeStartFx",
+			-- 	ChangeValue = "ShieldChargeThrowTrait",
+			-- 	ChangeType = "Absolute",
+			-- },
+			-- {
+			-- 	WeaponName = "ShieldThrow",
+			-- 	WeaponProperty = "LockTriggerForCharge",
+			-- 	ChangeValue = true,
+			-- 	ChangeType = "Absolute",
+			-- },
+			-- {
+			-- 	WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
+			-- 	WeaponProperty = "ChargeStartAnimation",
+			-- 	ChangeValue = "ZagreusShieldBeowulfHeavyThrow_Charge",
+			-- 	ChangeType = "Absolute"
+			-- },
+			-- {
+			-- 	WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
+			-- 	WeaponProperty = "FireGraphic",
+			-- 	ChangeValue = "ZagreusShieldBeowulfHeavyThrow_Fire",
+			-- 	ChangeType = "Absolute"
+			-- },
+			-- {
+			-- 	WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
+			-- 	ProjectileProperty = "OnDeathFiredByAnimation",
+			-- 	ChangeValue = "ZagreusShieldBeowulfHeavyThrow_ReturnToIdle",
+			-- 	ChangeType = "Absolute"
+			-- },
+			-- {
+			-- 	WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
+			-- 	EffectName = "ShieldThrowDisable",
+			-- 	EffectProperty = "Active",
+			-- 	ChangeValue = true,
+			-- 	ChangeType = "Absolute"
+			-- },
+			-- {
+			-- 	WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
+			-- 	ProjectileProperty = "Speed",
+			-- 	ChangeValue = 2900,
+			-- 	ChangeType = "Absolute",
+			-- },
+			-- {
+			-- 	WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
+			-- 	ProjectileProperty = "ReturnToOwnerAfterInactiveSeconds",
+			-- 	ChangeValue = 0.4,
+			-- 	ChangeType = "Absolute",
+			-- },
+			-- {
+			-- 	WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
+			-- 	ProjectileProperty = "ReturnToOwnerSpeed",
+			-- 	ChangeValue = 2500,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+			-- {
+			-- 	WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
+			-- 	ProjectileProperty = "DamageLow",
+			-- 	ChangeValue = 45,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- 	DeriveSource = "ShieldThrowDamage",
+			-- },
+			-- {
+			-- 	WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
+			-- 	ProjectileProperty = "DamageHigh",
+			-- 	DeriveValueFrom = "ShieldThrowDamage"
+			-- },
+			-- Changes to make ranged weapon instant fire
+			{
+				WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+				WeaponProperty = "FullyAutomatic",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "RangedWeapon",
+				WeaponProperty = "ShowFreeAimLine",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "RangedWeapon",
+				WeaponProperty = "IgnoreOwnerAttackDisabled",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "RangedWeapon",
+				WeaponProperty = "ClearFireRequestOnChargeCancel",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "RangedWeapon",
+				WeaponProperty = "Cooldown",
+				ChangeValue = 0,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "RangedWeapon",
+				WeaponProperty = "ChargeTime",
+				ChangeValue = 0,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "RangedWeapon",
+				WeaponProperty = "SelfVelocity",
+				ChangeValue = 0,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "RangedWeapon",
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "null",
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "RangedWeapon",
+				WeaponProperty = "AllowMultiFireRequest",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "RangedWeapon",
+				WeaponProperty = "AllowExternalForceRelease",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "RangedWeapon",
+				WeaponProperty = "RootOwnerWhileFiring",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "RangedWeapon",
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "null",
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "RangedWeapon",
+				WeaponProperty = "SetCompleteAngleOnFire",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "RangedWeapon",
+				WeaponProperty = "IgnoreForceCooldown",
+				ChangeValue = true,
+				ChangeType = "Absolute"
+			},
+			{
+				WeaponName = "RangedWeapon",
+				EffectName = "RangedDisable",
+				EffectProperty = "Active",
+				ChangeValue = false,
+			},
+			{
+				WeaponName = "RangedWeapon",
+				EffectName = "RangedDisableCancelable",
+				EffectProperty = "Active",
+				ChangeValue = false,
+			},
+			{
+                WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+                WeaponProperty = "FireOnRelease",
+                ChangeValue = false,
+                ChangeType = "Absolute",
+            },
+            {
+                WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+                ProjectileProperty = "Type",
+                ChangeValue = "INSTANT",
+            },
+            {
+                WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+                ProjectileProperty = "DamageRadius",
+                ChangeValue = 300
+            },
+            {
+                WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+				ProjectileName = "RangedWeapon",
+                ProjectileProperty = "DetonateGraphic",
+                ChangeValue = "RadialNovaSwordParry"
+            },
+
+            -- Animations
+            --[[
+           {
+			WeaponName = "ShieldWeapon",
+			WeaponProperty = "FireGraphic",
+			ChangeValue = "ZagreusShieldBeowulfPunch",
+			ChangeType = "Absolute",
+			ExcludeLinked = true,
+		  },
+		  ]]
+
+		--   {
+		-- 	WeaponName = "ShieldThrow",
+		-- 	ProjectileName = "ShieldThrow",
+		-- 	ProjectileProperty = "OnDeathFiredByAnimation",
+		-- 	ChangeValue = "ZagreusShieldBeowulfCatch",
+		-- 	ChangeType = "Absolute",
+		-- 	ExcludeLinked = true,
+		--   },
+
+		-- 	{
+		-- 		WeaponNames = { "ShieldThrow" },
+		-- 		ProjectileName = "ShieldThrow",
+		-- 		ProjectileProperty = "Graphic",
+		-- 		ChangeValue = "ProjectileShieldAlt03",
+		-- 		ChangeType = "Absolute",
+		-- 		ExcludeLinked = true,
+		-- 	},
+
+			-- vfx
+
+			{
+				WeaponName = "ShieldWeaponRush",
+				ProjectileProperty = "Graphic",
+				ChangeValue = "ShieldRush3DBeowulf",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponName = "ShieldWeaponRush",
+				ProjectileProperty = "DissipateGraphic",
+				ChangeValue = "ShieldRush3DBeowulf-Out",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+            -- Zagreus Aspect
+
+            {
+                WeaponNames = { "ShieldWeapon", "ShieldWeaponDash" },
+                ProjectileProperty = "DamageLow",
+                BaseValue = 15,
+                ChangeType = "Add",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "ShieldWeapon", "ShieldWeaponDash" },
+                ProjectileProperty = "DamageHigh",
+                DeriveValueFrom = "DamageLow",
+            },
+
+            -- Chaos Aspect
+
+            {
+                WeaponName = "ChaosShieldThrow",
+                WeaponProperty = "NumProjectiles",
+                BaseValue = 5,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+				WeaponName = "ChaosShieldThrow",
+				WeaponProperty = "ProjectileAngleOffset",
+				ChangeValue = math.rad(45),
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+            -- Zeus Aspect
+
+            {
+                WeaponName = "ShieldThrow",
+                ProjectileName = "ShieldThrow",
+                ProjectileProperty = "Graphic",
+                ChangeValue = "ProjectileShieldMirage",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ShieldThrow",
+                ProjectileName = "ShieldThrow",
+                ProjectileProperty = "GroupName",
+                ChangeValue = "Standing",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ShieldThrow",
+                ProjectileName = "ShieldThrow",
+                ProjectileProperty = "DamageLow",
+                BaseValue = 30,
+                ChangeType = "Absolute",
+            },
+            {
+                WeaponName = "ShieldThrow",
+                ProjectileName = "ShieldThrow",
+                ProjectileProperty = "DamageHigh",
+                DeriveValueFrom = "DamageLow",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ShieldThrow",
+                ProjectileName = "ShieldThrow",
+                ProjectileProperty = "ClearWeaponBonusesOnHit",
+                ChangeValue = true,
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ShieldThrow",
+                WeaponProperty = "RemoveControlOnFire",
+                ChangeValue = "null",
+                ChangeType = "Absolute",
+            },
+    
+            {
+                WeaponName = "ShieldThrow",
+                WeaponProperty = "RemoveControlOnFire3",
+                ChangeValue = "null",
+                ChangeType = "Absolute",
+            },
+    
+            {
+                WeaponName = "ShieldThrow",
+                WeaponProperty = "RemoveAllControlSwaps",
+                ChangeValue = "null",
+                ChangeType = "Absolute",
+            },
+            {
+                WeaponName = "ShieldThrow",
+                WeaponProperty = "RemoveControlOnFire",
+                ChangeValue = "null",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ShieldThrow",
+                ProjectileName = "ShieldThrow",
+                ProjectileProperty = "MultipleUnitCollisions",
+                ChangeValue = false,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ShieldThrow",
+                ProjectileName = "ShieldThrow",
+                ProjectileProperty = "IgnoreCoverageAngles",
+                ChangeValue = true,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ShieldThrow",
+                ProjectileName = "ShieldThrow",
+                ProjectileProperty = "UseVulnerability",
+                ChangeValue = false,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ShieldThrow",
+                ProjectileName = "ShieldThrow",
+                ProjectileProperty = "ReturnToOwnerAfterInactiveSeconds",
+                ChangeValue = 10,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ShieldThrow",
+                WeaponProperty = "DisableOwnerForDuration",
+                ChangeValue = 0,
+                ChangeType = "Absolute",
+            },
+            {
+                WeaponName = "ShieldThrow",
+                ProjectileName = "ShieldThrow",
+                ProjectileProperty = "FinalJumpToOwner",
+                ChangeValue = true,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ShieldThrow",
+                ProjectileProperty = "SelfImpactVelocityMultiplier",
+                ChangeValue = 0,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ShieldThrow",
+                ProjectileName = "ShieldThrow",
+                ProjectileProperty = "Speed",
+                ChangeValue = 325,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ShieldThrow",
+                ProjectileName = "ShieldThrow",
+                ProjectileProperty = "Acceleration",
+                ChangeValue = -75,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ShieldThrow",
+                ProjectileName = "ShieldThrow",
+                ProjectileProperty = "ReturnToOwnerSpeed",
+                ChangeValue = 550,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ShieldThrow",
+                ProjectileName = "ShieldThrow",
+                ProjectileProperty = "PenetrateJumpTargets",
+                ChangeValue = true,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ShieldThrow",
+                ProjectileName = "ShieldThrow",
+                ProjectileProperty = "MultiDetonate",
+                ChangeValue = true,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ShieldThrow",
+                ProjectileName = "ShieldThrow",
+                ProjectileProperty = "Fuse",
+                ChangeValue = 0.3,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ShieldThrow",
+                ProjectileName = "ShieldThrow",
+                ProjectileProperty = "DetonateGraphic",
+                ChangeValue = "ShieldThrowTrailMirage",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ShieldThrow",
+                ProjectileName = "ShieldThrow",
+                ProjectileProperty = "DamageRadius",
+                ChangeValue = 320,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ShieldThrow",
+                ProjectileName = "ShieldThrow",
+                ProjectileProperty = "DamageRadiusScaleX",
+                ChangeValue = 0.9,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ShieldThrow",
+                ProjectileName = "ShieldThrow",
+                ProjectileProperty = "DamageRadiusScaleY",
+                ChangeValue = 0.5,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ShieldThrow",
+                ProjectileName = "ShieldThrow",
+                ProjectileProperty = "AddControlOnDeath",
+                ChangeValue = "null",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ShieldThrow",
+                ProjectileName = "ShieldThrow",
+                EffectName = "OnHitStun",
+                EffectProperty = "Duration",
+                ChangeValue = 0.5,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            -- Zeus Chaos
+
+            {
+                WeaponName = "ChaosShieldThrow",
+                ProjectileName = "ChaosShieldThrow",
+                ProjectileProperty = "Graphic",
+                ChangeValue = "ProjectileShieldMirage",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ChaosShieldThrow",
+                ProjectileName = "ChaosShieldThrow",
+                ProjectileProperty = "GroupName",
+                ChangeValue = "Standing",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ChaosShieldThrow",
+                ProjectileName = "ChaosShieldThrow",
+                ProjectileProperty = "DamageLow",
+                BaseValue = 30,
+                ChangeType = "Absolute",
+            },
+            {
+                WeaponName = "ChaosShieldThrow",
+                ProjectileName = "ChaosShieldThrow",
+                ProjectileProperty = "DamageHigh",
+                DeriveValueFrom = "DamageLow",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ChaosShieldThrow",
+                ProjectileName = "ChaosShieldThrow",
+                ProjectileProperty = "ClearWeaponBonusesOnHit",
+                ChangeValue = true,
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ChaosShieldThrow",
+                WeaponProperty = "RemoveControlOnFire",
+                ChangeValue = "null",
+                ChangeType = "Absolute",
+            },
+    
+            {
+                WeaponName = "ChaosShieldThrow",
+                WeaponProperty = "RemoveControlOnFire3",
+                ChangeValue = "null",
+                ChangeType = "Absolute",
+            },
+    
+            {
+                WeaponName = "ChaosShieldThrow",
+                WeaponProperty = "RemoveAllControlSwaps",
+                ChangeValue = "null",
+                ChangeType = "Absolute",
+            },
+            {
+                WeaponName = "ChaosShieldThrow",
+                WeaponProperty = "RemoveControlOnFire",
+                ChangeValue = "null",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ChaosShieldThrow",
+                ProjectileName = "ChaosShieldThrow",
+                ProjectileProperty = "MultipleUnitCollisions",
+                ChangeValue = false,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ChaosShieldThrow",
+                ProjectileName = "ChaosShieldThrow",
+                ProjectileProperty = "IgnoreCoverageAngles",
+                ChangeValue = true,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ChaosShieldThrow",
+                ProjectileName = "ChaosShieldThrow",
+                ProjectileProperty = "UseVulnerability",
+                ChangeValue = false,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ChaosShieldThrow",
+                ProjectileName = "ChaosShieldThrow",
+                ProjectileProperty = "ReturnToOwnerAfterInactiveSeconds",
+                ChangeValue = 10,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ChaosShieldThrow",
+                WeaponProperty = "DisableOwnerForDuration",
+                ChangeValue = 0,
+                ChangeType = "Absolute",
+            },
+            {
+                WeaponName = "ChaosShieldThrow",
+                ProjectileName = "ChaosShieldThrow",
+                ProjectileProperty = "FinalJumpToOwner",
+                ChangeValue = true,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ChaosShieldThrow",
+                ProjectileProperty = "SelfImpactVelocityMultiplier",
+                ChangeValue = 0,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ChaosShieldThrow",
+                ProjectileName = "ChaosShieldThrow",
+                ProjectileProperty = "Speed",
+                ChangeValue = 325,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ChaosShieldThrow",
+                ProjectileName = "ChaosShieldThrow",
+                ProjectileProperty = "Acceleration",
+                ChangeValue = -75,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ChaosShieldThrow",
+                ProjectileName = "ChaosShieldThrow",
+                ProjectileProperty = "ReturnToOwnerSpeed",
+                ChangeValue = 550,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ChaosShieldThrow",
+                ProjectileName = "ChaosShieldThrow",
+                ProjectileProperty = "PenetrateJumpTargets",
+                ChangeValue = true,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ChaosShieldThrow",
+                ProjectileName = "ChaosShieldThrow",
+                ProjectileProperty = "MultiDetonate",
+                ChangeValue = true,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ChaosShieldThrow",
+                ProjectileName = "ChaosShieldThrow",
+                ProjectileProperty = "Fuse",
+                ChangeValue = 0.3,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ChaosShieldThrow",
+                ProjectileName = "ChaosShieldThrow",
+                ProjectileProperty = "DetonateGraphic",
+                ChangeValue = "ShieldThrowTrailMirage",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ChaosShieldThrow",
+                ProjectileName = "ChaosShieldThrow",
+                ProjectileProperty = "DamageRadius",
+                ChangeValue = 320,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ChaosShieldThrow",
+                ProjectileName = "ChaosShieldThrow",
+                ProjectileProperty = "DamageRadiusScaleX",
+                ChangeValue = 0.9,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ChaosShieldThrow",
+                ProjectileName = "ChaosShieldThrow",
+                ProjectileProperty = "DamageRadiusScaleY",
+                ChangeValue = 0.5,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ChaosShieldThrow",
+                ProjectileName = "ChaosShieldThrow",
+                ProjectileProperty = "AddControlOnDeath",
+                ChangeValue = "null",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ChaosShieldThrow",
+                ProjectileName = "ChaosShieldThrow",
+                EffectName = "OnHitStun",
+                EffectProperty = "Duration",
+                ChangeValue = 0.5,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ChaosShieldThrow",
+                WeaponProperty = "FireGraphic",
+                ChangeValue = "ZagreusShieldAlt02Throw",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ChaosShieldThrow",
+                ProjectileName = "ChaosShieldThrow",
+                ProjectileProperty = "OnDeathFiredByAnimation",
+                ChangeValue = "ZagreusShieldAlt02Catch",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            }, 
+
+		}
+	}
+
+    -- Trait specific changes
     ModUtil.LoadOnce(function ()
         for traitName, traitData in pairs(TraitData) do
-            local propertiesCopy = {}
+
+            if traitData.RequiredFalseTrait ~= nil and traitData.RequiredFalseTrait == "ShieldLoadAmmoTrait" then
+                traitData.RequiredFalseTrait = nil
+                traitData.RequiredFalseTraits = { "ShieldLoadAmmoTrait", "UltraShieldTrait"}
+            elseif traitData.RequiredFalseTraits ~= nil and Contains(traitData.RequiredFalseTraits, "ShieldLoadAmmoTrait") then
+                table.insert(traitData.RequiredFalseTraits, "UltraShieldTrait")
+            end
+
+            if traitData.TraitDependencyTextOverrides ~= nil and traitData.TraitDependencyTextOverrides.ShieldLoadAmmoTrait ~= nil then
+                local UltraShieldTrait = traitData.TraitDependencyTextOverrides.ShieldLoadAmmoTrait
+                table.insert(traitData.TraitDependencyTextOverrides, UltraShieldTrait)
+            end
+
             if traitData.PropertyChanges ~= nil then
                 for _, property in pairs(traitData.PropertyChanges) do
                     if property.TraitName ~= nil and property.TraitName == "SwordConsecrationTrait" then
-                        local propertyCopy = property
+                        local propertyCopy = DeepCopyTable(property)
                         propertyCopy.TraitName = "UltraSwordTrait"
                         table.insert(traitData.PropertyChanges, propertyCopy)
+                    elseif property.TraitName ~= nil and property.TraitName == "ShieldLoadAmmoTrait" then
+                        local legal = false
+                        local propertyCopy = DeepCopyTable(property)
+                        propertyCopy.TraitName = "UltraShieldTrait"
+
+                        if propertyCopy.WeaponName == nil or propertyCopy.WeaponName == "ShieldThrow" then
+                        elseif propertyCopy.WeaponName == "ShieldThrowDash" then
+                        elseif propertyCopy.WeaponName == "ChaosShieldThrow" then
+                        else
+                            legal = true
+                        end
+
+                        if propertyCopy.WeaponNames == nil or Contains(propertyCopy.WeaponNames, "ShieldThrow") then
+                        elseif Contains(propertyCopy.WeaponNames, "ShieldThrowDash") then
+                        elseif Contains(propertyCopy.WeaponNames, "ChaosShieldThrow") then
+                        else
+                            legal = true
+                        end
+                        
+                        -- not ideal but without it graphic is incorrect
+                        if propertyCopy.ChangeValue ~= nil and type(propertyCopy.ChangeValue) == "string" and string.match(propertyCopy.ChangeValue, "ProjectileShieldAlt03") then
+                            propertyCopy.ChangeValue = string.gsub(propertyCopy.ChangeValue, "ProjectileShieldAlt03", "ProjectileShieldAlt02")
+                        end
+
+                        if legal then
+                            table.insert(traitData.PropertyChanges, propertyCopy)
+                        end
+
+                    elseif property.TraitName ~= nil and property.TraitName == "ShieldTwoShieldTrait" then
+                        local propertyCopy = DeepCopyTable(property)
+                        propertyCopy.TraitName = "UltraShieldTrait"
+                        -- extremely cursed
+                        if propertyCopy.WeaponName ~= nil and propertyCopy.WeaponName == "ShieldThrow" then
+                            table.insert(traitData.PropertyChanges, propertyCopy)
+                            local propertyCopyChaos = DeepCopyTable(propertyCopy)
+                            propertyCopyChaos.WeaponName = "ChaosShieldThrow"
+                            if propertyCopyChaos.ProjectileName ~= nil and propertyCopyChaos.ProjectileName == "ShieldThrow" then
+                                propertyCopyChaos.ProjectileName = "ChaosShieldThrow"
+                            end
+                            table.insert(traitData.PropertyChanges, propertyCopyChaos)
+                        elseif propertyCopy.WeaponNames ~= nil and Contains(propertyCopy.WeaponNames, "ShieldThrow") then
+                            table.insert(traitData.PropertyChanges, propertyCopy)
+                            local propertyCopyChaos = DeepCopyTable(propertyCopy)
+                            table.insert(propertyCopyChaos.WeaponNames, "ChaosShieldThrow")
+                            if propertyCopyChaos.ProjectileName ~= nil and propertyCopyChaos.ProjectileName == "ShieldThrow" then
+                                propertyCopyChaos.ProjectileName = "ChaosShieldThrow"
+                            end
+                            table.insert(traitData.PropertyChanges, propertyCopyChaos)
+                        end
+
                     end
                 end
             end
         end
     end)
-
-    
 end

@@ -471,6 +471,16 @@ function AspectFusion.WeaponUpgradeScreenLoadPage(screen)
 	end
 end
 
+-- warning
+ModUtil.Path.Wrap("CloseWeaponUpgradeScreen", function (baseFunc, screen)
+    local weaponName = GetEquippedWeapon()
+    local aspectName = GetWeaponUpgradeTrait(weaponName, GameState.LastWeaponUpgradeData[weaponName].Index)
+    if aspectName ~= nil and aspectName == "UltraShieldTrait" then
+			thread( InCombatText, CurrentRun.Hero.ObjectId, "You need to exit and re-enter the room for this aspect to work properly in the courtyard", 5.0, { SkipShadow = true } )
+    end
+    baseFunc(screen)
+end)
+
 -- Ultra sword
 OnWeaponFired{ "SwordParry",
 	function( triggerArgs )
@@ -519,4 +529,153 @@ ModUtil.Path.Wrap("CheckComboPowers", function (baseFunc, victim, attacker, trig
 	end
 end)
 
+-- Ultra Shield
+ModUtil.Path.Wrap("ShieldFireClear", function (baseFunc, triggerArgs, args)
+    baseFunc(triggerArgs, args)
+    if HeroHasTrait("UltraShieldTrait") and CurrentRun.CurrentRoom.LoadedAmmo and CurrentRun.CurrentRoom.LoadedAmmo > 0 and triggerArgs.name == "ShieldWeaponRush" and CurrentRun.Hero.StoredAmmo and CurrentRun.CurrentRoom.LoadedAmmo then
+		local numAmmo = CurrentRun.CurrentRoom.LoadedAmmo
+		if HeroHasTrait("ShieldLoadAmmo_ZeusRangedTrait" ) then
+			local targetId = SpawnObstacle({ Name = "InvisibleTarget", Group = "Scripting", LocationX = triggerArgs.LocationX, LocationY = triggerArgs.LocationY })
+			for i = 1, numAmmo do
+				thread(FireWeaponWithinRange, { SourceId = targetId, Range = 350, SeekTarget = true, WeaponName = "ZeusShieldLoadAmmoStrike", InitialDelay = 0.1 * i, Delay = 0.25, Count = 1, BonusChance = GetTotalHeroTraitValue("BonusBolts") })
+			end
+			thread( DestroyOnDelay, { targetId }, 3 )
+		end
+		
+		thread( UnloadAmmoThread, { Count = numAmmo , Attacker = CurrentRun.Hero, Angle = GetAngle({Id = CurrentRun.Hero.ObjectId}), LocationX = triggerArgs.LocationX, LocationY = triggerArgs.LocationY, Interval = args.Interval })
+		
+		while numAmmo  > 0 do
+			for i, ammoData in pairs( CurrentRun.Hero.StoredAmmo ) do
+				if ammoData.WeaponName == "SelfLoadAmmoApplicator" then
+					local ammoAnchors = ScreenAnchors.SelfStoredAmmo
+					if ammoAnchors ~= nil and ammoAnchors[#ammoAnchors] ~= nil then
+						Destroy({ Id = ammoAnchors[#ammoAnchors] })
+						ammoAnchors[#ammoAnchors] = nil
+					end
+					CurrentRun.Hero.StoredAmmo[i] = nil
+					break
+				end
+			end
+			numAmmo  = numAmmo  - 1
+		end
+		CurrentRun.Hero.StoredAmmo = CollapseTable( CurrentRun.Hero.StoredAmmo )
+
+		thread(MarkObjectiveComplete, "BeowulfTackle")
+		ShieldFireClearPresentation( triggerArgs )
+	end
+end)
+
+OnWeaponFired{ "ShieldWeaponRush",
+	function(triggerArgs)
+		-- SetPlayerPhasing("ShieldWeaponRush")
+		if HeroHasTrait("UltraShieldTrait") then
+			FireWeaponFromUnit({ Weapon = "ShieldThrowProjectileBonusApplicator", Id = CurrentRun.Hero.ObjectId, DestinationId = CurrentRun.Hero.ObjectId })
+		end
+		if HeroHasTrait("UltraShieldTrait") then
+
+			local parentTrait = nil
+			for i, traitData in pairs( CurrentRun.Hero.Traits ) do
+				if traitData.Name == "UltraShieldTrait" then
+					parentTrait = traitData
+					break
+				end
+			end
+			SetProjectileProperty({ WeaponName = "ShieldWeaponRush", DestinationId = CurrentRun.Hero.ObjectId, Property = "Scale", Value = 1 })
+			SetProjectileProperty({ WeaponName = "ShieldWeaponRush", DestinationId = CurrentRun.Hero.ObjectId, Property = "ExtentScale", Value = 1 })
+
+			local parentAnimData = parentTrait.AnimDefinitions.Default
+			for traitName, animData in pairs( parentTrait.AnimDefinitions ) do
+				if traitName == "Default" or HeroHasTrait(traitName) then
+					parentAnimData = animData
+				end
+			end
+			if parentAnimData and parentAnimData.Unloaded then
+				for changeKey, changeValue in pairs( parentAnimData.Unloaded ) do
+					SetProjectileProperty({ WeaponName = "ShieldWeaponRush", DestinationId = CurrentRun.Hero.ObjectId, Property = changeKey, Value = changeValue })
+				end
+			end
+		end
+	end
+}
+
+ModUtil.Path.Wrap("SelfLoadAmmo", function (baseFunc)
+    baseFunc()
+	if not CurrentRun.CurrentRoom.LoadedAmmo or not HeroHasTrait( "UltraShieldTrait" ) then
+		return
+	end
+
+	PlaySound({ Name = "/Leftovers/SFX/HarpDash", Id = CurrentRun.Hero.ObjectId })
+	thread( PlayVoiceLines, HeroVoiceLines.LoadingAmmoVoiceLines, true )
+
+	if ScreenAnchors.AmmoIndicatorUI then
+		local offsetX = 380
+		local offsetY = -50
+		ScreenAnchors.SelfStoredAmmo =  ScreenAnchors.SelfStoredAmmo or {}
+		offsetX = offsetX + ( #ScreenAnchors.SelfStoredAmmo * 22 )
+		local screenId = CreateScreenObstacle({ Name = "BlankObstacle", Group = "Combat_UI", DestinationId = ScreenAnchors.HealthBack, X = 10 + offsetX, Y = ScreenHeight - 50 + offsetY })
+		SetThingProperty({ Property = "SortMode", Value = "Id", DestinationId = screenId })
+		table.insert( ScreenAnchors.SelfStoredAmmo, screenId )
+		SetAnimation({ Name = "SelfStoredAmmoIcon", DestinationId = screenId })
+	end
+
+	CurrentRun.CurrentRoom.LoadedAmmo = CurrentRun.CurrentRoom.LoadedAmmo + 1
+	CurrentRun.Hero.StoredAmmo = CurrentRun.Hero.StoredAmmo or {}
+
+	local storedAmmoData =
+	{
+		Count = 1,
+		ForceMin = 300,
+		ForceMax = 500,
+		AttackerId = CurrentRun.Hero.ObjectId,
+		WeaponName = "SelfLoadAmmoApplicator",
+		Id = _worldTime
+	}
+	table.insert( CurrentRun.Hero.StoredAmmo, storedAmmoData )
+	thread( UpdateAmmoUI )
+
+	-- Changes to extents
+	local parentTrait = nil
+	for i, traitData in pairs( CurrentRun.Hero.Traits ) do
+		if traitData.Name == "UltraShieldTrait" then
+			parentTrait = traitData
+			break
+		end
+	end
+
+	if parentTrait then
+		local loadedRushScale = parentTrait.BaseLoadedRushScale
+		local loadedRushRarityMultiplier = ( GetRarityValue(parentTrait.Rarity) * parentTrait.LoadedRushRarityMultiplier )
+		SetProjectileProperty({ WeaponName = "ShieldWeaponRush", DestinationId = CurrentRun.Hero.ObjectId, Property = "Scale", Value =  1 + ( loadedRushScale - 1 ) * loadedRushRarityMultiplier })
+		SetProjectileProperty({ WeaponName = "ShieldWeaponRush", DestinationId = CurrentRun.Hero.ObjectId, Property = "ExtentScale", Value = 1 + ( loadedRushScale - 1 ) * loadedRushRarityMultiplier })
+
+
+		local parentAnimData = parentTrait.AnimDefinitions.Default
+		for traitName, animData in pairs( parentTrait.AnimDefinitions ) do
+			if traitName == "Default" or HeroHasTrait(traitName) then
+				parentAnimData = animData
+			end
+		end
+		if parentAnimData and parentAnimData.Loaded then
+			for changeKey, changeValue in pairs( parentAnimData.Loaded ) do
+				SetProjectileProperty({ WeaponName = "ShieldWeaponRush", DestinationId = CurrentRun.Hero.ObjectId, Property = changeKey, Value = changeValue })
+			end
+		end
+	end
+end, AspectFusion)
+
+OnWeaponFailedToFire{ function( triggerArgs )
+		local attacker = triggerArgs.TriggeredByTable
+		local weaponData = GetWeaponData( attacker, triggerArgs.name )
+
+		if weaponData == nil then
+			return
+		end
+
+		if weaponData.RecallWeaponsOnFailToFire then
+            for _, recallWeaponName in pairs (weaponData.RecallWeaponsOnFailToFire) do
+			    RunWeaponMethod({ Id = CurrentRun.Hero.ObjectId, Weapon = recallWeaponName, Method = "RecallProjectiles" })
+            end
+		end
+
+	end}
 end

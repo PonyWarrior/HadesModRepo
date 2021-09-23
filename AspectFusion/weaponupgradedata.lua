@@ -24,4 +24,17 @@ if AspectFusion.Config.Enabled then
         Image = "Codex_Portrait_FistAlt03",
         UnequipFunctionName = "RemoveFistDetonateDash",
     }
+    WeaponUpgradeData.ShieldWeapon[5] =
+    {
+        Costs = { 0, 0, 0, 0, 0 },
+        MaxUpgradeLevel = 0,
+        StartsUnlocked = true,
+        TraitName = "UltraShieldTrait",
+        UnequipFunctionName = "RemoveSelfAmmoLoad",
+        EquippedKitAnimation = "WeaponShieldAlt03FloatingIdleOff",
+        UnequippedKitAnimation = "WeaponShieldAlt03FloatingIdle",
+        BonusUnequippedKitAnimation = "WeaponShieldAlt03FloatingIdleBonus",
+        BonusEquippedKitAnimation = "WeaponShieldAlt03FloatingIdleOffBonus",
+        Image = "Codex_Portrait_ShieldAlt03"
+    }
 end

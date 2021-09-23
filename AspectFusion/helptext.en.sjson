@@ -11,5 +11,10 @@
         DisplayName = "Final Form Malphon"
         Description = "The final form of Malphon. Combines the powers of Zagreus, Talos, Demeter and Gilgamesh at full strength."
         }
+        {
+        Id = "UltraShieldTrait"
+        DisplayName = "Final Form Aegis"
+        Description = "The final form of Aegis. Combines the powers of Zagreus, Chaos, Zeus and Beowulf at full strength."
+        }
     ]
 }
