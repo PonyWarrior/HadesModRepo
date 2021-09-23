@@ -1,0 +1,8 @@
+Top Import "config.lua"
+Import "fusion.lua"
+To "Scripts/TraitData.lua"
+Import "traitdata.lua"
+To "Scripts/WeaponUpgradeData.lua"
+Import "weaponupgradedata.lua"
+To "Game/Text/en/HelpText.en.sjson"
+SJSON "helptext.en.sjson"

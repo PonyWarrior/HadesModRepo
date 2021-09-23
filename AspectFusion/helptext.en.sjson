@@ -1,0 +1,10 @@
+{
+    Texts = [
+        "_append"
+        {
+        Id = "UltraSwordTrait"
+        DisplayName = "Final Form Stygius"
+        Description = "The final form of Stygius. Combines the powers of Zagreus, Nemesis, Poseidon and Arthur at full strength."
+        }
+    ]
+}
