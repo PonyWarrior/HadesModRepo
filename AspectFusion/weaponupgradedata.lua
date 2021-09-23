@@ -37,4 +37,17 @@ if AspectFusion.Config.Enabled then
         BonusEquippedKitAnimation = "WeaponShieldAlt03FloatingIdleOffBonus",
         Image = "Codex_Portrait_ShieldAlt03"
     }
+    WeaponUpgradeData.SpearWeapon[5] =
+    {
+        Costs = { 0, 0, 0, 0, 0 },
+        MaxUpgradeLevel = 0,
+        StartsUnlocked = true,
+        TraitName = "UltraSpearTrait",
+        UnequipFunctionName = "RemoveSpearGuanYu",
+        EquippedKitAnimation = "WeaponSpearAlt03FloatingIdleOff",
+        UnequippedKitAnimation = "WeaponSpearAlt03FloatingIdle",
+        BonusUnequippedKitAnimation = "WeaponSpearAlt03FloatingIdleBonus",
+        BonusEquippedKitAnimation = "WeaponSpearAlt03FloatingIdleOffBonus",
+        Image = "Codex_Portrait_SpearAlt03"
+    }
 end

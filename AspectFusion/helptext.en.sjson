@@ -4,17 +4,32 @@
         {
         Id = "UltraSwordTrait"
         DisplayName = "Final Form Stygius"
-        Description = "The final form of Stygius. Combines the powers of Zagreus, Nemesis, Poseidon and Arthur at full strength."
+        Description = "The final form of Stygius, the Stygian Blade. Combines the powers of Zagreus, Nemesis, Poseidon and Arthur at full strength."
         }
         {
         Id = "UltraFistTrait"
         DisplayName = "Final Form Malphon"
-        Description = "The final form of Malphon. Combines the powers of Zagreus, Talos, Demeter and Gilgamesh at full strength."
+        Description = "The final form of Malphon, the Twin Fists. Combines the powers of Zagreus, Talos, Demeter and Gilgamesh at full strength."
         }
         {
         Id = "UltraShieldTrait"
         DisplayName = "Final Form Aegis"
-        Description = "The final form of Aegis. Combines the powers of Zagreus, Chaos, Zeus and Beowulf at full strength."
+        Description = "The final form of Aegis, the Shield of Chaos. Combines the powers of Zagreus, Chaos, Zeus and Beowulf at full strength."
+        }
+        {
+        Id = "UltraSpearTrait"
+        DisplayName = "Final Form Varatha"
+        Description = "The final form of Varatha, the Eternal Spear. Combines the powers of Zagreus, Achiles, Hades and Guan Yu at full strength."
+        }
+        {
+        Id = "UltraBowTrait"
+        DisplayName = "Final Form Coronacht"
+        Description = "The final form of Coronacht, the Heart Seeking Bow. Combines the powers of Zagreus, Chiron, Hera and Rama at full strength."
+        }
+        {
+        Id = "UltraGunTrait"
+        DisplayName = "Final Form Exagryph"
+        Description = "The final form of Exagryph, the Adamant Rail. Combines the powers of Zagreus, Eris, Hestia and Lucifer at full strength."
         }
     ]
 }

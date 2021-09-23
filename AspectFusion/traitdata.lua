@@ -3586,6 +3586,713 @@ if AspectFusion.Config.Enabled then
 		}
 	}
 
+    TraitData.UltraSpearTrait =
+	{
+		InheritFrom = { "WeaponEnchantmentTrait" },
+		Icon = "Weapon_Spear_07",
+        Frame = "MetaUpgrade",
+        CustomRarityName = "Fusion",
+		CustomRarityColor = {3, 94, 252, 255},
+        PostWeaponUpgradeScreenFunctionName = "RemoveSpearTeleport",
+        PostWeaponUpgradeScreenAnimation = "ZagreusSpearAlt03ThrowFireReturn",
+		RequiredWeapons = {"SpearWeapon", "SpearWeaponThrow",},
+        PreEquipWeapons = { "SpearRushWeapon", "SpearWeaponThrowInvisibleReturn", },
+		RequiredFalseTraits = { "SpearAutoAttack", "SpearSpinAura" },
+		WeaponBinks =
+		{
+			"ZagreusSpear03Run_Bink",
+			"ZagreusSpear03RunStop_Bink",
+			"ZagreusSpear03Spin_Bink",
+			"ZagreusSpear03DashAttack_Bink",
+			"ZagreusSpear03Throw_Bink",
+
+			"ZagreusSpearLunarThrust1_Bink",
+			"ZagreusSpearLunarThrust2_Bink",
+			"ZagreusSpearLunarThrust3_Bink",
+
+			"ZagreusSpearLunarThrustIdle_Bink",
+			"ZagreusSpear03ReturnToIdle_Bink",
+			"ZagreusSpear03ThrowReceive_Bink",
+		},
+		WeaponDataOverride =
+		{
+            -- Guan Yu spins
+			SpearWeaponSpin =
+			{
+				HitSimSlowParameters = { },
+
+				Sounds =
+				{
+					FireSounds =
+					{
+						{ Name = "/VO/ZagreusEmotes/EmoteMartialSpearSpinAttack" },
+						{ Name = "/SFX/Player Sounds/ZagreusSpearSwipe" },
+						{ Name = "/Leftovers/SFX/AuraThrow" }
+					},
+					ImpactSounds =
+					{
+						Invulnerable = "/SFX/SwordWallHitClank",
+						Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
+						Bone = "/SFX/MetalBoneSmash",
+						Brick = "/SFX/MetalStoneClang",
+						Stone = "/SFX/MetalStoneClang",
+						Organic = "/SFX/StabSplatterSmall",
+						StoneObstacle = "/SFX/SwordWallHitClank",
+						BrickObstacle = "/SFX/SwordWallHitClank",
+						MetalObstacle = "/SFX/SwordWallHitClank",
+						BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
+					},
+
+					ChargeSounds =
+					{
+						{ Name = "/VO/ZagreusEmotes/EmoteCharging" },
+						{
+							Name = "/SFX/Player Sounds/ZagreusWeaponChargeup" ,
+							Key = "SpearWeaponSpinTravel",
+							StoppedBy = { "ChargeCancel", "TriggerRelease", "Fired" },
+							SetPitchToPropertyValue = "ChargeTime",
+						},
+					},
+				},
+
+			},
+			SpearWeaponSpin2 =
+			{
+				HitSimSlowParameters = { },
+
+				Sounds =
+				{
+					FireSounds =
+					{
+						{ Name = "/VO/ZagreusEmotes/EmoteMartialSpearSpinAttack" },
+						{ Name = "/SFX/Player Sounds/ZagreusSpearSwipe" },
+						{ Name = "/Leftovers/SFX/AuraThrow" }
+					},
+					ImpactSounds =
+					{
+						Invulnerable = "/SFX/SwordWallHitClank",
+						Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
+						Bone = "/SFX/MetalBoneSmash",
+						Brick = "/SFX/MetalStoneClang",
+						Stone = "/SFX/MetalStoneClang",
+						Organic = "/SFX/StabSplatterSmall",
+						StoneObstacle = "/SFX/SwordWallHitClank",
+						BrickObstacle = "/SFX/SwordWallHitClank",
+						MetalObstacle = "/SFX/SwordWallHitClank",
+						BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
+					},
+
+					ChargeSounds =
+					{
+						{ Name = "/VO/ZagreusEmotes/EmoteCharging" },
+						{
+							Name = "/SFX/Player Sounds/ZagreusWeaponChargeup",
+							Key = "SpearWeaponSpin2Travel",
+							StoppedBy = { "ChargeCancel", "TriggerRelease", "Fired" },
+						},
+					},
+				},
+			},
+			SpearWeaponSpin3 =
+			{
+				HitSimSlowParameters = { },
+
+				Sounds =
+				{
+					FireSounds =
+					{
+						{ Name = "/VO/ZagreusEmotes/EmoteMartialSpearSpinAttack" },
+						{ Name = "/SFX/Player Sounds/ZagreusSpearSwipe" },
+						{ Name = "/Leftovers/SFX/AuraThrow" }
+					},
+					ImpactSounds =
+					{
+						Invulnerable = "/SFX/SwordWallHitClank",
+						Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
+						Bone = "/SFX/MetalBoneSmash",
+						Brick = "/SFX/MetalStoneClang",
+						Stone = "/SFX/MetalStoneClang",
+						Organic = "/SFX/StabSplatterSmall",
+						StoneObstacle = "/SFX/SwordWallHitClank",
+						BrickObstacle = "/SFX/SwordWallHitClank",
+						MetalObstacle = "/SFX/SwordWallHitClank",
+						BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
+					},
+
+					ChargeSounds =
+					{
+						{ Name = "/VO/ZagreusEmotes/EmoteCharging" },
+						{
+							Name = "/SFX/Player Sounds/ZagreusWeaponChargeup" ,
+							Key = "SpearWeaponSpin3Travel",
+							StoppedBy = { "ChargeCancel", "TriggerRelease", "Fired" },
+							SetPitchToPropertyValue = "ChargeTime",
+						},
+					},
+				},
+			},
+            -- Achilles
+            SpearWeaponThrow =
+            {
+                Sounds =
+                {
+                    ChargeSounds =
+                    {
+                        { Name = "/VO/ZagreusEmotes/EmoteHeavyBowCharge",
+                            StoppedBy = { "TriggerRelease", "ChargeCancel", "Fired" },
+                        },
+                        {
+                            Name = "/SFX/Player Sounds/ZagreusWeaponChargeup" ,
+                            StoppedBy = { "TriggerRelease", "ChargeCancel", "Fired" },
+                            SetPitchToPropertyValue = "ChargeTime",
+                        },
+                    },
+                    FireSounds =
+                    {
+                        { Name = "/VO/ZagreusEmotes/EmoteHeavyShieldThrow" },
+                        { Name = "/SFX/Player Sounds/ZagreusDash" },
+                        { Name = "/SFX/Player Sounds/ZagreusSpearThrow" },
+                    },
+                },
+            },
+            SpearRushWeapon =
+            {
+                FireRumbleParameters =
+                {
+                    { ScreenPreWait = 0.1, LeftFraction = 0.17, Duration = 0.17 },
+                },
+    
+                HitSimSlowParameters =
+                {
+                    { ScreenPreWait = 0.02, Fraction = 0.10, LerpTime = 0 },
+                    --{ ScreenPreWait = 0.06, Fraction = 0.30, LerpTime = 0.06 },
+                    { ScreenPreWait = 0.04, Fraction = 1.0, LerpTime = 0.06 },
+    
+                    --{ ScreenPreWait = 0.02, Fraction = 0.01, LerpTime = 0 },
+                    --{ ScreenPreWait = 0.06, Fraction = 0.30, LerpTime = 0.06 },
+                    --{ ScreenPreWait = 0.04, Fraction = 1.0, LerpTime = 0.06 },
+                },
+    
+                HitRumbleParameters =
+                {
+                    { ScreenPreWait = 0.02, RightFraction = 0.15, Duration = 0.15 },
+                },
+    
+                Sounds =
+                {
+                    FireSounds =
+                    {
+                        { Name = "/VO/ZagreusEmotes/EmoteAttacking_DashUppercut" },
+                        { Name = "/SFX/Enemy Sounds/Hades/HadesDash" },
+                        { Name = "/Leftovers/World Sounds/QuickSnap" },
+                    },
+                    ImpactSounds =
+                    {
+                        Invulnerable = "/SFX/SwordWallHitClank",
+                        Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
+                        Bone = "/SFX/FistImpactSmall",
+                        Brick = "/SFX/FistImpactSmall",
+                        Stone = "/SFX/FistImpactSmall",
+                        Organic = "/SFX/FistImpactSmall",
+                    },
+                },
+            },
+		},
+        OnWeaponFiredFunctions =
+        {
+            ValidWeapons = { "SpearWeaponThrow" },
+            FunctionName = "CheckSpearTeleportBuffer",
+        },
+		MaxHealthMultiplier =
+		{
+			BaseValue = 0.5,
+			SourceIsMultiplier = true,
+		},
+        AddOutgoingDamageModifiers =
+        {
+              ValidWeaponMultiplier =
+              {
+                BaseValue = 1.25,
+                SourceIsMultiplier = true,
+              },
+              ValidWeapons = { "SpearWeaponThrowReturn", "SpearWeaponThrow" },
+        },
+		AddOutgoingLifestealModifiers =
+		{
+			MaxLifesteal = 1,
+			MinLifesteal = 1,
+			ValidWeapons = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+			ValidMultiplier = 0.05
+		},
+		RequiredMinMaxHealthAmount = 10,
+		PropertyChanges =
+		{
+            --Achilles
+            {
+                WeaponNames = { "SpearWeaponThrow" },
+                WeaponProperty = "FireOnRelease",
+                ChangeValue = true,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "SpearWeaponThrow" },
+                WeaponProperty = "FullyAutomatic",
+                ChangeValue = true,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "SpearWeaponThrowReturn" },
+                WeaponProperty = "AllowExternalForceRelease",
+                ChangeValue = true,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "SpearWeaponThrow" },
+                WeaponProperty = "LockTriggerForCharge",
+                ChangeValue = false,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "SpearWeaponThrow" },
+                WeaponProperty = "ChargeTime",
+                ChangeValue = 0.07,
+                ChangeType = "Add",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "SpearWeaponThrow", },
+                WeaponProperty = "RemoveControlOnCharge",
+                ChangeValue = "SpearWeaponSpin",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "SpearWeaponThrow" },
+                WeaponProperty = "MinChargeToFire",
+                ChangeValue = 0.04,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "SpearWeaponThrow" },
+                WeaponProperty = "ChargeRangeMultiplier",
+                ChangeValue = 3.34,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "SpearWeaponThrow" },
+                ProjectileProperty = "Range",
+                ChangeValue = 0.3,
+                ChangeType = "Multiply",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "SpearWeaponThrow" },
+                WeaponProperty = "AllowExternalForceRelease",
+                ChangeValue = false,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "SpearWeaponThrow" },
+                WeaponProperty = "AllowExternalForceReleaseIfAnyCharged",
+                ChangeValue = true,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "SpearWeaponThrow" },
+                WeaponProperty = "ChargeStartFx",
+                ChangeValue = "SpearChargeThrowTrait",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+    
+            -- Achilles Aspect Changes
+            {
+                WeaponName = "SpearWeaponThrow",
+                WeaponProperty = "SwapOnFire",
+                ChangeValue = "SpearRushWeapon",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "SpearWeaponThrow",
+                WeaponProperty = "AddControlOnFire",
+                ChangeValue = "SpearWeaponThrowReturn",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "SpearWeaponThrowReturn",
+                WeaponProperty = "Control",
+                ChangeValue = "Attack2",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "SpearWeaponThrowReturn",
+                WeaponProperty = "AlternateControl",
+                ChangeValue = "null",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "SpearWeaponThrowReturn",
+                WeaponProperty = "FireFromObstacle",
+                ChangeValue = "SpearReturnPointAlt01",
+                ExcludeLinked = true,
+            },
+              {
+                WeaponName = "SpearWeaponThrowInvisibleReturn",
+                WeaponProperty = "FireFromObstacle",
+                ChangeValue = "SpearReturnPointAlt01",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+              },
+            {
+                WeaponName = "SpearRushWeapon" ,
+                WeaponProperty = "BlinkDetonateAtOrigin",
+                ChangeValue = false,
+                ChangeType = "Absolute",
+            },
+            {
+                WeaponName = "SpearRushWeapon" ,
+                WeaponProperty = "Enabled",
+                ChangeValue = true,
+                ChangeType = "Absolute",
+            },
+            {
+                WeaponName = "SpearRushWeapon" ,
+                WeaponProperty = "BlinkDetonateAtEndpoint",
+                ChangeValue = false,
+                ChangeType = "Absolute",
+            },
+            {
+                WeaponName = "SpearRushWeapon" ,
+                WeaponProperty = "BlinkDetonateOnInterval",
+                ChangeValue = 130,
+                ChangeType = "Absolute",
+            },
+            {
+                WeaponName = "SpearRushWeapon" ,
+                EffectName = "SpearRushBonus",
+                EffectProperty = "Modifier",
+                BaseValue = 1.5,
+                ChangeType = "Add",
+                ExtractValue =
+                {
+                    ExtractAs = "TooltipDamage",
+                    Format = "Percent"
+                },
+                DeriveSource = "DeriveSource"
+            },
+            {
+                WeaponName = "SpearWeaponThrowReturn",
+                WeaponProperty = "FireGraphic",
+                ChangeValue = "ZagreusSpearAlt01ThrowFireReturn",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "SpearWeaponThrow",
+                WeaponProperty = "ChargeStartAnimation",
+                ChangeValue = "ZagreusSpearAlt01ThrowCharge",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "SpearWeaponThrow",
+                WeaponProperty = "ChargeCancelGraphic",
+                ChangeValue = "ZagreusSpearAlt01ThrowFireReturnToIdle",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "SpearWeaponThrow",
+                WeaponProperty = "FireGraphic",
+                ChangeValue = "ZagreusSpearAlt01ThrowFire",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "SpearWeaponDash",
+                WeaponProperty = "ChargeStartAnimation",
+                ChangeValue = "ZagreusSpearAlt01DashAttack_Charge",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "SpearWeaponDash",
+                WeaponProperty = "FireGraphic",
+                ChangeValue = "ZagreusSpearAlt01DashAttack",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "SpearWeaponThrow",
+                ProjectileProperty = "SpawnType",
+                ChangeValue = "OBSTACLE",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "SpearWeaponThrow",
+                ProjectileProperty = "SpawnOnDeath",
+                ChangeValue = "SpearReturnPointAlt01",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "SpearRushWeapon",
+                WeaponProperty = "FireToObstacle",
+                ChangeValue = "SpearReturnPointAlt01",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            -- Guan yu
+			{
+				WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+				ProjectileProperty = "MultiDetonate",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+				ProjectileProperty = "Range",
+				ChangeValue = 1000,
+				ChangeType = "Add",
+			},
+			{
+				WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+				ProjectileProperty = "Speed",
+				ChangeValue = 400,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+				ProjectileProperty = "Fuse",
+				ChangeValue = 0.25,
+				ChangeType = "Add",
+			},
+			{
+				WeaponNames = { "SpearWeaponSpin3" },
+				ProjectileProperty = "TotalFuse",
+				ChangeValue = 1.25,
+				ChangeType = "Add",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SpearWeaponSpin2" },
+				ProjectileProperty = "TotalFuse",
+				ChangeValue = 1.00,
+				ChangeType = "Add",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SpearWeaponSpin" },
+				ProjectileProperty = "TotalFuse",
+				ChangeValue = 0.75,
+				ChangeType = "Add",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+				ProjectileProperty = "UnlimitedUnitPenetration",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+				ProjectileProperty = "AttachToOwner",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+				ProjectileProperty = "MultipleObstacleCollisions",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+				ProjectileProperty = "CheckObstacleImpact",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+				ProjectileProperty = "NumBounces",
+				ChangeValue = 99999,
+				ChangeType = "Absolute",
+			},
+			-- {
+			-- 	WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+			-- 	ProjectileProperty = "DamageRadius",
+			-- 	ChangeValue = 0.50,
+			-- 	ChangeType = "Multiply",
+			-- },
+			-- {
+			-- 	WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+			-- 	ProjectileProperty = "ProjectileDefenseRadius",
+			-- 	ChangeValue = 0.50,
+			-- 	ChangeType = "Multiply",
+			-- },
+			{
+				WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+				ProjectileProperty = "AttachedAnim",
+				ChangeType = "Absolute",
+				ChangeValue = "GuanYuSpin",
+				ExcludeLinked = true,
+			},
+			-- {
+			-- 	WeaponNames = { "SpearWeaponSpin" },
+			-- 	ProjectileProperty = "DamageLow",
+			-- 	ChangeValue = 20,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+			-- {
+			-- 	WeaponNames = { "SpearWeaponSpin" },
+			-- 	ProjectileProperty = "DamageHigh",
+			-- 	ChangeValue = 20,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+
+			-- {
+			-- 	WeaponNames = { "SpearWeaponSpin2" },
+			-- 	ProjectileProperty = "DamageLow",
+			-- 	ChangeValue = 30,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+			-- 	{
+			-- 	WeaponNames = { "SpearWeaponSpin2" },
+			-- 	ProjectileProperty = "DamageHigh",
+			-- 	ChangeValue = 30,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+
+			-- {
+			-- 	WeaponNames = { "SpearWeaponSpin3" },
+			-- 	ProjectileProperty = "DamageLow",
+			-- 	ChangeValue = 50,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+			-- {
+			-- 	WeaponNames = { "SpearWeaponSpin3" },
+			-- 	ProjectileProperty = "DamageHigh",
+			-- 	ChangeValue = 50,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+			{
+				WeaponNames = { "SpearWeaponSpin","SpearWeaponSpin2","SpearWeaponSpin3" },
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusSpearAlt03SpinStart",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SpearWeaponSpin","SpearWeaponSpin2","SpearWeaponSpin3" },
+				WeaponProperty = "ChargeCancelGraphic",
+				ChangeValue = "ZagreusSpearAlt03SpinStartChargeCancel",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SpearWeaponSpin","SpearWeaponSpin2","SpearWeaponSpin3" },
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusSpearAlt03SpinAttack",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+            {
+                LuaProperty = "MaxHealth",
+                BaseValue = 0.5, -- Make sure to change MaxHealthMultiplier in this trait above if this is altered
+                SourceIsMultiplier = true,
+                ChangeType = "Multiply",
+                MaintainDelta = true,
+                ExtractValue =
+                {
+                    ExtractAs = "TooltipHealthCurse",
+                    Format = "PercentDelta",
+                }
+            },
+
+            -- Zagreus
+
+            {
+                WeaponNames = { "SpearWeaponThrowReturn", "SpearWeaponThrow" },
+                ProjectileProperty = "Range",
+                BaseValue = 1.25,
+                SourceIsMultiplier = true,
+                ChangeType = "MultiplyBase",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "SpearWeaponThrowReturn", "SpearWeaponThrow" },
+                ProjectileProperty = "Speed",
+                BaseValue = 1.25,
+                SourceIsMultiplier = true,
+                ChangeType = "MultiplyBase",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "SpearWeaponThrowReturn", "SpearWeaponThrow" },
+                WeaponProperty = "ChargeTime",
+                BaseValue = 0.75,
+                SourceIsMultiplier = true,
+                ChangeType = "Multiply",
+                ExcludeLinked = true,
+            },
+
+            -- Hades
+
+            {
+                WeaponNames = { "SpearWeaponSpin" },
+                ProjectileProperty = "DamageRadius",
+                ChangeValue = 1.475,
+                ChangeType = "Multiply",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "SpearWeaponSpin2" },
+                ProjectileProperty = "DamageRadius",
+                ChangeValue = 1.375,
+                ChangeType = "Multiply",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "SpearWeaponSpin3" },
+                ProjectileProperty = "DamageRadius",
+                ChangeValue = 1.275,
+                ChangeType = "Multiply",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+                EffectName = "MarkTargetSpin",
+                EffectProperty = "Active",
+                ChangeValue = true,
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = WeaponSets.HeroPhysicalWeapons,
+                EffectName = "MarkTargetSpin",
+                EffectProperty = "Modifier",
+                BaseValue = 1.5,
+                ChangeType = "Add",
+                DeriveSource = "DeriveSource"
+            },
+
+		},
+	}
+
     -- Trait specific changes
     ModUtil.LoadOnce(function ()
         for traitName, traitData in pairs(TraitData) do
@@ -3657,7 +4364,6 @@ if AspectFusion.Config.Enabled then
                             end
                             table.insert(traitData.PropertyChanges, propertyCopyChaos)
                         end
-
                     end
                 end
             end
