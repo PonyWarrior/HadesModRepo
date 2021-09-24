@@ -7,3 +7,9 @@ Initial release
 new features :
 
 added weapon and aspect selector
+
+1.2.0
+
+new features :
+
+added god pool selector

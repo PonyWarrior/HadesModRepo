@@ -84,6 +84,17 @@ local aspectLookupTable =
     }
 }
 
+local godLookupTable =
+{
+    [1] = "ZeusUpgrade",
+    [2] = "PoseidonUpgrade",
+    [3] = "AthenaUpgrade",
+    [4] = "AphroditeUpgrade",
+    [5] = "ArtemisUpgrade",
+    [6] = "DionysusUpgrade",
+    [7] = "DemeterUpgrade"
+}
+
 function FreshFileFun.LoadShrineUpgrades()
     for upgrade, upgradeData in pairs(FreshFileFun.Config.Pact.Options) do
         if upgradeData.Enabled then
@@ -94,6 +105,95 @@ function FreshFileFun.LoadShrineUpgrades()
 end
 
 if FreshFileFun.Config.Enabled then
+    if FreshFileFun.Config.GodPoolSelector.Enabled then
+        local config = FreshFileFun.Config.GodPoolSelector
+
+        if config.EnablePoolPicker then
+            -- prevent user input error from crashing the game
+            Clamp(config.Gods.God1, 1, 7)
+            Clamp(config.Gods.God2, 1, 7)
+            Clamp(config.Gods.God3, 1, 7)
+            Clamp(config.Gods.God4, 1, 7)
+
+            local god1 = godLookupTable[config.Gods.God1]
+            local god2 = godLookupTable[config.Gods.God2]
+            local god3 = godLookupTable[config.Gods.God3]
+            local god4 = godLookupTable[config.Gods.God4]
+
+            local gods = {god1, god2, god3, god4}
+            local firstGod = RemoveRandomKey(gods)
+
+            RoomSetData.Tartarus.RoomSimple01.ForcedRewards =
+            {
+                {
+                    Name = "Boon",
+                    LootName = godLookupTable[firstGod]
+                }
+            }
+            RoomSetData.Tartarus.RoomSimple01.ForceLootTableFirstRun = nil
+
+            -- required since athena's first pickup line is set to true
+            EncounterData.EnemyIntroFight01.RequiredFalseTextLines = nil
+
+            -- voiding every gods' prereqs
+            for _, loot in pairs(LootData) do
+                if loot.RequiredMinCompletedRuns ~= nil and loot.RequiredMinCompletedRuns == 1 then
+                    loot.RequiredMinCompletedRuns = nil
+                end
+                if loot.RequiredSeenRooms ~= nil then
+                    loot.RequiredSeenRooms = nil
+                end
+            end
+
+            ModUtil.Path.Wrap("StartNewGame", function (baseFunc)
+                baseFunc()
+                -- artificially fills up the god pool, forcing them to show up and preventing others
+                CurrentRun.LootTypeHistory[god1] = 0
+                CurrentRun.LootTypeHistory[god2] = 0
+                CurrentRun.LootTypeHistory[god3] = 0
+                CurrentRun.LootTypeHistory[god4] = 0
+                -- not the ideal way to unlock all the gods but this requirement is present in too many tables
+                TextLinesRecord["AthenaFirstPickUp"] = true
+            end)
+        end
+
+        if config.EnableChaos or config.EnableErebus then
+            for _, roomset in pairs(RoomSetData) do
+                for _, room in pairs(roomset) do
+                    if config.EnableChaos and room.SecretDoorRequirements ~= nil then
+                        room.SecretDoorRequirements.RequiredTextLines = nil
+                        room.SecretDoorRequirements.RequiredFalseTextLinesThisRun = nil
+                        room.SecretDoorRequirements.RequiredMinCompletedRuns = nil
+                    end
+                    if config.EnableErebus and room.ShrinePointDoorRequirements ~= nil then
+                        room.ShrinePointDoorRequirements.RequiredScreenViewed = nil
+                        room.ShrinePointDoorRequirements.RequiredCosmetics = nil
+                        room.ShrinePointDoorRequirements.RequireEncounterCompleted = nil
+                    end
+                end
+            end
+        end
+
+        if config.EnableHammer or config.EnableHermes then
+            if config.EnableHermes then
+                LootData.HermesUpgrade.RequiredTextLines = nil
+                ConsumableData.HermesUpgradeDrop.RequiredTextLines = nil
+            end
+    
+            if config.EnableHammer then
+                ConsumableData.WeaponUpgradeDrop.RequiredMinCompletedRuns = nil
+            end
+
+            for _, reward in pairs(RewardStoreData.RunProgress) do
+                if config.EnableHammer and reward.Name == "WeaponUpgrade" then
+                    reward.GameStateRequirements.RequiredMinCompletedRuns = nil
+                elseif config.EnableHermes and reward.Name == "HermesUpgrade" then
+                    reward.GameStateRequirements.RequiredMinCompletedRuns = nil
+                end
+            end
+        end
+    end
+
     if FreshFileFun.Config.ForceBestBuild.Enabled then
         ModUtil.Path.Wrap("SetupRoomReward", function (baseFunc, currentRun, room, previouslyChosenRewards, args)
             if not FreshFileFun.MercifulEndDone then
