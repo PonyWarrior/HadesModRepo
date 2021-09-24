@@ -1,0 +1,39 @@
+{
+    Texts = [
+        "_append"
+    {
+    Id = "UltraSwordTrait"
+    DisplayName = "Forme Finale Stygius"
+    Description = "La Forme Finale de Stygius, la Lame des Enfers. Combine les pouvoirs de Zagreus, Nemesis, Poseidon et Arthur à leur force maximale."
+    }
+    {
+    Id = "UltraFistTrait"
+    DisplayName = "Forme Finale Malphon"
+    Description = "La Forme Finale de Malphon, les Poings Jumeaux. Combine les pouvoirs de Zagreus, Talos, Demeter et Gilgamesh à leur force maximale."
+    }
+    {
+    Id = "UltraShieldTrait"
+    DisplayName = "Forme Finale Égide"
+    Description = "La Forme Finale d'Égide, le Bouclier du Chaos. Combine les pouvoirs de Zagreus, Chaos, Zeus et Beowulf à leur force maximale."
+    }
+    {
+    Id = "UltraSpearTrait"
+    DisplayName = "Forme Finale Varatha"
+    Description = "La Forme Finale de Varatha, la Lance Éternelle. Combine les pouvoirs de Zagreus, Achiles, Hades et Guan Yu à leur force maximale."
+    }
+    {
+    Id = "UltraBowTrait"
+    DisplayName = "Forme Finale Coronacht"
+    Description = "La Forme Finale de Coronacht, l'Arc Traque-Cœur. Combine les pouvoirs de Zagreus, Chiron, Hera et Rama à leur force maximale."
+    }
+    {
+    Id = "UltraGunTrait"
+    DisplayName = "Forme Finale Exagryphe"
+    Description = "La Forme Finale d'Exagryphe, le Canon Adamantin. Combine les pouvoirs de Zagreus, Eris, Hestia et Lucifer à leur force maximale."
+    }
+    {
+      Id = "Boon_Fusion"
+      DisplayName = "Fusion"
+    }
+    ]
+}

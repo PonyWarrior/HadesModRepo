@@ -1,0 +1,39 @@
+{
+    Texts = [
+        "_append"
+    {
+    Id = "UltraSwordTrait"
+    DisplayName = "最终形式斯第格思"
+    Description = "斯第格思，冥界之刃，在它的最终形式。结合扎格列欧斯，涅墨西斯，波塞冬和亚瑟的全力量。"
+    }
+    {
+    Id = "UltraFistTrait"
+    DisplayName = "最终形式玛尔封"
+    Description = "玛尔封，双子之拳，在它的最终形式。结合扎格列欧斯，塔罗斯，得墨忒尔和吉尔伽美什的全力量。"
+    }
+    {
+    Id = "UltraShieldTrait"
+    DisplayName = "最终形式埃癸斯"
+    Description = "埃癸斯，混沌之盾，在它的最终形式。结合扎格列欧斯，卡俄斯，宙斯和贝奥武夫的全力量。"
+    }
+    {
+    Id = "UltraSpearTrait"
+    DisplayName = "最终形式瓦拉塔"
+    Description = "瓦拉塔，永恒之矛，在它的最终形式。结合扎格列欧斯，阿喀琉斯，哈迪斯he关羽的全力量。"
+    }
+    {
+    Id = "UltraBowTrait"
+    DisplayName = "最终形式科罗纳赫特"
+    Description = "科罗纳赫特，索心弓，在它的最终形式。结合扎格列欧斯，喀戎，赫拉和罗摩的全力量。"
+    }
+    {
+    Id = "UltraGunTrait"
+    DisplayName = "最终形式伊格瑞菲"
+    Description = "伊格瑞菲，狮鹫坚炮，在它的最终形式。结合扎格列欧斯，厄里斯，赫斯提亚和路西法的全力量。"
+    }
+    {
+      Id = "Boon_Fusion"
+      DisplayName = "融汇"
+    }
+    ]
+}

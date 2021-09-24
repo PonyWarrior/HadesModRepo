@@ -9,7 +9,7 @@ if AspectFusion.Config.Enabled then
 		PostWeaponUpgradeScreenAnimation = "ZagreusSwordAlt03ParryReturnToIdle",
 		PostWeaponUpgradeScreenAngle = 300,
 		Frame = "Fusion",
-        CustomRarityName = "Fusion",
+        CustomRarityName = "Boon_Fusion",
 		CustomRarityColor = {3, 94, 252, 255},
 		OnProjectileDeathFunction =
 		{
@@ -834,7 +834,7 @@ if AspectFusion.Config.Enabled then
         RequiredWeapons = { "FistWeapon", "FistWeaponSpecial" },
         RequiredFalseTrait = "FistWeaveTrait",
         Frame = "Fusion",
-        CustomRarityName = "Fusion",
+        CustomRarityName = "Boon_Fusion",
 		CustomRarityColor = {3, 94, 252, 255},
         -- Talos
         PreEquipWeapons = {"RushRuptureWeapon", "FistDetonationWeapon", "MarkRuptureApplicator", "FistSpecialVacuum"},
@@ -2110,7 +2110,7 @@ if AspectFusion.Config.Enabled then
 		PostWeaponUpgradeScreenAngle = 180,
 		PreEquipWeapons = { "SelfLoadAmmoApplicator", "ShieldThrowProjectileBonusApplicator", "ChaosShieldThrow" },
         Frame = "Fusion",
-        CustomRarityName = "Fusion",
+        CustomRarityName = "Boon_Fusion",
 		CustomRarityColor = {3, 94, 252, 255},
         AmmoDropData =
 		{
@@ -3591,7 +3591,7 @@ if AspectFusion.Config.Enabled then
 		InheritFrom = { "WeaponEnchantmentTrait" },
 		Icon = "Weapon_Spear_07",
         Frame = "Fusion",
-        CustomRarityName = "Fusion",
+        CustomRarityName = "Boon_Fusion",
 		CustomRarityColor = {3, 94, 252, 255},
         PostWeaponUpgradeScreenFunctionName = "RemoveSpearTeleport",
         PostWeaponUpgradeScreenAnimation = "ZagreusSpearAlt03ThrowFireReturn",
@@ -4296,7 +4296,7 @@ if AspectFusion.Config.Enabled then
     TraitData.UltraBowTrait =
 	{
         Frame = "Fusion",
-        CustomRarityName = "Fusion",
+        CustomRarityName = "Boon_Fusion",
 		CustomRarityColor = {3, 94, 252, 255},
 		Icon = "Weapon_Bow_14",
 		InheritFrom = { "WeaponEnchantmentTrait" },
@@ -4972,7 +4972,7 @@ if AspectFusion.Config.Enabled then
     TraitData.UltraGunTrait =
 	{
         Frame = "Fusion",
-        CustomRarityName = "Fusion",
+        CustomRarityName = "Boon_Fusion",
 		CustomRarityColor = {3, 94, 252, 255},
 		InheritFrom = { "WeaponEnchantmentTrait" },
 		PostWeaponUpgradeScreenAnimation = "ZagreusGunLuciferReload_End",

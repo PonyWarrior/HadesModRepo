@@ -31,5 +31,9 @@
         DisplayName = "Final Form Exagryph"
         Description = "The final form of Exagryph, the Adamant Rail. Combines the powers of Zagreus, Eris, Hestia and Lucifer at full strength."
         }
+        {
+        Id = "Boon_Fusion"
+        DisplayName = "Fusion"
+        }
     ]
 }
