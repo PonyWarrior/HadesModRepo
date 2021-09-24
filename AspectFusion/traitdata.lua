@@ -4969,8 +4969,750 @@ if AspectFusion.Config.Enabled then
     }
 	}
 
+    TraitData.UltraGunTrait =
+	{
+        Frame = "MetaUpgrade",
+        CustomRarityName = "Fusion",
+		CustomRarityColor = {3, 94, 252, 255},
+		InheritFrom = { "WeaponEnchantmentTrait" },
+		PostWeaponUpgradeScreenAnimation = "ZagreusGunLuciferReload_End",
+		PostWeaponUpgradeScreenAngle = 210,
+		Icon = "Weapon_Gun_Lucifer_01",
+		RequiredWeapon = "GunWeapon",
+		PreEquipWeapons = { "GunBombWeapon", "GunBombImmolation", "ManualReloadEffectApplicator", "SniperGunWeapon", "SniperGunWeaponDash"  },
+        -- AddOnFireWeapons = { "GunBombImmolation" },
+		-- LegalOnFireWeapons = WeaponSets.HeroPrimarySecondaryWeapons,
+		--InfiniteAmmo = true,
+		WeaponBinks =
+		{
+			"ZagreusGunLucifer_Bink",
+			"ZagreusGunLuciferIdle_Bink",
+			"ZagreusGunLuciferRun_Bink",
+			"ZagreusGunLuciferStop_Bink",
+			"ZagreusGunLuciferFireEmpty_Bink",
+			"ZagreusGunLuciferGrenadeToss_Bink",
+		},
+		WeaponDataOverride =
+		{
+			GunWeapon =
+			{
+				CancelUnitHitFlash = true,
+				RapidDamageType = true,
+				CancelUnitShake = true,
+				CancelArmorUnitShake = true,
+				CancelArmorSpark = true,
+				DashWeapon = nil,
+				IdleReloadAnimation = "ZagreusGunLuciferReload_Start",
+				MovingReloadAnimation = "ZagreusGunLuciferRunReload",
+				WeaponBinks =
+				{
+					"ZagreusGunLucifer_Bink",
+					"ZagreusGunLuciferIdle_Bink",
+					"ZagreusGunLuciferRun_Bink",
+					"ZagreusGunLuciferStop_Bink",
+					"ZagreusGunLuciferFireEmpty_Bink",
+					"ZagreusGunLuciferGrenadeToss_Bink",
+				},
+
+				Sounds =
+				{
+					FireSounds =
+					{
+					--	{ Name = "/VO/ZagreusEmotes/EmoteHeavyGunFire" },
+					--	{ Name = "/SFX/Player Sounds/ZagreusGunFire" },
+					},
+					LowAmmoFireSounds =
+					{
+					--	{ Name = "/SFX/Player Sounds/ZagreusGunFire" },
+					--	{ Name = "/SFX/Player Sounds/ZagreusGunReloadCompleteFlash" },
+					},
+					ImpactSounds =
+					{
+						Invulnerable = "/SFX/BurnDamage",
+						Armored = "/SFX/BurnDamage",
+						Bone = "/SFX/BurnDamage",
+						Brick = "/SFX/BurnDamage",
+						Stone = "/SFX/BurnDamage",
+						Organic = "/SFX/BurnDamage",
+						StoneObstacle = "/SFX/BurnDamage",
+						BrickObstacle = "/SFX/BurnDamage",
+						MetalObstacle = "/SFX/BurnDamage",
+						BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
+					},
+				},
+			},
+			GunGrenadeToss =
+			{
+				Sounds =
+				{
+					ChargeSounds =
+					{
+						{ Name = "/VO/ZagreusEmotes/EmoteHeavyGunCharge" },
+					},
+					FireSounds =
+					{
+						{ Name = "/VO/ZagreusEmotes/EmoteHeavyGunLob" },
+					},
+					ImpactSounds =
+					{
+						Invulnerable = "/SFX/Player Sounds/ZagreusShieldRicochet",
+						Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
+						Bone = "/SFX/ArrowMetalBoneSmash",
+						Brick = "/SFX/ArrowMetalStoneClang",
+						Stone = "/SFX/ArrowMetalStoneClang",
+						Organic = "/SFX/ArrowImpactSplatter",
+						StoneObstacle = "/SFX/ArrowWallHitClankSmall",
+						BrickObstacle = "/SFX/ArrowWallHitClankSmall",
+						MetalObstacle = "/SFX/ArrowWallHitClankSmall",
+						BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
+					},
+				},
+			}
+		},
+		PropertyChanges =
+		{
+            --Lucifer
+		    -- move and fire properties
+			{
+				WeaponName = "GunWeapon",
+				EffectName = "GunDisable",
+				EffectProperty = "DisableMove",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "GunWeapon",
+				EffectName = "GunDisableCancellable",
+				EffectProperty = "DisableMove",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "GunWeapon",
+				EffectName = "GunSelfSpeed",
+				EffectProperty = "DisableMove",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "GunWeapon",
+				EffectName = "GunSelfHalt",
+				EffectProperty = "HaltOnEnd",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			-- laser properties
+			-- {
+			-- 	WeaponName = "GunWeapon",
+			-- 	ProjectileProperty = "ClearWeaponBonusesOnHit",
+			-- 	ChangeValue = true,
+			-- 	ExcludeLinked = true,
+			-- },
+			-- {
+			-- 	WeaponName = "GunWeapon",
+			-- 	ProjectileProperty = "ProjectileDefenseRadius",
+			-- 	ChangeValue = 0,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+
+			{
+				WeaponName = "GunWeapon",
+				ProjectileProperty = "Type",
+				ChangeValue = "BEAM",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "GunWeapon",
+				ProjectileProperty = "ArcSize",
+				ChangeValue = 100,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "GunWeapon",
+				WeaponProperty = "RefreshProjectileOnFire",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "RushWeapon",
+				EffectName = "RushWeaponInvulnerable",
+				EffectProperty = "ClearOnAttack",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "GunWeapon",
+				ProjectileProperty = "SkipFireCancelIfFiring",
+				ChangeValue = "true",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "GunWeapon",
+				ProjectileProperty = "AutoAdjustForTarget",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "GunWeapon",
+				ProjectileProperty = "AttachToOwner",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "GunWeapon",
+				ProjectileProperty = "Speed",
+				ChangeValue = 0,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "GunWeapon",
+				ProjectileProperty = "TotalFuse",
+				ChangeValue = 0.2,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "GunWeapon",
+				ProjectileProperty = "Fuse",
+				ChangeValue = 0.13,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "GunWeapon",
+				WeaponProperty = "Cooldown",
+				ChangeValue = 0.13,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "GunWeapon",
+				WeaponProperty = "Scatter",
+				ChangeValue = 0,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "GunWeapon",
+				WeaponProperty = "ScatterCap",
+				ChangeValue = 0,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "GunWeapon",
+				ProjectileProperty = "ImmunityDuration",
+				ChangeValue = 0.05,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "GunWeapon",
+				ProjectileProperty = "MultiDetonate",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "GunWeapon",
+				ProjectileProperty = "DrawAsBeam",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "GunWeapon",
+				WeaponProperty = "BarrelLength",
+				ChangeValue = 50,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			-- {
+			-- 	WeaponName = "GunWeapon",
+			-- 	WeaponProperty = "ChargeTime",
+			-- 	ChangeValue = 0.3,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+			{
+				WeaponName = "GunWeapon",
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusGunLucifer_Start",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "GunWeapon",
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusGunLucifer_Fire",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "GunWeapon",
+				WeaponProperty = "FireEndGraphic",
+				ChangeValue = "ZagreusGunLucifer_ReturnToIdle",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "GunWeapon",
+				WeaponProperty = "FailedToFireCooldownAnimation",
+				ChangeValue = "ZagreusGunLuciferFireEmpty",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "GunWeapon",
+				WeaponProperty = "OnlyChargeOnce",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "GunWeapon",
+				WeaponProperty = "FireFx",
+				ChangeValue = "null",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponName = "GunWeapon",
+				ProjectileProperty = "DamageLow",
+				ChangeValue = 10,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "GunWeapon",
+				ProjectileProperty = "DamageHigh",
+				ChangeValue = 10,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponName = "GunWeapon",
+				ProjectileProperty = "ConsecutiveHitWindow",
+				ChangeValue = 0.6,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponName = "GunWeapon",
+				ProjectileProperty = "DamagePerConsecutiveHit",
+				ChangeValue = 0.75,
+				--ChangeValue = 0.45,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponName = "GunWeapon",
+				WeaponProperty = "MaxAmmo",
+				ChangeValue = 20,
+				ChangeType = "Absolute",
+				ExtractValue =
+				{
+					ExtractAs = "TooltipAmmo",
+				},
+			},
+			{
+				WeaponName = "GunWeapon",
+				ProjectileProperty = "Range",
+				ChangeValue = 1.25,
+				ChangeType = "Multiply",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "GunWeapon",
+				WeaponProperty = "AutoLockRange",
+				ChangeValue = 1.25,
+				ChangeType = "Multiply",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponName = "GunWeapon",
+				EffectName = "GunDisable",
+				EffectProperty = "Active",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "GunWeapon",
+				EffectName = "GunDisableCancellable",
+				EffectProperty = "Active",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponName = "GunWeapon",
+				EffectName = "GunDisableLucifer",
+				EffectProperty = "Active",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "GunWeapon",
+				EffectName = "GunDisableCancellableLucifer",
+				EffectProperty = "Active",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			--[[]]
+			{
+				WeaponName = "RushWeapon",
+				EffectName = "RushWeaponInvulnerable",
+				EffectProperty = "ClearOnAttack",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			-- rapid fire trait stabilizers
+			
+			{
+				WeaponName = "ArtemisLegendary",
+				WeaponProperty = "Cooldown",
+				ChangeValue = 0.25,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "LightningStrikeImpact",
+				WeaponProperty = "Cooldown",
+				ChangeValue = 0.25,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "ChainLightning",
+				WeaponProperty = "Cooldown",
+				ChangeValue = 0.25,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			-- bomb properties
+			{
+				WeaponNames = { "GunBombWeapon" },
+				ProjectileProperty = "DamageLow",
+				BaseValue = 100,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+				ExtractValue =
+				{
+					ExtractAs = "TooltipDamage",
+				},
+				DeriveBombSource = "DeriveBombSource",
+			},
+			{
+				WeaponNames = { "GunBombWeapon" },
+				ProjectileProperty = "DamageHigh",
+				DeriveValueFrom = "DeriveBombSource",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "GunBombImmolation" },
+				ProjectileProperty = "DamageHigh",
+				DeriveValueFrom = "DeriveImmolationSource",
+				ExcludeLinked = true,
+			},
+            {
+				WeaponNames = { "GunBombImmolation" },
+				ProjectileProperty = "DamageRadius",
+				BaseValue = 400,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			-- change arc to drop a bomb instead of explode
+			{
+				WeaponNames = { "GunGrenadeToss" },
+				ProjectileProperty = "SpawnCap",
+				ChangeValue = 3,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "GunGrenadeToss" },
+				ProjectileProperty = "FizzleOldSpawnsOnDetonate",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "GunGrenadeToss" },
+				ProjectileProperty = "DamageLow",
+				BaseValue = 0,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+				DeriveSource = "DeriveSource"
+			},
+			{
+				WeaponNames = { "GunGrenadeToss" },
+				ProjectileProperty = "DamageRadius",
+				BaseValue = 0,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "GunGrenadeToss" },
+				ProjectileProperty = "DamageHigh",
+				DeriveValueFrom = "DeriveSource",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "GunGrenadeToss" },
+				ProjectileProperty = "HideDetonateGraphic",
+				ChangeValue = true,
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "GunGrenadeToss" },
+				ProjectileProperty = "DetonateSound",
+				ChangeValue = "null",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "GunGrenadeToss" },
+				ProjectileProperty = "SpawnsInheritGroups",
+				ChangeValue = false,
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "GunGrenadeToss" },
+				ProjectileProperty = "SkipSpawnsIfBlocked",
+				ChangeValue = true,
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "GunGrenadeToss" },
+				ProjectileProperty = "SpawnGroup",
+				ChangeValue = "Standing",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "GunGrenadeToss" },
+				ProjectileProperty = "SpawnType",
+				ChangeValue = "UNIT",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "GunGrenadeToss" },
+				ProjectileProperty = "SkipSpawnsIfBlocked",
+				ChangeValue = "false",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "GunGrenadeToss" },
+				ProjectileProperty = "SpawnOnDetonate",
+				ChangeValue = "GunBombUnit",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "GunGrenadeToss" },
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "ZagreusGunLuciferGrenadeTossCharge",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "GunGrenadeToss" },
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "ZagreusGunLuciferGrenadeTossFire",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "GunGrenadeToss" },
+				ProjectileProperty = "Gravity",
+				ChangeValue = 2.10,
+				ChangeType = "Multiply",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "GunGrenadeToss" },
+				ProjectileProperty = "Speed",
+				ChangeValue = 1.55,
+				ChangeType = "Multiply",
+				ExcludeLinked = true,
+			},
+
+			-- laser vfx
+
+			{
+				WeaponName = "GunWeapon",
+				ProjectileProperty = "Graphic",
+				ChangeValue = "GunLaser",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "GunWeapon",
+				ProjectileProperty = "BeamStartAnimSkipsImpact",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "GunWeapon",
+				ProjectileProperty = "AttachedAnim",
+				ChangeValue = "GunLaserOriginFlare",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "GunWeapon",
+				ProjectileProperty = "TipFx",
+				ChangeValue = "GunLaserTipFlare",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "GunWeapon",
+				WeaponProperty = "ChargeStartFx",
+				ChangeValue = "GunCharge",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponName = "GunWeapon",
+				ProjectileProperty = "DissipateGraphic",
+				ChangeValue = "GunLaserEnd",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			-- bomb vfx
+
+			{
+				WeaponNames = { "GunGrenadeToss" },
+				ProjectileProperty = "Graphic",
+				ChangeValue = "GunGrenadeLuciferOrb",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponNames = { "GunGrenadeToss" },
+				ProjectileProperty = "GroupName",
+				ChangeValue = "FX_Standing_Add",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+            -- Zagreus
+
+            {
+                WeaponNames = { "GunWeapon" },
+                WeaponProperty = "MaxAmmo",
+                BaseValue = 12,
+                AsInt = true,
+                ChangeType = "Add",
+            },
+
+            -- Eris
+
+            {
+				WeaponNames = { "GunBombWeapon", "GunBombImmolation" },
+				ProjectileProperty = "SpawnType",
+				ChangeValue = "PROJECTILE",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "GunBombWeapon", "GunBombImmolation" },
+				ProjectileProperty = "SpawnOnDetonate",
+				ChangeValue = "GunGrenadeSelfDamage",
+				ExcludeLinked = true,
+			},
+            {
+				WeaponNames = { "GunBombWeapon", "GunBombImmolation" },
+                EffectName = "ZagreusOnHitStun",
+                EffectProperty = "Active",
+                ChangeValue = false,
+            },
+            {
+				WeaponNames = { "GunBombWeapon", "GunBombImmolation" },
+                EffectName = "GrenadeSelfDamageOutput",
+                EffectProperty = "Active",
+                ChangeValue = true,
+            },
+            {
+                WeaponNames = { "GunBombWeapon", "GunBombImmolation" },
+                EffectName = "GrenadeSelfDamageOutput",
+                EffectProperty = "Modifier",
+                BaseValue = 0.50,
+                ChangeType = "Add",
+            },
+            -- Hestia
+
+            {
+                WeaponNames = { "SniperGunWeapon", "SniperGunWeaponDash" },
+                ProjectileProperty = "DamageLow",
+                BaseValue = 150,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "SniperGunWeapon", "SniperGunWeaponDash" },
+                ProjectileProperty = "DamageHigh",
+                BaseValue = 150,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "SniperGunWeapon", "SniperGunWeaponDash" },
+                WeaponProperty = "Enabled",
+                ChangeValue = true,
+                ChangeType = "Absolute",
+            },
+            {
+                WeaponName = "SniperGunWeapon",
+                WeaponProperty = "FireGraphic",
+                ChangeValue = "ZagreusGunAlt01Fire",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+    
+            {
+                WeaponName = "SniperGunWeapon",
+                WeaponProperty = "FailedToFireCooldownAnimation",
+                ChangeValue = "ZagreusGunAlt01FireEmpty",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "SniperGunWeaponDash",
+                WeaponProperty = "FireGraphic",
+                ChangeValue = "ZagreusGunAlt01Fire",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+		},
+	}
+
     -- Trait specific changes
-    ModUtil.LoadOnce(function ()
+    -- ModUtil.LoadOnce(function ()
         for traitName, traitData in pairs(TraitData) do
 
             if traitData.RequiredFalseTrait ~= nil and traitData.RequiredFalseTrait == "ShieldLoadAmmoTrait" then
@@ -5058,9 +5800,25 @@ if AspectFusion.Config.Enabled then
                         if legal then
                             table.insert(traitData.PropertyChanges, propertyCopy)
                         end
+                    elseif property.TraitName ~= nil and property.TraitName == "GunLoadedGrenadeTrait" then
+                        local legal = false
+                        local propertyCopy = DeepCopyTable(property)
+                        propertyCopy.TraitName = "UltraGunTrait"
+                        table.insert(traitData.PropertyChanges, propertyCopy)
+                    end
+                end
+            end
+
+            if traitData.EnemyPropertyChanges ~= nil then
+                for _, property in pairs(traitData.EnemyPropertyChanges) do
+                    if property.TraitName ~= nil and property.TraitName == "GunLoadedGrenadeTrait" then
+                        local legal = false
+                        local propertyCopy = DeepCopyTable(property)
+                        propertyCopy.TraitName = "UltraGunTrait"
+                        table.insert(traitData.EnemyPropertyChanges, propertyCopy)
                     end
                 end
             end
         end
-    end)
+    -- end)
 end

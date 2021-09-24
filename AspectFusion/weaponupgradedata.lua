@@ -62,4 +62,16 @@ if AspectFusion.Config.Enabled then
         BonusEquippedKitAnimation = "WeaponBowAlt03FloatingIdleOffBonus",
         Image = "Codex_Portrait_BowAlt03"
     }
+    WeaponUpgradeData.GunWeapon[5] =
+    {
+        Costs = { 0, 0, 0, 0, 0 },
+        MaxUpgradeLevel = 0,
+        StartsUnlocked = true,
+        TraitName = "UltraGunTrait",
+        EquippedKitAnimation = "WeaponGunAlt03FloatingIdleOff",
+        UnequippedKitAnimation = "WeaponGunAlt03FloatingIdle",
+        BonusUnequippedKitAnimation = "WeaponGunAlt03FloatingIdleBonus",
+        BonusEquippedKitAnimation = "WeaponGunAlt03FloatingIdleOffBonus",
+        Image = "Codex_Portrait_GunAlt03"
+    }
 end

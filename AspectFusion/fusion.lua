@@ -760,3 +760,91 @@ ModUtil.Path.Wrap("LoadAmmo", function (baseFunc)
 		RunWeaponMethod({ Id = CurrentRun.Hero.ObjectId, Weapon = "RangedWeapon", Method = "AddAmmo", Parameters = { 1 } })
 	end
 end)
+
+-- ultra gun
+ModUtil.Path.Wrap("DashManeuver", function (baseFunc, duration)
+    if CurrentRun.Hero.RallyHealth.RallyActive and CurrentRun.Hero.RallyHealth.RallyHealOnDash and not CurrentRun.Hero.IsDead then
+		if CurrentRun.Hero.RallyHealth.Store > 0 then
+			rallyHeal = round( CurrentRun.Hero.RallyHealth.Store )
+			CurrentRun.Hero.RallyHealth.Store = CurrentRun.Hero.RallyHealth.Store - rallyHeal
+			Heal( CurrentRun.Hero, { HealAmount = rallyHeal, SourceName = "RallyHeal", Silent = false } )
+			RallyHealPresentation()
+			thread( UpdateHealthUI )
+		end
+	end
+
+	if HeroHasTrait("UltraGunTrait") then
+		return
+	end
+    baseFunc(duration)
+end)
+
+ModUtil.Path.Wrap("ManualReload", function (baseFunc, attacker)
+    if HeroHasTrait("UltraGunTrait") then
+        if not IsInputAllowed({}) then
+            return
+        end
+    
+        if attacker.ActiveEffects then
+            for effectName in pairs(attacker.ActiveEffects) do
+                if EffectData[effectName] and EffectData[effectName].BlockReload then
+                    return
+                end
+            end
+        end
+    
+        if CurrentDeathAreaRoom == nil and CurrentRun and CurrentRun.CurrentRoom and CurrentRun.CurrentRoom.DisableWeaponsExceptDash then
+            return
+        end
+    
+        for weaponName, v in pairs( attacker.Weapons ) do
+            local weaponData = GetWeaponData( attacker, weaponName)
+            if weaponData ~= nil and weaponData.ActiveReloadTime ~= nil then
+                if attacker.Reloading then
+                    ReloadFailedMidReloadPresentation( attacker, weaponData )
+                    return
+                end
+                -- if RunWeaponMethod({ Id = attacker.ObjectId, Weapon = weaponData.Name, Method = "IsAmmoFull" }) then
+                --     ReloadFailedAmmoFullPresentation( attacker, weaponData )
+                --     return
+                -- end
+    
+                thread( MarkObjectiveComplete, "GunWeaponManualReload" )
+                ReloadGun( attacker, weaponData )
+    
+                thread( MarkObjectiveComplete, "ManualReload" )
+                ApplyEffectFromWeapon({ Id = CurrentRun.Hero.ObjectId, DestinationId = CurrentRun.Hero.ObjectId, WeaponName = "ManualReloadEffectApplicator", EffectName = "ManualReloadBonus" })
+                return
+            end
+        end
+    end
+    baseFunc(attacker)
+end)
+
+ModUtil.Path.Wrap("ShowGunUI", function (baseFunc, gunData)
+    baseFunc(gunData)
+    if HeroHasTrait( "UltraGunTrait" ) then
+		SetAnimation({ Name = "GunLaserIndicatorIcon", DestinationId = ScreenAnchors.GunUI})
+    end
+end)
+
+ModUtil.Path.Wrap("UpdateGunUI", function (baseFunc, triggerArgs)
+    baseFunc(triggerArgs)
+    if HeroHasTrait( "UltraGunTrait" ) then
+		SetAnimation({ Name = "GunLaserIndicatorIcon", DestinationId = ScreenAnchors.GunUI})
+    end
+end)
+
+ModUtil.Path.Wrap("ReloadPresentationComplete", function (baseFunc, attacker, weaponData, state )
+    if HeroHasTrait("UltraGunTrait") then
+        Flash({ Id = CurrentRun.Hero.ObjectId, Speed = 6, MinFraction = 0, MaxFraction = 1, Color = Color.White, Duration = 0.15, ExpireAfterCycle = false })
+        StopSound({ Id = state.ReloadSoundId, Duration = 0.2 })
+        PlaySound({ Name = "/SFX/Player Sounds/ZagreusGunReloadCompleteFlashLucifer", Id = CurrentRun.Hero.ObjectId })
+        PlaySound({ Name = "/SFX/Menu Sounds/ObjectiveActivateShk2", Id = state.GunReloadDisplayId })
+        CreateAnimation({ Name="GunReloadIndicatorComplete", DestinationId = state.GunReloadDisplayId, GroupName="Combat_UI" })
+        Destroy({ Id = state.GunReloadDisplayId })
+        thread( PlayVoiceLines, HeroVoiceLines.GunWeaponReloadCompleteVoiceLines, true )
+    else
+        baseFunc(attacker, weaponData, state )
+    end
+end)
