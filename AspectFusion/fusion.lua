@@ -1,4 +1,13 @@
 if AspectFusion.Config.Enabled then
+    local mod = "AspectFusion"
+    local package = "AspectFusion"
+    
+    ModUtil.Path.Wrap( "SetupMap", function(baseFunc)
+        DebugPrint({Text = "@"..mod.." Trying to load package "..package..".pkg"})
+        LoadPackages({Name = package})
+        return baseFunc()
+    end)
+
 ModUtil.BaseOverride("ShowWeaponUpgradeScreen", function (args)
     local textOffsetX = -50
     OnScreenOpened( { Flag = "WeaponUpgradeScreen", PersistCombatUI = true } )

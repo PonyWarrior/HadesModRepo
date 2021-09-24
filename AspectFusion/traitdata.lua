@@ -1,14 +1,14 @@
 if AspectFusion.Config.Enabled then
     TraitData.UltraSwordTrait =
 	{
-		Icon = "Weapon_Sword_15",
+		Icon = "Ultra_Sword",
 		InheritFrom = { "WeaponEnchantmentTrait" },
 		RequiredWeapon = "SwordWeapon",
 		AddOnFireWeapons = { "ConsecrationField" },
 		LegalOnFireWeapons = { "SwordParry" },
 		PostWeaponUpgradeScreenAnimation = "ZagreusSwordAlt03ParryReturnToIdle",
 		PostWeaponUpgradeScreenAngle = 300,
-		Frame = "MetaUpgrade",
+		Frame = "Fusion",
         CustomRarityName = "Fusion",
 		CustomRarityColor = {3, 94, 252, 255},
 		OnProjectileDeathFunction =
@@ -833,7 +833,7 @@ if AspectFusion.Config.Enabled then
         PostWeaponUpgradeScreenAngle = 208,
         RequiredWeapons = { "FistWeapon", "FistWeaponSpecial" },
         RequiredFalseTrait = "FistWeaveTrait",
-        Frame = "MetaUpgrade",
+        Frame = "Fusion",
         CustomRarityName = "Fusion",
 		CustomRarityColor = {3, 94, 252, 255},
         -- Talos
@@ -2109,7 +2109,7 @@ if AspectFusion.Config.Enabled then
 		PostWeaponUpgradeScreenAnimation = "ZagreusShieldBeowulfIdle",
 		PostWeaponUpgradeScreenAngle = 180,
 		PreEquipWeapons = { "SelfLoadAmmoApplicator", "ShieldThrowProjectileBonusApplicator", "ChaosShieldThrow" },
-        Frame = "MetaUpgrade",
+        Frame = "Fusion",
         CustomRarityName = "Fusion",
 		CustomRarityColor = {3, 94, 252, 255},
         AmmoDropData =
@@ -3590,7 +3590,7 @@ if AspectFusion.Config.Enabled then
 	{
 		InheritFrom = { "WeaponEnchantmentTrait" },
 		Icon = "Weapon_Spear_07",
-        Frame = "MetaUpgrade",
+        Frame = "Fusion",
         CustomRarityName = "Fusion",
 		CustomRarityColor = {3, 94, 252, 255},
         PostWeaponUpgradeScreenFunctionName = "RemoveSpearTeleport",
@@ -4295,7 +4295,7 @@ if AspectFusion.Config.Enabled then
 
     TraitData.UltraBowTrait =
 	{
-        Frame = "MetaUpgrade",
+        Frame = "Fusion",
         CustomRarityName = "Fusion",
 		CustomRarityColor = {3, 94, 252, 255},
 		Icon = "Weapon_Bow_14",
@@ -4971,7 +4971,7 @@ if AspectFusion.Config.Enabled then
 
     TraitData.UltraGunTrait =
 	{
-        Frame = "MetaUpgrade",
+        Frame = "Fusion",
         CustomRarityName = "Fusion",
 		CustomRarityColor = {3, 94, 252, 255},
 		InheritFrom = { "WeaponEnchantmentTrait" },
