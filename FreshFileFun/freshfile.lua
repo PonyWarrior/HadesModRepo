@@ -43,14 +43,14 @@ local aspectLookupTable =
     {
         [1] = "BowBaseUpgradeTrait",
         [2] = "BowMarkHomingTrait",
-        [3] = "DislodgeAmmoTrait",
+        [3] = "BowLoadAmmoTrait",
         [4] = "BowBondTrait"
     },
     SpearWeapon =
     {
         [1] = "SpearBaseUpgradeTrait",
         [2] = "SpearTeleportTrait",
-        [3] = "BowLoadAmmoTrait",
+        [3] = "SpearWeaveTrait",
         [4] = "SpearSpinTravel"
     },
     ShieldWeapon =

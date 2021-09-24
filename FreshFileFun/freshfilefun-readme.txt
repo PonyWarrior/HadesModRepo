@@ -4,4 +4,6 @@ Initial release
 
 1.1.0
 
-Added weapon and aspect selector
+new features :
+
+added weapon and aspect selector
