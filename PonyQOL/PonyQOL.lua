@@ -3195,9 +3195,19 @@ if PQOL.Config.BossNumericHealth.Enabled then
 end
 
 if PQOL.Config.CompleteAllBounties.Enabled then
+
+    if PQOL.Config.CompleteAllBounties.DisableBountyLimit then
+        HeroData.DefaultHero.MaxShrinePointThreshold = 99
+        HeroData.DefaultHero.MaxShrinePointThresholdHardMode = 99
+    end
+
 	function CompleteAllAvailableBounties()
-		DebugPrint({Text="@PonyQOL Trying to complete all bounties!"})
+		DebugPrint({Text="@PonyQOL: Trying to complete all bounties!"})
 		local activeShrinePoints = GameState.SpentShrinePointsCache
+        local maxHeat = HeroData.DefaultHero.MaxShrinePointThreshold
+        if GameState.Flags.HardMode then
+            local maxHeat = HeroData.DefaultHero.MaxShrinePointThresholdHardMode
+        end
 		local weaponName = GetEquippedWeapon()
 		local roomName = CurrentRun.CurrentRoom.GenusName or CurrentRun.CurrentRoom.Name
 		local rewardName = CurrentRun.CurrentRoom.ChosenRewardType
@@ -3230,22 +3240,26 @@ if PQOL.Config.CompleteAllBounties.Enabled then
 			thread( InCombatText, CurrentRun.Hero.ObjectId, "Rewarding additional bounties", 1.8, { ShadowScale = 1.2 } )
 			wait(1.0)
 			while activeShrinePoints > GameState.RecordClearedShrineThreshold[weaponName][roomName] do
+                if GameState.RecordClearedShrineThreshold[weaponName][roomName] >= maxHeat then
+                    DebugPrint({Text="@PonyQOL: Max bounties reached!"})
+                    break
+                end
 				-- skipping first reward as the game already gives it
 				if skippedFirstReward or dontSkipFirstReward then
-					local offsetY = RandomInt(0, 100)
-					local offsetX = RandomInt(0, 100)
-					local consumableId = SpawnObstacle({ Name = rewardName, DestinationId = CurrentRun.Hero.ObjectId, Group = "Standing", OffsetX = offsetX, OffsetY = offsetY })
-					local consumable = CreateConsumableItem( consumableId, rewardName, 0 )
 					rewardcount = rewardcount + 1
 				else
 					skippedFirstReward = true
 				end
-
 				GameState.RecordClearedShrineThreshold[weaponName][roomName] = GetLastRoomClearedShrinePointThreshold( weaponName, roomName ) + ShrineClearData.ClearThreshold
 				GameState.RecordLastClearedShrineReward[weaponName][roomName][GetLastRoomClearedShrinePointThreshold( weaponName, roomName )] = rewardName
-				wait(0.1)
 			end
+            local offsetY = RandomInt(0, 100)
+            local offsetX = RandomInt(0, 100)
+            ConsumableData.SuperLockKeyDrop.AddResources.SuperLockKeys = rewardcount
+            local consumableId = SpawnObstacle({ Name = rewardName, DestinationId = CurrentRun.Hero.ObjectId, Group = "Standing", OffsetX = offsetX, OffsetY = offsetY })
+            local consumable = CreateConsumableItem( consumableId, rewardName, 0 )
 			thread( InCombatText, CurrentRun.Hero.ObjectId, rewardcount.." additional bounties rewarded", 1.8, { ShadowScale = 1.2 } )
+            ConsumableData.SuperLockKeyDrop.AddResources.SuperLockKeys = 1
 		end
 	end
 

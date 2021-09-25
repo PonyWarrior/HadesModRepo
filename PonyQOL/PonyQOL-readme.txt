@@ -172,9 +172,20 @@ general code improvement
 
 changed features :
 
-the Gameplay module and submodules have been splintered off into a new mod Pony's Adjustable Balance
+the Gameplay module and submodules have been splintered off into a new mod called Pony's Adjustable Balance
 
 new features :
 
 added UnlockHiddenAspects, lets you unlock any or all hidden aspect
 Pact: you can now pick the Personal Liability pact option in a non hell mode save
+
+2.6.3
+
+changes features :
+
+CompleteAllBounties: additional bounty rewards are now merged into a single item (no more spawning 20 items)
+CompleteAllBounties: additional bounties are no longer rewarded when above the game's bounty limit
+
+new features :
+
+CompleteAllBounties: added an option to disable the game's bounty limit (20 in normal, 25 in hell mode)

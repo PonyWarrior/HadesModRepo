@@ -63,7 +63,9 @@ PQOL =
 		CompleteAllBounties =
 		{
 			-- When using more heat than required, all additional bounties are rewarded and completed when defeating bosses (you don't need to increase heat 1 by 1)
+            -- DisableBountyLimit lets you receive bounty rewards above 20 heat (25 in hell mode)
 			Enabled = true,
+            DisableBountyLimit = false,
 		},
 		BloodRefund =
 		{
