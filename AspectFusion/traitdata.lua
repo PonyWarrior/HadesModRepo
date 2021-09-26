@@ -1862,11 +1862,11 @@ if AspectFusion.Config.Enabled then
             -- Zeus shield throws
             ShieldThrowDash =
             {
-                RecallWeaponsOnFailToFire = {"ShieldThrow", "ChaosShieldThrow"},
+                RecallWeaponsOnFailToFire = {"ShieldThrow", "ChaosShieldThrow", "ShieldThrowDash"},
             },
             ShieldThrow =
             {
-                RecallWeaponsOnFailToFire = {"ShieldThrow", "ChaosShieldThrow"},
+                RecallWeaponsOnFailToFire = {"ShieldThrow", "ChaosShieldThrow", "ShieldThrowDash"},
                 NotReadySound = "/SFX/Player Sounds/ZagreusShieldReturn",
     
                 Sounds =
@@ -2463,8 +2463,8 @@ if AspectFusion.Config.Enabled then
                 WeaponName = "ShieldThrow",
                 ProjectileName = "ShieldThrow",
                 ProjectileProperty = "DamageHigh",
-                DeriveValueFrom = "DamageLow",
-                ExcludeLinked = true,
+                BaseValue = 30,
+                ChangeType = "Absolute",
             },
             {
                 WeaponName = "ShieldThrow",
@@ -2677,8 +2677,8 @@ if AspectFusion.Config.Enabled then
                 WeaponName = "ChaosShieldThrow",
                 ProjectileName = "UltraShieldThrow",
                 ProjectileProperty = "DamageHigh",
-                DeriveValueFrom = "DamageLow",
-                ExcludeLinked = true,
+                BaseValue = 30,
+                ChangeType = "Absolute",
             },
             {
                 WeaponName = "ChaosShieldThrow",
@@ -5317,4 +5317,260 @@ if AspectFusion.Config.Enabled then
     TraitData.FistDetonateBoostTrait.RequiredTrait = nil
     TraitData.FistDetonateBoostTrait.RequiredOneOfTraits = {"FistDetonateTrait", "UltraFistTrait"}
 
+        -- Bow
+
+    table.insert(TraitData.BowTapFireTrait.RequiredFalseTraits, "UltraBowTrait")
+
+        -- Shield
+    
+    table.insert(TraitData.ShieldThrowFastTrait.RequiredFalseTraits, "UltraShieldTrait")
+    
+    TraitData.ShieldLoadAmmoBoostTrait.RequiredTrait = nil
+    TraitData.ShieldLoadAmmoBoostTrait.RequiredOneOfTraits = {"ShieldLoadAmmoTrait", "UltraShieldTrait"}
+
+    TraitData.ShieldThrowRushTrait.PropertyChanges =
+    {   
+        {
+            TraitName = "UltraShieldTrait",
+            WeaponName = "ShieldThrowDash",
+            ProjectileName = "ShieldThrowDash",
+            ProjectileProperty = "Graphic",
+            ChangeValue = "ProjectileShieldMirage",
+            ChangeType = "Absolute",
+            ExcludeLinked = true,
+        },
+        {
+            TraitName = "UltraShieldTrait",
+            WeaponName = "ShieldThrowDash",
+            ProjectileName = "ShieldThrowDash",
+            ProjectileProperty = "GroupName",
+            ChangeValue = "Standing",
+            ChangeType = "Absolute",
+            ExcludeLinked = true,
+        },
+        {
+            TraitName = "UltraShieldTrait",
+            WeaponName = "ShieldThrowDash",
+            ProjectileName = "ShieldThrowDash",
+            ProjectileProperty = "DamageLow",
+            BaseValue = 30,
+            ChangeType = "Absolute",
+        },
+        {
+            TraitName = "UltraShieldTrait",
+            WeaponName = "ShieldThrowDash",
+            ProjectileName = "ShieldThrowDash",
+            ProjectileProperty = "DamageHigh",
+            BaseValue = 30,
+            ChangeType = "Absolute",
+        },
+        {
+            TraitName = "UltraShieldTrait",
+            WeaponName = "ShieldThrowDash",
+            ProjectileName = "ShieldThrowDash",
+            ProjectileProperty = "ClearWeaponBonusesOnHit",
+            ChangeValue = true,
+            ExcludeLinked = true,
+        },
+        {
+            TraitName = "UltraShieldTrait",
+            WeaponName = "ShieldThrowDash",
+            WeaponProperty = "RemoveControlOnFire",
+            ChangeValue = "null",
+            ChangeType = "Absolute",
+        },
+    
+        {
+            TraitName = "UltraShieldTrait",
+            WeaponName = "ShieldThrowDash",
+            WeaponProperty = "RemoveControlOnFire3",
+            ChangeValue = "null",
+            ChangeType = "Absolute",
+        },
+    
+        {
+            TraitName = "UltraShieldTrait",
+            WeaponName = "ShieldThrowDash",
+            WeaponProperty = "RemoveAllControlSwaps",
+            ChangeValue = "null",
+            ChangeType = "Absolute",
+        },
+        {
+            TraitName = "UltraShieldTrait",
+            WeaponName = "ShieldThrowDash",
+            WeaponProperty = "RemoveControlOnFire",
+            ChangeValue = "null",
+            ChangeType = "Absolute",
+            ExcludeLinked = true,
+        },
+        {
+            TraitName = "UltraShieldTrait",
+            WeaponName = "ShieldThrowDash",
+            ProjectileName = "ShieldThrowDash",
+            ProjectileProperty = "MultipleUnitCollisions",
+            ChangeValue = false,
+            ChangeType = "Absolute",
+            ExcludeLinked = true,
+        },
+        {
+            TraitName = "UltraShieldTrait",
+            WeaponName = "ShieldThrowDash",
+            ProjectileName = "ShieldThrowDash",
+            ProjectileProperty = "IgnoreCoverageAngles",
+            ChangeValue = true,
+            ChangeType = "Absolute",
+            ExcludeLinked = true,
+        },
+        {
+            TraitName = "UltraShieldTrait",
+            WeaponName = "ShieldThrowDash",
+            ProjectileName = "ShieldThrowDash",
+            ProjectileProperty = "UseVulnerability",
+            ChangeValue = false,
+            ChangeType = "Absolute",
+            ExcludeLinked = true,
+        },
+        {
+            TraitName = "UltraShieldTrait",
+            WeaponName = "ShieldThrowDash",
+            ProjectileName = "ShieldThrowDash",
+            ProjectileProperty = "ReturnToOwnerAfterInactiveSeconds",
+            ChangeValue = 10,
+            ChangeType = "Absolute",
+            ExcludeLinked = true,
+        },
+        {
+            TraitName = "UltraShieldTrait",
+            WeaponName = "ShieldThrowDash",
+            WeaponProperty = "DisableOwnerForDuration",
+            ChangeValue = 0,
+            ChangeType = "Absolute",
+        },
+        {
+            TraitName = "UltraShieldTrait",
+            WeaponName = "ShieldThrowDash",
+            ProjectileName = "ShieldThrowDash",
+            ProjectileProperty = "FinalJumpToOwner",
+            ChangeValue = true,
+            ChangeType = "Absolute",
+            ExcludeLinked = true,
+        },
+        {
+            TraitName = "UltraShieldTrait",
+            WeaponName = "ShieldThrowDash",
+            ProjectileProperty = "SelfImpactVelocityMultiplier",
+            ChangeValue = 0,
+            ChangeType = "Absolute",
+            ExcludeLinked = true,
+        },
+        {
+            TraitName = "UltraShieldTrait",
+            WeaponName = "ShieldThrowDash",
+            ProjectileName = "ShieldThrowDash",
+            ProjectileProperty = "Speed",
+            ChangeValue = 325,
+            ChangeType = "Absolute",
+            ExcludeLinked = true,
+        },
+        {
+            TraitName = "UltraShieldTrait",
+            WeaponName = "ShieldThrowDash",
+            ProjectileName = "ShieldThrowDash",
+            ProjectileProperty = "Acceleration",
+            ChangeValue = -75,
+            ChangeType = "Absolute",
+            ExcludeLinked = true,
+        },
+        {
+            TraitName = "UltraShieldTrait",
+            WeaponName = "ShieldThrowDash",
+            ProjectileName = "ShieldThrowDash",
+            ProjectileProperty = "ReturnToOwnerSpeed",
+            ChangeValue = 550,
+            ChangeType = "Absolute",
+            ExcludeLinked = true,
+        },
+        {
+            TraitName = "UltraShieldTrait",
+            WeaponName = "ShieldThrowDash",
+            ProjectileName = "ShieldThrowDash",
+            ProjectileProperty = "PenetrateJumpTargets",
+            ChangeValue = true,
+            ChangeType = "Absolute",
+            ExcludeLinked = true,
+        },
+        {
+            TraitName = "UltraShieldTrait",
+            WeaponName = "ShieldThrowDash",
+            ProjectileName = "ShieldThrowDash",
+            ProjectileProperty = "MultiDetonate",
+            ChangeValue = true,
+            ChangeType = "Absolute",
+            ExcludeLinked = true,
+        },
+        {
+            TraitName = "UltraShieldTrait",
+            WeaponName = "ShieldThrowDash",
+            ProjectileName = "ShieldThrowDash",
+            ProjectileProperty = "Fuse",
+            ChangeValue = 0.3,
+            ChangeType = "Absolute",
+            ExcludeLinked = true,
+        },
+        {
+            TraitName = "UltraShieldTrait",
+            WeaponName = "ShieldThrowDash",
+            ProjectileName = "ShieldThrowDash",
+            ProjectileProperty = "DetonateGraphic",
+            ChangeValue = "ShieldThrowTrailMirage",
+            ChangeType = "Absolute",
+            ExcludeLinked = true,
+        },
+        {
+            TraitName = "UltraShieldTrait",
+            WeaponName = "ShieldThrowDash",
+            ProjectileName = "ShieldThrowDash",
+            ProjectileProperty = "DamageRadius",
+            ChangeValue = 320,
+            ChangeType = "Absolute",
+            ExcludeLinked = true,
+        },
+        {
+            TraitName = "UltraShieldTrait",
+            WeaponName = "ShieldThrowDash",
+            ProjectileName = "ShieldThrowDash",
+            ProjectileProperty = "DamageRadiusScaleX",
+            ChangeValue = 0.9,
+            ChangeType = "Absolute",
+            ExcludeLinked = true,
+        },
+        {
+            TraitName = "UltraShieldTrait",
+            WeaponName = "ShieldThrowDash",
+            ProjectileName = "ShieldThrowDash",
+            ProjectileProperty = "DamageRadiusScaleY",
+            ChangeValue = 0.5,
+            ChangeType = "Absolute",
+            ExcludeLinked = true,
+        },
+        {
+            TraitName = "UltraShieldTrait",
+            WeaponName = "ShieldThrowDash",
+            ProjectileName = "ShieldThrowDash",
+            ProjectileProperty = "AddControlOnDeath",
+            ChangeValue = "null",
+            ChangeType = "Absolute",
+            ExcludeLinked = true,
+        },
+        {
+            TraitName = "UltraShieldTrait",
+            WeaponName = "ShieldThrowDash",
+            ProjectileName = "ShieldThrowDash",
+            EffectName = "OnHitStun",
+            EffectProperty = "Duration",
+            ChangeValue = 0.5,
+            ChangeType = "Absolute",
+            ExcludeLinked = true,
+        }
+    }
 end
