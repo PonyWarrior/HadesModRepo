@@ -2325,29 +2325,12 @@ if AspectFusion.Config.Enabled then
 		AddIncomingDamageModifiers =
 		{
 			GlobalMultiplier = 1.10,
-			ExtractValues =
-			{
-				{
-					Key = "GlobalMultiplier",
-					ExtractAs = "TooltipDamageTaken",
-					Format = "PercentDelta",
-					SkipAutoExtract = true
-				},
-			}
 		},
 		AddOutgoingDamageModifiers =
 		{
 			ValidWeapons = { "ShieldWeaponRush" },
 			LoadedAmmoMultiplier = { BaseValue = 2.0, SourceIsMultiplier = true },
 			ExcludeLinked = true,
-			ExtractValues =
-			{
-				{
-					Key = "LoadedAmmoMultiplier",
-					ExtractAs = "TooltipDamageIncrease",
-					Format = "PercentDelta",
-				}
-			},
 		},
 		WeaponBinks =
 		{
@@ -3345,14 +3328,6 @@ if AspectFusion.Config.Enabled then
             {
                 WeaponName = "ChaosShieldThrow",
                 ProjectileName = "UltraShieldThrow",
-                ProjectileProperty = "Graphic",
-                ChangeValue = "ProjectileShieldMirage",
-                ChangeType = "Absolute",
-                ExcludeLinked = true,
-            },
-            {
-                WeaponName = "ChaosShieldThrow",
-                ProjectileName = "UltraShieldThrow",
                 ProjectileProperty = "GroupName",
                 ChangeValue = "Standing",
                 ChangeType = "Absolute",
@@ -3531,14 +3506,22 @@ if AspectFusion.Config.Enabled then
                 ChangeType = "Absolute",
                 ExcludeLinked = true,
             },
-            {
-                WeaponName = "ChaosShieldThrow",
-                ProjectileName = "UltraShieldThrow",
-                ProjectileProperty = "AddControlOnDeath",
-                ChangeValue = "null",
-                ChangeType = "Absolute",
-                ExcludeLinked = true,
-            },
+            -- {
+            --     WeaponName = "ChaosShieldThrow",
+            --     ProjectileName = "UltraShieldThrow",
+            --     ProjectileProperty = "AddControlOnDeath",
+            --     ChangeValue = "null",
+            --     ChangeType = "Absolute",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponName = "ChaosShieldThrow",
+            --     ProjectileName = "UltraShieldThrow",
+            --     ProjectileProperty = "AddControlOnDeath2",
+            --     ChangeValue = "null",
+            --     ChangeType = "Absolute",
+            --     ExcludeLinked = true,
+            -- },
             {
                 WeaponName = "ChaosShieldThrow",
                 ProjectileName = "UltraShieldThrow",

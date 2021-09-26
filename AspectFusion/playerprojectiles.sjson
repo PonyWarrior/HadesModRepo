@@ -2,8 +2,42 @@
     Projectiles = [
         "_append"
         {
-            Name = "UltraShieldThrow"
-            InheritFrom = "ShieldThrow"
+        Name = "UltraShieldThrow"
+        InheritFrom = "ShieldThrow"
+        AddControlOnDeath = "null"
+        AddControlOnDeath2 = "null"
+            Thing = {
+            Graphic = "ProjectileShieldMirage"
+            OffsetZ = 70
+            RotateGeometry = true
+            AttachedAnim = "ChaosShieldFx"
+            Grip = 999999
+            Color = {
+            Red = 0.5
+            Green = 0.0
+            Blue = 1.0
+            Opacity = 0.5
+            }
+
+            Points = [
+            {
+                X = 36
+                Y = 32
+            }
+            {
+                X = 36
+                Y = -32
+            }
+            {
+                X = -36
+                Y = -32
+            }
+            {
+                X = -36
+                Y = 32
+            }
+            ]
+        }
         }
     ]
 }
