@@ -3233,8 +3233,9 @@ if PQOL.Config.CompleteAllBounties.Enabled then
 			GameState.RecordLastClearedShrineReward[weaponName][roomName][0] = rewardName
 			dontSkipFirstReward = true
 		end
-		-- check if player is more than 1 heat above record
-		if (activeShrinePoints - GameState.RecordClearedShrineThreshold[weaponName][roomName]) > 1 then
+		-- check if player is more than 1 heat above record and hasn't reached bounty limit
+		if (activeShrinePoints - GameState.RecordClearedShrineThreshold[weaponName][roomName]) > 1
+        and not (activeShrinePoints - GameState.RecordClearedShrineThreshold[weaponName][roomName]) >= maxHeat then
 			local skippedFirstReward = false
 			local rewardcount = 0
 			thread( InCombatText, CurrentRun.Hero.ObjectId, "Rewarding additional bounties", 1.8, { ShadowScale = 1.2 } )
