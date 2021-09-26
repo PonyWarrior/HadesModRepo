@@ -35,5 +35,10 @@
       Id = "Boon_Fusion"
       DisplayName = "融汇"
     }
+    {
+      Id = "UltraGunGrenadeDropTrait"
+      DisplayName = "人体炸弹"
+      Description = "{$Keywords.Special} 伤害范围更大，基础伤害 {#AltUpgradeFormat}{$TooltipData.TooltipDamage:P} {#PreviousFormat}，但也会伤到{#ItalicFormat}你自己{#PreviousFormat}。"
+    }
     ]
 }

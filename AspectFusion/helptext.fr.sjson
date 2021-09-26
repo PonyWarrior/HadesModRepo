@@ -35,5 +35,10 @@
       Id = "Boon_Fusion"
       DisplayName = "Fusion"
     }
+    {
+      Id = "UltraGunGrenadeDropTrait"
+      DisplayName = "Bombe Périlleuse"
+      Description = "Votre [Technique]{$Keywords.Special} inflige {#AltUpgradeFormat}{$TooltipData.TooltipDamage:P} {#PreviousFormat} de dégâts dans une zone élargie ; mais elle peut également {#ItalicFormat}vous {#PreviousFormat}blesser."
+    }
     ]
 }

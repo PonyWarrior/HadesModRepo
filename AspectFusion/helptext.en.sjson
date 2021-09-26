@@ -35,5 +35,10 @@
         Id = "Boon_Fusion"
         DisplayName = "Fusion"
         }
+        {
+        Id = "UltraGunGrenadeDropTrait"
+        DisplayName = "Hazard Bomb"
+        Description = "Your {$Keywords.Special} deals {#AltUpgradeFormat}{$TooltipData.TooltipDamage:P} {#PreviousFormat}base damage in a large area; it can hurt {#ItalicFormat}you{#PreviousFormat}."
+        }
     ]
 }
