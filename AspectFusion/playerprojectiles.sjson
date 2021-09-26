@@ -1,0 +1,9 @@
+{
+    Projectiles = [
+        "_append"
+        {
+            Name = "UltraShieldThrow"
+            InheritFrom = "ShieldThrow"
+        }
+    ]
+}

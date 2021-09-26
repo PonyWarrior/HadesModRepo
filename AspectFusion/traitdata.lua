@@ -3118,23 +3118,6 @@ if AspectFusion.Config.Enabled then
                 DeriveValueFrom = "DamageLow",
             },
 
-            -- Chaos Aspect
-
-            {
-                WeaponName = "ChaosShieldThrow",
-                WeaponProperty = "NumProjectiles",
-                BaseValue = 5,
-                ChangeType = "Absolute",
-                ExcludeLinked = true,
-            },
-            {
-				WeaponName = "ChaosShieldThrow",
-				WeaponProperty = "ProjectileAngleOffset",
-				ChangeValue = math.rad(45),
-				ChangeType = "Absolute",
-				ExcludeLinked = true,
-			},
-
             -- Zeus Aspect
 
             {
@@ -3355,7 +3338,13 @@ if AspectFusion.Config.Enabled then
 
             {
                 WeaponName = "ChaosShieldThrow",
-                ProjectileName = "ChaosShieldThrow",
+                WeaponProperty = "Projectile",
+                ChangeValue = "UltraShieldThrow",
+                ChangeType = "Absolute",
+            },
+            {
+                WeaponName = "ChaosShieldThrow",
+                ProjectileName = "UltraShieldThrow",
                 ProjectileProperty = "Graphic",
                 ChangeValue = "ProjectileShieldMirage",
                 ChangeType = "Absolute",
@@ -3363,7 +3352,7 @@ if AspectFusion.Config.Enabled then
             },
             {
                 WeaponName = "ChaosShieldThrow",
-                ProjectileName = "ChaosShieldThrow",
+                ProjectileName = "UltraShieldThrow",
                 ProjectileProperty = "GroupName",
                 ChangeValue = "Standing",
                 ChangeType = "Absolute",
@@ -3371,21 +3360,21 @@ if AspectFusion.Config.Enabled then
             },
             {
                 WeaponName = "ChaosShieldThrow",
-                ProjectileName = "ChaosShieldThrow",
+                ProjectileName = "UltraShieldThrow",
                 ProjectileProperty = "DamageLow",
                 BaseValue = 30,
                 ChangeType = "Absolute",
             },
             {
                 WeaponName = "ChaosShieldThrow",
-                ProjectileName = "ChaosShieldThrow",
+                ProjectileName = "UltraShieldThrow",
                 ProjectileProperty = "DamageHigh",
                 DeriveValueFrom = "DamageLow",
                 ExcludeLinked = true,
             },
             {
                 WeaponName = "ChaosShieldThrow",
-                ProjectileName = "ChaosShieldThrow",
+                ProjectileName = "UltraShieldThrow",
                 ProjectileProperty = "ClearWeaponBonusesOnHit",
                 ChangeValue = true,
                 ExcludeLinked = true,
@@ -3419,7 +3408,7 @@ if AspectFusion.Config.Enabled then
             },
             {
                 WeaponName = "ChaosShieldThrow",
-                ProjectileName = "ChaosShieldThrow",
+                ProjectileName = "UltraShieldThrow",
                 ProjectileProperty = "MultipleUnitCollisions",
                 ChangeValue = false,
                 ChangeType = "Absolute",
@@ -3427,7 +3416,7 @@ if AspectFusion.Config.Enabled then
             },
             {
                 WeaponName = "ChaosShieldThrow",
-                ProjectileName = "ChaosShieldThrow",
+                ProjectileName = "UltraShieldThrow",
                 ProjectileProperty = "IgnoreCoverageAngles",
                 ChangeValue = true,
                 ChangeType = "Absolute",
@@ -3435,7 +3424,7 @@ if AspectFusion.Config.Enabled then
             },
             {
                 WeaponName = "ChaosShieldThrow",
-                ProjectileName = "ChaosShieldThrow",
+                ProjectileName = "UltraShieldThrow",
                 ProjectileProperty = "UseVulnerability",
                 ChangeValue = false,
                 ChangeType = "Absolute",
@@ -3443,7 +3432,7 @@ if AspectFusion.Config.Enabled then
             },
             {
                 WeaponName = "ChaosShieldThrow",
-                ProjectileName = "ChaosShieldThrow",
+                ProjectileName = "UltraShieldThrow",
                 ProjectileProperty = "ReturnToOwnerAfterInactiveSeconds",
                 ChangeValue = 10,
                 ChangeType = "Absolute",
@@ -3457,14 +3446,6 @@ if AspectFusion.Config.Enabled then
             },
             {
                 WeaponName = "ChaosShieldThrow",
-                ProjectileName = "ChaosShieldThrow",
-                ProjectileProperty = "FinalJumpToOwner",
-                ChangeValue = true,
-                ChangeType = "Absolute",
-                ExcludeLinked = true,
-            },
-            {
-                WeaponName = "ChaosShieldThrow",
                 ProjectileProperty = "SelfImpactVelocityMultiplier",
                 ChangeValue = 0,
                 ChangeType = "Absolute",
@@ -3472,7 +3453,7 @@ if AspectFusion.Config.Enabled then
             },
             {
                 WeaponName = "ChaosShieldThrow",
-                ProjectileName = "ChaosShieldThrow",
+                ProjectileName = "UltraShieldThrow",
                 ProjectileProperty = "Speed",
                 ChangeValue = 325,
                 ChangeType = "Absolute",
@@ -3480,7 +3461,7 @@ if AspectFusion.Config.Enabled then
             },
             {
                 WeaponName = "ChaosShieldThrow",
-                ProjectileName = "ChaosShieldThrow",
+                ProjectileName = "UltraShieldThrow",
                 ProjectileProperty = "Acceleration",
                 ChangeValue = -75,
                 ChangeType = "Absolute",
@@ -3488,7 +3469,7 @@ if AspectFusion.Config.Enabled then
             },
             {
                 WeaponName = "ChaosShieldThrow",
-                ProjectileName = "ChaosShieldThrow",
+                ProjectileName = "UltraShieldThrow",
                 ProjectileProperty = "ReturnToOwnerSpeed",
                 ChangeValue = 550,
                 ChangeType = "Absolute",
@@ -3496,7 +3477,7 @@ if AspectFusion.Config.Enabled then
             },
             {
                 WeaponName = "ChaosShieldThrow",
-                ProjectileName = "ChaosShieldThrow",
+                ProjectileName = "UltraShieldThrow",
                 ProjectileProperty = "PenetrateJumpTargets",
                 ChangeValue = true,
                 ChangeType = "Absolute",
@@ -3504,7 +3485,7 @@ if AspectFusion.Config.Enabled then
             },
             {
                 WeaponName = "ChaosShieldThrow",
-                ProjectileName = "ChaosShieldThrow",
+                ProjectileName = "UltraShieldThrow",
                 ProjectileProperty = "MultiDetonate",
                 ChangeValue = true,
                 ChangeType = "Absolute",
@@ -3512,7 +3493,7 @@ if AspectFusion.Config.Enabled then
             },
             {
                 WeaponName = "ChaosShieldThrow",
-                ProjectileName = "ChaosShieldThrow",
+                ProjectileName = "UltraShieldThrow",
                 ProjectileProperty = "Fuse",
                 ChangeValue = 0.3,
                 ChangeType = "Absolute",
@@ -3520,7 +3501,7 @@ if AspectFusion.Config.Enabled then
             },
             {
                 WeaponName = "ChaosShieldThrow",
-                ProjectileName = "ChaosShieldThrow",
+                ProjectileName = "UltraShieldThrow",
                 ProjectileProperty = "DetonateGraphic",
                 ChangeValue = "ShieldThrowTrailMirage",
                 ChangeType = "Absolute",
@@ -3528,7 +3509,7 @@ if AspectFusion.Config.Enabled then
             },
             {
                 WeaponName = "ChaosShieldThrow",
-                ProjectileName = "ChaosShieldThrow",
+                ProjectileName = "UltraShieldThrow",
                 ProjectileProperty = "DamageRadius",
                 ChangeValue = 320,
                 ChangeType = "Absolute",
@@ -3536,7 +3517,7 @@ if AspectFusion.Config.Enabled then
             },
             {
                 WeaponName = "ChaosShieldThrow",
-                ProjectileName = "ChaosShieldThrow",
+                ProjectileName = "UltraShieldThrow",
                 ProjectileProperty = "DamageRadiusScaleX",
                 ChangeValue = 0.9,
                 ChangeType = "Absolute",
@@ -3544,7 +3525,7 @@ if AspectFusion.Config.Enabled then
             },
             {
                 WeaponName = "ChaosShieldThrow",
-                ProjectileName = "ChaosShieldThrow",
+                ProjectileName = "UltraShieldThrow",
                 ProjectileProperty = "DamageRadiusScaleY",
                 ChangeValue = 0.5,
                 ChangeType = "Absolute",
@@ -3552,7 +3533,7 @@ if AspectFusion.Config.Enabled then
             },
             {
                 WeaponName = "ChaosShieldThrow",
-                ProjectileName = "ChaosShieldThrow",
+                ProjectileName = "UltraShieldThrow",
                 ProjectileProperty = "AddControlOnDeath",
                 ChangeValue = "null",
                 ChangeType = "Absolute",
@@ -3560,7 +3541,7 @@ if AspectFusion.Config.Enabled then
             },
             {
                 WeaponName = "ChaosShieldThrow",
-                ProjectileName = "ChaosShieldThrow",
+                ProjectileName = "UltraShieldThrow",
                 EffectName = "OnHitStun",
                 EffectProperty = "Duration",
                 ChangeValue = 0.5,
@@ -3576,13 +3557,27 @@ if AspectFusion.Config.Enabled then
             },
             {
                 WeaponName = "ChaosShieldThrow",
-                ProjectileName = "ChaosShieldThrow",
+                ProjectileName = "UltraShieldThrow",
                 ProjectileProperty = "OnDeathFiredByAnimation",
                 ChangeValue = "ZagreusShieldAlt02Catch",
                 ChangeType = "Absolute",
                 ExcludeLinked = true,
             }, 
-
+            -- Chaos Aspect
+            {
+                WeaponName = "ChaosShieldThrow",
+                WeaponProperty = "NumProjectiles",
+                ChangeValue = 5,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "ChaosShieldThrow",
+                WeaponProperty = "ProjectileAngleOffset",
+                ChangeValue = math.rad(72),
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
 		}
 	}
 
