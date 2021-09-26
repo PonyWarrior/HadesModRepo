@@ -5765,7 +5765,7 @@ if AspectFusion.Config.Enabled then
                             local propertyCopyChaos = DeepCopyTable(propertyCopy)
                             propertyCopyChaos.WeaponName = "ChaosShieldThrow"
                             if propertyCopyChaos.ProjectileName ~= nil and propertyCopyChaos.ProjectileName == "ShieldThrow" then
-                                propertyCopyChaos.ProjectileName = "ChaosShieldThrow"
+                                propertyCopyChaos.ProjectileName = "UltraShieldThrow"
                             end
                             table.insert(traitData.PropertyChanges, propertyCopyChaos)
                         elseif propertyCopy.WeaponNames ~= nil and Contains(propertyCopy.WeaponNames, "ShieldThrow") then
@@ -5773,7 +5773,7 @@ if AspectFusion.Config.Enabled then
                             local propertyCopyChaos = DeepCopyTable(propertyCopy)
                             table.insert(propertyCopyChaos.WeaponNames, "ChaosShieldThrow")
                             if propertyCopyChaos.ProjectileName ~= nil and propertyCopyChaos.ProjectileName == "ShieldThrow" then
-                                propertyCopyChaos.ProjectileName = "ChaosShieldThrow"
+                                propertyCopyChaos.ProjectileName = "UltraShieldThrow"
                             end
                             table.insert(traitData.PropertyChanges, propertyCopyChaos)
                         end
