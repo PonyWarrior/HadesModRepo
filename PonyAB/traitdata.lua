@@ -192,6 +192,34 @@ if PAB.Config.Gameplay.Enabled then
         end
     end
 
+    if PAB.Config.Gameplay.OldChaosShield.Enabled then
+
+        table.insert(TraitData.ShieldRushBonusProjectileTrait.PropertyChanges,
+        {
+            WeaponName = "ChaosShieldThrow",
+            ProjectileProperty = "Speed",
+            ChangeValue = 2600,
+            ChangeType = "Absolute",
+            ExcludeLinked = true,
+        })
+        table.insert(TraitData.ShieldRushBonusProjectileTrait.PropertyChanges,
+        {
+            WeaponName = "ChaosShieldThrow",
+            ProjectileProperty = "NumJumps",
+            ChangeValue = 2,
+            ChangeType = "Absolute",
+            ExcludeLinked = true,
+        })
+        table.insert(TraitData.ShieldRushBonusProjectileTrait.PropertyChanges,
+        {
+            WeaponName = "ChaosShieldThrow",
+            WeaponProperty = "ProjectileAngleOffset",
+            ChangeValue = math.rad(72),
+            ChangeType = "Absolute",
+            ExcludeLinked = true,
+        })
+    end
+
     if PAB.Config.Gameplay.BetterBalance.Enabled then
         local config = PAB.Config.Gameplay.BetterBalance
         local temp

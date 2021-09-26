@@ -42,3 +42,10 @@ New feature BetterBalance rebalances bad/useless/unpopular/unviable game element
 
 fixed issues :
 extra last stand charges are no longer consumed before Stubborn Defiance
+
+v1.0.1
+
+fixed issues:
+
+fixed a crash on new save files
+fixed old chaos shield not always working

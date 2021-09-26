@@ -83,7 +83,7 @@ PAB =
 					SwordThrustKnockBack = 0, -- vanilla 3000
 					SwordSlashDisabledDuration = 2.0, -- vanilla 1.0 = 5 frames
 					-- Hades Spear
-					HadesSpearGlobalSweepBuff = true, -- vanilla false
+					HadesSpearGlobalSweepBuff = false, -- vanilla false
 					HadesSpearBaseSweepBuff = 0.3, -- vanilla 0.3
 			},
 		},

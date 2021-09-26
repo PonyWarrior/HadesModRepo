@@ -112,13 +112,6 @@ if PAB.Config.Gameplay.Enabled then
 		})
 	end
 
-	if PAB.Config.Gameplay.OldChaosShield.Enabled then
-		OnAnyLoad{function(triggerArgs)
-			SetProjectileProperty({ WeaponName = "ChaosShieldThrow", DestinationId = CurrentRun.Hero.ObjectId, Property = "Speed", Value = 2600 })
-			SetProjectileProperty({ WeaponName = "ChaosShieldThrow", DestinationId = CurrentRun.Hero.ObjectId, Property = "NumJumps", Value = 2 })
-			SetWeaponProperty({ WeaponName = "ChaosShieldThrow", DestinationId = CurrentRun.Hero.ObjectId, Property = "ProjectileAngleOffset", Value = 45 })
-		end}
-	end
 	if PAB.Config.Gameplay.ExtraHammers.Enabled then
 		if PAB.Config.Gameplay.ExtraHammers.SuperGunManualReloadTrait.Enabled then
 			function ApplyWeaponPropertyChange( unit, weaponName, propertyChange, reverse )
@@ -225,7 +218,7 @@ if PAB.Config.Gameplay.Enabled then
                     SetWeaponProperty({ WeaponName = "BowWeaponDash", DestinationId = CurrentRun.Hero.ObjectId,
                     Property = "PerfectChargeDamageMultiplier", Value = value2, ValueChangeType = "Absolute" })
                 end
-            end)
+            end, PAB)
 
             ModUtil.Path.Wrap("SetupHeroObject", function (baseFunc, currentRun, applyLuaUpgrades)
                 baseFunc(currentRun, applyLuaUpgrades)
