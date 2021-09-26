@@ -855,191 +855,6 @@ if AspectFusion.Config.Enabled then
         },
         WeaponDataOverride =
         {
-            -- FistWeapon =
-            -- {
-            --     WeaponBinks =
-            --     {
-            --         "ZagreusFistAlt03Idle_Bink",
-            --         "ZagreusFistAlt03ClawL_Bink",
-            --         "ZagreusFistAlt03ClawR_Bink",
-            --         "ZagreusFistAlt03AerialUpperCut_Bink",
-            --         "ZagreusFistAlt03DashAttack_Bink",
-            --         "ZagreusFistAlt03Dash_Bink",
-            --         "ZagreusFistAlt03Run_Bink",
-            --         "ZagreusFistAlt03RunStop_Bink",
-            --         "ZagreusFistAlt03FlashKick_Bink",
-            --         "ZagreusFistAlt03Grab_Bink",
-            --         "ZagreusFistAlt03DashUpperCut_Bink",
-            --         "ZagreusFistAlt03DashUpperClaw_Bink",
-            --     },
-
-            --     HitSimSlowCooldown = 0.2,
-            --     HitSimSlowParameters =
-            --     {
-            --         { ScreenPreWait = 0.02, Fraction = 0.01, LerpTime = 0 },
-            --         { ScreenPreWait = 0.02, Fraction = 0.7, LerpTime = 0.0 },
-            --         { ScreenPreWait = 0.06, Fraction = 1.0, LerpTime = 0.0 },
-            --     },
-
-            --     Sounds =
-            --     {
-            --         FireSounds =
-            --         {
-            --             { Name = "/VO/ZagreusEmotes/EmoteHeavyFistDashAttack" },
-            --             { Name = "/SFX/Player Sounds/ZagreusClawSwipe" },
-            --         },
-            --         ImpactSounds =
-            --         {
-            --             Invulnerable = "/SFX/SwordWallHitClank",
-            --             Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
-            --             Bone = "/SFX/MetalBoneSmash",
-            --             Brick = "/SFX/MetalStoneClang",
-            --             Stone = "/SFX/MetalStoneClang",
-            --             Organic = "/SFX/StabSplatterSmall",
-            --             StoneObstacle = "/SFX/SwordWallHitClank",
-            --             BrickObstacle = "/SFX/SwordWallHitClank",
-            --             MetalObstacle = "/SFX/SwordWallHitClank",
-            --             BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
-            --         },
-            --     },
-
-            -- },
-
-            -- FistWeapon2 =
-            -- {	
-            --     HitSimSlowCooldown = 0.2,
-            --     HitSimSlowParameters =
-            --     {
-            --         { ScreenPreWait = 0.02, Fraction = 0.01, LerpTime = 0 },
-            --         { ScreenPreWait = 0.02, Fraction = 0.7, LerpTime = 0.0 },
-            --         { ScreenPreWait = 0.06, Fraction = 1.0, LerpTime = 0.0 },
-            --     },
-            --     Sounds =
-            --     {
-            --         FireSounds =
-            --         {
-            --             { Name = "/VO/ZagreusEmotes/EmoteHeavyFistDashAttack" },
-            --             { Name = "/SFX/Player Sounds/ZagreusClawSwipe" },
-            --         },
-            --         ImpactSounds =
-            --         {
-            --             Invulnerable = "/SFX/SwordWallHitClank",
-            --             Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
-            --             Bone = "/SFX/MetalBoneSmash",
-            --             Brick = "/SFX/MetalStoneClang",
-            --             Stone = "/SFX/MetalStoneClang",
-            --             Organic = "/SFX/StabSplatterSmall",
-            --             StoneObstacle = "/SFX/SwordWallHitClank",
-            --             BrickObstacle = "/SFX/SwordWallHitClank",
-            --             MetalObstacle = "/SFX/SwordWallHitClank",
-            --             BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
-            --         },
-            --     },
-            -- },
-
-            -- FistWeapon3 =
-            -- {
-            --     HitSimSlowCooldown = 0.2,
-            --     HitSimSlowParameters =
-            --     {
-            --         { ScreenPreWait = 0.02, Fraction = 0.01, LerpTime = 0 },
-            --         { ScreenPreWait = 0.02, Fraction = 0.70, LerpTime = 0.0 },
-            --         { ScreenPreWait = 0.06, Fraction = 1.0, LerpTime = 0.0 },
-            --     },
-
-            --     Sounds =
-            --     {
-            --         FireSounds =
-            --         {
-            --             { Name = "/VO/ZagreusEmotes/EmoteHeavyFistDashAttack" },
-            --             { Name = "/SFX/Player Sounds/ZagreusClawSwipe" },
-            --         },
-            --         ImpactSounds =
-            --         {
-            --             Invulnerable = "/SFX/SwordWallHitClank",
-            --             Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
-            --             Bone = "/SFX/MetalBoneSmash",
-            --             Brick = "/SFX/MetalStoneClang",
-            --             Stone = "/SFX/MetalStoneClang",
-            --             Organic = "/SFX/StabSplatterSmall",
-            --             StoneObstacle = "/SFX/SwordWallHitClank",
-            --             BrickObstacle = "/SFX/SwordWallHitClank",
-            --             MetalObstacle = "/SFX/SwordWallHitClank",
-            --             BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
-            --         },
-            --     },
-
-            -- },
-
-            -- FistWeapon4 =
-            -- {
-            --     HitSimSlowCooldown = 0.2,
-            --     HitSimSlowParameters =
-            --     {
-            --         { ScreenPreWait = 0.02, Fraction = 0.01, LerpTime = 0 },
-            --         { ScreenPreWait = 0.02, Fraction = 0.7, LerpTime = 0.0 },
-            --         { ScreenPreWait = 0.06, Fraction = 1.0, LerpTime = 0.0 },
-            --     },
-
-            --     Sounds =
-            --     {
-            --         FireSounds =
-            --         {
-            --             { Name = "/VO/ZagreusEmotes/EmoteHeavyFistDashAttack" },
-            --             { Name = "/SFX/Player Sounds/ZagreusClawSwipe" },
-            --         },
-            --         ImpactSounds =
-            --         {
-            --             Invulnerable = "/SFX/SwordWallHitClank",
-            --             Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
-            --             Bone = "/SFX/MetalBoneSmash",
-            --             Brick = "/SFX/MetalStoneClang",
-            --             Stone = "/SFX/MetalStoneClang",
-            --             Organic = "/SFX/StabSplatterSmall",
-            --             StoneObstacle = "/SFX/SwordWallHitClank",
-            --             BrickObstacle = "/SFX/SwordWallHitClank",
-            --             MetalObstacle = "/SFX/SwordWallHitClank",
-            --             BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
-            --         },
-            --     },
-
-            -- },
-
-            -- FistWeapon5 =
-            -- {
-            --     HitSimSlowCooldown = 0.2,
-            --     HitSimSlowParameters =
-            --     {
-            --         { ScreenPreWait = 0.02, Fraction = 0.01, LerpTime = 0 },
-            --         { ScreenPreWait = 0.02, Fraction = 0.7, LerpTime = 0.0 },
-            --         { ScreenPreWait = 0.06, Fraction = 1.0, LerpTime = 0.0 },
-            --     },
-
-            --     Sounds =
-            --     {
-            --         FireSounds =
-            --         {
-            --             { Name = "/VO/ZagreusEmotes/EmotePowerAttacking_Fist5" },
-            --             { Name = "/SFX/Player Sounds/ZagreusClawSwipe" },
-            --         },
-            --         ImpactSounds =
-            --         {
-            --             Invulnerable = "/SFX/SwordWallHitClank",
-            --             Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
-            --             Bone = "/SFX/MetalBoneSmash",
-            --             Brick = "/SFX/MetalStoneClang",
-            --             Stone = "/SFX/MetalStoneClang",
-            --             Organic = "/SFX/StabSplatterSmall",
-            --             StoneObstacle = "/SFX/SwordWallHitClank",
-            --             BrickObstacle = "/SFX/SwordWallHitClank",
-            --             MetalObstacle = "/SFX/SwordWallHitClank",
-            --             BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
-            --         },
-
-            --     },
-
-            -- },
-
             FistWeaponSpecial =
             {
                 Sounds =
@@ -1197,11 +1012,6 @@ if AspectFusion.Config.Enabled then
                 EffectProperty = "Modifier",
                 ChangeValue = 0.5,
                 ChangeType = "Add",
-                ExtractValue =
-                {
-                    ExtractAs = "TooltipDamageBonus",
-                    Format = "Percent",
-                },
             },
             {
                 WeaponName = "FistDetonationWeapon",
@@ -1209,11 +1019,6 @@ if AspectFusion.Config.Enabled then
                 EffectProperty = "Modifier",
                 ChangeValue = 0.25,
                 ChangeType = "Add",
-                ExtractValue =
-                {
-                    ExtractAs = "TooltipDamageTaken",
-                    Format = "Percent",			
-                },
             },
             {
                 WeaponName = "FistDetonationWeapon",
@@ -1222,10 +1027,6 @@ if AspectFusion.Config.Enabled then
                 ChangeValue = 4,
                 ChangeType = "Absolute",
                 ExtractDuration = "ExtractDuration",
-                ExtractValue =
-                {
-                    ExtractAs = "TooltipDuration",
-                },
             },
             {
                 WeaponName = "FistDetonationWeapon",
@@ -1271,13 +1072,13 @@ if AspectFusion.Config.Enabled then
                 ChangeType = "Multiply",
                 ExcludeLinked = true,
             },
-            {
-                WeaponNames = WeaponSets.HeroRushWeapons,
-                WeaponProperty = "BlinkDuration",
-                ChangeValue = 0.8,
-                ChangeType = "Multiply",
-                ExcludeLinked = true,
-            },
+            -- {
+            --     WeaponNames = WeaponSets.HeroRushWeapons,
+            --     WeaponProperty = "BlinkDuration",
+            --     ChangeValue = 0.8,
+            --     ChangeType = "Multiply",
+            --     ExcludeLinked = true,
+            -- },
             {
                 WeaponNames = WeaponSets.HeroRushWeapons,
                 WeaponProperty = "IgnoreTriggerLockDuringCooldown",
@@ -1378,343 +1179,6 @@ if AspectFusion.Config.Enabled then
                 ChangeType = "Absolute",
                 ExcludeLinked = true,
             },
-
-            -- Gilgamesh Attack
-            -- {
-            --     WeaponNames = { "FistWeapon", "FistWeapon3", "FistWeapon5" },
-            --     WeaponProperty = "Projectile",
-            --     ChangeValue = "FistWeaponClawL",
-            --     ChangeType = "Absolute",
-            --     ExcludeLinked = true,
-            -- },
-            -- {
-            --     WeaponNames = { "FistWeapon2", "FistWeapon4" },
-            --     WeaponProperty = "Projectile",
-            --     ChangeValue = "FistWeaponClawR",
-            --     ChangeType = "Absolute",
-            --     ExcludeLinked = true,
-            -- },
-
-            -- {
-            --     WeaponNames = { "FistWeapon", "FistWeapon3", "FistWeapon5" },
-            --     WeaponProperty = "ChargeStartAnimation",
-            --     ChangeValue = "ZagreusFistAlt03ClawL_Start",
-            --     ChangeType = "Absolute",
-            --     ExcludeLinked = true,
-            -- },
-            -- {
-            --     WeaponNames = { "FistWeapon", "FistWeapon3", "FistWeapon5" },
-            --     WeaponProperty = "FireGraphic",
-            --     ChangeValue = "ZagreusFistAlt03ClawL_Fire",
-            --     ChangeType = "Absolute",
-            --     ExcludeLinked = true,
-            -- },
-            -- {
-            --     WeaponNames = { "FistWeapon2", "FistWeapon4" },
-            --     WeaponProperty = "ChargeStartAnimation",
-            --     ChangeValue = "ZagreusFistAlt03ClawR_Start",
-            --     ChangeType = "Absolute",
-            --     ExcludeLinked = true,
-            -- },
-            -- {
-            --     WeaponNames = { "FistWeapon2", "FistWeapon4" },
-            --     WeaponProperty = "FireGraphic",
-            --     ChangeValue = "ZagreusFistAlt03ClawR_Fire",
-            --     ChangeType = "Absolute",
-            --     ExcludeLinked = true,
-            -- },
-
-            -- {
-            --     WeaponNames = { "FistWeapon2", "FistWeapon3", "FistWeapon4", "FistWeapon5" },
-            --     WeaponProperty = "ControlWindow",
-            --     ChangeValue = 0.5,
-            --     ChangeType = "Absolute",
-            --     ExcludeLinked = true,
-            -- },
-
-            -- {
-            --     WeaponNames = { "FistWeapon" },
-            --     WeaponProperty = "ChargeTime",
-            --     ChangeValue = 0.21,
-            --     ChangeType = "Absolute",
-            --     ExcludeLinked = true,
-            -- },
-
-            -- {
-            --     WeaponNames = { "FistWeapon2", },
-            --     WeaponProperty = "ChargeTime",
-            --     ChangeValue = 0.14,
-            --     ChangeType = "Absolute",
-            --     ExcludeLinked = true,
-            -- },
-
-            -- {
-            --     WeaponNames = { "FistWeapon3", },
-            --     WeaponProperty = "ChargeTime",
-            --     ChangeValue = 0.14,
-            --     ChangeType = "Absolute",
-            --     ExcludeLinked = true,
-            -- },
-
-            -- {
-            --     WeaponNames = { "FistWeapon4" },
-            --     WeaponProperty = "ChargeTime",
-            --     ChangeValue = 0.13,
-            --     ChangeType = "Absolute",
-            --     ExcludeLinked = true,
-            -- },
-
-            -- {
-            --     WeaponNames = { "FistWeapon5" },
-            --     WeaponProperty = "ChargeTime",
-            --     ChangeValue = 0.12,
-            --     ChangeType = "Absolute",
-            --     ExcludeLinked = true,
-            -- },
-            
-            -- {
-            --     WeaponNames = { "FistWeapon" },
-            --     EffectName = "FistDisable",
-            --     EffectProperty = "Duration",
-            --     ChangeValue = 3.0,
-            --     ChangeType = "Multiply",
-            --     ExcludeLinked = true,
-            -- },
-            -- {
-            --     WeaponNames = { "FistWeapon" },
-            --     EffectName = "FistDisableAndLockTrigger",
-            --     EffectProperty = "Duration",
-            --     ChangeValue = 3.0,
-            --     ChangeType = "Multiply",
-            --     ExcludeLinked = true,
-            -- },
-            -- {
-            --     WeaponNames = { "FistWeapon2" },
-            --     EffectName = "FistDisable2",
-            --     EffectProperty = "Duration",
-            --     ChangeValue = 3.0,
-            --     ChangeType = "Multiply",
-            --     ExcludeLinked = true,
-            -- },
-            -- {
-            --     WeaponNames = { "FistWeapon2" },
-            --     EffectName = "FistDisableAndLockTrigger2",
-            --     EffectProperty = "Duration",
-            --     ChangeValue = 3.0,
-            --     ChangeType = "Multiply",
-            --     ExcludeLinked = true,
-            -- },
-            -- {
-            --     WeaponNames = { "FistWeapon3" },
-            --     EffectName = "FistDisable3",
-            --     EffectProperty = "Duration",
-            --     ChangeValue = 3.0,
-            --     ChangeType = "Multiply",
-            --     ExcludeLinked = true,
-            -- },
-            -- {
-            --     WeaponNames = { "FistWeapon3" },
-            --     EffectName = "FistDisableAndLockTrigger3",
-            --     EffectProperty = "Duration",
-            --     ChangeValue = 3.0,
-            --     ChangeType = "Multiply",
-            --     ExcludeLinked = true,
-            -- },
-            -- {
-            --     WeaponNames = { "FistWeapon4" },
-            --     EffectName = "FistDisable4",
-            --     EffectProperty = "Duration",
-            --     ChangeValue = 3.0,
-            --     ChangeType = "Multiply",
-            --     ExcludeLinked = true,
-            -- },
-            -- {
-            --     WeaponNames = { "FistWeapon4" },
-            --     EffectName = "FistDisableAndLockTrigger4",
-            --     EffectProperty = "Duration",
-            --     ChangeValue = 3.0,
-            --     ChangeType = "Multiply",
-            --     ExcludeLinked = true,
-            -- },
-            -- {
-            --     WeaponNames = { "FistWeapon5" },
-            --     EffectName = "FistDisable5",
-            --     EffectProperty = "Duration",
-            --     ChangeValue = 3.0,
-            --     ChangeType = "Multiply",
-            --     ExcludeLinked = true,
-            -- },
-
-            -- {
-            --     WeaponNames = { "FistWeapon5" },
-            --     EffectName = "FistDetonateMoveDisable",
-            --     EffectProperty = "Active",
-            --     ChangeValue = true,
-            --     ChangeType = "Absolute",
-            --     ExcludeLinked = true,
-            -- },
-            
-            -- {
-            --     WeaponNames = { "FistWeapon" },
-            --     EffectName = "FistSelfSelfSlowFire",
-            --     EffectProperty = "Modifier",
-            --     ChangeValue = 0.1,
-            --     ChangeType = "Absolute",
-            --     ExcludeLinked = true,
-            -- },
-            -- {
-            --     WeaponNames = { "FistWeapon" },
-            --     EffectName = "FistSelfSlowCharge",
-            --     EffectProperty = "Modifier",
-            --     ChangeValue = 0.05,
-            --     ChangeType = "Absolute",
-            --     ExcludeLinked = true,
-            -- },
-            -- {
-            --     WeaponNames = { "FistWeapon" },
-            --     EffectName = "FistSelfSlowCharge",
-            --     EffectProperty = "Duration",
-            --     ChangeValue = 1.5,
-            --     ChangeType = "Multiply",
-            --     ExcludeLinked = true,
-            -- },
-            -- {
-            --     WeaponNames = { "FistWeapon" },
-            --     EffectName = "FistSelfSelfSlowFire",
-            --     EffectProperty = "Duration",
-            --     ChangeValue = 1.5,
-            --     ChangeType = "Multiply",
-            --     ExcludeLinked = true,
-            -- },
-            -- {
-            --     WeaponNames = { "FistWeapon2" },
-            --     EffectName = "FistSwordSelfSlowFire2",
-            --     EffectProperty = "Modifier",
-            --     ChangeValue = 0.1,
-            --     ChangeType = "Absolute",
-            --     ExcludeLinked = true,
-            -- },
-            -- {
-            --     WeaponNames = { "FistWeapon2" },
-            --     EffectName = "FistSelfSlowCharge2",
-            --     EffectProperty = "Modifier",
-            --     ChangeValue = 0.05,
-            --     ChangeType = "Absolute",
-            --     ExcludeLinked = true,
-            -- },
-            -- {
-            --     WeaponNames = { "FistWeapon2" },
-            --     EffectName = "FistSelfSlowCharge2",
-            --     EffectProperty = "Duration",
-            --     ChangeValue = 1.5,
-            --     ChangeType = "Multiply",
-            --     ExcludeLinked = true,
-            -- },
-            -- {
-            --     WeaponNames = { "FistWeapon2" },
-            --     EffectName = "FistSwordSelfSlowFire2",
-            --     EffectProperty = "Duration",
-            --     ChangeValue = 1.5,
-            --     ChangeType = "Multiply",
-            --     ExcludeLinked = true,
-            -- },
-            -- {
-            --     WeaponNames = { "FistWeapon3" },
-            --     EffectName = "FistSwordSelfSlowFire3",
-            --     EffectProperty = "Modifier",
-            --     ChangeValue = 0.1,
-            --     ChangeType = "Absolute",
-            --     ExcludeLinked = true,
-            -- },
-            -- {
-            --     WeaponNames = { "FistWeapon3" },
-            --     EffectName = "FistSelfSlowCharge3",
-            --     EffectProperty = "Modifier",
-            --     ChangeValue = 0.05,
-            --     ChangeType = "Absolute",
-            --     ExcludeLinked = true,
-            -- },
-            -- {
-            --     WeaponNames = { "FistWeapon3" },
-            --     EffectName = "FistSelfSlowCharge3",
-            --     EffectProperty = "Duration",
-            --     ChangeValue = 1.5,
-            --     ChangeType = "Multiply",
-            --     ExcludeLinked = true,
-            -- },
-            -- {
-            --     WeaponNames = { "FistWeapon3" },
-            --     EffectName = "FistSwordSelfSlowFire3",
-            --     EffectProperty = "Duration",
-            --     ChangeValue = 1.5,
-            --     ChangeType = "Multiply",
-            --     ExcludeLinked = true,
-            -- },
-            -- {
-            --     WeaponNames = { "FistWeapon4" },
-            --     EffectName = "FistSwordSelfSlowFire4",
-            --     EffectProperty = "Modifier",
-            --     ChangeValue = 0.1,
-            --     ChangeType = "Absolute",
-            --     ExcludeLinked = true,
-            -- },
-            -- {
-            --     WeaponNames = { "FistWeapon4" },
-            --     EffectName = "FistSelfSlowCharge4",
-            --     EffectProperty = "Modifier",
-            --     ChangeValue = 0.05,
-            --     ChangeType = "Absolute",
-            --     ExcludeLinked = true,
-            -- },
-            -- {
-            --     WeaponNames = { "FistWeapon4" },
-            --     EffectName = "FistSelfSlowCharge4",
-            --     EffectProperty = "Duration",
-            --     ChangeValue = 1.5,
-            --     ChangeType = "Multiply",
-            --     ExcludeLinked = true,
-            -- },
-            -- {
-            --     WeaponNames = { "FistWeapon4" },
-            --     EffectName = "FistSwordSelfSlowFire4",
-            --     EffectProperty = "Duration",
-            --     ChangeValue = 1.5,
-            --     ChangeType = "Multiply",
-            --     ExcludeLinked = true,
-            -- },
-            -- --[[
-            -- {
-            --     WeaponNames = { "FistWeapon", "FistWeapon2", "FistWeapon3", "FistWeapon4", "FistWeapon5" },
-            --     WeaponProperty = "ChargeCancelMovement",
-            --     ChangeValue = true,
-            --     ChangeType = "Aboslute",
-            --     ExcludeLinked = true,
-            -- },
-            -- {
-            --     WeaponNames = { "FistWeapon2", "FistWeapon3", "FistWeapon4", "FistWeapon5" },
-            --     WeaponProperty = "BlockMoveInput",
-            --     ChangeValue = true,
-            --     ChangeType = "Aboslute",
-            --     ExcludeLinked = true,
-            -- },
-            -- ]]
-
-
-            -- {
-            --     WeaponNames = { "FistWeapon", "FistWeapon3", "FistWeapon5" },
-            --     WeaponProperty = "FireFx",
-            --     ChangeValue = "ClawSwipe",
-            --     ChangeType = "Absolute",
-            --     ExcludeLinked = true,
-            -- },
-            -- {
-            --     WeaponNames = { "FistWeapon2", "FistWeapon4" },
-            --     WeaponProperty = "FireFx",
-            --     ChangeValue = "ClawSwipeFlipped",
-            --     ChangeType = "Absolute",
-            --     ExcludeLinked = true,
-            -- },
-            --fff
 
             -- Gilgamesh Dash Attack
             {
@@ -2024,11 +1488,6 @@ if AspectFusion.Config.Enabled then
                 EffectProperty = "Modifier",
                 BaseValue = 0.40,
                 ChangeType = "Add",
-                ExtractValue =
-                {
-                    ExtractAs = "TooltipDamage",
-                    Format = "Percent"
-                },
                 DeriveSource = "DeriveSource"
             },
             {
@@ -2037,22 +1496,12 @@ if AspectFusion.Config.Enabled then
                 EffectProperty = "Duration",
                 ChangeValue = 6,
                 ChangeType = "Absolute",
-                ExtractValue =
-                {
-                    ExtractAs = "TooltipDuration",
-                    SkipAutoExtract = true,
-                },
                 DeriveSource = "DeriveSource"
             },
             {
                 WeaponNames = { "FistSpecialVacuum" },
                 ProjectileProperty = "DamageLow",
                 ChangeValue = 20,
-                ExtractValue =
-                {
-                    ExtractAs = "TooltipPullDamage",
-                    SkipAutoExtract = true,
-                },
                 ExcludeLinked = true,
             },
             {
@@ -2070,13 +1519,13 @@ if AspectFusion.Config.Enabled then
                 ExcludeLinked = true,
             },
     
-            {
-                WeaponNames = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
-                WeaponProperty = "ChargeTime",
-                ChangeValue = 0.24,
-                ChangeType = "Absolute",
-                ExcludeLinked = true,
-            },
+            -- {
+            --     WeaponNames = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+            --     WeaponProperty = "ChargeTime",
+            --     ChangeValue = 0.24,
+            --     ChangeType = "Absolute",
+            --     ExcludeLinked = true,
+            -- },
             {
                 WeaponNames = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
                 WeaponProperty = "AutoLock",
@@ -2511,8 +1960,8 @@ if AspectFusion.Config.Enabled then
 		LoadedRushRarityMultiplier = 1,
 		PropertyChanges =
 		{
+            -- Beowulf
 			-- Slow heavy shield Rush
-
 			{
 				WeaponNames = { "ShieldWeaponRush" },
 				ProjectileProperty = "DamageLow",
@@ -2630,35 +2079,35 @@ if AspectFusion.Config.Enabled then
 
 			-- Main attack
 
-			{
-				WeaponName = "ShieldWeapon",
-				WeaponProperty = "ChargeTime",
-				ChangeValue = 0.16,
-				ChangeType = "Absolute",
-				ExcludeLinked = true,
-			},
-			{
-				WeaponName = "ShieldWeapon",
-				WeaponProperty = "MinChargeToFire",
-				ChangeValue = 1.0,
-				ChangeType = "Absolute",
-				ExcludeLinked = true,
-			},
-			{
-				WeaponName = "ShieldWeapon",
-				WeaponProperty = "BlockMoveInput",
-				ChangeValue = true,
-				ChangeType = "Absolute",
-				ExcludeLinked = true,
-			},
-			{
-				WeaponName = "ShieldWeapon",
-				EffectName = "ShieldDisableAttack",
-				EffectProperty = "DisableMove",
-				ChangeValue = true,
-				ChangeType = "Absolute",
-				ExcludeLinked = true,
-			},
+			-- {
+			-- 	WeaponName = "ShieldWeapon",
+			-- 	WeaponProperty = "ChargeTime",
+			-- 	ChangeValue = 0.16,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+			-- {
+			-- 	WeaponName = "ShieldWeapon",
+			-- 	WeaponProperty = "MinChargeToFire",
+			-- 	ChangeValue = 1.0,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+			-- {
+			-- 	WeaponName = "ShieldWeapon",
+			-- 	WeaponProperty = "BlockMoveInput",
+			-- 	ChangeValue = true,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+			-- {
+			-- 	WeaponName = "ShieldWeapon",
+			-- 	EffectName = "ShieldDisableAttack",
+			-- 	EffectProperty = "DisableMove",
+			-- 	ChangeValue = true,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
 			{
 				WeaponNames = { "ShieldWeapon", "ShieldWeaponDash" },
 				ProjectileProperty = "DamageLow",
@@ -2673,20 +2122,20 @@ if AspectFusion.Config.Enabled then
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
-			{
-				WeaponNames = { "ShieldWeapon", "ShieldWeaponDash" },
-				ProjectileProperty = "ImpactVelocity",
-				ChangeValue = 1800,
-				ChangeType = "Absolute",
-				ExcludeLinked = true,
-			},
-			{
-				WeaponNames = { "ShieldWeapon", "ShieldWeaponDash" },
-				ProjectileProperty = "ImpactVelocityCap",
-				ChangeValue = 1800,
-				ChangeType = "Absolute",
-				ExcludeLinked = true,
-			},
+			-- {
+			-- 	WeaponNames = { "ShieldWeapon", "ShieldWeaponDash" },
+			-- 	ProjectileProperty = "ImpactVelocity",
+			-- 	ChangeValue = 1800,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+			-- {
+			-- 	WeaponNames = { "ShieldWeapon", "ShieldWeaponDash" },
+			-- 	ProjectileProperty = "ImpactVelocityCap",
+			-- 	ChangeValue = 1800,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
 			--[[
 			{
 				WeaponName = "ShieldWeapon",
@@ -2696,43 +2145,43 @@ if AspectFusion.Config.Enabled then
 				ExcludeLinked = true,
 			},
 			]]
-			{
-				WeaponName = "ShieldWeapon",
-				EffectName = "ShieldSelfSlowFire",
-				EffectProperty = "Duration",
-				ChangeValue = 0.5,
-				ChangeType = "Multiply",
-				ExcludeLinked = true,
-			},
-			{
-				WeaponName = "ShieldWeapon",
-				EffectName = "ShieldDisableAttack",
-				EffectProperty = "Duration",
-				ChangeValue = 1.45,
-				ChangeType = "Multiply",
-				ExcludeLinked = true,
-			},
-			{
-				WeaponName = "ShieldWeaponRush",
-				WeaponProperty = "ControlWindow",
-				ChangeValue = 1.45,
-				ChangeType = "Multiply",
-				ExcludeLinked = true,
-			},
-			{
-				WeaponName = "ShieldWeapon",
-				WeaponProperty = "ChargeStartAnimation",
-				ChangeValue = "ZagreusShieldHeavyPound_Charge",
-				ChangeType = "Absolute",
-				ExcludeLinked = true,
-			},
-			{
-				WeaponName = "ShieldWeapon",
-				WeaponProperty = "FireGraphic",
-				ChangeValue = "ZagreusShieldHeavyPound_Fire",
-				ChangeType = "Absolute",
-				ExcludeLinked = true,
-			},
+			-- {
+			-- 	WeaponName = "ShieldWeapon",
+			-- 	EffectName = "ShieldSelfSlowFire",
+			-- 	EffectProperty = "Duration",
+			-- 	ChangeValue = 0.5,
+			-- 	ChangeType = "Multiply",
+			-- 	ExcludeLinked = true,
+			-- },
+			-- {
+			-- 	WeaponName = "ShieldWeapon",
+			-- 	EffectName = "ShieldDisableAttack",
+			-- 	EffectProperty = "Duration",
+			-- 	ChangeValue = 1.45,
+			-- 	ChangeType = "Multiply",
+			-- 	ExcludeLinked = true,
+			-- },
+			-- {
+			-- 	WeaponName = "ShieldWeaponRush",
+			-- 	WeaponProperty = "ControlWindow",
+			-- 	ChangeValue = 1.45,
+			-- 	ChangeType = "Multiply",
+			-- 	ExcludeLinked = true,
+			-- },
+			-- {
+			-- 	WeaponName = "ShieldWeapon",
+			-- 	WeaponProperty = "ChargeStartAnimation",
+			-- 	ChangeValue = "ZagreusShieldHeavyPound_Charge",
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+			-- {
+			-- 	WeaponName = "ShieldWeapon",
+			-- 	WeaponProperty = "FireGraphic",
+			-- 	ChangeValue = "ZagreusShieldHeavyPound_Fire",
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
 			{
 				WeaponName = "ShieldWeapon",
 				ProjectileProperty = "DetonateGraphic",
@@ -2765,29 +2214,36 @@ if AspectFusion.Config.Enabled then
 			-- 	ChangeType = "Absolute",
 			-- 	ExcludeLinked = true,
 			-- },
-			{
-				WeaponName = "ShieldWeaponDash",
-				WeaponProperty = "MinChargeToFire",
-				ChangeValue = 1.0,
-				ChangeType = "Absolute",
-				ExcludeLinked = true,
-			},
-			{
-				WeaponName = "ShieldWeaponDash",
-				EffectName = "ShieldSelfSlowFireBeowulf",
-				EffectProperty = "Active",
-				ChangeValue = true,
-				ChangeType = "Absolute",
-				ExcludeLinked = true,
-			},
+			-- {
+			-- 	WeaponName = "ShieldWeaponDash",
+			-- 	WeaponProperty = "MinChargeToFire",
+			-- 	ChangeValue = 1.0,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+			-- {
+			-- 	WeaponName = "ShieldWeaponDash",
+			-- 	EffectName = "ShieldSelfSlowFireBeowulf",
+			-- 	EffectProperty = "Active",
+			-- 	ChangeValue = true,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
 
-			 {
-				WeaponName = "ShieldWeaponDash",
-				WeaponProperty = "ChargeStartAnimation",
-				ChangeValue = "ZagreusShieldBeowulfPunchFast_Charge",
-				ChangeType = "Absolute",
-				ExcludeLinked = true,
-		 	 },
+			--  {
+			-- 	WeaponName = "ShieldWeaponDash",
+			-- 	WeaponProperty = "ChargeStartAnimation",
+			-- 	ChangeValue = "ZagreusShieldBeowulfPunchFast_Charge",
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+		 	--  },
+            --  {
+			-- 	WeaponName = "ShieldWeaponDash",
+			-- 	WeaponProperty = "SelfVelocity",
+			-- 	ChangeValue = 0,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+		 	--  },
 
 			 {
 				WeaponName = "ShieldWeaponDash",
@@ -2796,129 +2252,6 @@ if AspectFusion.Config.Enabled then
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 		 	 },
-
-			-- One target slower shield Throw
-
-			-- {
-			-- 	WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
-			-- 	ProjectileProperty = "ImpactVelocity",
-			-- 	ChangeValue = 900,
-			-- 	ChangeType = "Add",
-			-- },
-			-- {
-			-- 	WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
-			-- 	ProjectileProperty = "ImpactVelocityCap",
-			-- 	ChangeValue = 900,
-			-- 	ChangeType = "Add",
-			-- },
-			--[[
-			{
-				WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
-				ProjectileProperty = "NumJumps",
-				ChangeValue = 1,
-				ChangeType = "Absolute",
-			},
-			]]
-			-- {
-			-- 	WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
-			-- 	WeaponProperty= "ChargeTime",
-			-- 	ChangeValue = 0.3,
-			-- 	ChangeType = "Absolute",
-			-- },
-			-- {
-			-- 	WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
-			-- 	WeaponProperty= "ShowFreeAimLine",
-			-- 	ChangeValue = false,
-			-- 	ChangeType = "Absolute",
-			-- },
-			-- {
-			-- 	WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
-			-- 	WeaponProperty= "MinChargeToFire",
-			-- 	ChangeValue = 1.0,
-			-- 	ChangeType = "Absolute",
-			-- },
-			-- {
-			-- 	WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
-			-- 	ProjectileProperty= "StartDelay",
-			-- 	ChangeValue = 0.12,
-			-- 	ChangeType = "Absolute",
-			-- },
-			-- {
-			-- 	WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
-			-- 	EffectName = "OnHitStun",
-			-- 	EffectProperty = "Duration",
-			-- 	ChangeValue = 0.7,
-			-- 	ChangeType = "Absolute",
-			-- },
-			-- {
-			-- 	WeaponNames = { "ShieldThrow" },
-			-- 	WeaponProperty = "MinChargeStartFx",
-			-- 	ChangeValue = "ShieldChargeThrowTrait",
-			-- 	ChangeType = "Absolute",
-			-- },
-			-- {
-			-- 	WeaponName = "ShieldThrow",
-			-- 	WeaponProperty = "LockTriggerForCharge",
-			-- 	ChangeValue = true,
-			-- 	ChangeType = "Absolute",
-			-- },
-			-- {
-			-- 	WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
-			-- 	WeaponProperty = "ChargeStartAnimation",
-			-- 	ChangeValue = "ZagreusShieldBeowulfHeavyThrow_Charge",
-			-- 	ChangeType = "Absolute"
-			-- },
-			-- {
-			-- 	WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
-			-- 	WeaponProperty = "FireGraphic",
-			-- 	ChangeValue = "ZagreusShieldBeowulfHeavyThrow_Fire",
-			-- 	ChangeType = "Absolute"
-			-- },
-			-- {
-			-- 	WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
-			-- 	ProjectileProperty = "OnDeathFiredByAnimation",
-			-- 	ChangeValue = "ZagreusShieldBeowulfHeavyThrow_ReturnToIdle",
-			-- 	ChangeType = "Absolute"
-			-- },
-			-- {
-			-- 	WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
-			-- 	EffectName = "ShieldThrowDisable",
-			-- 	EffectProperty = "Active",
-			-- 	ChangeValue = true,
-			-- 	ChangeType = "Absolute"
-			-- },
-			-- {
-			-- 	WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
-			-- 	ProjectileProperty = "Speed",
-			-- 	ChangeValue = 2900,
-			-- 	ChangeType = "Absolute",
-			-- },
-			-- {
-			-- 	WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
-			-- 	ProjectileProperty = "ReturnToOwnerAfterInactiveSeconds",
-			-- 	ChangeValue = 0.4,
-			-- 	ChangeType = "Absolute",
-			-- },
-			-- {
-			-- 	WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
-			-- 	ProjectileProperty = "ReturnToOwnerSpeed",
-			-- 	ChangeValue = 2500,
-			-- 	ChangeType = "Absolute",
-			-- 	ExcludeLinked = true,
-			-- },
-			-- {
-			-- 	WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
-			-- 	ProjectileProperty = "DamageLow",
-			-- 	ChangeValue = 45,
-			-- 	ChangeType = "Absolute",
-			-- 	ExcludeLinked = true,
-			-- 	DeriveSource = "ShieldThrowDamage",
-			-- },
-			-- {
-			-- 	WeaponNames = { "ShieldThrow", "ShieldThrowDash" },
-			-- 	ProjectileProperty = "DamageHigh",
-			-- 	DeriveValueFrom = "ShieldThrowDamage"
-			-- },
 			-- Changes to make ranged weapon instant fire
 			{
 				WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
@@ -5399,22 +4732,28 @@ if AspectFusion.Config.Enabled then
 				BaseValue = 100,
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
-				ExtractValue =
-				{
-					ExtractAs = "TooltipDamage",
-				},
 				DeriveBombSource = "DeriveBombSource",
 			},
-			{
+            {
 				WeaponNames = { "GunBombWeapon" },
 				ProjectileProperty = "DamageHigh",
-				DeriveValueFrom = "DeriveBombSource",
+				BaseValue = 100,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+				DeriveBombSource = "DeriveBombSource",
+			},
+            {
+				WeaponNames = { "GunBombImmolation" },
+				ProjectileProperty = "DamageLow",
+				BaseValue = 20,
+                ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
-			{
+            {
 				WeaponNames = { "GunBombImmolation" },
 				ProjectileProperty = "DamageHigh",
-				DeriveValueFrom = "DeriveImmolationSource",
+				BaseValue = 20,
+                ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
             {
@@ -5690,113 +5029,292 @@ if AspectFusion.Config.Enabled then
 	}
 
     -- Trait specific changes
-    -- ModUtil.LoadOnce(function ()
-        for traitName, traitData in pairs(TraitData) do
 
-            if traitData.RequiredFalseTrait ~= nil and traitData.RequiredFalseTrait == "ShieldLoadAmmoTrait" then
-                traitData.RequiredFalseTrait = nil
-                traitData.RequiredFalseTraits = { "ShieldLoadAmmoTrait", "UltraShieldTrait"}
-            elseif traitData.RequiredFalseTraits ~= nil and Contains(traitData.RequiredFalseTraits, "ShieldLoadAmmoTrait") then
-                table.insert(traitData.RequiredFalseTraits, "UltraShieldTrait")
-            end
+    for traitName, traitData in pairs(TraitData) do
 
-            if traitData.TraitDependencyTextOverrides ~= nil and traitData.TraitDependencyTextOverrides.ShieldLoadAmmoTrait ~= nil then
-                local UltraShieldTrait = traitData.TraitDependencyTextOverrides.ShieldLoadAmmoTrait
-                table.insert(traitData.TraitDependencyTextOverrides, UltraShieldTrait)
-            end
+        if traitData.RequiredFalseTrait ~= nil and traitData.RequiredFalseTrait == "ShieldLoadAmmoTrait" then
+            traitData.RequiredFalseTrait = nil
+            traitData.RequiredFalseTraits = { "ShieldLoadAmmoTrait", "UltraShieldTrait"}
+        elseif traitData.RequiredFalseTraits ~= nil and Contains(traitData.RequiredFalseTraits, "ShieldLoadAmmoTrait") then
+            table.insert(traitData.RequiredFalseTraits, "UltraShieldTrait")
+        end
 
-            if traitData.PropertyChanges ~= nil then
-                for _, property in pairs(traitData.PropertyChanges) do
-                    if property.TraitName ~= nil and property.TraitName == "SwordConsecrationTrait" then
-                        local propertyCopy = DeepCopyTable(property)
-                        propertyCopy.TraitName = "UltraSwordTrait"
-                        table.insert(traitData.PropertyChanges, propertyCopy)
-                    elseif property.TraitName ~= nil and property.TraitName == "ShieldLoadAmmoTrait" then
-                        local legal = false
-                        local propertyCopy = DeepCopyTable(property)
-                        propertyCopy.TraitName = "UltraShieldTrait"
+        if traitData.TraitDependencyTextOverrides ~= nil and traitData.TraitDependencyTextOverrides.ShieldLoadAmmoTrait ~= nil then
+            local UltraShieldTrait = traitData.TraitDependencyTextOverrides.ShieldLoadAmmoTrait
+            table.insert(traitData.TraitDependencyTextOverrides, UltraShieldTrait)
+        end
 
-                        if propertyCopy.WeaponName == nil or propertyCopy.WeaponName == "ShieldThrow" then
-                        elseif propertyCopy.WeaponName == "ShieldThrowDash" then
-                        elseif propertyCopy.WeaponName == "ChaosShieldThrow" then
-                        else
-                            legal = true
-                        end
+        if traitData.PropertyChanges ~= nil then
+            for _, property in pairs(traitData.PropertyChanges) do
+                if property.TraitName ~= nil and property.TraitName == "SwordConsecrationTrait" then
+                    local propertyCopy = DeepCopyTable(property)
+                    propertyCopy.TraitName = "UltraSwordTrait"
+                    table.insert(traitData.PropertyChanges, propertyCopy)
+                elseif property.TraitName ~= nil and property.TraitName == "ShieldLoadAmmoTrait" then
+                    local legal = false
+                    local propertyCopy = DeepCopyTable(property)
+                    propertyCopy.TraitName = "UltraShieldTrait"
 
-                        if propertyCopy.WeaponNames == nil or Contains(propertyCopy.WeaponNames, "ShieldThrow") then
-                        elseif Contains(propertyCopy.WeaponNames, "ShieldThrowDash") then
-                        elseif Contains(propertyCopy.WeaponNames, "ChaosShieldThrow") then
-                        else
-                            legal = true
-                        end
-                        
-                        -- not ideal but without it graphic is incorrect
-                        if propertyCopy.ChangeValue ~= nil and type(propertyCopy.ChangeValue) == "string" and string.match(propertyCopy.ChangeValue, "ProjectileShieldAlt03") then
-                            propertyCopy.ChangeValue = string.gsub(propertyCopy.ChangeValue, "ProjectileShieldAlt03", "ProjectileShieldAlt02")
-                        end
+                    if propertyCopy.WeaponName == nil or propertyCopy.WeaponName == "ShieldThrow" then
+                    elseif propertyCopy.WeaponName == "ShieldThrowDash" then
+                    elseif propertyCopy.WeaponName == "ChaosShieldThrow" then
+                    else
+                        legal = true
+                    end
 
-                        if legal then
-                            table.insert(traitData.PropertyChanges, propertyCopy)
-                        end
+                    if propertyCopy.WeaponNames == nil or Contains(propertyCopy.WeaponNames, "ShieldThrow") then
+                    elseif Contains(propertyCopy.WeaponNames, "ShieldThrowDash") then
+                    elseif Contains(propertyCopy.WeaponNames, "ChaosShieldThrow") then
+                    else
+                        legal = true
+                    end
+                    
+                    -- not ideal but without it graphic is incorrect
+                    if propertyCopy.ChangeValue ~= nil and type(propertyCopy.ChangeValue) == "string" and string.match(propertyCopy.ChangeValue, "ProjectileShieldAlt03") then
+                        propertyCopy.ChangeValue = string.gsub(propertyCopy.ChangeValue, "ProjectileShieldAlt03", "ProjectileShieldAlt02")
+                    end
 
-                    elseif property.TraitName ~= nil and property.TraitName == "ShieldTwoShieldTrait" then
-                        local propertyCopy = DeepCopyTable(property)
-                        propertyCopy.TraitName = "UltraShieldTrait"
-                        -- extremely cursed
-                        if propertyCopy.WeaponName ~= nil and propertyCopy.WeaponName == "ShieldThrow" then
-                            table.insert(traitData.PropertyChanges, propertyCopy)
-                            local propertyCopyChaos = DeepCopyTable(propertyCopy)
-                            propertyCopyChaos.WeaponName = "ChaosShieldThrow"
-                            if propertyCopyChaos.ProjectileName ~= nil and propertyCopyChaos.ProjectileName == "ShieldThrow" then
-                                propertyCopyChaos.ProjectileName = "UltraShieldThrow"
-                            end
-                            table.insert(traitData.PropertyChanges, propertyCopyChaos)
-                        elseif propertyCopy.WeaponNames ~= nil and Contains(propertyCopy.WeaponNames, "ShieldThrow") then
-                            table.insert(traitData.PropertyChanges, propertyCopy)
-                            local propertyCopyChaos = DeepCopyTable(propertyCopy)
-                            table.insert(propertyCopyChaos.WeaponNames, "ChaosShieldThrow")
-                            if propertyCopyChaos.ProjectileName ~= nil and propertyCopyChaos.ProjectileName == "ShieldThrow" then
-                                propertyCopyChaos.ProjectileName = "UltraShieldThrow"
-                            end
-                            table.insert(traitData.PropertyChanges, propertyCopyChaos)
-                        end
-                    elseif property.TraitName ~= nil and property.TraitName == "BowBondTrait" then
-                        local legal = false
-                        local propertyCopy = DeepCopyTable(property)
-                        propertyCopy.TraitName = "UltraBowTrait"
-
-                        if propertyCopy.WeaponName == nil or propertyCopy.WeaponName == "BowSplitShot" then
-                        else
-                            legal = true
-                        end
-
-                        if propertyCopy.WeaponNames == nil or Contains(propertyCopy.WeaponNames, "BowSplitShot") then
-                        else
-                            legal = true
-                        end
-
-                        if legal then
-                            table.insert(traitData.PropertyChanges, propertyCopy)
-                        end
-                    elseif property.TraitName ~= nil and property.TraitName == "GunLoadedGrenadeTrait" then
-                        local legal = false
-                        local propertyCopy = DeepCopyTable(property)
-                        propertyCopy.TraitName = "UltraGunTrait"
+                    if legal then
                         table.insert(traitData.PropertyChanges, propertyCopy)
                     end
-                end
-            end
 
-            if traitData.EnemyPropertyChanges ~= nil then
-                for _, property in pairs(traitData.EnemyPropertyChanges) do
-                    if property.TraitName ~= nil and property.TraitName == "GunLoadedGrenadeTrait" then
-                        local legal = false
-                        local propertyCopy = DeepCopyTable(property)
-                        propertyCopy.TraitName = "UltraGunTrait"
-                        table.insert(traitData.EnemyPropertyChanges, propertyCopy)
+                elseif property.TraitName ~= nil and property.TraitName == "ShieldTwoShieldTrait" then
+                    local propertyCopy = DeepCopyTable(property)
+                    propertyCopy.TraitName = "UltraShieldTrait"
+                    -- extremely cursed
+                    if propertyCopy.WeaponName ~= nil and propertyCopy.WeaponName == "ShieldThrow" then
+                        table.insert(traitData.PropertyChanges, propertyCopy)
+                        local propertyCopyChaos = DeepCopyTable(propertyCopy)
+                        propertyCopyChaos.WeaponName = "ChaosShieldThrow"
+                        if propertyCopyChaos.ProjectileName ~= nil and propertyCopyChaos.ProjectileName == "ShieldThrow" then
+                            propertyCopyChaos.ProjectileName = "UltraShieldThrow"
+                        end
+                        table.insert(traitData.PropertyChanges, propertyCopyChaos)
+                    elseif propertyCopy.WeaponNames ~= nil and Contains(propertyCopy.WeaponNames, "ShieldThrow") then
+                        table.insert(traitData.PropertyChanges, propertyCopy)
+                        local propertyCopyChaos = DeepCopyTable(propertyCopy)
+                        table.insert(propertyCopyChaos.WeaponNames, "ChaosShieldThrow")
+                        if propertyCopyChaos.ProjectileName ~= nil and propertyCopyChaos.ProjectileName == "ShieldThrow" then
+                            propertyCopyChaos.ProjectileName = "UltraShieldThrow"
+                        end
+                        table.insert(traitData.PropertyChanges, propertyCopyChaos)
                     end
+                elseif property.TraitName ~= nil and property.TraitName == "BowBondTrait" then
+                    local legal = false
+                    local propertyCopy = DeepCopyTable(property)
+                    propertyCopy.TraitName = "UltraBowTrait"
+
+                    if propertyCopy.WeaponName == nil or propertyCopy.WeaponName == "BowSplitShot" then
+                    else
+                        legal = true
+                    end
+
+                    if propertyCopy.WeaponNames == nil or Contains(propertyCopy.WeaponNames, "BowSplitShot") then
+                    else
+                        legal = true
+                    end
+
+                    if legal then
+                        table.insert(traitData.PropertyChanges, propertyCopy)
+                    end
+                elseif property.TraitName ~= nil and property.TraitName == "GunLoadedGrenadeTrait" then
+                    local legal = false
+                    local propertyCopy = DeepCopyTable(property)
+                    propertyCopy.TraitName = "UltraGunTrait"
+                    table.insert(traitData.PropertyChanges, propertyCopy)
                 end
             end
         end
-    -- end)
+
+        if traitData.EnemyPropertyChanges ~= nil then
+            for _, property in pairs(traitData.EnemyPropertyChanges) do
+                if property.TraitName ~= nil and property.TraitName == "GunLoadedGrenadeTrait" then
+                    local legal = false
+                    local propertyCopy = DeepCopyTable(property)
+                    propertyCopy.TraitName = "UltraGunTrait"
+                    table.insert(traitData.EnemyPropertyChanges, propertyCopy)
+                end
+            end
+        end
+    end
+
+    -- Hammers
+        --Gun
+    table.insert(TraitData.GunMinigunTrait.RequiredFalseTraits, "UltraGunTrait")
+    table.insert(TraitData.GunChainShotTrait.RequiredFalseTraits, "UltraGunTrait")
+    table.insert(TraitData.GunShotgunTrait.RequiredFalseTraits, "UltraGunTrait")
+    table.insert(TraitData.GunInfiniteAmmoTrait.RequiredFalseTraits, "UltraGunTrait")
+    table.insert(TraitData.GunHomingBulletTrait.RequiredFalseTraits, "UltraGunTrait")
+    table.insert(TraitData.GunGrenadeDropTrait.RequiredFalseTraits, "UltraGunTrait")
+
+    TraitData.GunLoadedGrenadeSpeedTrait.RequiredFalseTrait = "UltraGunTrait"
+    TraitData.GunLoadedGrenadeBoostTrait.RequiredTrait = nil
+    TraitData.GunLoadedGrenadeBoostTrait.RequiredOneOfTraits = {"GunLoadedGrenadeTrait", "UltraGunTrait"}
+    TraitData.GunLoadedGrenadeWideTrait.RequiredTrait = nil
+    TraitData.GunLoadedGrenadeWideTrait.RequiredOneOfTraits = {"GunLoadedGrenadeTrait", "UltraGunTrait"}
+    TraitData.GunLoadedGrenadeInfiniteAmmoTrait.RequiredTrait = nil
+    TraitData.GunLoadedGrenadeInfiniteAmmoTrait.RequiredOneOfTraits = {"GunLoadedGrenadeTrait", "UltraGunTrait"}
+
+    table.insert(TraitData.GunGrenadeClusterTrait.PropertyChanges,
+    {
+        TraitName = "UltraGunTrait",
+        WeaponName = "GunGrenadeToss",
+        ProjectileProperty = "SpawnCap",
+        ChangeValue = 5,
+        ChangeType = "Absolute",
+        ExcludeLinked = true,
+    })
+    table.insert(TraitData.GunGrenadeClusterTrait.PropertyChanges,
+    {
+        TraitName = "UltraGunTrait",
+        WeaponNames = {"GunBombWeapon", "GunBombImmolation"},
+        ProjectileProperty = "DamageRadius",
+        ChangeValue = 350,
+        ChangeType = "Absolute",
+        ExcludeLinked = true,
+    })
+    table.insert(TraitData.GunGrenadeClusterTrait.PropertyChanges,
+    {
+        TraitName = "UltraGunTrait",
+        WeaponNames = {"GunBombWeapon", "GunBombImmolation"},
+        ProjectileProperty = "DamageLow",
+        ChangeValue = 0.7,
+        ChangeType = "Multiply",
+        ExcludeLinked = true,
+    })
+    table.insert(TraitData.GunGrenadeClusterTrait.PropertyChanges,
+    {
+        TraitName = "UltraGunTrait",
+        WeaponNames = {"GunBombWeapon", "GunBombImmolation"},
+        ProjectileProperty = "DamageHigh",
+        DeriveValueFrom = "DamageLow",
+    })
+    table.insert(TraitData.GunGrenadeClusterTrait.PropertyChanges,
+    {
+        TraitName = "UltraGunTrait",
+        WeaponNames = { "GunGrenadeToss" },
+        ExcludeProjectileName = "GunGrenadeSelfDamage",
+        ProjectileProperty = "Graphic",
+        ChangeValue = "GunGrenadeLuciferOrb",
+    })
+
+    table.insert(TraitData.GunExplodingSecondaryTrait.PropertyChanges,
+    {
+        TraitName = "UltraGunTrait",
+        WeaponNames = { "GunGrenadeToss" },
+        ExcludeProjectileName = "GunGrenadeSelfDamage",
+        ProjectileProperty = "Graphic",
+        ChangeValue = "GunGrenadeLuciferOrb",
+    })
+    
+    TraitData.UltraGunGrenadeDropTrait  =
+	{
+		InheritFrom = { "WeaponTrait" },
+		Icon = "Weapon_Gun_06",
+		RequiredWeapon = "GunWeapon",
+        RequiredTrait = "UltraGunTrait",
+		RequiredFalseTraits = { "GunGrenadeFastTrait", "GunGrenadeClusterTrait", "GunExplodingSecondaryTrait", "GunLoadedGrenadeBoostTrait" },
+		PropertyChanges =
+		{
+            --GunBombImmolation
+			{
+				WeaponName = "GunGrenadeToss",
+				ProjectileProperty = "Gravity",
+				ChangeValue = 1250,
+				ChangeType = "Absolute",
+			},
+
+            {
+				WeaponName = "GunGrenadeToss",
+				ProjectileProperty = "DamageRadius",
+				ChangeValue = 580,
+				ChangeType = "Absolute",
+                ExcludeLinked = true
+			},
+
+			{
+				WeaponName = "GunBombWeapon",
+				ProjectileProperty = "DamageRadius",
+				ChangeValue = 1.45,
+				ChangeType = "Multiply",
+			},
+			{
+				WeaponName = "GunBombWeapon",
+				ProjectileName = "GunGrenadeToss",
+				ProjectileProperty = "AffectsSelf",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "GunBombWeapon",
+				ProjectileProperty = "DamageLow",
+				ChangeValue = 4.0,
+				ChangeType = "Multiply",
+				ExcludeLinked = true,
+				ExtractValue =
+				{
+					ExtractAs = "TooltipDamage",
+					Format = "PercentDelta",
+				},
+				DeriveSource = "DeriveSource"
+			},
+			{
+				WeaponName = "GunBombWeapon",
+				ProjectileProperty = "DamageHigh",
+				DeriveValueFrom = "DeriveSource",
+			},
+
+			{
+				WeaponName = "GunBombImmolation",
+				ProjectileProperty = "DamageRadius",
+				ChangeValue = 1.45,
+				ChangeType = "Multiply",
+			},
+			{
+				WeaponName = "GunBombImmolation",
+				ProjectileName = "GunGrenadeToss",
+				ProjectileProperty = "AffectsSelf",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "GunBombImmolation",
+				ProjectileProperty = "DamageLow",
+				ChangeValue = 4.0,
+				ChangeType = "Multiply",
+				ExcludeLinked = true,
+				DeriveSource = "DeriveSource"
+			},
+			{
+				WeaponName = "GunBombImmolation",
+				ProjectileProperty = "DamageHigh",
+				DeriveValueFrom = "DeriveSource",
+			},
+			{
+				WeaponName = "GunGrenadeToss",
+				WeaponProperty = "TargetReticleAnimation",
+				ChangeValue = "GunGrenadeWarningDecal_StaticHazard",
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "GunGrenadeToss",
+				ProjectileProperty = "ReticleGraphic",
+				ChangeValue = "GunGrenadeWarningDecalFlash",
+				ChangeType = "Absolute",
+			},
+		},
+	}
+    
+    table.insert(LootData.WeaponUpgrade.Traits, "UltraGunGrenadeDropTrait")
+
+        -- Fists
+
+    table.insert(TraitData.FistReachAttackTrait.RequiredFalseTraits, "UltraFistTrait")
+    table.insert(TraitData.FistSpecialFireballTrait.RequiredFalseTraits, "UltraFistTrait")
+
+    TraitData.FistKillTrait.RequiredFalseTrait = "UltraFistTrait"
+    TraitData.FistConsecutiveAttackTrait.RequiredFalseTrait = "UltraFistTrait"
+    TraitData.FistDetonateBoostTrait.RequiredTrait = nil
+    TraitData.FistDetonateBoostTrait.RequiredOneOfTraits = {"FistDetonateTrait", "UltraFistTrait"}
+
 end
