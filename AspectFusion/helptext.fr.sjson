@@ -19,7 +19,7 @@
     {
     Id = "UltraSpearTrait"
     DisplayName = "Forme Finale Varatha"
-    Description = "La Forme Finale de Varatha, la Lance Éternelle. Combine les pouvoirs de Zagreus, Achiles, Hades et Guan Yu à leur force maximale."
+    Description = "La Forme Finale de Varatha, la Lance Éternelle. Combine les pouvoirs de Zagreus, Achilles, Hades et Guan Yu à leur force maximale."
     }
     {
     Id = "UltraBowTrait"

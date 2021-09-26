@@ -19,7 +19,7 @@
         {
         Id = "UltraSpearTrait"
         DisplayName = "Final Form Varatha"
-        Description = "The final form of Varatha, the Eternal Spear. Combines the powers of Zagreus, Achiles, Hades and Guan Yu at full strength."
+        Description = "The final form of Varatha, the Eternal Spear. Combines the powers of Zagreus, Achilles, Hades and Guan Yu at full strength."
         }
         {
         Id = "UltraBowTrait"
