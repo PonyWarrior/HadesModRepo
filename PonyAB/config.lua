@@ -83,8 +83,18 @@ PAB =
 					SwordThrustKnockBack = 0, -- vanilla 3000
 					SwordSlashDisabledDuration = 2.0, -- vanilla 1.0 = 5 frames
 					-- Hades Spear
-					HadesSpearGlobalSweepBuff = false, -- vanilla false
+					HadesSpearGlobalSweepBuff = true, -- vanilla false
 					HadesSpearBaseSweepBuff = 0.3, -- vanilla 0.3
+                    -- Hammers
+                    HoardingSlashGoldMultiplier = 0.15, -- vanilla 0.05 (5%)
+                    CursedSlashWorksOnDashStrikes = true, -- vanilla false
+                    ShadowSlashWorksOnDashStrikes = true, -- vanilla false
+                    FlurrySlashDealsRampingDamage = true, -- vanilla false
+                    FlurrySlashRampingDamage = 5, -- vanilla none
+                    FlurrySlashRampingDamageTimeWindow = 0.8, -- vanilla none
+                    SuperNovaDamageMultiplier = 1.5, -- vanilla 1.2 (+20%)
+                    SuperNovaRangeMultiplier = 1.5, -- vanilla 1.2 (+20%)
+                    DoubleNovaDamageInterval = 0.1, -- vanilla 0.2 (in seconds)
 			},
 		},
     }

@@ -414,5 +414,57 @@ if PAB.Config.Gameplay.Enabled then
                 propertyChange.BaseValue = config.HadesSpearBaseSweepBuff
             end
         end
+        -- Hoarding slash
+        TraitData.SwordGoldDamageTrait.AddOutgoingDamageModifiers.GoldMultiplier = config.HoardingSlashGoldMultiplier
+        if config.CursedSlashWorksOnDashStrikes then
+            TraitData.SwordCursedLifeStealTrait.AddOutgoingLifestealModifiers.ValidWeapons = { "SwordWeapon", "SwordWeapon2", "SwordWeapon3", "SwordWeaponDash" }
+        end
+        if config.ShadowSlashWorksOnDashStrikes then
+            TraitData.SwordBackstabTrait.AddOutgoingDamageModifiers.ValidWeapons = { "SwordWeapon", "SwordWeapon2", "SwordWeapon3", "SwordWeaponDash" }
+        end
+        -- Flurry slash
+        if config.FlurrySlashDealsRampingDamage then
+            table.insert(TraitData.SwordTwoComboTrait.PropertyChanges,
+            {
+                WeaponNames = { "SwordWeapon", "SwordWeapon2" },
+                ProjectileName = "SwordWeapon",
+                ProjectileProperty = "ConsecutiveHitWindow",
+                ChangeValue = 0.8,
+                ChangeType = "Absolute",
+            })
+            table.insert(TraitData.SwordTwoComboTrait.PropertyChanges,
+            {
+                WeaponNames = { "SwordWeapon", "SwordWeapon2" },
+                ProjectileName = "SwordWeapon",
+                ProjectileProperty = "DamagePerConsecutiveHit",
+                ChangeValue = 5,
+                ChangeType = "Absolute",
+                DeriveSource = "DamageSource",
+                ExtractValue =
+                {
+                    ExtractAs = "TooltipDamage",
+                },
+                ExtractSource = "ExtractSource",
+            })
+            table.insert(TraitData.SwordTwoComboTrait.PropertyChanges,
+            {
+                WeaponNames = { "SwordWeapon", "SwordWeapon2" },
+                ProjectileName = "SwordWeapon2",
+                ProjectileProperty = "DamagePerConsecutiveHit",
+                ChangeValue = 5,
+                ChangeType = "Absolute",
+                DeriveSource = "DamageSource",
+                ExtractValue =
+                {
+                    ExtractAs = "TooltipDamage",
+                },
+                ExtractSource = "ExtractSource",
+            })
+        end
+        -- Super nova
+        TraitData.SwordSecondaryAreaDamageTrait.AddOutgoingDamageModifiers.ValidWeaponMultiplier = config.SuperNovaDamageMultiplier
+        TraitData.SwordSecondaryAreaDamageTrait.PropertyChanges[1].ChangeValue = config.SuperNovaRangeMultiplier
+        -- Double nova
+        TraitData.SwordSecondaryDoubleAttackTrait.PropertyChanges[2].ChangeValue = config.DoubleNovaDamageInterval
     end
 end
