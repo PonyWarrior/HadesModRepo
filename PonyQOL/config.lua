@@ -4,6 +4,9 @@ PQOL =
 	{
 		-- Change "Enabled = true" to "Enabled = false" to disable any feature
 		-- Some features have additional configuration options
+
+        -- Disabling this disables everything
+        Enabled = true,
 		BoonList =
 		{
 			-- Improves the boon list by showing incompatibilities and hidden requirements
@@ -210,7 +213,14 @@ PQOL =
 			UnlockRama = false,
 			UnlockBeowulf = false,
 			UnlockGilgamesh = false,
-		}
+		},
+        Other =
+        {
+            -- Minor changes that do not fit in other modules
+            -- Disabling this disables everything
+            Enabled = true,
+            DisableSwordNovaZoomEffect = true, -- disables the zooming in effect when using sword nova
+        }
 	}
 }
 

@@ -188,4 +188,7 @@ CompleteAllBounties: additional bounties are no longer rewarded when above the g
 
 new features :
 
+added global config disable option
 CompleteAllBounties: added an option to disable the game's bounty limit (20 in normal, 25 in hell mode)
+added module Other, for minor features that do not fit in other modules
+Other: added an option to disable the sword nova attack zoom-in effect

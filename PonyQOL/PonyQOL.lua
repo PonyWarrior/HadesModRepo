@@ -1,5 +1,5 @@
 -- To anyone looking over the code, "--mod start" and "--mod end" are there to show what code I added to base game functions when a wrap wasn't possible
-
+if PQOL.Config.Enabled then
 --fix a bullshit crash
 function IsTraitEligible( currentRun, traitData )
 	--Mod start
@@ -3235,7 +3235,8 @@ if PQOL.Config.CompleteAllBounties.Enabled then
 		end
 		-- check if player is more than 1 heat above record and hasn't reached bounty limit
 		if (activeShrinePoints - GameState.RecordClearedShrineThreshold[weaponName][roomName]) > 1
-        and not (activeShrinePoints - GameState.RecordClearedShrineThreshold[weaponName][roomName]) >= maxHeat then
+        --and not (activeShrinePoints - GameState.RecordClearedShrineThreshold[weaponName][roomName]) >= maxHeat 
+        then
 			local skippedFirstReward = false
 			local rewardcount = 0
 			thread( InCombatText, CurrentRun.Hero.ObjectId, "Rewarding additional bounties", 1.8, { ShadowScale = 1.2 } )
@@ -4507,4 +4508,12 @@ if PQOL.Config.UnlockHiddenAspects.Enabled then
 		end
 		SaveCheckpoint()
 	end)
+end
+
+if PQOL.Config.Other.Enabled then
+    if PQOL.Config.Other.DisableSwordNovaZoomEffect then
+        WeaponData.SwordParry.ChargeCameraMotion = nil
+    end
+end
+
 end
