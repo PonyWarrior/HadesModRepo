@@ -698,6 +698,26 @@ if AspectFusion.Config.Enabled then
 					Format = "NegativePercentDelta",
 				}
 			},
+            {
+				WeaponName = "ConsecrationField",
+				ProjectileProperty = "AttachToOwner",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+			},
+            {
+				WeaponName = "RushWeapon",
+				WeaponProperty = "CancelAttachedProjectiles",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+			},
+            {
+				WeaponName = "SwordWeaponDash",
+				WeaponProperty = "SwapOnFire",
+				ChangeValue = "SwordWeapon2",
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
 			--[[
 			{
 				WeaponName = "ConsecrationField",
@@ -712,22 +732,21 @@ if AspectFusion.Config.Enabled then
 				}
 			},
 			]]
-			--[[
-			{
-				WeaponName = "ConsecrationField",
-				EffectName = "ConsecrationDamage",
-				EffectProperty = "Modifier",
-				ChangeValue = 1.07,
-				SourceIsMultiplier = true,
-				ChangeType = "Multiply",
-				ExtractValue =
-				{
-					ExtractAs = "TooltipDamage",
-					Format = "PercentDelta",
-				}
-			},
-			]]
-
+			
+			-- {
+			-- 	WeaponName = "ConsecrationField",
+			-- 	EffectName = "ConsecrationDamage",
+			-- 	EffectProperty = "Modifier",
+			-- 	ChangeValue = 1.15,
+			-- 	SourceIsMultiplier = true,
+			-- 	ChangeType = "Multiply",
+			-- 	ExtractValue =
+			-- 	{
+			-- 		ExtractAs = "TooltipDamage",
+			-- 		Format = "PercentDelta",
+			-- 	}
+			-- },
+			
 			{
 				LuaProperty = "MaxHealth",
 				ChangeValue = 50,
@@ -798,7 +817,7 @@ if AspectFusion.Config.Enabled then
             },
             {
                 UnitProperty = "Speed",
-                ChangeValue = 1.03,
+                ChangeValue = 1.15,
                 ChangeType = "Multiply",
                 SourceIsMultiplier = true,
             },
@@ -822,6 +841,78 @@ if AspectFusion.Config.Enabled then
                     DecimalPlaces = 1,
                 }
             },
+            -- Charged third slash
+            {
+                WeaponNames = { "SwordWeapon3" },
+                WeaponProperty = "FireOnRelease",
+                ChangeValue = true,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "SwordWeapon3" },
+                WeaponProperty = "LockTriggerForCharge",
+                ChangeValue = false,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "SwordWeapon3" },
+                WeaponProperty = "FullyAutomatic",
+                ChangeValue = true,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "SwordWeapon3" },
+                WeaponProperty = "ChargeTime",
+                ChangeValue = 0.8,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "SwordWeapon3" },
+                WeaponProperty = "MinChargeToFire",
+                ChangeValue = 0,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "SwordWeapon3" },
+                WeaponProperty = "ChargeDamageMultiplier",
+                ChangeValue = 1.5,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+				WeaponName = "SwordWeapon3",
+				WeaponProperty = "ForceReleaseOnFire",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+            {
+                WeaponNames = { "SwordWeapon3" },
+                WeaponProperty = "MinChargeStartFx",
+                ChangeValue = "BowChargeFocusedFire",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "SwordWeapon3" },
+                WeaponProperty = "AllowExternalForceRelease",
+                ChangeValue = false,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "SwordWeapon3" },
+                WeaponProperty = "AllowExternalForceReleaseIfAnyCharged",
+                ChangeValue = true,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+
 		},
 	}
 
