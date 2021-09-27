@@ -3116,7 +3116,7 @@ if AspectFusion.Config.Enabled then
         },
 		MaxHealthMultiplier =
 		{
-			BaseValue = 0.5,
+			BaseValue = 0.75,
 			SourceIsMultiplier = true,
 		},
         AddOutgoingDamageModifiers =
@@ -3364,25 +3364,25 @@ if AspectFusion.Config.Enabled then
             },
             -- Guan yu
 			{
-				WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+				WeaponName = "SpearWeaponSpin3",
 				ProjectileProperty = "MultiDetonate",
 				ChangeValue = true,
 				ChangeType = "Absolute",
 			},
 			{
-				WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+				WeaponName = "SpearWeaponSpin3",
 				ProjectileProperty = "Range",
 				ChangeValue = 1000,
 				ChangeType = "Add",
 			},
 			{
-				WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+				WeaponName = "SpearWeaponSpin3",
 				ProjectileProperty = "Speed",
 				ChangeValue = 400,
 				ChangeType = "Absolute",
 			},
 			{
-				WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+				WeaponName = "SpearWeaponSpin3",
 				ProjectileProperty = "Fuse",
 				ChangeValue = 0.25,
 				ChangeType = "Add",
@@ -3409,98 +3409,42 @@ if AspectFusion.Config.Enabled then
 				ExcludeLinked = true,
 			},
 			{
-				WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+				WeaponName = "SpearWeaponSpin3",
 				ProjectileProperty = "UnlimitedUnitPenetration",
 				ChangeValue = true,
 				ChangeType = "Absolute",
 			},
 			{
-				WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+				WeaponName = "SpearWeaponSpin3",
 				ProjectileProperty = "AttachToOwner",
 				ChangeValue = false,
 				ChangeType = "Absolute",
 			},
 			{
-				WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+				WeaponName = "SpearWeaponSpin3",
 				ProjectileProperty = "MultipleObstacleCollisions",
 				ChangeValue = false,
 				ChangeType = "Absolute",
 			},
 			{
-				WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+				WeaponName = "SpearWeaponSpin3",
 				ProjectileProperty = "CheckObstacleImpact",
 				ChangeValue = true,
 				ChangeType = "Absolute",
 			},
 			{
-				WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+				WeaponName = "SpearWeaponSpin3",
 				ProjectileProperty = "NumBounces",
 				ChangeValue = 99999,
 				ChangeType = "Absolute",
 			},
-			-- {
-			-- 	WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
-			-- 	ProjectileProperty = "DamageRadius",
-			-- 	ChangeValue = 0.50,
-			-- 	ChangeType = "Multiply",
-			-- },
-			-- {
-			-- 	WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
-			-- 	ProjectileProperty = "ProjectileDefenseRadius",
-			-- 	ChangeValue = 0.50,
-			-- 	ChangeType = "Multiply",
-			-- },
 			{
-				WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+				WeaponName = "SpearWeaponSpin3",
 				ProjectileProperty = "AttachedAnim",
 				ChangeType = "Absolute",
 				ChangeValue = "GuanYuSpin",
 				ExcludeLinked = true,
 			},
-			-- {
-			-- 	WeaponNames = { "SpearWeaponSpin" },
-			-- 	ProjectileProperty = "DamageLow",
-			-- 	ChangeValue = 20,
-			-- 	ChangeType = "Absolute",
-			-- 	ExcludeLinked = true,
-			-- },
-			-- {
-			-- 	WeaponNames = { "SpearWeaponSpin" },
-			-- 	ProjectileProperty = "DamageHigh",
-			-- 	ChangeValue = 20,
-			-- 	ChangeType = "Absolute",
-			-- 	ExcludeLinked = true,
-			-- },
-
-			-- {
-			-- 	WeaponNames = { "SpearWeaponSpin2" },
-			-- 	ProjectileProperty = "DamageLow",
-			-- 	ChangeValue = 30,
-			-- 	ChangeType = "Absolute",
-			-- 	ExcludeLinked = true,
-			-- },
-			-- 	{
-			-- 	WeaponNames = { "SpearWeaponSpin2" },
-			-- 	ProjectileProperty = "DamageHigh",
-			-- 	ChangeValue = 30,
-			-- 	ChangeType = "Absolute",
-			-- 	ExcludeLinked = true,
-			-- },
-
-			-- {
-			-- 	WeaponNames = { "SpearWeaponSpin3" },
-			-- 	ProjectileProperty = "DamageLow",
-			-- 	ChangeValue = 50,
-			-- 	ChangeType = "Absolute",
-			-- 	ExcludeLinked = true,
-			-- },
-			-- {
-			-- 	WeaponNames = { "SpearWeaponSpin3" },
-			-- 	ProjectileProperty = "DamageHigh",
-			-- 	ChangeValue = 50,
-			-- 	ChangeType = "Absolute",
-			-- 	ExcludeLinked = true,
-			-- },
 			{
 				WeaponNames = { "SpearWeaponSpin","SpearWeaponSpin2","SpearWeaponSpin3" },
 				WeaponProperty = "ChargeStartAnimation",
@@ -3524,7 +3468,7 @@ if AspectFusion.Config.Enabled then
 			},
             {
                 LuaProperty = "MaxHealth",
-                BaseValue = 0.5, -- Make sure to change MaxHealthMultiplier in this trait above if this is altered
+                BaseValue = 0.75, -- Make sure to change MaxHealthMultiplier in this trait above if this is altered
                 SourceIsMultiplier = true,
                 ChangeType = "Multiply",
                 MaintainDelta = true,
@@ -4291,8 +4235,8 @@ if AspectFusion.Config.Enabled then
 		Icon = "Weapon_Gun_Lucifer_01",
 		RequiredWeapon = "GunWeapon",
 		PreEquipWeapons = { "GunBombWeapon", "GunBombImmolation", "ManualReloadEffectApplicator", "SniperGunWeapon", "SniperGunWeaponDash"  },
-        -- AddOnFireWeapons = { "GunBombImmolation" },
-		-- LegalOnFireWeapons = WeaponSets.HeroPrimarySecondaryWeapons,
+        AddOnFireWeapons = { "UltraGunWeapon" },
+		LegalOnFireWeapons = { "GunWeapon" },
 		--InfiniteAmmo = true,
 		WeaponBinks =
 		{
@@ -4382,6 +4326,67 @@ if AspectFusion.Config.Enabled then
 		},
 		PropertyChanges =
 		{
+            -- Additional shots
+
+			{
+				WeaponName = "UltraGunWeapon",
+				ProjectileProperty = "MaxAdjustRate",
+				ChangeValue = 10,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponName = "UltraGunWeapon",
+				ProjectileProperty = "AdjustRateAcceleration",
+				ChangeValue = 25,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponName = "UltraGunWeapon",
+				ProjectileProperty = "Speed",
+				ChangeValue = 0.30,
+				ChangeType = "Multiply",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponName = "UltraGunWeapon",
+				ProjectileProperty = "MaxSpeed",
+				ChangeValue = 0.30,
+				ChangeType = "Multiply",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponName = "UltraGunWeapon",
+				ProjectileProperty = "Acceleration",
+				ChangeValue = 0.30,
+				ChangeType = "Multiply",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponName = "UltraGunWeapon",
+				ProjectileProperty = "Range",
+				ChangeValue = 1.30,
+				ChangeType = "Multiply",
+				ExcludeLinked = true,
+				ExtractValue =
+				{
+					ExtractAs = "TooltipRange",
+					Format = "PercentDelta",
+				},
+			},
+			{
+				WeaponName = "UltraGunWeapon",
+				ProjectileProperty = "Fuse",
+				ChangeValue = 1.0,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
             --Lucifer
 		    -- move and fire properties
 			{
@@ -4416,20 +4421,6 @@ if AspectFusion.Config.Enabled then
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
-			-- laser properties
-			-- {
-			-- 	WeaponName = "GunWeapon",
-			-- 	ProjectileProperty = "ClearWeaponBonusesOnHit",
-			-- 	ChangeValue = true,
-			-- 	ExcludeLinked = true,
-			-- },
-			-- {
-			-- 	WeaponName = "GunWeapon",
-			-- 	ProjectileProperty = "ProjectileDefenseRadius",
-			-- 	ChangeValue = 0,
-			-- 	ChangeType = "Absolute",
-			-- 	ExcludeLinked = true,
-			-- },
 
 			{
 				WeaponName = "GunWeapon",
@@ -4790,7 +4781,7 @@ if AspectFusion.Config.Enabled then
 			{
 				WeaponNames = { "GunGrenadeToss" },
 				ProjectileProperty = "DamageRadius",
-				BaseValue = 0,
+				BaseValue = 400,
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
@@ -5025,6 +5016,52 @@ if AspectFusion.Config.Enabled then
                 ChangeType = "Absolute",
                 ExcludeLinked = true,
             },
+
+            -- Cluster bomb and rocket bomb vfx
+
+            {
+                TraitName = "GunGrenadeClusterTrait",
+                WeaponNames = { "GunGrenadeToss" },
+                ExcludeProjectileName = "GunGrenadeSelfDamage",
+                ProjectileProperty = "Graphic",
+                ChangeValue = "GunGrenadeLuciferOrb",
+            },
+            {
+                TraitName = "GunExplodingSecondaryTrait",
+                WeaponNames = { "GunGrenadeToss" },
+                ExcludeProjectileName = "GunGrenadeSelfDamage",
+                ProjectileProperty = "Graphic",
+                ChangeValue = "GunGrenadeLuciferOrb",
+            },
+
+            -- Hack to make cluster bombs explode on impact
+            {
+                TraitName = "GunGrenadeClusterTrait",
+                WeaponNames = { "GunGrenadeToss" },
+                ExcludeProjectileName = "GunGrenadeSelfDamage",
+                ProjectileProperty = "DamageRadius",
+                ChangeValue = 350,
+                ChangeType = "Absolute",
+                ExcludeLinked = true
+            },
+            {
+                TraitName = "GunGrenadeClusterTrait",
+                WeaponNames = { "GunGrenadeToss" },
+                ExcludeProjectileName = "GunGrenadeSelfDamage",
+                ProjectileProperty = "DamageLow",
+                ChangeValue = 1,
+                ChangeType = "Absolute",
+                ExcludeLinked = true
+            },
+            {
+                TraitName = "GunGrenadeClusterTrait",
+                WeaponNames = { "GunGrenadeToss" },
+                ExcludeProjectileName = "GunGrenadeSelfDamage",
+                ProjectileProperty = "DamageHigh",
+                ChangeValue = 1,
+                ChangeType = "Absolute",
+                ExcludeLinked = true
+            },
 		},
 	}
 
@@ -5118,10 +5155,28 @@ if AspectFusion.Config.Enabled then
                         table.insert(traitData.PropertyChanges, propertyCopy)
                     end
                 elseif property.TraitName ~= nil and property.TraitName == "GunLoadedGrenadeTrait" then
-                    local legal = false
-                    local propertyCopy = DeepCopyTable(property)
-                    propertyCopy.TraitName = "UltraGunTrait"
-                    table.insert(traitData.PropertyChanges, propertyCopy)
+                    -- Exclude cluster bomb and rocket bomb
+                    if traitData.Icon ~= "Weapon_Gun_05" and traitData.Icon ~= "Weapon_Gun_08" then
+                        local propertyCopy = DeepCopyTable(property)
+                        propertyCopy.TraitName = "UltraGunTrait"
+                        table.insert(traitData.PropertyChanges, propertyCopy)
+                    end
+                elseif property.WeaponName ~= nil and property.WeaponName == "GunWeapon"
+                and traitData.Icon ~= "WeaponEnchantment_Gun01"
+                and traitData.Icon ~= "WeaponEnchantment_Gun02"
+                and traitData.Icon ~= "WeaponEnchantment_Gun03"
+                and traitData.Icon ~= "WeaponEnchantment_Gun04"
+                and traitData.Icon ~= "Weapon_Gun_Lucifer_01"
+                then
+                    if property.TraitName ~= "GunLoadedGrenadeTrait" and property.TraitName ~= "UltraGunTrait" then
+                        local propertyCopy = DeepCopyTable(property)
+                        propertyCopy.TraitName = "UltraGunTrait"
+                        propertyCopy.WeaponName = "UltraGunWeapon"
+                        if propertyCopy.ProjectileName ~= nil and propertyCopy.ProjectileName == "GunWeapon" then
+                            propertyCopy.ProjectileName = "UltraGunWeapon"
+                        end
+                        table.insert(traitData.PropertyChanges, propertyCopy)
+                    end
                 end
             end
         end
@@ -5573,4 +5628,76 @@ if AspectFusion.Config.Enabled then
             ExcludeLinked = true,
         }
     }
+
+        -- Spear
+    
+    table.insert(TraitData.SpearThrowBounce.RequiredFalseTraits, "UltraSpearTrait")
+    table.insert(TraitData.SpearThrowCritical.RequiredFalseTraits, "UltraSpearTrait")
+    table.insert(TraitData.SpearThrowElectiveCharge.RequiredFalseTraits, "UltraSpearTrait")
+    table.insert(TraitData.SpearSpinChargeAreaDamageTrait.RequiredFalseTraits, "UltraSpearTrait")
+
+    TraitData.SpearSpinTravelDurationTrait.RequiredTrait = nil
+    TraitData.SpearSpinTravelDurationTrait.RequiredOneOfTraits = {"SpearSpinTravel", "UltraSpearTrait"}
+        -- Sword
+    TraitData.SwordConsecrationBoostTrait.RequiredTrait = nil
+    TraitData.SwordConsecrationBoostTrait.RequiredOneOfTraits = {"SwordConsecrationTrait", "UltraSwordTrait"}
+    
+    table.insert(TraitData.SwordTwoComboTrait.PropertyChanges,
+    {
+        TraitName = "UltraSwordTrait",
+        WeaponName = "SwordWeapon",
+        ProjectileProperty = "DamageLow",
+        ChangeValue = 60,
+        ChangeType = "Absolute",
+        ExcludeLinked = true,
+    })
+    table.insert(TraitData.SwordTwoComboTrait.PropertyChanges,
+    {
+        TraitName = "UltraSwordTrait",
+        WeaponName = "SwordWeapon2",
+        ProjectileProperty = "DamageLow",
+        ChangeValue = 80,
+        ChangeType = "Absolute",
+        ExcludeLinked = true,
+    })
+    table.insert(TraitData.SwordTwoComboTrait.PropertyChanges,
+    {
+        TraitName = "UltraSwordTrait",
+        WeaponName = "SwordWeapon",
+        ProjectileProperty = "DamageHigh",
+        ChangeValue = 60,
+        ChangeType = "Absolute",
+        ExcludeLinked = true,
+    })
+    table.insert(TraitData.SwordTwoComboTrait.PropertyChanges,
+    {
+        TraitName = "UltraSwordTrait",
+        WeaponName = "SwordWeapon2",
+        ProjectileProperty = "DamageHigh",
+        ChangeValue = 80,
+        ChangeType = "Absolute",
+        ExcludeLinked = true,
+    })
+
+    table.insert(TraitData.SwordHeavySecondStrikeTrait.PropertyChanges,
+    {
+        TraitName = "UltraSwordTrait",
+        WeaponName = "SwordWeapon2",
+        ProjectileProperty = "DamageLow",
+        ChangeValue = 145,
+        ChangeType = "Absolute",
+        ExcludeLinked = true,
+        ExtractValue =
+        {
+            ExtractAs = "TooltipDamage",
+        },
+    })
+    table.insert(TraitData.SwordHeavySecondStrikeTrait.PropertyChanges,
+    {
+        WeaponName = "SwordWeapon2",
+        ProjectileProperty = "DamageHigh",
+        ChangeValue = 145,
+        ChangeType = "Absolute",
+        ExcludeLinked = true,
+    })
 end

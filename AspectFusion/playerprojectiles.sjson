@@ -38,6 +38,15 @@
             }
             ]
         }
-        }
+    }
+    {
+    Name = "UltraGunWeapon"
+    InheritFrom = "GunWeapon"
+    ImpactFx = "GunWeaponImpact"
+    CheckObstacleImpact = false
+    DetonateAtVictimLocation = true
+    Fuse = 0.0
+    Range = 1000.0
+    }
     ]
 }

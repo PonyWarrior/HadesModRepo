@@ -1,0 +1,15 @@
+{
+  Weapons = [
+    "_append"
+    {
+        Name = "UltraGunWeapon"
+        InheritFrom = "ArtemisLegendary"
+        Projectile = "UltraGunWeapon"
+        ProjectileAngleOffset = 0
+        ProjectileAngleStartOffset = 180
+        Spread = 270
+        FireFx = "GunFire"
+        FireSound = "/SFX/Player Sounds/ZagreusGunFire"
+    }
+  ]
+}
