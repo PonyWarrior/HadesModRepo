@@ -70,4 +70,34 @@ Shield Hammers
 -Dashing Flight need fix
 -Ferocious Guard yes
 -Unyielding Defense yes
+
+Spear hammers
+-Extending Jab yes
+-Chain Skewer no
+-Breaching Skewer yes
+-Vicious Skewer no
+-Exploding Launcher yes
+-Massive Spin yes
+-Quick Spin yes
+-Flurry Jab yes
+-Charged Skewer no
+-Serrated Point yes
+-Flaring Spin no
+-Triple Jab yes
+-Winged Serpent yes
+
+Sword hammers
+-Breaching Slash yes
+-Cruel Thrust yes
+-Cursed Slash yes
+-Dash Nova yes
+-Double Edge yes
+-Double Nova yes
+-Flurry Slash yes
+-Hoarding Slash yes
+-Piercing Wave 
+-Shadow Slash yes
+-Super Nova yes
+-World Splitter yes
+-Greater Consecration yes
 --]]
