@@ -18,6 +18,8 @@ To "Game/Animations/GUIAnimations.sjson"
 SJSON "guianimations.sjson"
 To "Game/Animations/Fx.sjson"
 SJSON "fx.sjson"
+To "Game/Obstacles/GUI.sjson"
+SJSON "gui.sjson"
 To "Win/Packages/AspectFusion.pkg"
 Replace "AspectFusion.pkg"
 To Win/Packages/720p/AspectFusion.pkg

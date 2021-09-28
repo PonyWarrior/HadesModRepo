@@ -1,0 +1,20 @@
+{
+  Obstacles = [
+    "_append"
+    {
+      Name = "UltraRuptureSmall"
+      InheritFrom = "1_BaseGUIObstacle"
+      DisplayInEditor = false
+      Thing =
+      {
+        EditorOutlineDrawBounds = false
+        Graphic = "UltraMaimedStatus"
+		SortMode = "Id"
+		CausesOcclusion = true
+        OcclusionInterpolateDuration = 0.5
+        OcclusionOpacity = 0.25
+		AllowDrawableCache = false
+      }
+    }
+  ]
+}
