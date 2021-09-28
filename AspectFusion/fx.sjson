@@ -1,0 +1,128 @@
+{
+  Animations = [
+      "_append"
+    {
+      Name = "UltraMaimedStatus"
+      Type = "Book"
+      FilePath = "AspectFusion\Fx\MaimedStatus\MaimedStatus"
+      NumFrames = 24
+      PlaySpeed = 30
+      Scale = 0.75
+      Loop = true
+      Material = "Unlit"
+      ScaleFromOwner = "Ignore"
+      AngleFromOwner = "Ignore"
+      LocationZFromOwner = "Maintain"
+      LocationFromOwner = "Maintain"
+      ColorFromOwner = "Ignore"
+      UseAttachedFlasher = false
+      UseAttachedAddColor = false
+      UseAttachedShake = false
+      Sound = "/SFX/Enemy Sounds/MaimStatusEffectLoop"
+      StopSoundOnFinishFade = 0.2
+    }
+
+    {
+      Name = "UltraFistDetonateCharge"
+      Type = "Book"
+      FilePath = "AspectFusion\Fx\FistDetonate\FistDetonate"
+      NumFrames = 4
+      Material = "Unlit"
+      ColorFromOwner = "Ignore"
+      UseAttachedFlasher = false
+      UseAttachedAddColor = false
+      LocationFromOwner = "Take"
+      LocationZFromOwner = "Take"
+      AngleFromOwner = "Ignore"
+      UseOwnAngle = false
+      ScaleFromOwner = "Ignore"
+      GroupName = "FX_Standing_Add"
+      Duration = 0.1
+      TimeModifierFraction = 0.1
+    }
+
+    {
+	Name = "UltraFistDetonateSequence"
+	InheritFrom = "UltraFistDetonateCharge"
+	ChainTo = "UltraFistDetonateFx"
+	}
+
+    {
+      Name = "UltraFistDetonateFx"
+      Type = "Slide"
+      FilePath = "AspectFusion\Fx\FistDetonate\FistDetonate"
+      Material = "Unlit"
+      OverlayVfx = true
+      SortMode = "FromParent"
+      ColorFromOwner = "Ignore"
+      UseAttachedFlasher = false
+      UseAttachedAddColor = false
+      LocationFromOwner = "Take"
+      LocationZFromOwner = "Take"
+      AngleFromOwner = "Ignore"
+      UseOwnAngle = false
+      ScaleFromOwner = "Ignore"
+      GroupName = "FX_Standing_Add"
+      CreateAnimation = "UltraFistDetonateFxDark"
+      NumFrames = 33
+      StartScale = 1
+      EndScale = 1.1
+      TimeModifierFraction = 0.1
+      Slides = [
+        { DurationFrames = 0 }
+        { DurationFrames = 0 }
+        { DurationFrames = 0 }
+        { DurationFrames = 0 }
+        { DurationFrames = 2 VisualFx = "FistDetonateFlare" Sound = "/SFX/Player Sounds/GilgameshDelayedDamageStab" }
+        { DurationFrames = 2 VisualFx = "FistDetonateGlow" }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+      ]
+    }
+
+    {
+      Name = "UltraFistDetonateFxDark"
+      InheritFrom = "UtraFistDetonateFx"
+      Type = "Book"
+      StartFrame = 5
+      NumFrames = 28
+      GroupName = "Standing"
+      Red = 0
+      Green = 0
+      Blue = 0
+      
+      PlaySpeed = 30
+      ClearCreateAnimations = true
+      CreateAnimation = null
+      TimeModifierFraction = 0.1
+    }
+  ]
+}

@@ -5,7 +5,7 @@
     {
       Name = "BoonIcon_Frame_Fusion"
       InheritFrom = "WeaponEnchantmentTray"
-      FilePath = "Fusion_Frame.png"
+      FilePath = "AspectFusion\Frames\Fusion_Frame"
       EndFrame = 1
       StartFrame = 1
       Scale = 0.5
@@ -13,12 +13,12 @@
     {
       Name = "Ultra_Sword_Large"
       InheritFrom = "WeaponEnchantment"
-      FilePath = "Ultra_Sword.png"
+      FilePath = "AspectFusion\WeaponIcons\Ultra_Sword"
     }
     {
       Name = "Ultra_Sword_Small"
       InheritFrom = "WeaponEnchantmentTray"
-      FilePath = "Ultra_Sword.png"
+      FilePath = "AspectFusion\WeaponIcons\Ultra_Sword"
     }
     ]
 }

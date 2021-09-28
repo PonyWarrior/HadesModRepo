@@ -523,19 +523,203 @@ ModUtil.Path.Wrap("CheckComboPowers", function (baseFunc, victim, attacker, trig
 
 	if attacker.ComboCount >= attacker.ComboThreshold and not attacker.ComboReady then
 		attacker.ComboReady = true
+        attacker.UltraComboReady = true
 		SetWeaponProperty({ WeaponName = "FistWeaponSpecial", DestinationId = CurrentRun.Hero.ObjectId, Property = "NumProjectiles", Value = 2 + GetTotalHeroTraitValue("BonusSpecialHits") })
 		SetWeaponProperty({ WeaponName = "FistWeaponSpecial", DestinationId = CurrentRun.Hero.ObjectId, Property = "FireFx2", Value = "FistUppercutSpecial" })
-		if HeroHasTrait( "FistSpecialFireballTrait" ) then
-			SetWeaponProperty({ WeaponName = "FistWeaponSpecial", DestinationId = CurrentRun.Hero.ObjectId, Property = "ProjectileInterval", Value = 0.08 })
-		else
-			SetWeaponProperty({ WeaponName = "FistWeaponSpecial", DestinationId = CurrentRun.Hero.ObjectId, Property = "ProjectileInterval", Value = 0.03 })
-		end
+		SetWeaponProperty({ WeaponName = "FistWeaponSpecial", DestinationId = CurrentRun.Hero.ObjectId, Property = "ProjectileInterval", Value = 0.03 })
 		SetWeaponProperty({ WeaponName = "FistWeaponSpecialDash", DestinationId = CurrentRun.Hero.ObjectId, Property = "NumProjectiles", Value = 1 + GetTotalHeroTraitValue("BonusSpecialHits") })
 		SetWeaponProperty({ WeaponName = "FistWeaponSpecialDash", DestinationId = CurrentRun.Hero.ObjectId, Property = "ProjectileInterval", Value = 0.03 })
 		SetWeaponProperty({ WeaponName = "FistWeaponSpecialDash", DestinationId = CurrentRun.Hero.ObjectId, Property = "FireFx2", Value = "FistUppercutSpecial" })
 
 		ComboReadyPresentation( attacker, triggerArgs )
 	end
+end)
+CheckComboPowerReset( attacker, weaponData, args )
+
+ModUtil.Path.Wrap("CheckComboPowerReset", function (baseFunc, attacker, weaponData, args)
+	if weaponData ~= nil and attacker.UltraComboReady then
+        thread(AspectFusion.DeactiveUltraCombo)
+    end
+    baseFunc(attacker, weaponData, args)
+end)
+
+function AspectFusion.DeactiveUltraCombo()
+    wait(0.1)
+    CurrentRun.Hero.UltraComboReady = false
+end
+
+ModUtil.Path.Wrap("SetupHeroObject", function (baseFunc, currentRun, applyLuaUpgrades )
+    baseFunc(currentRun, applyLuaUpgrades )
+    CurrentRun.Hero.UltraComboReady = false
+end)
+
+ModUtil.Path.Wrap("UpdateRuptureEffectStacks", function (baseFunc, args)
+    if CurrentRun.Hero.UltraComboReady then
+        -- CurrentRun.Hero.UltraComboReady = false
+        local unitId = args.triggeredById
+        local unit = args.TriggeredByTable
+        local startIconScale = 1.3
+
+        if not EnemyHealthDisplayAnchors[unitId] then
+            CreateHealthBar( unit )
+            UpdateHealthBar( unit, 0, { Force = true })
+        end
+    
+        if not EnemyHealthDisplayAnchors[ unitId .. "rupturestatus" ] then
+    
+            local backingId = nil
+            local scale = 1
+            if unit.BarXScale then
+                scale = unit.BarXScale
+            end
+            if unit and unit.UseBossHealthBar then
+                backingId = CreateScreenObstacle({ Name = "UltraRuptureSmall", Group = "Combat_Menu", DestinationId = EnemyHealthDisplayAnchors[unitId] })
+                startIconScale = 1.3
+                CreateTextBox({ Id = backingId, FontSize = 20, OffsetX = 17, OffsetY = 0,
+                    Font = "AlegreyaSansSCExtraBold",
+                    Justification = "Left",
+                    ShadowColor = {0, 0, 0, 240}, ShadowOffset = {0, 2}, ShadowBlur = 0,
+                    OutlineThickness = 3, OutlineColor = {0.25, 0.3, 0.5, 1},
+                })
+            else
+                backingId = SpawnObstacle({ Name = "UltraRuptureSmall", Group = "Combat_UI_World", DestinationId = unitId, TriggerOnSpawn = false })
+                CreateTextBox({ Id = backingId, FontSize = 20, OffsetX = 12, OffsetY = 0,
+                    Font = "AlegreyaSansSCExtraBold",
+                    Justification = "Left",
+                    ShadowColor = {0, 0, 0, 240}, ShadowOffset = {0, 2}, ShadowBlur = 0,
+                    OutlineThickness = 3, OutlineColor = {0.25, 0.3, 0.5, 1},
+                })
+            end
+            EnemyHealthDisplayAnchors[ unitId .. "rupturestatus" ] = backingId
+        end
+        
+        local scaleTarget = 1.0
+        SetScale({ Id = EnemyHealthDisplayAnchors[ unitId .. "rupturestatus" ], Fraction = startIconScale })
+    
+        PositionEffectStacks( unitId )
+    else
+        baseFunc(args)
+    end
+end)
+
+ModUtil.Path.Wrap("OnRuptureDashHit", function (baseFunc, args)
+    if HeroHasTrait("UltraFistTrait") and CurrentRun.Hero.UltraComboReady then
+        -- CurrentRun.Hero.UltraComboReady = false
+        local victim = args.TriggeredByTable
+        if victim.TriggersOnDamageEffects and victim ~= CurrentRun.Hero then
+            if not victim.ActiveEffects or not victim.ActiveEffects.UltraMarkRuptureTarget  then
+                ApplyEffectFromWeapon({ WeaponName = "UltraMarkRuptureApplicator", EffectName = "UltraMarkRuptureTarget", Id = CurrentRun.Hero.ObjectId, DestinationId = victim.ObjectId })
+            end
+        end
+    else
+        baseFunc(args)
+    end
+end)
+
+ModUtil.Path.Wrap("OnRuptureWeaponHit", function (baseFunc, args)
+    if HeroHasTrait("UltraFistTrait") and CurrentRun.Hero.UltraComboReady then
+        -- CurrentRun.Hero.UltraComboReady = false
+        local victim = args.TriggeredByTable
+        if victim.TriggersOnDamageEffects and victim ~= CurrentRun.Hero then
+            if not victim.ActiveEffects or not victim.ActiveEffects.UltraMarkRuptureTarget  then
+                ApplyEffectFromWeapon({ WeaponName = "UltraMarkRuptureApplicator", EffectName = "UltraMarkRuptureTarget", Id = CurrentRun.Hero.ObjectId, DestinationId = victim.ObjectId })
+            end
+        end
+    else
+        baseFunc(args)
+    end
+end)
+
+ModUtil.Path.Override("EnemyHandleInvisibleAttack", function(enemy, weaponAIData, currentRun, args)
+    args = args or {}
+	if enemy.IsInvisible and not weaponAIData.KeepInvisibility then
+		if enemy.CurrentPhase ~= nil and enemy.CurrentPhase >= 2 and enemy.Phase2VFX ~= nil then
+  			CreateAnimation({ Name = enemy.Phase2VFX, DestinationId = enemy.ObjectId })
+		end
+  	
+		SetLifeProperty({ DestinationId = enemy.ObjectId, Property = "InvulnerableFx", Value = "Invincibubble_Hades" })
+		enemy.IsInvisible = false
+		CreateHealthBar( enemy )
+		UpdateHealthBar( enemy, 0, { Force = true })
+
+		if enemy.ActiveEffects and enemy.ActiveEffects.MarkRuptureTarget then
+			UpdateRuptureEffectStacks({ TriggeredByTable = enemy, triggeredById = enemy.ObjectId })
+		end
+        --mod start
+        if enemy.ActiveEffects and enemy.ActiveEffects.UltraMarkRuptureTarget then
+			UpdateRuptureEffectStacks({ TriggeredByTable = enemy, triggeredById = enemy.ObjectId })
+		end
+        --mod end
+		if enemy.InvisibilityEndSound ~= nil then
+			PlaySound({ Name = enemy.InvisibilityEndSound })
+		end
+		SetUnitVulnerable( enemy )
+		SetAlpha({ Id = enemy.ObjectId, Fraction = 1.0, Duration = weaponAIData.InvisibilityFadeInDuration })
+		SetColor({ Id = enemy.ObjectId, Color = { 255, 255, 255, 255 }, Duration = weaponAIData.InvisibilityFadeInDuration })
+		if args.CreateAnimation then
+			CreateAnimation({ Name = args.CreateAnimation, DestinationId = enemy.ObjectId })
+		end
+		if args.Animation then
+			CreateAnimation({ Name = args.Animation, DestinationId = enemy.ObjectId })
+		end
+		SetUnitProperty({ DestinationId = enemy.ObjectId, Property = "CollideWithUnits", Value = true })
+		SetUnitProperty({ DestinationId = enemy.ObjectId, Property = "ImmuneToStun", Value = enemy.PreInvisibilityImmuneToStun })
+		SetThingProperty({ DestinationId = enemy.ObjectId, Property = "StopsProjectiles", Value = true })
+		enemy.SkipInvulnerableOnHitPresentation = false
+		wait( CalcEnemyWait( enemy, weaponAIData.InvisibilityFadeInDuration ), enemy.AIThreadName )
+	end
+end)
+
+ModUtil.Path.Wrap("CheckFistDetonation", function (baseFunc, victim, functionArgs, triggerArgs)
+    if ( not victim.ActiveEffects or not victim.ActiveEffects.UltraMarkRuptureTarget ) and triggerArgs.SourceWeapon == "FistWeaponSpecialDash" and CurrentRun.Hero.UltraComboReady then
+        thread(AspectFusion.ApplyUltraMark, triggerArgs)
+        victim.UltraMarked = true
+        local delay = 0.1
+		MapState.QueuedDetonations = MapState.QueuedDetonations  or {}
+		while MapState.QueuedDetonations[_worldTime + delay ] and delay < 2 do
+			delay = delay + 0.1
+		end
+		local key = _worldTime + delay
+		MapState.QueuedDetonations[_worldTime + delay] = victim
+		wait( delay, RoomThreadName )
+		FireWeaponFromUnit({ Weapon = "UltraFistDetonationWeapon", Id = CurrentRun.Hero.ObjectId, DestinationId = victim.ObjectId, FireFromTarget = true, AutoEquip = true })
+		MapState.QueuedDetonations[key] = nil
+		victim.LastRuptureTime = _worldTime
+    elseif ( not victim.ActiveEffects or not victim.ActiveEffects.UltraMarkRuptureTarget ) and not victim.UltraMarked then
+        baseFunc(victim, functionArgs, triggerArgs)
+	end
+end)
+
+function AspectFusion.ApplyUltraMark(triggerArgs)
+    UpdateRuptureEffectStacks( triggerArgs )
+    wait(4)
+    AspectFusion.ClearUltraMark(triggerArgs)
+end
+
+function AspectFusion.ClearUltraMark(triggerArgs)
+    local victim = triggerArgs.TriggeredByTable
+	StopAnimation({ Name = "PoseidonAresProjectileGlow", DestinationId = victim.ObjectId })
+    victim.UltraMarked = false
+	ClearRuptureEffectStacks( triggerArgs )
+end
+
+ModUtil.Path.Wrap("CheckVacuumNearbyEnemy", function (baseFunc, weaponData, args)
+    if HeroHasTrait("UltraFistTrait") then
+        local nearestEnemyTargetIds = GetClosestIds({ Id = CurrentRun.Hero.ObjectId, DestinationName = "EnemyTeam", IgnoreInvulnerable = true, IgnoreHomingIneligible = true, Distance = args.Range, MaximumCount = 99 })
+        for _, targetId in ipairs(nearestEnemyTargetIds) do
+            if targetId ~= 0 and ActiveEnemies[targetId] ~= nil and not ActiveEnemies[targetId].IsDead then
+                local distanceBuffer = args.DistanceBuffer
+                if CurrentRun.Hero.VacuumRush then
+                    distanceBuffer = args.RushDistanceBuffer
+                end
+                ApplyForce({ Id = targetId, Speed = GetRequiredForceToEnemy( targetId, CurrentRun.Hero.ObjectId, -1 * distanceBuffer ), Angle = GetAngleBetween({ Id = targetId, DestinationId = CurrentRun.Hero.ObjectId }) })
+                FireWeaponFromUnit({ Weapon = "FistSpecialVacuum", Id = CurrentRun.Hero.ObjectId, DestinationId = targetId })
+                FistVacuumPullPresentation( targetId, args )
+            end
+        end
+    else
+        baseFunc(weaponData, args)
+    end
 end)
 
 -- Ultra Shield

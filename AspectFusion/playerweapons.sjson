@@ -11,5 +11,44 @@
         FireFx = "GunFire"
         FireSound = "/SFX/Player Sounds/ZagreusGunFire"
     }
+    {
+      Name = "UltraFistDetonationWeapon"
+      InheritFrom = "1_BaseMagicWeapon"
+      Type = "GUN"
+      FireSound = "/SFX/StabSplatterSmall"
+      Projectile = "UltraFistDetonationProjectile"
+    }
+    {
+      Name = "UltraMarkRuptureApplicator"
+      InheritFrom = "1_BaseMagicWeapon"
+      Type = "GUN"
+      Projectile = "null"
+      FullyAutomatic = true
+      AutoLock = true
+      FireFx = "null"
+      IgnoreOwnerAttackDisabled = true
+	  Effects = [
+
+		{
+			Name = "UltraMarkRuptureTarget"
+			Duration = 10.0
+            Type = "DAMAGE_OVER_TIME"
+			Modifier = 0
+			Active = true
+			TimeModifierFraction = 0
+			FrontFx = "null"
+			BackFx = "null"
+            Stacks = true
+			MaxStacks = 100
+            ExtendDurationOnReapply = false
+		}
+	  ]
+	}
+    {
+      Name = "UltraRushRuptureWeapon"
+      InheritFrom = "1_BaseMagicWeapon"
+      Type = "GUN"
+      Projectile = "UltraRushRuptureProjectile"
+    }
   ]
 }

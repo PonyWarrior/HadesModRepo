@@ -928,7 +928,8 @@ if AspectFusion.Config.Enabled then
         CustomRarityName = "Boon_Fusion",
 		CustomRarityColor = {3, 94, 252, 255},
         -- Talos
-        PreEquipWeapons = {"RushRuptureWeapon", "FistDetonationWeapon", "MarkRuptureApplicator", "FistSpecialVacuum"},
+        PreEquipWeapons = {"RushRuptureWeapon", "FistDetonationWeapon", "MarkRuptureApplicator", "FistSpecialVacuum"
+        ,"UltraRushRuptureWeapon", "UltraFistDetonationWeapon", "UltraMarkRuptureApplicator"},
         WeaponBinks =
         {
             "ZagreusFistAlt03Idle_Bink",
@@ -1138,14 +1139,69 @@ if AspectFusion.Config.Enabled then
                 EffectProperty = "Duration",
                 DeriveValueFrom = "ExtractDuration"
             },
-            -- Dash Weapon Changes
+
+            -- Ultra detonation
+
             {
-                WeaponNames = WeaponSets.HeroRushWeapons,
-                WeaponProperty = "WeaponRange",
-                ChangeValue = 0.75,
-                ChangeType = "Multiply",
-                ExcludeLinked = true,
+                WeaponName = "UltraFistDetonationWeapon",
+                EffectName = "UltraFistDetonationDamage",
+                EffectProperty = "Amount",
+                BaseValue = 200,
+                ChangeType = "Add",
+                ExtractValue =
+                {
+                    ExtractAs = "TooltipDamage",
+                },
             },
+            {
+                WeaponName = "UltraFistDetonationWeapon",
+                EffectName = "UltraMarkRuptureTarget",
+                EffectProperty = "Modifier",
+                ChangeValue = 0.0,
+                ChangeType = "Add",
+            },
+            {
+                WeaponName = "UltraFistDetonationWeapon",
+                EffectName = "DetonationDamageTaken",
+                EffectProperty = "Modifier",
+                ChangeValue = 1.0,
+                ChangeType = "Add",
+            },
+            {
+                WeaponName = "UltraFistDetonationWeapon",
+                EffectName = "UltraMarkRuptureTarget",
+                EffectProperty = "Duration",
+                ChangeValue = 4,
+                ChangeType = "Absolute",
+                ExtractDuration = "ExtractDuration",
+            },
+            {
+                WeaponName = "UltraFistDetonationWeapon",
+                EffectName = "DetonationSlow",
+                EffectProperty = "Duration",
+                DeriveValueFrom = "ExtractDuration"
+            },
+            {
+                WeaponName = "UltraFistDetonationWeapon",
+                EffectName = "UltraFistDetonationDamage",
+                EffectProperty = "Duration",
+                ChangeValue = 3.95, -- Should be 0.05 lower than duration defined above.
+                ChangeType = "Absolute",
+            },
+            {
+                WeaponName = "UltraFistDetonationWeapon",
+                EffectName = "DetonationDamageTaken",
+                EffectProperty = "Duration",
+                DeriveValueFrom = "ExtractDuration"
+            },
+            -- Dash Weapon Changes
+            -- {
+            --     WeaponNames = WeaponSets.HeroRushWeapons,
+            --     WeaponProperty = "WeaponRange",
+            --     ChangeValue = 0.75,
+            --     ChangeType = "Multiply",
+            --     ExcludeLinked = true,
+            -- },
             {
                 WeaponNames = WeaponSets.HeroRushWeapons,
                 WeaponProperty = "ClipSize",
@@ -1156,13 +1212,13 @@ if AspectFusion.Config.Enabled then
                     ExtractAs = "TooltipBonusDashes",
                 }
             },
-            {
-                WeaponNames = WeaponSets.HeroRushWeapons,
-                WeaponProperty = "ClipRegenInterval",
-                ChangeValue = 1.2,
-                ChangeType = "Multiply",
-                ExcludeLinked = true,
-            },
+            -- {
+            --     WeaponNames = WeaponSets.HeroRushWeapons,
+            --     WeaponProperty = "ClipRegenInterval",
+            --     ChangeValue = 1.2,
+            --     ChangeType = "Multiply",
+            --     ExcludeLinked = true,
+            -- },
             -- {
             --     WeaponNames = WeaponSets.HeroRushWeapons,
             --     WeaponProperty = "BlinkDuration",
@@ -1191,30 +1247,30 @@ if AspectFusion.Config.Enabled then
                 ChangeType = "Absolute",
                 ExcludeLinked = true,
             },
-            {
-                WeaponNames = WeaponSets.HeroRushWeapons,
-                EffectName = "RushWeaponInvulnerable",
-                EffectProperty = "Duration",
-                ChangeValue = 0.8,
-                ChangeType = "Multiply",
-                ExcludeLinked = true,
-            },
-            {
-                WeaponNames = WeaponSets.HeroRushWeapons,
-                EffectName = "RushWeaponImmuneToForce",
-                EffectProperty = "Duration",
-                ChangeValue = 0.8,
-                ChangeType = "Multiply",
-                ExcludeLinked = true,
-            },
-            {
-                WeaponNames = WeaponSets.HeroRushWeapons,
-                EffectName = "RushWeaponDisableMove",
-                EffectProperty = "Duration",
-                ChangeValue = 0.8,
-                ChangeType = "Multiply",
-                ExcludeLinked = true,
-            },
+            -- {
+            --     WeaponNames = WeaponSets.HeroRushWeapons,
+            --     EffectName = "RushWeaponInvulnerable",
+            --     EffectProperty = "Duration",
+            --     ChangeValue = 0.8,
+            --     ChangeType = "Multiply",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponNames = WeaponSets.HeroRushWeapons,
+            --     EffectName = "RushWeaponImmuneToForce",
+            --     EffectProperty = "Duration",
+            --     ChangeValue = 0.8,
+            --     ChangeType = "Multiply",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponNames = WeaponSets.HeroRushWeapons,
+            --     EffectName = "RushWeaponDisableMove",
+            --     EffectProperty = "Duration",
+            --     ChangeValue = 0.8,
+            --     ChangeType = "Multiply",
+            --     ExcludeLinked = true,
+            -- },
             {
                 WeaponNames = WeaponSets.HeroRushWeapons,
                 EffectName = "RushWeaponSelfGrip",
@@ -1379,39 +1435,39 @@ if AspectFusion.Config.Enabled then
                 ChangeType = "Absolute",
                 ExcludeLinked = true,
             },
-            --[[
-            {
-                WeaponNames = { "FistWeaponSpecial" },
-                WeaponProperty = "ChargeTime",
-                ChangeValue = 1.23,
-                ChangeType = "Multiply",
-                ExcludeLinked = true,
-            },
-            {
-                WeaponNames = { "FistWeaponSpecial" },
-                ProjectileProperty = "DamageLow",
-                ChangeValue = 1.68,
-                ChangeType = "Multiply",
-                ExcludeLinked = true,
-            },
-            {
-                WeaponNames = { "FistWeaponSpecial" },
-                ProjectileProperty = "DamageHigh",
-                ChangeValue = 1.68,
-                ChangeType = "Multiply",
-                ExcludeLinked = true,
-            },
-            ]]
+            
+            -- {
+            --     WeaponNames = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+            --     WeaponProperty = "ChargeTime",
+            --     ChangeValue = 1.23,
+            --     ChangeType = "Multiply",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponNames = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+            --     ProjectileProperty = "DamageLow",
+            --     ChangeValue = 1.68,
+            --     ChangeType = "Multiply",
+            --     ExcludeLinked = true,
+            -- },
+            -- {
+            --     WeaponNames = { "FistWeaponSpecial", "FistWeaponSpecialDash" },
+            --     ProjectileProperty = "DamageHigh",
+            --     ChangeValue = 1.68,
+            --     ChangeType = "Multiply",
+            --     ExcludeLinked = true,
+            -- },
+            
 
             -- Gilgamesh Dash Special
 
-            {
-                WeaponNames = { "FistWeaponSpecialDash" },
-                WeaponProperty = "ChargeTime",
-                ChangeValue = 0.17,
-                ChangeType = "Absolute",
-                ExcludeLinked = true,
-            },
+            -- {
+            --     WeaponNames = { "FistWeaponSpecialDash" },
+            --     WeaponProperty = "ChargeTime",
+            --     ChangeValue = 0.17,
+            --     ChangeType = "Absolute",
+            --     ExcludeLinked = true,
+            -- },
             {
                 WeaponNames = { "FistWeaponDash" },
                 EffectName = "FistDashDisable",
