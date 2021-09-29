@@ -1033,19 +1033,6 @@ if AspectFusion.Config.Enabled then
                     },
                 },
             },
-
-            RushWeapon =
-            {
-                Sounds =
-                {
-                    FireSounds =
-                    {
-                        { Name = "/VO/ZagreusEmotes/EmoteAttacking_Fist1" },
-                        { Name = "/SFX/Enemy Sounds/Exalted/ExaltedDash" },
-                    },
-                },
-            },
-
         },
         -- Talos
         AddRush =

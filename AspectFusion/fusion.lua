@@ -1,12 +1,11 @@
 if AspectFusion.Config.Enabled then
-    local mod = "AspectFusion"
-    local package = "AspectFusion"
-    
-    ModUtil.Path.Wrap( "SetupMap", function(baseFunc)
-        DebugPrint({Text = "@"..mod.." Trying to load package "..package..".pkg"})
-        LoadPackages({Name = package})
-        return baseFunc()
-    end)
+local mod = "AspectFusion"
+local package = "AspectFusion"
+ModUtil.Path.Wrap( "SetupMap", function(baseFunc)
+    DebugPrint({Text = "@"..mod.." Trying to load package "..package..".pkg"})
+    LoadPackages({Name = package})
+    return baseFunc()
+end)
 
 ModUtil.BaseOverride("ShowWeaponUpgradeScreen", function (args)
     local textOffsetX = -50
@@ -500,6 +499,7 @@ OnWeaponFired{ "SwordParry",
 }
 
 -- Ultra Fists
+
 ModUtil.Path.Wrap("CheckComboPowers", function (baseFunc, victim, attacker, triggerArgs, sourceWeaponData )
     baseFunc(victim, attacker, triggerArgs, sourceWeaponData)
     if sourceWeaponData == nil or sourceWeaponData.ComboPoints == nil or sourceWeaponData.ComboPoints <= 0 then
@@ -519,6 +519,10 @@ ModUtil.Path.Wrap("CheckComboPowers", function (baseFunc, victim, attacker, trig
 		return
 	end
 
+    if ScreenAnchors.ComboUI == nil then
+        thread(AspectFusion.ShowComboUI)
+    end
+
 	attacker.ComboCount = (attacker.ComboCount or 0) + sourceWeaponData.ComboPoints
 
 	if attacker.ComboCount >= attacker.ComboThreshold and not attacker.ComboReady then
@@ -533,14 +537,99 @@ ModUtil.Path.Wrap("CheckComboPowers", function (baseFunc, victim, attacker, trig
 
 		ComboReadyPresentation( attacker, triggerArgs )
 	end
+	thread( AspectFusion.UpdateComboUI )
+
 end)
-CheckComboPowerReset( attacker, weaponData, args )
 
 ModUtil.Path.Wrap("CheckComboPowerReset", function (baseFunc, attacker, weaponData, args)
 	if weaponData ~= nil and attacker.UltraComboReady then
         thread(AspectFusion.DeactiveUltraCombo)
     end
     baseFunc(attacker, weaponData, args)
+    thread(AspectFusion.UpdateComboUI)
+end)
+
+function AspectFusion.ShowComboUI()
+    if not CurrentRun.Hero.Weapons.FistWeapon then
+		return
+	end
+    if ScreenAnchors.ComboUI ~= nil then
+		return
+	end
+	ScreenAnchors.ComboUI = CreateScreenObstacle({ Name = "BlankObstacle", Group = "Combat_UI", X = GunUI.StartX, Y = GunUI.StartY })
+
+	local offsetX = 20
+	CreateTextBox(MergeTables({ Id = ScreenAnchors.ComboUI, OffsetX = 0, OffsetY = -2,
+			Font = "AlegreyaSansSCBold", FontSize = 24, ShadowRed = 0.1, ShadowBlue = 0.1, ShadowGreen = 0.1,
+			OutlineColor = {0.113, 0.113, 0.113, 1}, OutlineThickness = 1,
+			ShadowAlpha = 1.0, ShadowBlur = 0, ShadowOffsetY = 2, ShadowOffsetX = 0, Justification = "Left",},
+			LocalizationData.UIScripts.GunUI ))
+	thread( AspectFusion.UpdateComboUI )
+
+	FadeObstacleIn({ Id = ScreenAnchors.ComboUI, Duration = CombatUI.FadeInDuration, IncludeText = true, Distance = CombatUI.FadeDistance.Ammo, Direction = 0 })
+
+end
+
+function AspectFusion.UpdateComboUI()
+	local comboData =
+	{
+		Current = CurrentRun.Hero.ComboCount,
+		Maximum = 12
+	}
+
+	if comboData.Current == nil then
+		return
+	end
+    comboData.Current = Clamp(comboData.Current, 0, comboData.Maximum)
+
+    local text = comboData.Current.."/"..comboData.Maximum
+
+	PulseText({ ScreenAnchorReference = "ComboUI", ScaleTarget = 1.04, ScaleDuration = 0.05, HoldDuration = 0.05, PulseBias = 0.02 })
+	if comboData.Current < 12 then
+		ModifyTextBox({ Id = ScreenAnchors.ComboUI, Text = text, Color = Color.White, ColorDuration = 0.04 })
+	else
+		ModifyTextBox({ Id = ScreenAnchors.ComboUI, Text = text, Color = Color.LightBlue, ColorDuration = 0.04 })
+	end
+
+	ModifyTextBox({ Id = ScreenAnchors.ComboUI, Text = text, FadeTarget = 1 })
+	-- ModifyTextBox({ Id = ScreenAnchors.ComboUI, Text = "UI_GunText", OffsetY = -2, LuaKey = "TempTextData", LuaValue = comboData, AutoSetDataProperties = false, })
+	ModifyTextBox({ Id = ScreenAnchors.ComboUI, Text = text, OffsetY = -2 })
+end
+
+function AspectFusion.HideComboUI()
+	if ScreenAnchors.ComboUI == nil then
+		return
+	end
+
+	local id = ScreenAnchors.ComboUI
+	HideObstacle({ Id = id, IncludeText = true, Distance = CombatUI.FadeDistance.Ammo, Angle = 180, Duration = CombatUI.FadeDuration, SmoothStep = true })
+
+	ScreenAnchors.ComboUI = nil
+
+	wait( CombatUI.FadeDuration , RoomThreadName)
+	Destroy({ Id = id })
+	ModifyTextBox({ Id = id, FadeTarget = 0, FadeDuration = 0, AutoSetDataProperties = false, })
+end
+
+ModUtil.Path.Wrap("ShowCombatUI", function (baseFunc, flag)
+    baseFunc(flag)
+    if CurrentDeathAreaRoom == nil or not CurrentDeathAreaRoom.ShowResourceUIOnly then
+		AspectFusion.ShowComboUI()
+	end
+end)
+
+ModUtil.Path.Wrap("HideCombatUI", function (baseFunc, flag, args)
+    baseFunc(flag, args)
+	thread(AspectFusion.HideComboUI)
+end)
+
+ModUtil.Path.Wrap("EquipPlayerWeaponPresentation", function (baseFunc, weaponData, args)
+    baseFunc(weaponData, args)
+    if weaponData.ComboPoints ~= nil then
+        thread(AspectFusion.ShowComboUI)
+    else
+	    thread(AspectFusion.HideComboUI)
+    end
 end)
 
 function AspectFusion.DeactiveUltraCombo()
@@ -871,7 +960,6 @@ OnWeaponFailedToFire{ function( triggerArgs )
 		end
 
 	end}
-end
 
 -- ultra bow
 
@@ -1041,3 +1129,4 @@ ModUtil.Path.Wrap("ReloadPresentationComplete", function (baseFunc, attacker, we
         baseFunc(attacker, weaponData, state )
     end
 end)
+end
