@@ -8,8 +8,16 @@
         ProjectileAngleOffset = 0
         ProjectileAngleStartOffset = 180
         Spread = 270
-        FireFx = "GunFire"
-        FireSound = "/SFX/Player Sounds/ZagreusGunFire"
+        MaxAmmo = 999999
+    }
+    {
+        Name = "UltraSniperGunWeapon"
+        InheritFrom = "ArtemisLegendary"
+        Projectile = "UltraSniperGunWeapon"
+        ProjectileAngleOffset = 0
+        ProjectileAngleStartOffset = 180
+        Spread = 270
+        MaxAmmo = 999999
     }
     {
       Name = "UltraFistDetonationWeapon"

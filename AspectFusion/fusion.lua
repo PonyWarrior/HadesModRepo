@@ -1085,10 +1085,6 @@ ModUtil.Path.Wrap("ManualReload", function (baseFunc, attacker)
                     ReloadFailedMidReloadPresentation( attacker, weaponData )
                     return
                 end
-                -- if RunWeaponMethod({ Id = attacker.ObjectId, Weapon = weaponData.Name, Method = "IsAmmoFull" }) then
-                --     ReloadFailedAmmoFullPresentation( attacker, weaponData )
-                --     return
-                -- end
     
                 thread( MarkObjectiveComplete, "GunWeaponManualReload" )
                 ReloadGun( attacker, weaponData )
@@ -1098,9 +1094,26 @@ ModUtil.Path.Wrap("ManualReload", function (baseFunc, attacker)
                 return
             end
         end
+    else
+        baseFunc(attacker)
     end
-    baseFunc(attacker)
 end)
+
+ModUtil.Path.Wrap("ManualReloadBonusApply", function (baseFunc, triggerArgs)
+    if HeroHasTrait("UltraGunTrait") then
+        AddOnFireWeapons( CurrentRun.Hero, "GunWeapon" , { LegalOnFireWeapons = {"GunWeapon"}, AddOnFireWeapons = { "UltraSniperGunWeapon" }} )
+    else
+        baseFunc(triggerArgs)
+    end
+end)
+
+OnWeaponFired{ "UltraSniperGunWeapon",
+	function( triggerArgs )
+        -- hacky but it does the job
+        RemoveOnFireWeapons( CurrentRun.Hero, { LegalOnFireWeapons = {"GunWeapon"}, AddOnFireWeapons = { "UltraSniperGunWeapon" }} )
+        AddOnFireWeapons( CurrentRun.Hero, "GunWeapon" , { LegalOnFireWeapons = {"GunWeapon"}, AddOnFireWeapons = { "UltraGunWeapon" }} )
+	end
+}
 
 ModUtil.Path.Wrap("ShowGunUI", function (baseFunc, gunData)
     baseFunc(gunData)

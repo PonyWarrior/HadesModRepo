@@ -49,6 +49,43 @@
     Range = 1000.0
     }
     {
+    Name = "UltraSniperGunWeapon"
+    InheritFrom = "GunWeapon"
+    ImpactFx = "GunWeaponImpact"
+    CheckObstacleImpact = false
+    DetonateAtVictimLocation = true
+    Fuse = 0.0
+	Range = 1500
+    Thing = {
+        Graphic = "GunWeaponProjectile_Sniper"
+        OffsetZ = 70
+        AttachedAnim = "SniperPowerShot"
+        Grip = 999999
+        RotateGeometry = true
+		UseBoundsForSortDrawArea = true
+		SortBoundsScale = 0.33
+		Tallness = 50
+        Points = [
+          {
+            X = 24
+            Y = 24
+          }
+          {
+            X = 24
+            Y = -24
+          }
+          {
+            X = -24
+            Y = -24
+          }
+          {
+            X = -24
+            Y = 24
+          }
+        ]
+      }
+    }
+    {
       Name = "UltraFistDetonationProjectile"
       InheritFrom = "1_BaseMagicProjectile"
       GroupName = "FX_Standing_Add"

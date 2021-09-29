@@ -3886,20 +3886,6 @@ if AspectFusion.Config.Enabled then
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
-			-- {
-			-- 	WeaponNames = { "BowWeapon", "BowWeaponDash" },
-			-- 	WeaponProperty = "ChargeTime",
-			-- 	ChangeValue = 2.1,
-			-- 	ChangeType = "Multiply",
-			-- 	ExcludeLinked = true,
-			-- },
-			-- {
-			-- 	WeaponNames = { "BowWeapon", "BowWeaponDash" },
-			-- 	WeaponProperty = "MinChargeToFire",
-			-- 	ChangeValue = 0.13,
-			-- 	ChangeType = "Absolute",
-			-- 	ExcludeLinked = true,
-			-- },
 			{
 				WeaponNames = { "BowWeapon", "BowWeaponDash" },
 				WeaponProperty = "ChargeDamageMultiplier",
@@ -3953,85 +3939,12 @@ if AspectFusion.Config.Enabled then
 				ChangeType = "Multiply",
 				ExcludeLinked = true,
 			},
-			--[[
-			{
-				WeaponNames = { "BowWeapon", "BowWeaponDash" },
-				ProjectileProperty = "AttachedAnim",
-				ChangeValue = "RamaWideShot",
-				ChangeType = "Absolute",
-				ExcludeLinked = true,
-			},
-			]]
-			-- split shot modifications
-			-- {
-			-- 	WeaponNames = { "BowSplitShot" },
-			-- 	ProjectileProperty = "DamageLow",
-			-- 	ChangeValue = 5,
-			-- 	ChangeType = "Absolute",
-			-- 	ExcludeLinked = true,
-			-- 	SplitShoutDamageSource = "SplitShotDamageSource",
-			-- 	ExtractValue =
-			-- 	{
-			-- 		ExtractAs = "SpecialDamage",
-			-- 		SkipAutoExtract = true,
-			-- 	},
-			-- },
-			-- {
-			-- 	WeaponNames = { "BowSplitShot" },
-			-- 	ProjectileProperty = "DamageHigh",
-			-- 	DeriveValueFrom = "SplitShotDamageSource",
-			-- },
-			-- {
-			-- 	WeaponNames = { "BowSplitShot" },
-			-- 	WeaponProperty = "ProjectileAngleOffsetMin",
-			-- 	ChangeValue = -1 * math.rad(4),
-			-- 	--ChangeValue = 0,
-			-- 	ChangeType = "Absolute",
-			-- 	ExcludeLinked = true,
-			-- },
-			-- {
-			-- 	WeaponNames = { "BowSplitShot" },
-			-- 	WeaponProperty = "ProjectileAngleOffsetMax",
-			-- 	ChangeValue = math.rad(4),
-			-- 	--ChangeValue = 0,
-			-- 	ChangeType = "Absolute",
-			-- 	ExcludeLinked = true,
-			-- },
-			-- {
-			-- 	WeaponNames = { "BowSplitShot" },
-			-- 	WeaponProperty = "ProjectileAngleOffset",
-			-- 	ChangeValue = 0,
-			-- 	ChangeType = "Absolute",
-			-- 	ExcludeLinked = true,
-			-- },
 			{
 				WeaponNames = { "BowSplitShot" },
 				ProjectileProperty = "NoJumpTargetRandomSpread",
 				ChangeValue = 90,
 				ChangeType = "Absolute",
 			},
-			-- {
-			-- 	WeaponNames = { "BowSplitShot" },
-			-- 	WeaponProperty = "NumProjectiles",
-			-- 	ChangeValue = 3,
-			-- 	ChangeType = "Absolute",
-			-- 	ExcludeLinked = true,
-			-- },
-			-- {
-			-- 	WeaponNames = { "BowSplitShot" },
-			-- 	WeaponProperty = "ProjectileInterval",
-			-- 	ChangeValue = 1.5,
-			-- 	ChangeType = "Multiply",
-			-- 	ExcludeLinked = true,
-			-- },
-			-- {
-			-- 	WeaponNames = { "BowSplitShot" },
-			-- 	WeaponProperty = "ProjectileInterval",
-			-- 	ChangeValue = 1.5,
-			-- 	ChangeType = "Multiply",
-			-- 	ExcludeLinked = true,
-			-- },
-
 			{
 				WeaponNames = { "BowSplitShot" },
 				WeaponProperty = "AutoLock",
@@ -4053,42 +3966,6 @@ if AspectFusion.Config.Enabled then
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
-
-			-- {
-			-- 	WeaponName = "BowSplitShot",
-			-- 	EffectName = "SplitShotDisable",
-			-- 	EffectProperty = "Duration",
-			-- 	ChangeValue = 0.65,
-			-- 	ChangeType = "Multiply",
-			-- },
-			-- {
-			-- 	WeaponName = "BowSplitShot",
-			-- 	EffectName = "SplitShotDisableFast",
-			-- 	EffectProperty = "Duration",
-			-- 	ChangeValue = 0.65,
-			-- 	ChangeType = "Multiply",
-			-- },
-			-- {
-			-- 	WeaponName = "BowSplitShot",
-			-- 	EffectName = "SplitShotDisableCancelable",
-			-- 	EffectProperty = "Duration",
-			-- 	ChangeValue = 0.5,
-			-- 	ChangeType = "Multiply",
-			-- },
-			-- {
-			-- 	WeaponName = "BowSplitShot",
-			-- 	EffectName = "SplitShotDisableFastCancelable",
-			-- 	EffectProperty = "Duration",
-			-- 	ChangeValue = 0.5,
-			-- 	ChangeType = "Multiply",
-			-- },
-			-- {
-			-- 	WeaponName = "BowSplitShot",
-			-- 	WeaponProperty = "ChargeTime",
-			-- 	ChangeValue = 0.18,
-			-- 	ChangeType = "Absolute",
-			-- },
-
 			{
 				WeaponNames = { "BowSplitShot" },
 				ProjectileProperty = "NumJumps",
@@ -4122,97 +3999,6 @@ if AspectFusion.Config.Enabled then
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
-
-			-- {
-			-- 	WeaponName = "BowSplitShot",
-			-- 	WeaponProperty = "ChargeStartAnimation",
-			-- 	ChangeValue = "ZagreusBowRamaRapidLoop_Start",
-			-- 	ChangeType = "Absolute",
-			-- },
-			-- {
-			-- 	WeaponName = "BowSplitShot",
-			-- 	WeaponProperty = "FireGraphic",
-			-- 	ChangeValue = "ZagreusBowRamaRapidLoop_Fire",
-			-- 	ChangeType = "Absolute",
-			-- },
-			-- {
-			-- 	WeaponName = "BowSplitShot",
-			-- 	EffectName = "OnHitStun",
-			-- 	EffectProperty = "Active",
-			-- 	ChangeValue = false,
-			-- 	ChangeType = "Absolute",
-			-- },
-			-- -- tap fire properties
-			-- {
-			-- 	WeaponNames = { "BowSplitShot" },
-			-- 	WeaponProperty = "LockTriggerForCharge",
-			-- 	ChangeValue = true,
-			-- 	ChangeType = "Absolute",
-			-- 	ExcludeLinked = true,
-			-- },
-
-			-- {
-			-- 	WeaponNames = { "BowSplitShot" },
-			-- 	WeaponProperty = "FireOnRelease",
-			-- 	ChangeValue = false,
-			-- 	ChangeType = "Absolute",
-			-- 	ExcludeLinked = true,
-			-- },
-
-			-- {
-			-- 	WeaponNames = { "BowSplitShot" },
-			-- 	WeaponProperty = "FullyAutomatic",
-			-- 	ChangeValue = true,
-			-- 	ChangeType = "Absolute",
-			-- 	ExcludeLinked = true,
-			-- },
-
-			-- {
-			-- 	WeaponNames = { "BowSplitShot" },
-			-- 	WeaponProperty = "ForceReleaseOnFire",
-			-- 	ChangeValue = false,
-			-- 	ChangeType = "Absolute",
-			-- 	ExcludeLinked = true,
-			-- },
-			-- {
-			-- 	WeaponNames = { "BowSplitShot" },
-			-- 	WeaponProperty = "AllowExternalForceRelease",
-			-- 	ChangeValue = false,
-			-- 	ChangeType = "Absolute",
-			-- 	ExcludeLinked = true,
-			-- },
-			-- {
-			-- 	WeaponNames = { "BowSplitShot" },
-			-- 	WeaponProperty = "ForceReleaseWeaponOnFire",
-			-- 	ChangeValue = "null",
-			-- 	ChangeType = "Absolute",
-			-- 	ExcludeLinked = true,
-			-- },
-
-			-- {
-			-- 	WeaponNames = { "BowSplitShot" },
-			-- 	WeaponProperty = "ShowFreeAimLine",
-			-- 	ChangeValue = false,
-			-- 	ChangeType = "Absolute",
-			-- 	ExcludeLinked = true,
-			-- },
-
-			-- {
-			-- 	WeaponNames = { "BowSplitShot" },
-			-- 	WeaponProperty = "MinChargeToFire",
-			-- 	ChangeValue = 1.0,
-			-- 	ChangeType = "Absolute",
-			-- 	ExcludeLinked = true,
-			-- },
-
-			-- {
-			-- 	WeaponNames = { "BowSplitShot" },
-			-- 	WeaponProperty = "ReloadTime",
-			-- 	ChangeValue = 0.35,
-			-- 	ChangeType = "Absolute",
-			-- 	ExcludeLinked = true,
-			-- },
-
 			{
 				WeaponName = "BowWeapon",
 				WeaponProperty = "ClipSize",
@@ -4220,7 +4006,6 @@ if AspectFusion.Config.Enabled then
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
-
 			{
 				WeaponName = "BowWeapon",
 				WeaponProperty = "ChargeStartAnimation",
@@ -4368,7 +4153,7 @@ if AspectFusion.Config.Enabled then
 		PostWeaponUpgradeScreenAngle = 210,
 		Icon = "Weapon_Gun_Lucifer_01",
 		RequiredWeapon = "GunWeapon",
-		PreEquipWeapons = { "GunBombWeapon", "GunBombImmolation", "ManualReloadEffectApplicator", "SniperGunWeapon", "SniperGunWeaponDash"  },
+		PreEquipWeapons = { "GunBombWeapon", "GunBombImmolation", "ManualReloadEffectApplicator", "UltraSniperGunWeapon"  },
         AddOnFireWeapons = { "UltraGunWeapon" },
 		LegalOnFireWeapons = { "GunWeapon" },
 		--InfiniteAmmo = true,
@@ -4456,7 +4241,17 @@ if AspectFusion.Config.Enabled then
 						BushObstacle = "/Leftovers/World Sounds/LeavesRustle",
 					},
 				},
-			}
+			},
+            UltraSniperGunWeapon =
+            {
+                Sounds = 
+                {
+                    FireSounds =
+                    {
+                        {"/Leftovers/SFX/AuraPerfectThrow"}
+                    }
+                }
+            }
 		},
 		PropertyChanges =
 		{
@@ -4676,13 +4471,6 @@ if AspectFusion.Config.Enabled then
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
-			-- {
-			-- 	WeaponName = "GunWeapon",
-			-- 	WeaponProperty = "ChargeTime",
-			-- 	ChangeValue = 0.3,
-			-- 	ChangeType = "Absolute",
-			-- 	ExcludeLinked = true,
-			-- },
 			{
 				WeaponName = "GunWeapon",
 				WeaponProperty = "ChargeStartAnimation",
@@ -5072,6 +4860,13 @@ if AspectFusion.Config.Enabled then
                 AsInt = true,
                 ChangeType = "Add",
             },
+            {
+                WeaponNames = { "UltraGunWeapon", "UltraSniperGunWeapon" },
+                WeaponProperty = "MaxAmmo",
+                BaseValue = 999999,
+                AsInt = true,
+                ChangeType = "Add",
+            },
 
             -- Eris
 
@@ -5109,47 +4904,107 @@ if AspectFusion.Config.Enabled then
             -- Hestia
 
             {
-                WeaponNames = { "SniperGunWeapon", "SniperGunWeaponDash" },
+                WeaponName = "UltraSniperGunWeapon",
                 ProjectileProperty = "DamageLow",
                 BaseValue = 150,
                 ChangeType = "Absolute",
                 ExcludeLinked = true,
             },
             {
-                WeaponNames = { "SniperGunWeapon", "SniperGunWeaponDash" },
+                WeaponName = "UltraSniperGunWeapon",
                 ProjectileProperty = "DamageHigh",
                 BaseValue = 150,
                 ChangeType = "Absolute",
                 ExcludeLinked = true,
             },
             {
-                WeaponNames = { "SniperGunWeapon", "SniperGunWeaponDash" },
+                WeaponName = "UltraSniperGunWeapon",
                 WeaponProperty = "Enabled",
                 ChangeValue = true,
                 ChangeType = "Absolute",
             },
             {
-                WeaponName = "SniperGunWeapon",
+                WeaponName = "UltraSniperGunWeapon",
                 WeaponProperty = "FireGraphic",
                 ChangeValue = "ZagreusGunAlt01Fire",
                 ChangeType = "Absolute",
                 ExcludeLinked = true,
             },
+
+            {
+				WeaponName = "UltraSniperGunWeapon",
+				ProjectileProperty = "MaxAdjustRate",
+				ChangeValue = 20,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponName = "UltraSniperGunWeapon",
+				ProjectileProperty = "AdjustRateAcceleration",
+				ChangeValue = 50,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponName = "UltraSniperGunWeapon",
+				ProjectileProperty = "Speed",
+				ChangeValue = 0.60,
+				ChangeType = "Multiply",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponName = "UltraSniperGunWeapon",
+				ProjectileProperty = "MaxSpeed",
+				ChangeValue = 0.60,
+				ChangeType = "Multiply",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponName = "UltraSniperGunWeapon",
+				ProjectileProperty = "Acceleration",
+				ChangeValue = 0.60,
+				ChangeType = "Multiply",
+				ExcludeLinked = true,
+			},
+
+			{
+				WeaponName = "UltraSniperGunWeapon",
+				ProjectileProperty = "Range",
+				ChangeValue = 1.30,
+				ChangeType = "Multiply",
+				ExcludeLinked = true,
+				ExtractValue =
+				{
+					ExtractAs = "TooltipRange",
+					Format = "PercentDelta",
+				},
+			},
+			{
+				WeaponName = "UltraSniperGunWeapon",
+				ProjectileProperty = "Fuse",
+				ChangeValue = 2.0,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
     
             {
-                WeaponName = "SniperGunWeapon",
+                WeaponName = "UltraSniperGunWeapon",
                 WeaponProperty = "FailedToFireCooldownAnimation",
                 ChangeValue = "ZagreusGunAlt01FireEmpty",
                 ChangeType = "Absolute",
                 ExcludeLinked = true,
             },
-            {
-                WeaponName = "SniperGunWeaponDash",
-                WeaponProperty = "FireGraphic",
-                ChangeValue = "ZagreusGunAlt01Fire",
-                ChangeType = "Absolute",
-                ExcludeLinked = true,
-            },
+            -- {
+            --     WeaponName = "UltraSniperGunWeaponDash",
+            --     WeaponProperty = "FireGraphic",
+            --     ChangeValue = "ZagreusGunAlt01Fire",
+            --     ChangeType = "Absolute",
+            --     ExcludeLinked = true,
+            -- },
 
             -- Cluster bomb and rocket bomb vfx
 
@@ -5295,19 +5150,65 @@ if AspectFusion.Config.Enabled then
                         propertyCopy.TraitName = "UltraGunTrait"
                         table.insert(traitData.PropertyChanges, propertyCopy)
                     end
-                elseif property.WeaponName ~= nil and property.WeaponName == "GunWeapon"
+
+                end
+                if property.WeaponName ~= nil and property.WeaponName == "GunWeapon"
                 and traitData.Icon ~= "WeaponEnchantment_Gun01"
                 and traitData.Icon ~= "WeaponEnchantment_Gun02"
                 and traitData.Icon ~= "WeaponEnchantment_Gun03"
                 and traitData.Icon ~= "WeaponEnchantment_Gun04"
-                and traitData.Icon ~= "Weapon_Gun_Lucifer_01"
-                then
+                and traitData.Icon ~= "Weapon_Gun_Lucifer_01" then
                     if property.TraitName ~= "GunLoadedGrenadeTrait" and property.TraitName ~= "UltraGunTrait" then
                         local propertyCopy = DeepCopyTable(property)
                         propertyCopy.TraitName = "UltraGunTrait"
                         propertyCopy.WeaponName = "UltraGunWeapon"
                         if propertyCopy.ProjectileName ~= nil and propertyCopy.ProjectileName == "GunWeapon" then
                             propertyCopy.ProjectileName = "UltraGunWeapon"
+                        end
+                        table.insert(traitData.PropertyChanges, propertyCopy)
+                    end
+                elseif property.WeaponName ~= nil and property.WeaponName == "SniperGunWeapon"
+                and traitData.Icon ~= "WeaponEnchantment_Gun01"
+                and traitData.Icon ~= "WeaponEnchantment_Gun02"
+                and traitData.Icon ~= "WeaponEnchantment_Gun03"
+                and traitData.Icon ~= "WeaponEnchantment_Gun04"
+                and traitData.Icon ~= "Weapon_Gun_Lucifer_01" then
+                    if property.TraitName ~= "GunLoadedGrenadeTrait" and property.TraitName ~= "UltraGunTrait" then
+                        local propertyCopy = DeepCopyTable(property)
+                        propertyCopy.TraitName = "UltraGunTrait"
+                        propertyCopy.WeaponName = "UltraSniperGunWeapon"
+                        if propertyCopy.ProjectileName ~= nil and propertyCopy.ProjectileName == "SniperGunWeapon" then
+                            propertyCopy.ProjectileName = "UltraSniperGunWeapon"
+                        end
+                        table.insert(traitData.PropertyChanges, propertyCopy)
+                    end
+                elseif property.WeaponNames ~= nil and Contains(property.WeaponNames, "GunWeapon")
+                and traitData.Icon ~= "WeaponEnchantment_Gun01"
+                and traitData.Icon ~= "WeaponEnchantment_Gun02"
+                and traitData.Icon ~= "WeaponEnchantment_Gun03"
+                and traitData.Icon ~= "WeaponEnchantment_Gun04"
+                and traitData.Icon ~= "Weapon_Gun_Lucifer_01" then
+                    if property.TraitName ~= "GunLoadedGrenadeTrait" and property.TraitName ~= "UltraGunTrait" then
+                        local propertyCopy = DeepCopyTable(property)
+                        propertyCopy.TraitName = "UltraGunTrait"
+                        propertyCopy.WeaponName = "UltraGunWeapon"
+                        if propertyCopy.ProjectileName ~= nil and propertyCopy.ProjectileName == "GunWeapon" then
+                            propertyCopy.ProjectileName = "UltraGunWeapon"
+                        end
+                        table.insert(traitData.PropertyChanges, propertyCopy)
+                    end
+                elseif property.WeaponNames ~= nil and Contains(property.WeaponNames, "SniperGunWeapon")
+                and traitData.Icon ~= "WeaponEnchantment_Gun01"
+                and traitData.Icon ~= "WeaponEnchantment_Gun02"
+                and traitData.Icon ~= "WeaponEnchantment_Gun03"
+                and traitData.Icon ~= "WeaponEnchantment_Gun04"
+                and traitData.Icon ~= "Weapon_Gun_Lucifer_01" then
+                    if property.TraitName ~= "GunLoadedGrenadeTrait" and property.TraitName ~= "UltraGunTrait" then
+                        local propertyCopy = DeepCopyTable(property)
+                        propertyCopy.TraitName = "UltraGunTrait"
+                        propertyCopy.WeaponName = "UltraSniperGunWeapon"
+                        if propertyCopy.ProjectileName ~= nil and propertyCopy.ProjectileName == "SniperGunWeapon" then
+                            propertyCopy.ProjectileName = "UltraSniperGunWeapon"
                         end
                         table.insert(traitData.PropertyChanges, propertyCopy)
                     end
@@ -5834,4 +5735,10 @@ if AspectFusion.Config.Enabled then
         ChangeType = "Absolute",
         ExcludeLinked = true,
     })
+
+    --Other changes
+        --Gun
+    WeaponSets.LinkedWeaponUpgrades.GunWeapon = { "GunWeaponDash", "SniperGunWeapon", "SniperGunWeaponDash", "UltraGunWeapon", "UltraSniperGunWeapon" }
+    WeaponSets.HeroWeaponSets.GunWeapon = { "GunGrenadeToss", "GunBombWeapon", "GunWeaponDash", "SniperGunWeapon", "SniperGunWeaponDash", "UltraGunWeapon", "UltraSniperGunWeapon" }
+    
 end
