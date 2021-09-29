@@ -466,5 +466,12 @@ if PAB.Config.Gameplay.Enabled then
         TraitData.SwordSecondaryAreaDamageTrait.PropertyChanges[1].ChangeValue = config.SuperNovaRangeMultiplier
         -- Double nova
         TraitData.SwordSecondaryDoubleAttackTrait.PropertyChanges[2].ChangeValue = config.DoubleNovaDamageInterval
+        -- Glacial glare
+        if config.GlacialGlarePrereqForArcticBlastAndKillingFreeze then
+            LootData.DemeterUpgrade.LinkedUpgrades.MaximumChillBlast.OneOf ={ "DemeterWeaponTrait", "DemeterSecondaryTrait", "DemeterRushTrait",
+            "DemeterShoutTrait", "ShieldLoadAmmo_DemeterRangedTrait", "CastNovaTrait", "DemeterRangedBonusTrait"}
+            LootData.DemeterUpgrade.LinkedUpgrades.MaximumChillBonusSlow.OneOf ={ "DemeterWeaponTrait", "DemeterSecondaryTrait", "DemeterRushTrait",
+            "DemeterShoutTrait", "ShieldLoadAmmo_DemeterRangedTrait", "CastNovaTrait", "DemeterRangedBonusTrait"}
+        end
     end
 end

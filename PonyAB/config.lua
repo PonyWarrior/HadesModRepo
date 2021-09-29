@@ -64,6 +64,7 @@ PAB =
 					RavenousWillPommable = false, -- vanilla false
 					DemeterAidBaseDamage = 15, -- vanilla 10
 					DemeterAidExpansionSpeed = 1.5, -- vanilla 1.0 (100%)
+                    GlacialGlarePrereqForArcticBlastAndKillingFreeze = true, -- vanilla false
 					-- Guan Yu
 					GuanYuComboAttack1Damage = 60, -- vanilla 40
 					GuanYuComboAttack2Damage = 80, -- vanilla 60

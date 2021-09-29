@@ -49,3 +49,9 @@ fixed issues:
 
 fixed a crash on new save files
 fixed old chaos shield not always working
+
+1.1.0
+
+new features:
+
+Glacial glare is now a prerequisite for Arctic Blast and Killing Freeze
