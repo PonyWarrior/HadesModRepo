@@ -963,6 +963,45 @@ OnWeaponFailedToFire{ function( triggerArgs )
 
 -- ultra bow
 
+function AspectFusion.ArrowRain(markId)
+    while CurrentRun.CurrentRoom.LastMarkedTargetId == markId do
+        local offsetX = RandomFloat( -200, 200 )
+        local offsetY = RandomFloat( -200, 200 )
+        local targetId =  SpawnObstacle({ Name = "BlankObstacle", DestinationId = markId, OffsetX = offsetX, OffsetY = offsetY })
+        FireWeaponFromUnit({ Weapon = "UltraBowRain", Id = CurrentRun.Hero.ObjectId, DestinationId = targetId, FireFromTarget = true, AutoEquip = true })
+        local rubbleWait = RandomFloat( 0.16, 0.32 )
+        wait( rubbleWait )
+    end
+end
+
+ModUtil.Path.Wrap("MarkTargetApply", function (baseFunc, triggerArgs)
+    if HeroHasTrait("UltraBowTrait") and not triggerArgs.Reapplied then
+            if CurrentRun.CurrentRoom.LastMarkedTargetId ~= nil then
+                ClearEffect({ Id = CurrentRun.CurrentRoom.LastMarkedTargetId, Name = "MarkTarget" })
+                BlockEffect({ Id = CurrentRun.CurrentRoom.LastMarkedTargetId, Name = "MarkTarget", Duration = 0.1 })
+            end
+            CurrentRun.CurrentRoom.LastMarkedTargetId = triggerArgs.triggeredById
+            SetWeaponProperty({ WeaponName = "BowSplitShot", DestinationId = CurrentRun.Hero.ObjectId, Property = "OverrideFireRequestTarget", Value = triggerArgs.triggeredById, DataValue = false})
+            --fff
+            SetProjectileProperty({ WeaponName = "BowSplitShot", DestinationId = CurrentRun.Hero.ObjectId, Property = "UseStartLocation", Value = false })
+            -- thread(AspectFusion.ArrowRain, triggerArgs.triggeredById)
+    elseif not triggerArgs.Reapplied then
+    DebugPrint({Text="fuck"})
+
+        baseFunc(triggerArgs)
+    end
+end)
+
+ModUtil.Path.Wrap("MarkTargetClear", function (baseFunc, triggerArgs)
+    if HeroHasTrait("UltraBowTrait") then
+        SetWeaponProperty({ WeaponName = "BowSplitShot", DestinationId = CurrentRun.Hero.ObjectId, Property = "OverrideFireRequestTarget", Value = -1, DataValue = false})
+        SetProjectileProperty({ WeaponName = "BowSplitShot", DestinationId = CurrentRun.Hero.ObjectId, Property = "UseStartLocation", Value = true })
+        -- CurrentRun.CurrentRoom.LastMarkedTargetId = nil
+    else
+        baseFunc(triggerArgs)
+    end
+end)
+
 ModUtil.Path.Wrap("DamageEnemy", function (baseFunc, victim, triggerArgs )
     baseFunc(victim, triggerArgs )
     local sourceWeaponData = triggerArgs.AttackerWeaponData

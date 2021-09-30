@@ -1933,6 +1933,7 @@ if AspectFusion.Config.Enabled then
 		},
 		WeaponDataOverride =
 		{
+            -- ShieldWeapon = { Sounds = {}},
 			ShieldWeapon =
 			{
 				WeaponBinks =
@@ -2337,7 +2338,74 @@ if AspectFusion.Config.Enabled then
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
-
+            --fff
+            -- {
+			-- 	WeaponName = "ShieldWeapon",
+			-- 	WeaponProperty = "FireGraphic",
+			-- 	ChangeValue = "null",
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+            -- {
+			-- 	WeaponName = "ShieldWeapon",
+			-- 	ProjectileProperty = "DetonateGraphic",
+			-- 	ChangeValue = "null",
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+			-- {
+			-- 	WeaponName = "ShieldWeapon",
+			-- 	ProjectileProperty = "DamageLow",
+			-- 	ChangeValue = 0,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+			-- {
+			-- 	WeaponName = "ShieldWeapon",
+			-- 	ProjectileProperty = "DamageHigh",
+			-- 	ChangeValue = 0,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+            -- {
+			-- 	WeaponName = "ShieldWeapon",
+			-- 	ProjectileProperty = "DamageRadius",
+			-- 	ChangeValue = 0,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+            -- {
+			-- 	WeaponName = "ShieldWeapon",
+			-- 	WeaponProperty = "ChargeTime",
+			-- 	ChangeValue = 0,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+			-- {
+			-- 	WeaponName = "ShieldWeapon",
+			-- 	EffectName = "ShieldDisableAttack",
+			-- 	EffectProperty = "Duration",
+			-- 	BaseValue = 0,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+            -- {
+			-- 	WeaponName = "ShieldWeapon",
+			-- 	EffectName = "ShieldDisableAttackFast",
+			-- 	EffectProperty = "Duration",
+			-- 	BaseValue = 0,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+            -- {
+			-- 	WeaponName = "ShieldWeapon",
+			-- 	EffectName = "ShieldSelfSlowFire",
+			-- 	EffectProperty = "Duration",
+			-- 	ChangeValue = 0,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+            --fff
 
 			-- Dash attack
 
@@ -2606,12 +2674,6 @@ if AspectFusion.Config.Enabled then
                 ProjectileProperty = "ClearWeaponBonusesOnHit",
                 ChangeValue = true,
                 ExcludeLinked = true,
-            },
-            {
-                WeaponName = "ShieldThrow",
-                WeaponProperty = "RemoveControlOnFire",
-                ChangeValue = "null",
-                ChangeType = "Absolute",
             },
     
             {
@@ -3939,13 +4001,145 @@ if AspectFusion.Config.Enabled then
 				ChangeType = "Multiply",
 				ExcludeLinked = true,
 			},
-			{
-				WeaponNames = { "BowSplitShot" },
-				ProjectileProperty = "NoJumpTargetRandomSpread",
-				ChangeValue = 90,
-				ChangeType = "Absolute",
-			},
-			{
+			-- {
+			-- 	WeaponNames = { "BowSplitShot" },
+			-- 	ProjectileProperty = "NoJumpTargetRandomSpread",
+			-- 	ChangeValue = 90,
+			-- 	ChangeType = "Absolute",
+			-- },
+			-- {
+			-- 	WeaponNames = { "BowSplitShot" },
+			-- 	WeaponProperty = "AutoLock",
+			-- 	ChangeValue = true,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+			-- {
+			-- 	WeaponNames = { "BowSplitShot" },
+			-- 	WeaponProperty = "AutoLockRange",
+			-- 	ChangeValue = 1000,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+			-- {
+			-- 	WeaponNames = { "BowSplitShot" },
+			-- 	WeaponProperty = "AutoLockArcDistance",
+			-- 	ChangeValue = math.rad(90),
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+			-- {
+			-- 	WeaponNames = { "BowSplitShot" },
+			-- 	ProjectileProperty = "NumJumps",
+			-- 	ChangeValue = 1,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- 	ExtractValue =
+			-- 	{
+			-- 		ExtractAs = "BonusJumps",
+			-- 		SkipAutoExtract = true,
+			-- 	}
+			-- },
+			-- {
+			-- 	WeaponNames = { "BowSplitShot" },
+			-- 	ProjectileProperty = "BounceWhenOutOfJumpTargets",
+			-- 	ChangeValue = true,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+			-- {
+			-- 	WeaponNames = { "BowSplitShot" },
+			-- 	ProjectileProperty = "JumpRange",
+			-- 	ChangeValue = 500,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+			-- {
+			-- 	WeaponNames = { "BowSplitShot" },
+			-- 	ProjectileProperty = "Fuse",
+			-- 	ChangeValue = 0.75,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+            --fff
+            {
+                WeaponNames = { "BowSplitShot" },
+                ProjectileProperty = "Type",
+                ChangeValue = "SKY",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "BowSplitShot" },
+                ProjectileProperty = "DamageRadius",
+                ChangeValue = 250,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "BowSplitShot" },
+                ProjectileProperty = "UseStartLocation",
+                ChangeValue = true,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "BowSplitShot" },
+                ProjectileProperty = "AscentEndZ",
+                ChangeValue = 1800,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "BowSplitShot" },
+                WeaponProperty = "ReloadTime",
+                ChangeValue = 1.0,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "BowSplitShot" },
+                WeaponProperty = "NumProjectiles",
+                ChangeValue = 9,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "BowSplitShot" },
+                WeaponProperty = "ProjectileInterval",
+                ChangeValue = 0.07,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "BowSplitShot" },
+                WeaponProperty = "ChargeStartAnimation",
+                ChangeValue = "ZagreusBowRamaRapidLoop_Start",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "BowSplitShot" },
+                WeaponProperty = "FireGraphic",
+                ChangeValue = "ZagreusBowRamaRapidLoop_Fire",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "BowSplitShot" },
+                ProjectileProperty = "DetonateGraphic",
+                ChangeValue = "RadialNova-UltraBow",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "BowSplitShot" },
+                ProjectileProperty = "DamageRadiusScaleY",
+                ChangeValue =  0.5,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
 				WeaponNames = { "BowSplitShot" },
 				WeaponProperty = "AutoLock",
 				ChangeValue = true,
@@ -3966,39 +4160,106 @@ if AspectFusion.Config.Enabled then
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
-			{
-				WeaponNames = { "BowSplitShot" },
-				ProjectileProperty = "NumJumps",
-				ChangeValue = 1,
-				ChangeType = "Absolute",
-				ExcludeLinked = true,
-				ExtractValue =
-				{
-					ExtractAs = "BonusJumps",
-					SkipAutoExtract = true,
-				}
+            {
+            	WeaponNames = { "BowSplitShot" },
+            	WeaponProperty = "ProjectileAngleOffset",
+            	ChangeValue = math.rad(35),
+            	ChangeType = "Absolute",
+            	ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "BowSplitShot" },
+                WeaponProperty = "ProjectileOffsetStartDistance",
+                ChangeValue = 0,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "BowSplitShot" },
+                WeaponProperty = "ProjectileOffset",
+                ChangeValue = 500,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "BowSplitShot" },
+                WeaponProperty = "ProjectileOffsetStart",
+                ChangeValue = "LEFT",
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponNames = { "BowSplitShot" },
+                WeaponProperty = "ChargeTime",
+                ChangeValue = 0.18,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+				WeaponName = "BowSplitShot",
+				EffectName = "SplitShotDisable",
+				EffectProperty = "Duration",
+				ChangeValue = 0.65,
+				ChangeType = "Multiply",
 			},
 			{
-				WeaponNames = { "BowSplitShot" },
-				ProjectileProperty = "BounceWhenOutOfJumpTargets",
-				ChangeValue = true,
-				ChangeType = "Absolute",
-				ExcludeLinked = true,
+				WeaponName = "BowSplitShot",
+				EffectName = "SplitShotDisableFast",
+				EffectProperty = "Duration",
+				ChangeValue = 0.65,
+				ChangeType = "Multiply",
 			},
 			{
-				WeaponNames = { "BowSplitShot" },
-				ProjectileProperty = "JumpRange",
-				ChangeValue = 500,
-				ChangeType = "Absolute",
-				ExcludeLinked = true,
+				WeaponName = "BowSplitShot",
+				EffectName = "SplitShotDisableCancelable",
+				EffectProperty = "Duration",
+				ChangeValue = 0.5,
+				ChangeType = "Multiply",
 			},
 			{
-				WeaponNames = { "BowSplitShot" },
-				ProjectileProperty = "Fuse",
-				ChangeValue = 0.75,
-				ChangeType = "Absolute",
-				ExcludeLinked = true,
+				WeaponName = "BowSplitShot",
+				EffectName = "SplitShotDisableFastCancelable",
+				EffectProperty = "Duration",
+				ChangeValue = 0.5,
+				ChangeType = "Multiply",
 			},
+            -- {
+            -- 	WeaponNames = { "BowSplitShot" },
+            -- 	WeaponProperty = "ProjectileAngleResetCount",
+            -- 	ChangeValue = 1,
+            -- 	ChangeType = "Absolute",
+            -- 	ExcludeLinked = true,
+            -- },
+            {
+                WeaponName = "BowSplitShot",
+                WeaponProperty = "ProjectileSpacing",
+                ChangeValue = 0,
+                ChangeType = "Absolute",
+                ExcludeLinked = true
+            },
+            {
+                WeaponNames = { "BowSplitShot" },
+                ProjectileName = "BowWeapon",
+                EffectName = "OnHitStun",
+                EffectProperty = "Active",
+                ChangeValue = true,
+                ChangeType = "Absolute",
+                ExcludeLinked = true,
+            },
+            {
+                WeaponName = "BowSplitShot",
+                ProjectileProperty = "DamageLow",
+                ChangeValue = 30,
+                ChangeType = "Absolute",
+                ExcludeLinked = true
+            },
+            {
+                WeaponName = "BowSplitShot",
+                ProjectileProperty = "DamageHigh",
+                DeriveValueFrom = "DamageLow",
+                ExcludeLinked = true
+            },
+            --fff
 			{
 				WeaponName = "BowWeapon",
 				WeaponProperty = "ClipSize",
