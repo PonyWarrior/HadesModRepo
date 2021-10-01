@@ -54,4 +54,11 @@ fixed old chaos shield not always working
 
 new features:
 
+Sword hammer changes :
+    -Hoarding slash gold multiplier 5% > 15%
+    -Cursed slash now works on dash strikes
+    -Shadow slash now works on dash strikes
+    -Flurry slash now deals ramping damage, 5 per hit with a 0.8s window
+    -Super nova damage and range +20% > 50%
+    -Double nova damage interval 0.2s > 0.1s
 Glacial glare is now a prerequisite for Arctic Blast and Killing Freeze
