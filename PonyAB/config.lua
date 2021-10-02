@@ -90,7 +90,7 @@ PAB =
 					-- Hades Spear
 					HadesSpearGlobalSweepBuff = true, -- vanilla false
 					HadesSpearBaseSweepBuff = 0.3, -- vanilla 0.3
-                    -- Hammers
+                    -- Sword Hammers
                     HoardingSlashGoldMultiplier = 0.15, -- vanilla 0.05 (5%)
                     CursedSlashWorksOnDashStrikes = true, -- vanilla false
                     ShadowSlashWorksOnDashStrikes = true, -- vanilla false
@@ -100,6 +100,8 @@ PAB =
                     SuperNovaDamageMultiplier = 1.5, -- vanilla 1.2 (+20%)
                     SuperNovaRangeMultiplier = 1.5, -- vanilla 1.2 (+20%)
                     DoubleNovaDamageInterval = 0.1, -- vanilla 0.2 (in seconds)
+                    -- Rail Hammers
+                    ClusterBombsRocketBombBugFix = true, -- vanilla false (rockets deal 100% dmg instead of 70%)
 			},
 		},
     }

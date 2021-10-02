@@ -604,5 +604,27 @@ if PAB.Config.Gameplay.Enabled then
                 })
             end
         end
+        -- Clockets
+        if config.ClusterBombsRocketBombBugFix then
+            table.insert(TraitData.GunExplodingSecondaryTrait.PropertyChanges,
+        {
+                TraitName = "GunGrenadeClusterTrait",
+                WeaponName = "GunGrenadeToss",
+                ProjectileProperty = "DamageLow",
+                ChangeValue = 0.7,
+                ChangeType = "Multiply",
+                ExcludeLinked = true,
+            })
+            table.insert(TraitData.GunExplodingSecondaryTrait.PropertyChanges,
+        {
+                TraitName = "GunGrenadeClusterTrait",
+                WeaponName = "GunGrenadeToss",
+                ProjectileProperty = "DamageHigh",
+                ChangeValue = 0.7,
+                ChangeType = "Multiply",
+                ExcludeLinked = true,
+            })
+        end
+
     end
 end
