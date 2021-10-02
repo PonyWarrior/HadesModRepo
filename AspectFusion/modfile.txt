@@ -1,30 +1,55 @@
+::AspectFusion
+
 Top Import "config.lua"
-Import "fusion.lua"
+Import "Scripts/fusion.lua"
+
 To "Scripts/TraitData.lua"
-Import "traitdata.lua"
+Import "Data/traitdata.lua"
+
 To "Scripts/WeaponUpgradeData.lua"
-Import "weaponupgradedata.lua"
+Import "Data/weaponupgradedata.lua"
+
 To "Scripts/WeaponData.lua"
-Import "weapondata.lua"
+Import "Data/weapondata.lua"
+
+To "Scripts/EnemyData.lua"
+Import "Data/enemydata.lua"
+
+To "Game/Weapons/PlayerWeapons.sjson"
+SJSON "Game/playerweapons.sjson"
+
 To "Game/Projectiles/PlayerProjectiles.sjson"
-SJSON "playerprojectiles.sjson"
-To "Game/Text/en/HelpText.en.sjson"
-SJSON "helptext.en.sjson"
-To "Game/Text/fr/HelpText.fr.sjson"
-SJSON "helptext.fr.sjson"
-To "Game/Text/zh-CN/HelpText.zh-CN.sjson"
-SJSON "helptext.zh-CN.sjson"
+SJSON "Game/playerprojectiles.sjson"
+
+To "Game/Units/Enemies.sjson"
+SJSON "Game/enemies.sjson"
+
 To "Game/Animations/GUIAnimations.sjson"
-SJSON "guianimations.sjson"
+SJSON "Game/guianimations.sjson"
+
 To "Game/Animations/Fx.sjson"
-SJSON "fx.sjson"
+SJSON "Game/fx.sjson"
+
 To "Game/Obstacles/GUI.sjson"
-SJSON "gui.sjson"
+SJSON "Game/gui.sjson"
+
+To "Game/Text/en/HelpText.en.sjson"
+SJSON "Localization/helptext.en.sjson"
+
+To "Game/Text/fr/HelpText.fr.sjson"
+SJSON "Localization/helptext.fr.sjson"
+
+To "Game/Text/zh-CN/HelpText.zh-CN.sjson"
+SJSON "Localization/helptext.zh-CN.sjson"
+
 To "Win/Packages/AspectFusion.pkg"
-Replace "AspectFusion.pkg"
+Replace "Packages/AspectFusion.pkg"
+
 To Win/Packages/720p/AspectFusion.pkg
-Replace "AspectFusion.pkg"
+Replace "Packages/AspectFusion.pkg"
+
 To Win/Packages/AspectFusion.pkg_manifest
-Replace "AspectFusion.pkg_manifest"
+Replace "Packages/AspectFusion.pkg_manifest"
+
 To Win/Packages/720p/AspectFusion.pkg_manifest
-Replace "AspectFusion.pkg_manifest"
+Replace "Packages/AspectFusion.pkg_manifest"

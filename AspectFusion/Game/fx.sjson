@@ -1,0 +1,257 @@
+{
+  Animations = [
+      "_append"
+    {
+      Name = "UltraMaimedStatus"
+      Type = "Book"
+      FilePath = "AspectFusion\Fx\MaimedStatus\MaimedStatus"
+      NumFrames = 24
+      PlaySpeed = 30
+      Scale = 0.75
+      Loop = true
+      Material = "Unlit"
+      ScaleFromOwner = "Ignore"
+      AngleFromOwner = "Ignore"
+      LocationZFromOwner = "Maintain"
+      LocationFromOwner = "Maintain"
+      ColorFromOwner = "Ignore"
+      UseAttachedFlasher = false
+      UseAttachedAddColor = false
+      UseAttachedShake = false
+      Sound = "/SFX/Enemy Sounds/MaimStatusEffectLoop"
+      StopSoundOnFinishFade = 0.2
+    }
+    {
+      Name = "UltraFistDetonateCharge"
+      Type = "Book"
+      FilePath = "AspectFusion\Fx\FistDetonate\FistDetonate"
+      NumFrames = 4
+      Material = "Unlit"
+      ColorFromOwner = "Ignore"
+      UseAttachedFlasher = false
+      UseAttachedAddColor = false
+      LocationFromOwner = "Take"
+      LocationZFromOwner = "Take"
+      AngleFromOwner = "Ignore"
+      UseOwnAngle = false
+      ScaleFromOwner = "Ignore"
+      GroupName = "FX_Standing_Add"
+      Duration = 0.1
+      TimeModifierFraction = 0.1
+    }
+    {
+	Name = "UltraFistDetonateSequence"
+	InheritFrom = "UltraFistDetonateCharge"
+	ChainTo = "UltraFistDetonateFx"
+	}
+    {
+      Name = "UltraFistDetonateFx"
+      Type = "Slide"
+      FilePath = "AspectFusion\Fx\FistDetonate\FistDetonate"
+      Material = "Unlit"
+      OverlayVfx = true
+      SortMode = "FromParent"
+      ColorFromOwner = "Ignore"
+      UseAttachedFlasher = false
+      UseAttachedAddColor = false
+      LocationFromOwner = "Take"
+      LocationZFromOwner = "Take"
+      AngleFromOwner = "Ignore"
+      UseOwnAngle = false
+      ScaleFromOwner = "Ignore"
+      GroupName = "FX_Standing_Add"
+      CreateAnimation = "UltraFistDetonateFxDark"
+      NumFrames = 33
+      StartScale = 1
+      EndScale = 1.1
+      TimeModifierFraction = 0.1
+      Slides = [
+        { DurationFrames = 0 }
+        { DurationFrames = 0 }
+        { DurationFrames = 0 }
+        { DurationFrames = 0 }
+        { DurationFrames = 2 VisualFx = "UltraFistDetonateFlare" Sound = "/SFX/Player Sounds/GilgameshDelayedDamageStab" }
+        { DurationFrames = 2 VisualFx = "UltraFistDetonateGlow" }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+        { DurationFrames = 2 }
+      ]
+    }
+    {
+      Name = "UltraFistDetonateFuseFx"
+      Type = "Book"
+      FilePath = "Fx\ProjectileFire\ProjectileFire"
+      NumFrames = 60
+      AddColor = true
+      StartRed = 0
+      StartGreen = 0.01
+      StartBlue = 1
+      EndRed = 0.001
+      EndGreen = 0.5
+      EndBlue = 0.999
+      LocationZFromOwner = "Maintain"
+      LocationFromOwner = "Maintain"
+      OffsetZ = 70
+      GroupName = "FX_Standing_Add"
+      Loop = true
+      PingPongColor = true
+      StartScale = 1.2
+      EndScale = 0.2
+      PingPongScale = false
+      EaseIn = 0
+      EaseOut = 1
+      PlaySpeed = 240
+      RandomRotation = true
+      ReRandomizeOnLoop = true
+      AngleMin = 0
+      AngleMax = 360
+      AngleFromOwner = "Ignore"
+      ColorFromOwner = "Ignore"
+      ScaleFromOwner = "Ignore"
+      UseAttachedFlasher = false
+      UseAttachedAddColor = false
+      VisualFx = "FistDetonateFuseFxRings"
+      VisualFxIntervalMin = 0.2
+      VisualFxIntervalMax = 0.21
+      Scale = 1.25
+    }
+    {
+      Name = "UltraFistDetonateFuseFxRings"
+      Type = "Book"
+      FilePath = "Fx\ProjectileFire\ProjectileFire"
+      Material = "Unlit"
+      NumFrames = 60
+      Red = 0
+      Green = 0
+      Blue = 0
+      StartScale = 3
+      EndScale = 0.5
+      EaseIn = 0
+      EaseOut = 1
+      RandomDurationMin = 0.2
+      RandomDurationMax = 0.4
+      StartAlpha = 0
+      EndAlpha = 1
+      SortMode = "FromParent"
+      DrawBehindOwner = true
+      Scale = 1.25
+      Sound = "/Leftovers/World Sounds/Caravan Interior/MushroomLogInteract"
+    }
+    {
+      Name = "UltraFistDetonateFxDark"
+      InheritFrom = "UltraFistDetonateFx"
+      Type = "Book"
+      StartFrame = 5
+      NumFrames = 28
+      GroupName = "Standing"
+      Red = 0
+      Green = 0
+      Blue = 0
+      
+      PlaySpeed = 30
+      ClearCreateAnimations = true
+      CreateAnimation = null
+      TimeModifierFraction = 0.1
+    }
+    {
+      Name = "UltraFistDetonateFlare"
+      Type = "Constant"
+      FilePath = "Fx\PickupFlareA\PickupFlareA0012"
+      Material = "Unlit"
+      GroupName = "FX_Standing_Add"
+      Hue = -0.48
+      StartScale = 1
+      EndScale = 0
+      EaseIn = 0.9
+      EaseOut = 1.0
+      Duration = 0.125
+      AngleFromOwner = "Ignore"
+      UseOwnAngle = false
+      LocationZFromOwner = "Take"
+      Scale = 1.25
+      AddColor = true
+      Red = 0.16
+      Green = 0.75
+      Blue = 0.98
+      CreateAnimation = "FistDetonateFlareDark"
+      TimeModifierFraction = 0.1
+    }
+    {
+      Name = "UltraFistDetonateFlareDark"
+      InheritFrom = "UltraFistDetonateFlare"
+      GroupName = "FX_Dark"
+      AddColor = false
+      Red = 0
+      Green = 0
+      Blue = 0
+      CreateAnimation = null
+      Duration = 0.2
+      StartScaleX = 1
+      EndScaleX = 0
+      EndScale = 0.999
+      EaseIn = 0.9
+      EaseOut = 1.0
+      TimeModifierFraction = 0.1
+    }
+    {
+      Name = "UltraFistDetonateGlow"
+      Type = "Constant"
+      FilePath = "Particles\particle_glow_egg"
+      Material = "Unlit"
+      GroupName = "FX_Standing_Add"
+      UseOwnAngle = false
+      AngleFromOwner = "Ignore"
+      Scale = 2.5
+      StartScale = 1
+      EndScale = 1.33
+      EaseIn = 0.9
+      EaseOut = 1.0
+      Duration = 1.5
+      StartAlpha = 1
+      EndAlpha = 0
+      StartRed = 0.16
+      StartGreen = 0.75
+      StartBlue = 0.98
+      EndRed = 0.09
+      EndGreen = 0.14
+      EndBlue = 0.98
+      TimeModifierFraction = 0.1
+    }
+    {
+        Name = "RadialNova-UltraBow"
+        InheritFrom ="RadialNova"
+        Red = 0.55
+        Green = 0.27
+        Blue = 0.58
+    }
+  ]
+}

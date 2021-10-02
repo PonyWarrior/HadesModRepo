@@ -1181,4 +1181,178 @@ ModUtil.Path.Wrap("ReloadPresentationComplete", function (baseFunc, attacker, we
         baseFunc(attacker, weaponData, state )
     end
 end)
+
+-- ultra spear
+
+ModUtil.Path.Wrap("Kill", function (baseFunc, victim, triggerArgs )
+    baseFunc(victim, triggerArgs )
+    if victim.MarkedForDeath then
+        local newUnit = DeepCopyTable( EnemyData.ZagreusTombstone )
+        newUnit.ObjectId = SpawnUnit({ Name = newUnit.Name, Group = "Standing", DestinationId = victim.ObjectId, DoActivatePresentation = false })
+        SetColor({ Id = newUnit.ObjectId, Color = Color.Red})
+        SetupEnemyObject( newUnit, CurrentRun)
+    end
+
+    if victim.Name ~= nil and victim.Name == "ZagreusTombstone" then
+        thread(AspectFusion.SoulPotKill, victim, triggerArgs)
+        CurrentRun.Hero.SoulCount = CurrentRun.Hero.SoulCount + 1
+        thread(AspectFusion.UpdateSoulUI)
+    end
+end)
+
+function AspectFusion.SoulPotKill(victim, triggerArgs)
+    local debug = false
+	local victimName = victim.Name
+	local killer = triggerArgs.AttackerTable
+	local destroyerId = triggerArgs.AttackerId
+	local killingWeaponName = triggerArgs.SourceWeapon
+	local currentRoom = CurrentRun.CurrentRoom
+
+    if killer == CurrentRun.Hero and killer.SoulCount >= 5 then
+        local nearestEnemyTargetIds = GetClosestIds({ Id = victim.ObjectId, DestinationName = "EnemyTeam", IgnoreInvulnerable = true, IgnoreHomingIneligible = true, Distance = 600, MaximumCount = 3 })
+        for _, targetId in ipairs(nearestEnemyTargetIds) do
+            if targetId ~= 0 and ActiveEnemies[targetId] ~= nil and not ActiveEnemies[targetId].IsDead then
+                local distanceBuffer = 0
+
+                ApplyForce({ Id = targetId, Speed = GetRequiredForceToEnemy( targetId, victim.ObjectId, -1 * distanceBuffer ), Angle = GetAngleBetween({ Id = targetId, DestinationId = victim.ObjectId }) })
+              end
+        end
+        if killer.SoulCount >= 10 then
+            wait(0.2)
+	        FireWeaponFromUnit({ Weapon = "GunBombWeapon", Id = CurrentRun.Hero.ObjectId, DestinationId = victim.ObjectId, FireFromTarget = true })
+        end
+    end
+
+    if killer == CurrentRun.Hero and killingWeaponName ~= nil and debug then
+	    -- FireWeaponFromUnit({ Weapon = "GunBombWeapon", Id = CurrentRun.Hero.ObjectId, DestinationId = victim.ObjectId, FireFromTarget = true })
+        -- if HasEffect({Id = attacker.ObjectId, EffectName = "SpearRushBonus"}) then
+        --     DebugPrint({Text="yolo"})
+        -- end
+
+        if killingWeaponName == "SpearWeaponThrow" then
+	        FireWeaponFromUnit({ Weapon = "GunBombWeapon", Id = CurrentRun.Hero.ObjectId, DestinationId = victim.ObjectId, FireFromTarget = true })
+            
+        elseif killingWeaponName == "SpearWeaponSpin" or killingWeaponName == "SpearWeaponSpin2" or killingWeaponName == "SpearWeaponSpin3" then
+	        FireWeaponFromUnit({ Weapon = killingWeaponName, Id = CurrentRun.Hero.ObjectId, DestinationId = victim.ObjectId, FireFromTarget = true })
+
+        elseif killingWeaponName == "RangedWeapon" then
+			-- ReloadRangedAmmo(0)
+	        -- FireWeaponFromUnit({ Weapon = killingWeaponName, Id = victim.ObjectId, DestinationId = victim.ObjectId, FireFromTarget = true })
+
+            local consumableId = SpawnObstacle({ Name = "AmmoPack", DestinationId = victim.ObjectId, Group = "Standing" })
+            local consumable = CreateConsumableItem( consumableId, "AmmoPack" )
+            consumable.AddAmmo = 1
+            local delay = GetTotalHeroTraitValue("AmmoDropUseDelay")
+            if delay > 0 then
+                SetInteractProperty({ DestinationId = consumableId, Property = "Cooldown", Value = delay })
+                thread( DoUseDelay, consumableId, delay )
+            end
+    
+            for i, data in pairs(GetHeroTraitValues("AmmoFieldWeapon")) do
+                thread( FireAmmoWeapon, consumableId, data )
+            end
+            thread( EscalateMagnetism, consumable )
+        elseif killingWeaponName == "SpearWeapon" then
+        local nearestEnemyTargetIds = GetClosestIds({ Id = victim.ObjectId, DestinationName = "EnemyTeam", IgnoreInvulnerable = true, IgnoreHomingIneligible = true, Distance = 600, MaximumCount = 3 })
+        for _, targetId in ipairs(nearestEnemyTargetIds) do
+            if targetId ~= 0 and ActiveEnemies[targetId] ~= nil and not ActiveEnemies[targetId].IsDead then
+                local distanceBuffer = 0
+
+                ApplyForce({ Id = targetId, Speed = GetRequiredForceToEnemy( targetId, victim.ObjectId, -1 * distanceBuffer ), Angle = GetAngleBetween({ Id = targetId, DestinationId = victim.ObjectId }) })
+              end
+        end
+
+        -- elseif killingWeaponName == "SpearWeaponThrow" then
+
+        -- elseif killingWeaponName == "SpearWeaponThrow" then
+
+        end
+
+    end
+end
+
+function AspectFusion.ShowSoulUI()
+    if not CurrentRun.Hero.Weapons.SpearWeapon then
+		return
+	end
+    if ScreenAnchors.SoulUI ~= nil then
+		return
+	end
+
+    if CurrentRun.Hero.SoulCount == nil then
+        CurrentRun.Hero.SoulCount = 0
+    end
+
+	ScreenAnchors.SoulUI = CreateScreenObstacle({ Name = "BlankObstacle", Group = "Combat_UI", X = GunUI.StartX, Y = GunUI.StartY })
+
+	local offsetX = 20
+	CreateTextBox(MergeTables({ Id = ScreenAnchors.SoulUI, OffsetX = 0, OffsetY = -2,
+			Font = "AlegreyaSansSCBold", FontSize = 24, ShadowRed = 0.1, ShadowBlue = 0.1, ShadowGreen = 0.1,
+			OutlineColor = {0.113, 0.113, 0.113, 1}, OutlineThickness = 1,
+			ShadowAlpha = 1.0, ShadowBlur = 0, ShadowOffsetY = 2, ShadowOffsetX = 0, Justification = "Left",},
+			LocalizationData.UIScripts.GunUI ))
+	thread( AspectFusion.UpdateSoulUI )
+
+	FadeObstacleIn({ Id = ScreenAnchors.SoulUI, Duration = CombatUI.FadeInDuration, IncludeText = true, Distance = CombatUI.FadeDistance.Ammo, Direction = 0 })
+
+end
+
+function AspectFusion.UpdateSoulUI()
+	local soulData =
+	{
+		Current = CurrentRun.Hero.SoulCount,
+		Maximum = 12
+	}
+
+	if soulData.Current == nil then
+		return
+	end
+    soulData.Current = Clamp(soulData.Current, 0, soulData.Maximum)
+
+    local text = soulData.Current.."/"..soulData.Maximum
+
+	PulseText({ ScreenAnchorReference = "SoulUI", ScaleTarget = 1.04, ScaleDuration = 0.05, HoldDuration = 0.05, PulseBias = 0.02 })
+	if soulData.Current < 12 then
+		ModifyTextBox({ Id = ScreenAnchors.SoulUI, Text = text, Color = Color.White, ColorDuration = 0.04 })
+	else
+		ModifyTextBox({ Id = ScreenAnchors.SoulUI, Text = text, Color = Color.LightGreen, ColorDuration = 0.04 })
+	end
+
+	ModifyTextBox({ Id = ScreenAnchors.SoulUI, Text = text, FadeTarget = 1 })
+	-- ModifyTextBox({ Id = ScreenAnchors.ComboUI, Text = "UI_GunText", OffsetY = -2, LuaKey = "TempTextData", LuaValue = comboData, AutoSetDataProperties = false, })
+	ModifyTextBox({ Id = ScreenAnchors.SoulUI, Text = text, OffsetY = -2 })
+end
+
+function AspectFusion.HideComboUI()
+	if ScreenAnchors.SoulUI == nil then
+		return
+	end
+
+	local id = ScreenAnchors.SoulUI
+	HideObstacle({ Id = id, IncludeText = true, Distance = CombatUI.FadeDistance.Ammo, Angle = 180, Duration = CombatUI.FadeDuration, SmoothStep = true })
+
+	ScreenAnchors.SoulUI = nil
+
+	wait( CombatUI.FadeDuration , RoomThreadName)
+	Destroy({ Id = id })
+	ModifyTextBox({ Id = id, FadeTarget = 0, FadeDuration = 0, AutoSetDataProperties = false, })
+end
+
+ModUtil.Path.Wrap("ShowCombatUI", function (baseFunc, flag)
+    baseFunc(flag)
+    if CurrentDeathAreaRoom == nil or not CurrentDeathAreaRoom.ShowResourceUIOnly then
+		AspectFusion.ShowSoulUI()
+	end
+end)
+
+ModUtil.Path.Wrap("HideCombatUI", function (baseFunc, flag, args)
+    baseFunc(flag, args)
+	thread(AspectFusion.HideComboUI)
+end)
+
+ModUtil.Path.Wrap("EquipPlayerWeaponPresentation", function (baseFunc, weaponData, args)
+    baseFunc(weaponData, args)
+    thread(AspectFusion.ShowComboUI)
+end)
+
 end

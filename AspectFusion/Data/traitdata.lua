@@ -3103,7 +3103,7 @@ if AspectFusion.Config.Enabled then
         PostWeaponUpgradeScreenFunctionName = "RemoveSpearTeleport",
         PostWeaponUpgradeScreenAnimation = "ZagreusSpearAlt03ThrowFireReturn",
 		RequiredWeapons = {"SpearWeapon", "SpearWeaponThrow",},
-        PreEquipWeapons = { "SpearRushWeapon", "SpearWeaponThrowInvisibleReturn", },
+        PreEquipWeapons = { "SpearRushWeapon", "SpearWeaponThrowInvisibleReturn", "GunBombWeapon" },
 		RequiredFalseTraits = { "SpearAutoAttack", "SpearSpinAura" },
 		WeaponBinks =
 		{
@@ -3740,7 +3740,64 @@ if AspectFusion.Config.Enabled then
                 ChangeType = "Add",
                 DeriveSource = "DeriveSource"
             },
-
+            --fff
+            {
+				WeaponNames = { "GunBombWeapon" },
+				ProjectileProperty = "DamageLow",
+				ChangeValue = 100,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "GunBombWeapon" },
+				ProjectileProperty = "DamageHigh",
+                ChangeValue = 100,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+            {
+				WeaponNames = { "GunBombWeapon" },
+				ProjectileProperty = "DamageRadius",
+                ChangeValue = 300,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+            -- {
+			-- 	WeaponNames = { "SpearWeaponSpin3" },
+			-- 	ProjectileProperty = "SpawnsInheritGroups",
+			-- 	ChangeValue = false,
+			-- 	ExcludeLinked = true,
+			-- },
+			-- {
+			-- 	WeaponNames = { "SpearWeaponSpin3" },
+			-- 	ProjectileProperty = "SkipSpawnsIfBlocked",
+			-- 	ChangeValue = true,
+			-- 	ExcludeLinked = true,
+			-- },
+			-- {
+			-- 	WeaponNames = { "SpearWeaponSpin3" },
+			-- 	ProjectileProperty = "SpawnGroup",
+			-- 	ChangeValue = "Standing",
+			-- 	ExcludeLinked = true,
+			-- },
+			-- {
+			-- 	WeaponNames = { "SpearWeaponSpin3" },
+			-- 	ProjectileProperty = "SpawnType",
+			-- 	ChangeValue = "UNIT",
+			-- 	ExcludeLinked = true,
+			-- },
+			-- {
+			-- 	WeaponNames = { "SpearWeaponSpin3" },
+			-- 	ProjectileProperty = "SkipSpawnsIfBlocked",
+			-- 	ChangeValue = "false",
+			-- 	ExcludeLinked = true,
+			-- },
+			-- {
+			-- 	WeaponNames = { "SpearWeaponSpin3" },
+			-- 	ProjectileProperty = "SpawnOnDetonate",
+			-- 	ChangeValue = "ZagreusTombStone",
+			-- 	ExcludeLinked = true,
+			-- },
 		},
 	}
 
@@ -4163,7 +4220,7 @@ if AspectFusion.Config.Enabled then
             {
             	WeaponNames = { "BowSplitShot" },
             	WeaponProperty = "ProjectileAngleOffset",
-            	ChangeValue = math.rad(35),
+            	ChangeValue = math.rad(45),
             	ChangeType = "Absolute",
             	ExcludeLinked = true,
             },
