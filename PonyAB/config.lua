@@ -65,6 +65,8 @@ PAB =
 					DemeterAidBaseDamage = 15, -- vanilla 10
 					DemeterAidExpansionSpeed = 1.5, -- vanilla 1.0 (100%)
                     GlacialGlarePrereqForArcticBlastAndKillingFreeze = true, -- vanilla false
+                    -- Zeus
+                    ThunderFlareRemake = true, -- vanilla false
 					-- Guan Yu
 					GuanYuComboAttack1Damage = 60, -- vanilla 40
 					GuanYuComboAttack2Damage = 80, -- vanilla 60
@@ -73,6 +75,8 @@ PAB =
 					GuanYuSpecialDamage = 60, -- vanilla 45
 					-- Zagreus Shield
 					ZagreusShieldIncreaseSpecialDamage = true, -- vanilla false
+                    -- Beowulf Shield
+                    BeowulfMirageShotBugFix = true, -- vanilla false (deals +100% dmg instead of 30%)
 					-- Duo Boons
 					ColdEmbraceBonusDamage = 1.6, -- vanilla 1.3 (+30%)
 					FreezingVortexSizeChange = 23, -- vanilla -23 (-15%)

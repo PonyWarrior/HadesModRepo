@@ -62,3 +62,12 @@ Sword hammer changes :
     -Super nova damage and range +20% > 50%
     -Double nova damage interval 0.2s > 0.1s
 Glacial glare is now a prerequisite for Arctic Blast and Killing Freeze
+
+1.2.0
+
+new features :
+
+Zeus :
+    -Remade thunder flare
+Aspect of Beowulf :
+    -Fixed the Mirage Shot bug where casts dealt +100% damage instead of +30%

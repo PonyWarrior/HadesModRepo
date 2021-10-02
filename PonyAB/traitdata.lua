@@ -473,5 +473,136 @@ if PAB.Config.Gameplay.Enabled then
             LootData.DemeterUpgrade.LinkedUpgrades.MaximumChillBonusSlow.OneOf ={ "DemeterWeaponTrait", "DemeterSecondaryTrait", "DemeterRushTrait",
             "DemeterShoutTrait", "ShieldLoadAmmo_DemeterRangedTrait", "CastNovaTrait", "DemeterRangedBonusTrait"}
         end
+        --Beowulf mirage shot
+        if config.BeowulfMirageShotBugFix then
+            for i, propertyChange in pairs(TraitData.ShieldLoadAmmoTrait.PropertyChanges) do
+                if propertyChange.ProjectileProperty ~= nil and propertyChange.ProjectileProperty == "Type" then
+                    TraitData.ShieldLoadAmmoTrait.PropertyChanges[i] =
+                    {
+                        WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+                        ProjectileProperty = "Fuse",
+                        ChangeValue = 0,
+                        ChangeType = "Absolute",
+                    }
+                end
+            end
+            for traitName, traitData in pairs(TraitData) do
+                if traitData.PropertyChanges ~= nil then
+                    for i, propertyChange in pairs(traitData.PropertyChanges) do
+                        if propertyChange.TraitName ~= nil and propertyChange.TraitName == "ShieldLoadAmmoTrait" and propertyChange.ProjectileProperty ~= nil and propertyChange.ProjectileProperty == "Type" then
+                            traitData.PropertyChanges[i] =
+                            {
+                                TraitName = "ShieldLoadAmmoTrait",
+                                WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+                                ProjectileProperty = "Fuse",
+                                ChangeValue = 0,
+                                ChangeType = "Absolute",
+                            }
+                        end
+                    end
+                end
+            end
+            table.insert(TraitData.ShieldLoadAmmo_AphroditeRangedTrait.PropertyChanges,
+            {
+                WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+                ProjectileProperty = "Type",
+                ChangeValue = "HOMING",
+                ChangeType = "Absolute",
+            })
+            table.insert(TraitData.ShieldLoadAmmo_AphroditeRangedTrait.PropertyChanges,
+            {
+                WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+                ProjectileProperty = "Fuse",
+                ChangeValue = 0,
+                ChangeType = "Absolute",
+            })
+            table.insert(TraitData.ShieldLoadAmmo_AthenaRangedTrait.PropertyChanges,
+            {
+                WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+                ProjectileProperty = "Type",
+                ChangeValue = "HOMING",
+                ChangeType = "Absolute",
+            })
+            table.insert(TraitData.ShieldLoadAmmo_AthenaRangedTrait.PropertyChanges,
+            {
+                WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+                ProjectileProperty = "Fuse",
+                ChangeValue = 0,
+                ChangeType = "Absolute",
+            })
+        end
+        -- Thunder flare
+        if config.ThunderFlareRemake then
+            TraitData.ShieldLoadAmmo_ZeusRangedTrait.PreEquipWeapons = nil
+            TraitData.ShieldLoadAmmo_ZeusRangedTrait.PropertyChanges =
+            {
+                {
+                    WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+                    ProjectileProperty = "Projectile",
+                    ChangeValue = "ZeusProjectile",
+                    ChangeType = "Absolute",
+                },
+                {
+                    WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+                    ProjectileProperty = "DamageLow",
+                    BaseMin = 60,
+                    BaseMax = 60,
+                    DepthMult = 0.0,
+                    IdenticalMultiplier =
+                    {
+                        Value = -0.60,
+                    },
+                    ExtractValue =
+                    {
+                        ExtractAs = "TooltipDamage",
+                    }
+                },
+                {
+                    WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+                    ProjectileProperty = "DamageHigh",
+                    DeriveValueFrom = "DamageLow"
+                },
+                {
+                    WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+                    WeaponProperty = "FireOnRelease",
+                    ChangeValue = false,
+                    ChangeType = "Absolute",
+                },
+                {
+                    WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+                    ProjectileProperty = "DamageRadius",
+                    ChangeValue = 300
+                },
+                {
+                    WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+                    ProjectileProperty = "DetonateGraphic",
+                    ChangeValue = "RadialNovaSwordParry-Zeus"
+                },
+                {
+                    WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+                    EffectName = "OnHitStun",
+                    EffectProperty = "Active",
+                    ChangeValue = false,
+                    ChangeType = "Absolute",
+                },
+            }
+            if config.BeowulfMirageShotBugFix then
+                table.insert(TraitData.ShieldLoadAmmo_ZeusRangedTrait.PropertyChanges,
+                {
+                    WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+                    ProjectileProperty = "Fuse",
+                    ChangeValue = 0,
+                    ChangeType = "Absolute",
+                })
+            else
+                table.insert(TraitData.ShieldLoadAmmo_ZeusRangedTrait.PropertyChanges,
+                {
+                    WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+                    ProjectileProperty = "Type",
+                    ChangeValue = "INSTANT",
+                    ChangeType = "Absolute",
+                })
+            end
+        end
     end
 end
