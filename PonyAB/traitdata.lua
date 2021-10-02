@@ -625,6 +625,15 @@ if PAB.Config.Gameplay.Enabled then
                 ExcludeLinked = true,
             })
         end
+        table.insert(TraitData.GunGrenadeFastTrait.PropertyChanges,
+    {
+            TraitName = "GunExplodingSecondaryTrait",
+            WeaponNames = { "GunGrenadeToss" },
+            WeaponProperty = "MinChargeToFire",
+            ChangeValue = config.TripleBombsRocketBombFireInterval,
+            ChangeType = "Absolute",
+            ExcludeLinked = true,
+        })
 
     end
 end

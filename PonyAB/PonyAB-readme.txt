@@ -71,3 +71,6 @@ Zeus :
     -Remade thunder flare
 Aspect of Beowulf :
     -Fixed the Mirage Shot bug where casts dealt +100% damage instead of +30%
+Rail hammers :
+    -Fix cluster bombs and rocket bomb bug where the rockets did not deal reduced damage
+    -Triple bombs Rocket bomb fire interval reduced from 1 second to 0.25 second

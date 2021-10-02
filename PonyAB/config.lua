@@ -102,6 +102,7 @@ PAB =
                     DoubleNovaDamageInterval = 0.1, -- vanilla 0.2 (in seconds)
                     -- Rail Hammers
                     ClusterBombsRocketBombBugFix = true, -- vanilla false (rockets deal 100% dmg instead of 70%)
+                    TripleBombsRocketBombFireInterval = 0.25, -- vanilla 1.0 (in seconds)
 			},
 		},
     }
