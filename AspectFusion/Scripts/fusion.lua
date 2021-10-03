@@ -7,6 +7,72 @@ ModUtil.Path.Wrap( "SetupMap", function(baseFunc)
     return baseFunc()
 end)
 
+AspectFusion.Data =
+{
+    SoulThresholds =
+    {
+        {
+            Threshold = 20,
+            EnablePull = true,
+            PullCount = 1,
+            PullRange = 400
+        },
+        {
+            Threshold = 40,
+            PullCount = 1,
+            PullRange = 100,
+        },
+        {
+            Threshold = 50,
+            IncreaseHeroMaxHealth = true
+        },
+        {
+            Threshold = 60,
+            PullCount = 1,
+            PullRange = 100,
+        },
+        {
+            Threshold = 80,
+            EnableExplosion = true,
+            ExplosionDamage = 50,
+            ExplosionRadius = 200,
+        },
+        {
+            Threshold = 100,
+            IncreaseHeroMaxHealth = true
+        },
+        {
+            Threshold = 120,
+            ExplosionDamage = 25,
+            ExplosionRadius = 100,
+        },
+        {
+            Threshold = 150,
+            IncreaseHeroMaxHealth = true
+        },
+        {
+            Threshold = 160,
+            ExplosionDamage = 25,
+            ExplosionRadius = 100,
+        },
+        {
+            Threshold = 200,
+            ExplosionDamage = 25,
+            IncreaseHeroMaxHealth = true
+        },
+        {
+            Threshold = 240,
+            ExplosionDamage = 25,
+        },
+        {
+            Threshold = 250,
+            IncreaseHeroMaxHealth = true
+        },
+    }
+}
+
+local FusionData = AspectFusion.Data
+
 ModUtil.BaseOverride("ShowWeaponUpgradeScreen", function (args)
     local textOffsetX = -50
     OnScreenOpened( { Flag = "WeaponUpgradeScreen", PersistCombatUI = true } )
@@ -1183,46 +1249,207 @@ ModUtil.Path.Wrap("ReloadPresentationComplete", function (baseFunc, attacker, we
 end)
 
 -- ultra spear
+ModUtil.Path.Wrap("MarkTargetSpinApply", function (baseFunc, triggerArgs)
+    baseFunc(triggerArgs)
+    if HeroHasTrait("UltraSpearTrait") then
+        triggerArgs.TriggeredByTable.MarkedForDeath = true
+    end
+end)
+
+ModUtil.Path.Wrap("MarkTargetSpinClear", function (baseFunc, triggerArgs)
+    baseFunc(triggerArgs)
+    if HeroHasTrait("UltraSpearTrait") then
+        thread(AspectFusion.RemoveMark, triggerArgs)
+    end
+end)
+
+function AspectFusion.RemoveMark(triggerArgs)
+    wait(1)
+    if triggerArgs.TriggeredByTable ~= nil then
+       triggerArgs.TriggeredByTable.MarkedForDeath = false
+    end
+end
 
 ModUtil.Path.Wrap("Kill", function (baseFunc, victim, triggerArgs )
-    baseFunc(victim, triggerArgs )
-    if victim.MarkedForDeath then
-        local newUnit = DeepCopyTable( EnemyData.ZagreusTombstone )
-        newUnit.ObjectId = SpawnUnit({ Name = newUnit.Name, Group = "Standing", DestinationId = victim.ObjectId, DoActivatePresentation = false })
-        SetColor({ Id = newUnit.ObjectId, Color = Color.Red})
-        SetupEnemyObject( newUnit, CurrentRun)
+    if victim.IsDead or CurrentRun.Hero.HandlingDeath then
+		return
+	end
+
+    local killingWeaponName
+    if triggerArgs == nil then
+        killingWeaponName = ""
+    else
+        killingWeaponName = triggerArgs.SourceWeapon
     end
 
+    -- Pot spawning
+    if victim.MarkedForDeath or killingWeaponName == "SpearWeaponSpin" or killingWeaponName == "SpearWeaponSpin2" or killingWeaponName == "SpearWeaponSpin3" then
+        if victim.Name ~= "ZagreusTombstone" then
+        -- if CurrentRun.Hero.LastPotSpawn == nil then
+        --     CurrentRun.Hero.LastPotSpawn = 0
+        -- end
+        -- if (_worldTime - CurrentRun.Hero.LastPotSpawn) > AspectFusion.Config.FinalFormVaratha.PotSpawnCooldown then
+        --     CurrentRun.Hero.LastPotSpawn = _worldTime
+            local newUnit = DeepCopyTable( EnemyData.ZagreusTombstone )
+            newUnit.ObjectId = SpawnUnit({ Name = newUnit.Name, Group = "Standing", DestinationId = victim.ObjectId, DoActivatePresentation = false })
+            SetColor({ Id = newUnit.ObjectId, Color = Color.Red})
+            SetupEnemyObject( newUnit, CurrentRun)
+        end
+        -- end
+    end
+
+    baseFunc(victim, triggerArgs )
+
+    -- Pot kill
     if victim.Name ~= nil and victim.Name == "ZagreusTombstone" then
         thread(AspectFusion.SoulPotKill, victim, triggerArgs)
         CurrentRun.Hero.SoulCount = CurrentRun.Hero.SoulCount + 1
+        AspectFusion.SoulPotLevelUp()
         thread(AspectFusion.UpdateSoulUI)
     end
 end)
 
+function AspectFusion.DestroyAllPots()
+	for k, enemy in pairs( ActiveEnemies ) do
+		if enemy.Name == "ZagreusTombstone" then
+            enemy.DestroyOnly = true
+			thread( Kill, enemy )
+		end
+	end
+end
+
+ModUtil.Path.Wrap("CheckForAllEnemiesDead", function(baseFunc, eventSource, args)
+    baseFunc(eventSource, args)
+    -- Clean all pots at the end of an encounter
+    AspectFusion.DestroyAllPots()
+end)
+
+OnControlPressed{"Reload", function (triggerArgs)
+    if HeroHasTrait("UltraSpearTrait") then
+        local newUnit = DeepCopyTable( EnemyData.ZagreusTombstone )
+        newUnit.ObjectId = SpawnUnit({ Name = newUnit.Name, Group = "Standing", DestinationId = CurrentRun.Hero.ObjectId, DoActivatePresentation = false,
+        OffsetX = 100, OffsetY = 100 })
+        SetColor({ Id = newUnit.ObjectId, Color = Color.Red})
+        SetupEnemyObject( newUnit, CurrentRun)
+    end
+end}
+
+function AspectFusion.SoulPotLevelUp()
+    if CurrentRun.Hero.SoulCount == nil then
+        return
+    end
+    local levelData
+
+    if CurrentRun.Hero.SoulCount >= AspectFusion.GetNextPotThreshold() then
+        local temp = AspectFusion.GetNextPotThreshold()
+        for _, thresholdData in pairs (AspectFusion.Data.SoulThresholds) do
+            if thresholdData.Threshold == temp then
+                levelData = thresholdData
+                break
+            end
+        end
+    end
+
+    if levelData ~= nil then
+        local pot = CurrentRun.Hero.SoulPot
+        pot.CurrentThreshold = pot.NextThreshold
+        pot.NextThreshold = AspectFusion.GetNextPotThreshold()
+
+        if levelData.EnablePull then
+            pot.EnablePull = true
+        end
+        if levelData.PullCount then
+            pot.PullCount = pot.PullCount + levelData.PullCount
+        end
+        if levelData.PullRange then
+            pot.PullRange = pot.PullRange + levelData.PullRange
+        end
+        if levelData.EnableExplosion then
+            pot.EnableExplosion = true
+        end
+        if levelData.ExplosionDamage then
+            pot.ExplosionDamage = pot.ExplosionDamage + levelData.ExplosionDamage
+        end
+        if levelData.ExplosionRadius then
+            pot.ExplosionRadius = pot.ExplosionRadius + levelData.ExplosionRadius
+        end
+        if levelData.IncreaseHeroMaxHealth then
+            AddTraitToHero({TraitName = "UltraSpearHealthBonus"})
+            thread(UpdateHealthUI)
+        end
+
+    end
+
+end
+
+function AspectFusion.InitSoulPot()
+    CurrentRun.Hero.SoulPot =
+    {
+        EnablePull = false,
+        PullCount = 0,
+        PullRange = 0,
+        EnableExplosion = false,
+        ExplosionDamage = 0,
+        ExplosionRadius = 0,
+        CurrentThreshold = 0,
+    }
+    CurrentRun.Hero.SoulPot.NextThreshold = AspectFusion.GetNextPotThreshold()
+end
+
+function AspectFusion.GetNextPotThreshold()
+    if CurrentRun.Hero.SoulPot == nil then
+        return
+    end
+
+    local threshold = CurrentRun.Hero.SoulPot.CurrentThreshold or 0
+    local temp = 9999
+
+    for i, thresholdData in pairs (AspectFusion.Data.SoulThresholds) do
+        DebugPrint({Text=thresholdData.Threshold})
+        if thresholdData.Threshold > threshold and thresholdData.Threshold < temp then
+            temp = thresholdData.Threshold
+        end
+    end
+    return temp
+end
+
 function AspectFusion.SoulPotKill(victim, triggerArgs)
+    if victim.DestroyOnly then
+        return
+    end
+
+    if CurrentRun.Hero.SoulPot == nil then
+        AspectFusion.InitSoulPot()
+    end
+
     local debug = false
 	local victimName = victim.Name
 	local killer = triggerArgs.AttackerTable
 	local destroyerId = triggerArgs.AttackerId
 	local killingWeaponName = triggerArgs.SourceWeapon
 	local currentRoom = CurrentRun.CurrentRoom
+    local pot = CurrentRun.Hero.SoulPot
 
-    if killer == CurrentRun.Hero and killer.SoulCount >= 5 then
-        local nearestEnemyTargetIds = GetClosestIds({ Id = victim.ObjectId, DestinationName = "EnemyTeam", IgnoreInvulnerable = true, IgnoreHomingIneligible = true, Distance = 600, MaximumCount = 3 })
-        for _, targetId in ipairs(nearestEnemyTargetIds) do
-            if targetId ~= 0 and ActiveEnemies[targetId] ~= nil and not ActiveEnemies[targetId].IsDead then
-                local distanceBuffer = 0
-
-                ApplyForce({ Id = targetId, Speed = GetRequiredForceToEnemy( targetId, victim.ObjectId, -1 * distanceBuffer ), Angle = GetAngleBetween({ Id = targetId, DestinationId = victim.ObjectId }) })
-              end
+    if killer == CurrentRun.Hero then
+        if pot.EnablePull then
+            local nearestEnemyTargetIds = GetClosestIds({ Id = victim.ObjectId, DestinationName = "EnemyTeam", IgnoreInvulnerable = true, IgnoreHomingIneligible = true, Distance = pot.PullRange, MaximumCount = pot.PullCount })
+            for _, targetId in ipairs(nearestEnemyTargetIds) do
+                if targetId ~= 0 and ActiveEnemies[targetId] ~= nil and not ActiveEnemies[targetId].IsDead then
+                    local distanceBuffer = 0
+                    ApplyForce({ Id = targetId, Speed = GetRequiredForceToEnemy( targetId, victim.ObjectId, -1 * distanceBuffer ), Angle = GetAngleBetween({ Id = targetId, DestinationId = victim.ObjectId }) })
+                  end
+            end
         end
-        if killer.SoulCount >= 10 then
+        if pot.EnableExplosion then
             wait(0.2)
+			SetProjectileProperty({ WeaponName = "GunBombWeapon", DestinationId = CurrentRun.Hero.ObjectId, Property = "DamageLow", Value = pot.ExplosionDamage })
+			SetProjectileProperty({ WeaponName = "GunBombWeapon", DestinationId = CurrentRun.Hero.ObjectId, Property = "DamageHigh", Value = pot.ExplosionDamage })
+			SetProjectileProperty({ WeaponName = "GunBombWeapon", DestinationId = CurrentRun.Hero.ObjectId, Property = "DamageRadius", Value = pot.ExplosionRadius })
 	        FireWeaponFromUnit({ Weapon = "GunBombWeapon", Id = CurrentRun.Hero.ObjectId, DestinationId = victim.ObjectId, FireFromTarget = true })
         end
     end
 
+    -- for reference, temporary
     if killer == CurrentRun.Hero and killingWeaponName ~= nil and debug then
 	    -- FireWeaponFromUnit({ Weapon = "GunBombWeapon", Id = CurrentRun.Hero.ObjectId, DestinationId = victim.ObjectId, FireFromTarget = true })
         -- if HasEffect({Id = attacker.ObjectId, EffectName = "SpearRushBonus"}) then
@@ -1261,11 +1488,6 @@ function AspectFusion.SoulPotKill(victim, triggerArgs)
                 ApplyForce({ Id = targetId, Speed = GetRequiredForceToEnemy( targetId, victim.ObjectId, -1 * distanceBuffer ), Angle = GetAngleBetween({ Id = targetId, DestinationId = victim.ObjectId }) })
               end
         end
-
-        -- elseif killingWeaponName == "SpearWeaponThrow" then
-
-        -- elseif killingWeaponName == "SpearWeaponThrow" then
-
         end
 
     end
@@ -1273,6 +1495,7 @@ end
 
 function AspectFusion.ShowSoulUI()
     if not CurrentRun.Hero.Weapons.SpearWeapon then
+        AspectFusion.HideSoulUI()
 		return
 	end
     if ScreenAnchors.SoulUI ~= nil then
@@ -1281,6 +1504,9 @@ function AspectFusion.ShowSoulUI()
 
     if CurrentRun.Hero.SoulCount == nil then
         CurrentRun.Hero.SoulCount = 0
+    end
+    if CurrentRun.Hero.SoulPot == nil then
+        AspectFusion.InitSoulPot()
     end
 
 	ScreenAnchors.SoulUI = CreateScreenObstacle({ Name = "BlankObstacle", Group = "Combat_UI", X = GunUI.StartX, Y = GunUI.StartY })
@@ -1301,7 +1527,7 @@ function AspectFusion.UpdateSoulUI()
 	local soulData =
 	{
 		Current = CurrentRun.Hero.SoulCount,
-		Maximum = 12
+		Maximum = 1000--CurrentRun.Hero.SoulPot.NextThreshold
 	}
 
 	if soulData.Current == nil then
@@ -1309,21 +1535,24 @@ function AspectFusion.UpdateSoulUI()
 	end
     soulData.Current = Clamp(soulData.Current, 0, soulData.Maximum)
 
-    local text = soulData.Current.."/"..soulData.Maximum
+    local text = soulData.Current--.."/"..soulData.Maximum
+
+    local textColorA = { 17, 125, 0, 255 }
+	local textColorB = Color.White
+	local FontColor = Color.Lerp(textColorA, textColorB, (soulData.Maximum - soulData.Current) / soulData.Maximum)
+	if soulData.Current >= soulData.Maximum then
+		FontColor = textColorA
+	end
 
 	PulseText({ ScreenAnchorReference = "SoulUI", ScaleTarget = 1.04, ScaleDuration = 0.05, HoldDuration = 0.05, PulseBias = 0.02 })
-	if soulData.Current < 12 then
-		ModifyTextBox({ Id = ScreenAnchors.SoulUI, Text = text, Color = Color.White, ColorDuration = 0.04 })
-	else
-		ModifyTextBox({ Id = ScreenAnchors.SoulUI, Text = text, Color = Color.LightGreen, ColorDuration = 0.04 })
-	end
+	ModifyTextBox({ Id = ScreenAnchors.SoulUI, Text = text, Color = FontColor, ColorDuration = 0.04 })
 
 	ModifyTextBox({ Id = ScreenAnchors.SoulUI, Text = text, FadeTarget = 1 })
 	-- ModifyTextBox({ Id = ScreenAnchors.ComboUI, Text = "UI_GunText", OffsetY = -2, LuaKey = "TempTextData", LuaValue = comboData, AutoSetDataProperties = false, })
 	ModifyTextBox({ Id = ScreenAnchors.SoulUI, Text = text, OffsetY = -2 })
 end
 
-function AspectFusion.HideComboUI()
+function AspectFusion.HideSoulUI()
 	if ScreenAnchors.SoulUI == nil then
 		return
 	end
@@ -1347,12 +1576,12 @@ end)
 
 ModUtil.Path.Wrap("HideCombatUI", function (baseFunc, flag, args)
     baseFunc(flag, args)
-	thread(AspectFusion.HideComboUI)
+	thread(AspectFusion.HideSoulUI)
 end)
 
 ModUtil.Path.Wrap("EquipPlayerWeaponPresentation", function (baseFunc, weaponData, args)
     baseFunc(weaponData, args)
-    thread(AspectFusion.ShowComboUI)
+    thread(AspectFusion.ShowSoulUI)
 end)
 
 end

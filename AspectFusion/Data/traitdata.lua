@@ -3312,7 +3312,7 @@ if AspectFusion.Config.Enabled then
         },
 		MaxHealthMultiplier =
 		{
-			BaseValue = 0.75,
+			BaseValue = 0.50,
 			SourceIsMultiplier = true,
 		},
         AddOutgoingDamageModifiers =
@@ -3664,7 +3664,7 @@ if AspectFusion.Config.Enabled then
 			},
             {
                 LuaProperty = "MaxHealth",
-                BaseValue = 0.75, -- Make sure to change MaxHealthMultiplier in this trait above if this is altered
+                BaseValue = 0.50, -- Make sure to change MaxHealthMultiplier in this trait above if this is altered
                 SourceIsMultiplier = true,
                 ChangeType = "Multiply",
                 MaintainDelta = true,
@@ -5371,6 +5371,26 @@ if AspectFusion.Config.Enabled then
             },
 		},
 	}
+
+    TraitData.UltraSpearHealthBonus =
+    {
+        Hidden = true,
+        MaxHealthMultiplier =
+        {
+            BaseValue = 1.10,
+            SourceIsMultiplier = true
+        },
+        PropertyChanges =
+        {
+            {
+                LuaProperty = "MaxHealth",
+                BaseValue = 1.10,
+                SourceIsMultiplier = true,
+                ChangeType = "Multiply",
+                MaintainDelta = true,
+            }
+        }
+    }
 
     -- Trait specific changes
 
