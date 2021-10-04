@@ -12,8 +12,7 @@ if ArthurMod.Config.Enabled then
     table.insert(DeathLoopData.DeathAreaBedroom.UnthreadedEvents,{FunctionName = "ArthurMod.SpawnArthur"})
 
     function ArthurMod.SpawnArthur()
-        local unlocked = true
-        if unlocked then
+        if GameState.LastWeaponUpgradeData.SwordWeapon.Index == 4 then
             local newUnit = DeepCopyTable( EnemyData.NPC_Arthur_01 )
             local spawnPointId = 421158
 

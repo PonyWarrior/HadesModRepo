@@ -8,17 +8,17 @@ if ArthurMod.Config.Enabled then
         {
             {
                 UnlockThreshold = 1,
-                Text = "Arthur_01"
-            },
-            {
-                UnlockThreshold = 5,
-                Text = "Arthur_02"
-
-            },
-            {
-                UnlockThreshold = 15,
                 Text = "Arthur_03"
-            }
+            },
+            -- {
+            --     UnlockThreshold = 5,
+            --     Text = "Arthur_02"
+
+            -- },
+            -- {
+            --     UnlockThreshold = 15,
+            --     Text = "Arthur_03"
+            -- }
         },
         Image = "Codex_Portrait_Arthur",
     }
