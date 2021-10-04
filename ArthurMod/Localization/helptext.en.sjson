@@ -1,0 +1,32 @@
+{
+  Texts = [
+    "_append"
+    {
+      Id = "ArthurSignoff"
+      DisplayName = "From Arthur"
+    }
+    {
+      Id = "ArthurSignoff_Max"
+      DisplayName = """
+        From {#AwardMaxFlavorFormat}Arthur{#AwardDarkFlavorFormat}; you share a {#AwardMaxFlavorFormat}Chivalrous Bond
+
+        {#AwardDarkFlavorFormat}The king entrusted you with his mighty sword; may you guide the legends of his future.
+      """
+    }
+    {
+      Id = "ArthurKeepsakeTrait"
+      DisplayName = "Royal Clasp"
+      Description = "Excalibur's {$Keywords.ArthurSpecial} blocks all projectiles, but has a shorter duration. Aura Duration : {#AltUpgradeFormat}{$TooltipData.AuraDuration} Sec{#PreviousFormat}."
+    }
+    {
+      Id = "ArthurKeepsakeTrait_Rack"
+      InheritFrom = "ArthurKeepsakeTrait"
+      Description = "Excalibur's {$Keywords.ArthurSpecial} blocks all projectiles, but has a shorter duration. Aura Duration : {#AltUpgradeFormat}{$TooltipData.AuraDuration} Sec{#PreviousFormat}. \n\n {#AwardFlavorFormat}{$TooltipData.SignoffText}"
+    }
+    {
+      Id = "NPC_Arthur_01"
+      DisplayName = "Arthur"
+      Description = "The Holy Liege"
+    }
+  ]
+}

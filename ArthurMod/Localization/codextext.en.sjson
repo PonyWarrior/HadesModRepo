@@ -1,0 +1,17 @@
+{
+  Texts = [
+    "_append"
+    {
+      Id = "Arthur_01"
+      DisplayName = "'...I know not of any leader, mortal or god, bearing the name of Arthur, yet if the Fates have chosen his blade as an aspect of Stygius, he must have been worthy...'"
+    }
+    {
+      Id = "Arthur_02"
+      DisplayName = "'...I know not of any leader, mortal or god, bearing the name of Arthur, yet if the Fates have chosen his blade as an aspect of Stygius, he must have been worthy.{#CodexBoldFormat} The Master's son told me he can feel the presence of Arthur while wielding his blade, even conversing with him occasionally; perhaps, as the prince continues to strenghten his bond with his Infernal Arms, the other aspect wielders will manifest themselves as well...{#PreviousFormat}'"
+    }
+    {
+      Id = "Arthur_03"
+      DisplayName = "'...I know not of any leader, mortal or god, bearing the name of Arthur, yet if the Fates have chosen his blade as an aspect of Stygius, he must have been worthy. The Master's son told me he can feel the presence of Arthur while wielding his blade, even conversing with him occasionally; perhaps, as the prince continues to strenghten his bond with his Infernal Arms, the other aspect wielders will manifest themselves as well.{#CodexBoldFormat} Although, the Arthur that the prince speaks of does not seem like he has matured into his future role of king. No doubt this was the Fates' intention, having this version of Arthur accompany our young prince on his journeys, so both of them may learn from one another...{#PreviousFormat}'"
+    }
+  ]
+}

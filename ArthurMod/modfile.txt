@@ -1,0 +1,39 @@
+:: ArthurMod
+Top Import "config.lua"
+Import "arthur.lua"
+
+To "Scripts/TraitData.lua"
+Import "Data/traitdata.lua"
+
+To "Scripts/GiftData.lua"
+Import "Data/giftdata.lua"
+
+To "Scripts/CodexData.lua"
+Import "Data/codexdata.lua"
+
+To "Scripts/NPCData.lua"
+Import "Data/npcdata.lua"
+
+To "Game/Animations/GUIAnimations.sjson"
+SJSON "Game/guianimations.sjson"
+
+To "Game/Animations/PortraitAnimations.sjson"
+SJSON "Game/portraitanimations.sjson"
+
+To "Game/text/en/HelpText.en.sjson"
+SJSON "Localization/helptext.en.sjson"
+
+To "Game/text/en/CodexText.en.sjson"
+SJSON "Localization/codextext.en.sjson"
+
+To "Win/Packages/ArthurMod.pkg"
+Replace "Packages/ArthurMod.pkg"
+
+To Win/Packages/720p/ArthurMod.pkg
+Replace "Packages/ArthurMod.pkg"
+
+To Win/Packages/ArthurMod.pkg_manifest
+Replace "Packages/ArthurMod.pkg_manifest"
+
+To Win/Packages/720p/ArthurMod.pkg_manifest
+Replace "Packages/ArthurMod.pkg_manifest"

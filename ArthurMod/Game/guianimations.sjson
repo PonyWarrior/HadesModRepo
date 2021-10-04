@@ -1,0 +1,38 @@
+{
+  Animations = [
+    "_append"
+    {
+      Name = "Keepsake_Arthur_Small"
+      InheritFrom = "KeepsakeTrayIconBacking"
+      ChildAnimation = "Keepsake_Arthur_Child"
+      EndFrame = 1
+      StartFrame = 1
+    }
+    {
+      Name = "Keepsake_Arthur_Child"
+      InheritFrom = "KeepsakeTrayIcon"
+      FilePath = "ArthurMod\ArthurKeepsake"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.25
+    }
+    {
+      Name = "Keepsake_Arthur"
+      InheritFrom = "KeepsakeIcon"
+      FilePath = "ArthurMod\ArthurKeepsake"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.5
+    }
+    {
+      Name = "Keepsake_Arthur_Max"
+      InheritFrom = "KeepsakeMax_Corner"
+      FilePath = "ArthurMod\Keepsake_Arthur_Max"
+    }
+    {
+      Name = "Keepsake_ArthurSticker_Max"
+      InheritFrom = "KeepsakeMax_Sticker"
+      FilePath = "ArthurMod\Keepsake_ArthurSticker_Max"
+    }
+  ]
+}
