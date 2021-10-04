@@ -1,0 +1,27 @@
+{
+  Units = [
+    "_append"
+    {
+      Name = "NPC_Arthur_01"
+      InheritFrom = "BaseNPC"
+      DisplayInEditor = true
+      Thing =
+      {
+        EditorOutlineDrawBounds = false
+        Graphic = "WeaponSwordAlt03FloatingIdleBonus"
+        Tallness = 260.0
+        Interact =
+        {
+          Distance = 170.0
+        }
+        Offset = { X = 0 Y = -16 }
+        Points = [
+          { X = 10 Y = 18 }
+          { X = 81 Y = -13 }
+          { X = 7 Y = -50 }
+          { X = -55 Y = -16 }
+        ]
+      }
+    }
+  ]
+}

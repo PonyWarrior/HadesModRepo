@@ -20,6 +20,9 @@ SJSON "Game/guianimations.sjson"
 To "Game/Animations/PortraitAnimations.sjson"
 SJSON "Game/portraitanimations.sjson"
 
+To "Game/Units/NPCs.sjson"
+SJSON "Game/npcs.sjson"
+
 To "Game/text/en/HelpText.en.sjson"
 SJSON "Localization/helptext.en.sjson"
 
