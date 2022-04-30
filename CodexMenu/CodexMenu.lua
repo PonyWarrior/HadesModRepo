@@ -1,10 +1,6 @@
 
 CodexMenuData =
 {
-	HestiaUpgrade =
-	{
-		"HestiaWeaponTrait", "HestiaRangedTrait", "HestiaRushTrait", "HestiaSecondaryTrait", "HestiaRetaliateTrait", "HestiaShoutTrait",
-	},
 	ZeusUpgrade =
 	{
 	  "ZeusWeaponTrait", "ZeusRushTrait", "ZeusRangedTrait", "ZeusSecondaryTrait", "ZeusShoutTrait",
@@ -96,12 +92,13 @@ CodexMenuData =
 	},
 	Duos =
 	{
-		"LightningCloudTrait", "AutoRetaliateTrait", "AmmoBoltTrait", "ImpactBoltTrait", "ReboundingAthenaCastTrait", "JoltDurationTrait",
-		"ImprovedPomTrait", "RaritySuperBoost", "BlizzardOrbTrait",
-		"TriggerCurseTrait", "SlowProjectileTrait", "ArtemisReflectBuffTrait", "CurseSickTrait", "HeartsickCritDamageTrait",
-		"DionysusAphroditeStackIncreaseTrait", "AresHomingTrait", "IceStrikeArrayTrait", "HomingLaserTrait",
-		"RegeneratingCappedSuperTrait", "StatusImmunityTrait", "PoseidonAresProjectileTrait", "CastBackstabTrait", "NoLastStandRegenerationTrait",
-		"PoisonTickRateTrait", "StationaryRiftTrait", "SelfLaserTrait", "ArtemisBonusProjectileTrait", "PoisonCritVulnerabilityTrait",
+		"LightningCloudTrait", "AutoRetaliateTrait", "AmmoBoltTrait", "ImpactBoltTrait", 
+		"ReboundingAthenaCastTrait", "JoltDurationTrait", "ImprovedPomTrait", "RaritySuperBoost", 
+		"BlizzardOrbTrait", "TriggerCurseTrait", "SlowProjectileTrait", "ArtemisReflectBuffTrait", 
+		"CurseSickTrait", "HeartsickCritDamageTrait", "DionysusAphroditeStackIncreaseTrait", "AresHomingTrait", 
+		"IceStrikeArrayTrait", "HomingLaserTrait", "RegeneratingCappedSuperTrait", "StatusImmunityTrait", 
+		"PoseidonAresProjectileTrait", "CastBackstabTrait", "NoLastStandRegenerationTrait", "PoisonTickRateTrait", 
+		"StationaryRiftTrait", "SelfLaserTrait", "ArtemisBonusProjectileTrait", "PoisonCritVulnerabilityTrait",
 	},
 	Consumables =
 	{
@@ -141,7 +138,7 @@ CodexMenuColors =
 	FistWeapon = { 176, 196, 222, 255 },
 }
 
-local RealGodNames = {
+RealGodNames = {
 	"Zeus", "Athena", "Poseidon", "Artemis",
 	"Aphrodite", "Ares", "Dionysus", "Demeter"
 }
@@ -149,7 +146,7 @@ local RealGodNames = {
 SaveIgnores["CodexMenuData"] = true
 
 -- ModUtil part
-if ModUtil ~= nil then
+if ModUtil ~= nil and PQOL == nil then
     local mod = "CodexMenu"
 
     ModUtil.WrapBaseFunction( "SetupMap", function(baseFunc)
@@ -1814,9 +1811,8 @@ OnControlPressed{ "Confirm",
 
 local FishTable = CodexOrdering.Fish.Order
 local WeaponTable = CodexOrdering.Weapons.Order
-local BoonTable =
+CodexBoonTable =
 {
-	"HestiaUpgrade",
 	"TrialUpgrade",
 	"ZeusUpgrade",
 	"PoseidonUpgrade",
@@ -1905,10 +1901,12 @@ local CommandTable =
 		OpenSellTraitMenu()
 	end,
 	NPC_Orpheus_01 = function()
+		--Save state
 		CloseCodexScreen()
 		SaveState()
 	end,
 	NPC_Patroclus_01 = function()
+		--Load state
 		CloseCodexScreen()
 		LoadState()
 	end,
@@ -1932,13 +1930,13 @@ function CodexMain(triggerArgs)
 
 	local selection = CodexStatus.SelectedEntryNames[CodexStatus.SelectedChapterName]
 
-	if Contains(BoonTable, selection) then
+	if Contains(CodexBoonTable, selection) then
 		DebugPrint({Text = "@CodexMenu Trying to open boon : "..selection})
 		OpenBoonSelector(selection, true)
 
-	elseif BoonTable[selection] ~= nil then
+	elseif CodexBoonTable[selection] ~= nil then
 		DebugPrint({Text = "@CodexMenu Trying to open boon : "..selection})
-		OpenBoonSelector(BoonTable[selection], false)
+		OpenBoonSelector(CodexBoonTable[selection], false)
 
 	elseif Contains(ConsumableTable, selection) then
 		DebugPrint({Text = "@CodexMenu Trying to spawn consumable : "..selection})
