@@ -27,29 +27,24 @@ local TextLineGroups =
     NPC_Hades_01 =
     {
         "InteractTextLineSets", "GiftTextLineSets"
-
     },
     NPC_Sisyphus_01 =
     {
         "InteractTextLineSets", "GiftTextLineSets"
-
     },
     --Skelly
     TrainingMelee =
     {
         "InteractTextLineSets", "GiftTextLineSets"
-
     },
     NPC_Achilles_01 =
     {
         "InteractTextLineSets", "GiftTextLineSets"
-
     },
     --Megaera
     NPC_FurySister_01 =
     {
         "InteractTextLineSets", "GiftTextLineSets"
-
     },
     Harpy2 =
     {
@@ -129,15 +124,15 @@ local TextLineGroups =
     },
     NPC_Orpheus_01 =
     {
-        "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
+        "InteractTextLineSets", "GiftTextLineSets"
     },
     NPC_Eurydice_01 =
     {
-        "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
+        "InteractTextLineSets", "GiftTextLineSets"
     },
     NPC_Patroclus_01 =
     {
-        "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
+        "InteractTextLineSets", "GiftTextLineSets"
     },
     Theseus =
     {
@@ -176,9 +171,6 @@ function DialogManager.OpenDialogManagerScreen()
 	local components = screen.Components
 	screen.Title = "Dialog Manager"
 	screen.Name = "DialogManagerScreen"
-    if BuildManager.Data.SavedBuilds == nil then
-        BuildManager.Data.SavedBuilds = {}
-    end
 	OnScreenOpened({ Flag = screen.Name, PersistCombatUI = true })
 	SetConfigOption({ Name = "UseOcclusion", Value = false })
 	FreezePlayerUnit()
@@ -468,7 +460,6 @@ ModUtil.BaseOverride("ForcePlayTextLines", function (source, textLinesName )
 		"BossPresentationIntroTextLineSets", "BossPresentationTextLineSets", "BossPresentationRepeatableTextLineSets", "BossPresentationPriorityIntroTextLineSets"
 	}
     for textline, i in pairs (textLinesName)do
-        DebugPrint({Text=textline})
         for k, possibleSet in pairs( possibleSets ) do
             local set = source[possibleSet]
             if set ~= nil then
