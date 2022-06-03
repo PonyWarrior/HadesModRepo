@@ -286,3 +286,8 @@ added missing 'Rending Claws' upgrade to Twin Fists hammer
 
 fixed issues :
 opening the boon manager while having a centaur heart healed you
+
+2.4.9
+
+updated features :
+added compatibility with OlympusExtra and future mods
