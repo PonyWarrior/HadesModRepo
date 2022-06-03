@@ -143,7 +143,18 @@ RealGodNames = {
 	"Aphrodite", "Ares", "Dionysus", "Demeter"
 }
 
+-- Any trait that should not be reloaded
+CodexMenuReloadShouldSkip = {
+    FastClearDodgeBonusTrait = true,
+    PerfectClearDamageBonusTrait = true,
+    RoomRewardMaxHealthTrait = true,
+    RoomRewardEmptyMaxHealthTrait = true
+}
+
 SaveIgnores["CodexMenuData"] = true
+SaveIgnores["CodexMenuColors"] = true
+SaveIgnores["RealGodNames"] = true
+SaveIgnores["CodexMenuReloadShouldSkip"] = true
 
 -- ModUtil part
 if ModUtil ~= nil and PQOL == nil then
@@ -2177,16 +2188,10 @@ It will also give bonus max health from the RoomRewardMaxHealthTrait trait, but 
 ]]--
 function CodexMenuReloadAllTraits()
 	-- Remove all traits, then readd them in order
-	local shouldSkip = {
-		FastClearDodgeBonusTrait = true,
-		PerfectClearDamageBonusTrait = true,
-    	RoomRewardMaxHealthTrait = true,
-    	RoomRewardEmptyMaxHealthTrait = true
-	}
 	local weaponName = GetEquippedWeapon()
 	local removedTraitData = {}
 	for i, traitData in pairs( CurrentRun.Hero.Traits ) do
-		if shouldSkip[traitData.Name] ~= true then
+		if CodexMenuReloadShouldSkip[traitData.Name] ~= true then
 			table.insert(removedTraitData, { Name = traitData.Name, Rarity = traitData.Rarity })
 		end
 	end
