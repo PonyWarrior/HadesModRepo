@@ -1,1 +1,3 @@
 Import "colorblind.lua"
+To "Game\Animations\Fx.sjson"
+SJSON "colorblind.sjson"
