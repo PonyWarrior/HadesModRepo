@@ -1,5 +1,5 @@
 ::AspectExtender
 
-Priority 20
+Load Priority 20
 
 Import "AspectExtender.lua"
