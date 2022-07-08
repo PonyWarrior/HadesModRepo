@@ -839,12 +839,11 @@ function RandomColor(rng)
 end
 
 function OpenBoonManager()
-    if IsScreenOpen("BoonSelector") then
+    if IsScreenOpen("BoonManager") then
 		return
 	end
-	OnScreenOpened( { Flag = "BoonSelector", SkipBlockTimer = true } )
+	OnScreenOpened( { Flag = "BoonManager", SkipBlockTimer = true } )
 	CloseCodexScreen()
-	wait(0.1)
 	CheckHadesShout(CurrentRun.Hero.Traits)
 	CodexMenuReloadAllTraits()
 	if CurrentRun.Hero.Traits ~= nil then
@@ -988,7 +987,7 @@ function CloseBoonManager(screen, button)
 	screen.BoonsList = {}
 	CheckHadesShout(CurrentRun.Hero.Traits)
 	CodexMenuReloadAllTraits()
-	OnScreenClosed({ Flag = screen.Name })
+	OnScreenClosed({ Flag = "BoonManager" })
 end
 
 function SpawnBoon(screen, button)
