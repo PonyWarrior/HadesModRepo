@@ -307,8 +307,11 @@ function CheckHadesShout(traits)
 end
 
 function OpenBoonSelector(godName, spawnBoon)
+	if IsScreenOpen("BoonSelector") then
+		return
+	end
+	OnScreenOpened( { Flag = "BoonSelector", SkipBlockTimer = true } )
 	CloseCodexScreen()
-	wait(0.1)
 	CheckHadesShout(CurrentRun.Hero.Traits)
 	CodexMenuReloadAllTraits()
 	if godName ~= nil and CodexMenuData[godName] then
@@ -838,6 +841,10 @@ function RandomColor(rng)
 end
 
 function OpenBoonManager()
+    if IsScreenOpen("BoonSelector") then
+		return
+	end
+	OnScreenOpened( { Flag = "BoonSelector", SkipBlockTimer = true } )
 	CloseCodexScreen()
 	wait(0.1)
 	CheckHadesShout(CurrentRun.Hero.Traits)
@@ -1001,7 +1008,7 @@ function CloseBoonSelector(screen, button)
 	ScreenAnchors.BoonSelector = nil
 	UnfreezePlayerUnit()
 	screen.KeepOpen = false
-	OnScreenClosed({ Flag = screen.Name })
+	OnScreenClosed({ Flag = "BoonSelector" })
 end
 
 function CloseCustomMirror( screen, button )
