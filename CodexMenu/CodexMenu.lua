@@ -2081,6 +2081,8 @@ function CodexMain(triggerArgs)
 
 	elseif BossTable[selection] ~= nil then
 		DebugPrint({Text = "@CodexMenu Trying to start boss fight : "..selection})
+        RemoveAllTraits()
+        ReloadEquipment()
 		CloseCodexScreen()
 		StartNewCustomRun(BossTable[selection])
 		LoadMap({ Name = CurrentRun.CurrentRoom.Name, ResetBinks = true, ResetWeaponBinks = true })

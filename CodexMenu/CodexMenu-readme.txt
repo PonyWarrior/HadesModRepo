@@ -291,3 +291,8 @@ opening the boon manager while having a centaur heart healed you
 
 updated features :
 added compatibility with OlympusExtra and future mods
+
+2.4.10
+
+fixed issues :
+crash when trying to load a boss fight with a god's aid equipped
