@@ -297,3 +297,4 @@ added compatibility with OlympusExtra and future mods
 fixed issues :
 crash when trying to load a boss fight with a god's aid equipped
 rapid inputs opening the boon selector/manager multiple times
+re-added demeter's rare crop boon to boon selector

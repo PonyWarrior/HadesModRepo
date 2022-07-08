@@ -58,11 +58,9 @@ CodexMenuData =
 	},
 	DemeterUpgrade =
 	{
-		--Removed "HarvestBoonDrop", causes crash
 		"DemeterWeaponTrait", "DemeterSecondaryTrait", "DemeterRushTrait", "DemeterRangedTrait", "DemeterShoutTrait",
 		"CastNovaTrait", "ZeroAmmoBonusTrait", "MaximumChillBlast", "MaximumChillBonusSlow", "HealingPotencyDrop", "InstantChillKill",
-		"DemeterRangedBonusTrait", "DemeterRetaliateTrait",
-		"HealingPotencyTrait",
+		"DemeterRangedBonusTrait", "DemeterRetaliateTrait", "HarvestBoonDrop", "HealingPotencyTrait"
 	},
 	TrialUpgrade =
 	{
