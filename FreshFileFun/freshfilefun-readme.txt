@@ -13,3 +13,9 @@ added weapon and aspect selector
 new features :
 
 added god pool selector
+
+1.2.1
+
+fixed issues :
+ares missing from god pool selector
+force best build not enabled by default

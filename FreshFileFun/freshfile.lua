@@ -92,7 +92,8 @@ local godLookupTable =
     [4] = "AphroditeUpgrade",
     [5] = "ArtemisUpgrade",
     [6] = "DionysusUpgrade",
-    [7] = "DemeterUpgrade"
+    [7] = "DemeterUpgrade",
+    [8] = "AresUpgrade"
 }
 
 function FreshFileFun.LoadShrineUpgrades()
@@ -110,10 +111,10 @@ if FreshFileFun.Config.Enabled then
 
         if config.EnablePoolPicker then
             -- prevent user input error from crashing the game
-            Clamp(config.Gods.God1, 1, 7)
-            Clamp(config.Gods.God2, 1, 7)
-            Clamp(config.Gods.God3, 1, 7)
-            Clamp(config.Gods.God4, 1, 7)
+            Clamp(config.Gods.God1, 1, 8)
+            Clamp(config.Gods.God2, 1, 8)
+            Clamp(config.Gods.God3, 1, 8)
+            Clamp(config.Gods.God4, 1, 8)
 
             local god1 = godLookupTable[config.Gods.God1]
             local god2 = godLookupTable[config.Gods.God2]

@@ -3,11 +3,11 @@ ModUtil.RegisterMod("FreshFileFun")
 FreshFileFun =
 {
     Config =
-    {   
+    {
         -- Disabling this disables everything
         Enabled = true,
         Pact =
-        {   
+        {
             -- Disabling this disables all pact options
             Enabled = false,
             Options =
@@ -107,7 +107,7 @@ FreshFileFun =
             --Chamber 3 Epic Athena Special
             --Chamber 4 Epic Ares Attack
             --Chamber 5 Merciful end
-            Enabled = false,
+            Enabled = true,
         },
         GodPoolSelector =
         {
@@ -121,8 +121,8 @@ FreshFileFun =
             {
                 -- Set EnablePoolPicker to true to use this
                 -- Pick the 4 gods you want to encounter
-                -- 1 = Zeus; 2 = Poseidon; 3 = Athena; 4 = Aphrodite; 5 = Artemis; 6 = Dionysus 7 = Demeter
-                God1 = 1, 
+                -- 1 = Zeus; 2 = Poseidon; 3 = Athena; 4 = Aphrodite; 5 = Artemis; 6 = Dionysus; 7 = Demeter; 8 = Ares
+                God1 = 1,
                 God2 = 2,
                 God3 = 3,
                 God4 = 4,
