@@ -496,13 +496,6 @@ if AspectFusion.Config.Enabled then
 
 
 			-- SwordWeapon3
-			-- {
-			-- 	WeaponNames = { "SwordWeapon3" },
-			-- 	WeaponProperty = "ChargeTime",
-			-- 	ChangeValue = 0.50,
-			-- 	ChangeType = "Absolute",
-			-- 	ExcludeLinked = true,
-			-- },
 			{
 				WeaponNames = { "SwordWeapon3" },
 				WeaponProperty = "ControlWindow",
@@ -626,7 +619,20 @@ if AspectFusion.Config.Enabled then
 				ChangeValue = 0,
 				ExcludeLinked = true,
 			},
-
+			{
+				WeaponNames = { "SwordWeapon3" },
+				ProjectileProperty = "DamageLow",
+				ChangeValue = 80,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
+			{
+				WeaponNames = { "SwordWeapon3" },
+				ProjectileProperty = "DamageHigh",
+				ChangeValue = 80,
+				ChangeType = "Absolute",
+				ExcludeLinked = true,
+			},
 
 			-- Sword Parry
 
@@ -851,13 +857,6 @@ if AspectFusion.Config.Enabled then
             },
             {
                 WeaponNames = { "SwordWeapon3" },
-                WeaponProperty = "LockTriggerForCharge",
-                ChangeValue = false,
-                ChangeType = "Absolute",
-                ExcludeLinked = true,
-            },
-            {
-                WeaponNames = { "SwordWeapon3" },
                 WeaponProperty = "FullyAutomatic",
                 ChangeValue = true,
                 ChangeType = "Absolute",
@@ -880,17 +879,10 @@ if AspectFusion.Config.Enabled then
             {
                 WeaponNames = { "SwordWeapon3" },
                 WeaponProperty = "ChargeDamageMultiplier",
-                ChangeValue = 1.5,
+                ChangeValue = 3.75,
                 ChangeType = "Absolute",
                 ExcludeLinked = true,
             },
-            {
-				WeaponName = "SwordWeapon3",
-				WeaponProperty = "ForceReleaseOnFire",
-				ChangeValue = false,
-				ChangeType = "Absolute",
-				ExcludeLinked = true,
-			},
             {
                 WeaponNames = { "SwordWeapon3" },
                 WeaponProperty = "MinChargeStartFx",
@@ -898,21 +890,6 @@ if AspectFusion.Config.Enabled then
                 ChangeType = "Absolute",
                 ExcludeLinked = true,
             },
-            {
-                WeaponNames = { "SwordWeapon3" },
-                WeaponProperty = "AllowExternalForceRelease",
-                ChangeValue = false,
-                ChangeType = "Absolute",
-                ExcludeLinked = true,
-            },
-            {
-                WeaponNames = { "SwordWeapon3" },
-                WeaponProperty = "AllowExternalForceReleaseIfAnyCharged",
-                ChangeValue = true,
-                ChangeType = "Absolute",
-                ExcludeLinked = true,
-            },
-
 		},
 	}
 
@@ -3639,6 +3616,20 @@ if AspectFusion.Config.Enabled then
 				ProjectileProperty = "AttachedAnim",
 				ChangeType = "Absolute",
 				ChangeValue = "GuanYuSpin",
+				ExcludeLinked = true,
+			},
+            {
+				WeaponName = "SpearWeaponSpin3",
+				ProjectileProperty = "DamageLow",
+				ChangeType = "Absolute",
+				ChangeValue = "50",
+				ExcludeLinked = true,
+			},
+            {
+				WeaponName = "SpearWeaponSpin3",
+				ProjectileProperty = "DamageHigh",
+				ChangeType = "Absolute",
+				ChangeValue = "50",
 				ExcludeLinked = true,
 			},
 			{

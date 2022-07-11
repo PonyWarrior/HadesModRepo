@@ -1283,56 +1283,66 @@ ModUtil.Path.Wrap("Kill", function (baseFunc, victim, triggerArgs )
     end
 
     -- Pot spawning
+    -- if victim.MarkedForDeath or killingWeaponName == "SpearWeaponSpin" or killingWeaponName == "SpearWeaponSpin2" or killingWeaponName == "SpearWeaponSpin3" then
+    --     if victim.Name ~= "ZagreusTombstone" then
+    --         local newUnit = DeepCopyTable( EnemyData.ZagreusTombstone )
+    --         newUnit.ObjectId = SpawnUnit({ Name = newUnit.Name, Group = "Standing", DestinationId = victim.ObjectId, DoActivatePresentation = false })
+    --         SetColor({ Id = newUnit.ObjectId, Color = Color.Red})
+    --         SetupEnemyObject( newUnit, CurrentRun)
+    --     end
+    -- end
     if victim.MarkedForDeath or killingWeaponName == "SpearWeaponSpin" or killingWeaponName == "SpearWeaponSpin2" or killingWeaponName == "SpearWeaponSpin3" then
-        if victim.Name ~= "ZagreusTombstone" then
-        -- if CurrentRun.Hero.LastPotSpawn == nil then
-        --     CurrentRun.Hero.LastPotSpawn = 0
-        -- end
-        -- if (_worldTime - CurrentRun.Hero.LastPotSpawn) > AspectFusion.Config.FinalFormVaratha.PotSpawnCooldown then
-        --     CurrentRun.Hero.LastPotSpawn = _worldTime
-            local newUnit = DeepCopyTable( EnemyData.ZagreusTombstone )
-            newUnit.ObjectId = SpawnUnit({ Name = newUnit.Name, Group = "Standing", DestinationId = victim.ObjectId, DoActivatePresentation = false })
-            SetColor({ Id = newUnit.ObjectId, Color = Color.Red})
-            SetupEnemyObject( newUnit, CurrentRun)
-        end
-        -- end
+        CurrentRun.Hero.SoulCount = CurrentRun.Hero.SoulCount + 1
+        AspectFusion.SoulLevelUp()
+        thread(AspectFusion.UpdateSoulUI)
     end
+
 
     baseFunc(victim, triggerArgs )
 
     -- Pot kill
-    if victim.Name ~= nil and victim.Name == "ZagreusTombstone" then
-        thread(AspectFusion.SoulPotKill, victim, triggerArgs)
-        CurrentRun.Hero.SoulCount = CurrentRun.Hero.SoulCount + 1
-        AspectFusion.SoulPotLevelUp()
-        thread(AspectFusion.UpdateSoulUI)
-    end
+    -- if victim.Name ~= nil and victim.Name == "ZagreusTombstone" then
+    --     thread(AspectFusion.SoulPotKill, victim, triggerArgs)
+    --     CurrentRun.Hero.SoulCount = CurrentRun.Hero.SoulCount + 1
+    --     AspectFusion.SoulPotLevelUp()
+    --     thread(AspectFusion.UpdateSoulUI)
+    -- end
 end)
 
-function AspectFusion.DestroyAllPots()
-	for k, enemy in pairs( ActiveEnemies ) do
-		if enemy.Name == "ZagreusTombstone" then
-            enemy.DestroyOnly = true
-			thread( Kill, enemy )
-		end
-	end
+-- function AspectFusion.DestroyAllPots()
+-- 	for k, enemy in pairs( ActiveEnemies ) do
+-- 		if enemy.Name == "ZagreusTombstone" then
+--             enemy.DestroyOnly = true
+-- 			thread( Kill, enemy )
+-- 		end
+-- 	end
+-- end
+
+-- ModUtil.Path.Wrap("CheckForAllEnemiesDead", function(baseFunc, eventSource, args)
+--     baseFunc(eventSource, args)
+--     -- Clean all pots at the end of an encounter
+--     AspectFusion.DestroyAllPots()
+-- end)
+
+--Debug pot spawning
+-- OnControlPressed{"Reload", function (triggerArgs)
+--     if HeroHasTrait("UltraSpearTrait") then
+--         local newUnit = DeepCopyTable( EnemyData.ZagreusTombstone )
+--         newUnit.ObjectId = SpawnUnit({ Name = newUnit.Name, Group = "Standing", DestinationId = CurrentRun.Hero.ObjectId, DoActivatePresentation = false,
+--         OffsetX = 100, OffsetY = 100 })
+--         SetColor({ Id = newUnit.ObjectId, Color = Color.Red})
+--         SetupEnemyObject( newUnit, CurrentRun)
+--     end
+-- end}
+
+function AspectFusion.SoulLevelUp()
+    if CurrentRun.Hero.SoulCount == nil or CurrentRun.Hero.SoulCount < 10 then
+        return
+    else
+        CurrentRun.Hero.SoulCount = 0
+        CurrentRun.Hero.MaxHealth = CurrentRun.Hero.MaxHealth + 1
+    end
 end
-
-ModUtil.Path.Wrap("CheckForAllEnemiesDead", function(baseFunc, eventSource, args)
-    baseFunc(eventSource, args)
-    -- Clean all pots at the end of an encounter
-    AspectFusion.DestroyAllPots()
-end)
-
-OnControlPressed{"Reload", function (triggerArgs)
-    if HeroHasTrait("UltraSpearTrait") then
-        local newUnit = DeepCopyTable( EnemyData.ZagreusTombstone )
-        newUnit.ObjectId = SpawnUnit({ Name = newUnit.Name, Group = "Standing", DestinationId = CurrentRun.Hero.ObjectId, DoActivatePresentation = false,
-        OffsetX = 100, OffsetY = 100 })
-        SetColor({ Id = newUnit.ObjectId, Color = Color.Red})
-        SetupEnemyObject( newUnit, CurrentRun)
-    end
-end}
 
 function AspectFusion.SoulPotLevelUp()
     if CurrentRun.Hero.SoulCount == nil then
@@ -1505,9 +1515,9 @@ function AspectFusion.ShowSoulUI()
     if CurrentRun.Hero.SoulCount == nil then
         CurrentRun.Hero.SoulCount = 0
     end
-    if CurrentRun.Hero.SoulPot == nil then
-        AspectFusion.InitSoulPot()
-    end
+    -- if CurrentRun.Hero.SoulPot == nil then
+    --     AspectFusion.InitSoulPot()
+    -- end
 
 	ScreenAnchors.SoulUI = CreateScreenObstacle({ Name = "BlankObstacle", Group = "Combat_UI", X = GunUI.StartX, Y = GunUI.StartY })
 
