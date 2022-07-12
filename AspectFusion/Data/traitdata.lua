@@ -1597,7 +1597,7 @@ if AspectFusion.Config.Enabled then
                 WeaponNames = { "FistSpecialVacuum" },
                 EffectName = "MarkTargetFist",
                 EffectProperty = "Modifier",
-                BaseValue = 0.40,
+                BaseValue = 0.50,
                 ChangeType = "Add",
                 DeriveSource = "DeriveSource"
             },
@@ -2603,14 +2603,16 @@ if AspectFusion.Config.Enabled then
             {
                 WeaponNames = { "ShieldWeapon", "ShieldWeaponDash" },
                 ProjectileProperty = "DamageLow",
-                BaseValue = 15,
+                ChangeValue = 15,
                 ChangeType = "Add",
                 ExcludeLinked = true,
             },
             {
                 WeaponNames = { "ShieldWeapon", "ShieldWeaponDash" },
                 ProjectileProperty = "DamageHigh",
-                DeriveValueFrom = "DamageLow",
+                ChangeValue = 15,
+                ChangeType = "Add",
+                ExcludeLinked = true,
             },
 
             -- Zeus Aspect

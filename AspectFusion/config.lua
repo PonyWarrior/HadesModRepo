@@ -95,7 +95,7 @@ Sword hammers
 -Double Nova yes
 -Flurry Slash yes
 -Hoarding Slash yes
--Piercing Wave 
+-Piercing Wave yes
 -Shadow Slash yes
 -Super Nova yes
 -World Splitter yes
