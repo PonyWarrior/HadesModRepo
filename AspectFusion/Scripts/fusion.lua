@@ -1300,12 +1300,13 @@ ModUtil.Path.Wrap("Kill", function (baseFunc, victim, triggerArgs )
     --         SetupEnemyObject( newUnit, CurrentRun)
     --     end
     -- end
-    if victim.MarkedForDeath or killingWeaponName == "SpearWeaponSpin" or killingWeaponName == "SpearWeaponSpin2" or killingWeaponName == "SpearWeaponSpin3" then
-        CurrentRun.Hero.SoulCount = CurrentRun.Hero.SoulCount + 1
-        AspectFusion.SoulLevelUp()
-        thread(AspectFusion.UpdateSoulUI)
+    if not victim.BlockLifeSteal then
+        if victim.MarkedForDeath or killingWeaponName == "SpearWeaponSpin" or killingWeaponName == "SpearWeaponSpin2" or killingWeaponName == "SpearWeaponSpin3" then
+            CurrentRun.Hero.SoulCount = CurrentRun.Hero.SoulCount + 1
+            AspectFusion.SoulLevelUp()
+            thread(AspectFusion.UpdateSoulUI)
+        end
     end
-
 
     baseFunc(victim, triggerArgs )
 

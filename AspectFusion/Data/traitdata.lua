@@ -5575,6 +5575,10 @@ if AspectFusion.Config.Enabled then
     TraitData.GunLoadedGrenadeWideTrait.RequiredOneOfTraits = {"GunLoadedGrenadeTrait", "UltraGunTrait"}
     TraitData.GunLoadedGrenadeInfiniteAmmoTrait.RequiredTrait = nil
     TraitData.GunLoadedGrenadeInfiniteAmmoTrait.RequiredOneOfTraits = {"GunLoadedGrenadeTrait", "UltraGunTrait"}
+    TraitData.ArtemisRushTrait.RequiredFalseTrait = nil
+    TraitData.ArtemisRushTrait.RequiredOneOfTraits = {"GunLoadedGrenadeTrait", "UltraGunTrait"}
+    TraitData.ChaosBlessingDashAttackTrait.RequiredFalseTrait = nil
+    TraitData.ChaosBlessingDashAttackTrait.RequiredOneOfTraits = {"GunLoadedGrenadeTrait", "UltraGunTrait"}
 
     table.insert(TraitData.GunGrenadeClusterTrait.PropertyChanges,
     {
