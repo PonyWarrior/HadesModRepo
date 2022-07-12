@@ -17,3 +17,9 @@ Changes:
 -Fixed Exagryph's Eris buff being +50% global damage instead of +75%
 -Fixed Poseidon's special boon knocking back the player with Exagryph
 -Fixed Assists and Keepsakes gaining levels with Exagryph equipped
+
+1.0.3
+
+Changes:
+-Added requirements and cost to unlock final forms
+-Removed duplicate code from Aspect Extender

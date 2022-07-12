@@ -5,6 +5,7 @@ AspectFusion =
     Config =
     {
         Enabled = true,
+        FinalFormUnlockBloodCost = 20
     }
 }
 
