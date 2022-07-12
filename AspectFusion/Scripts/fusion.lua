@@ -261,6 +261,63 @@ for itemIndex, itemData in pairs( WeaponUpgradeData[weaponName] ) do
 end
 end)
 
+local DoNotReload =
+{
+    HadesShoutTrait = true,
+    FastClearDodgeBonusTrait = true,
+    PerfectClearDamageBonusTrait = true,
+    RoomRewardMaxHealthTrait = true,
+    RoomRewardEmptyMaxHealthTrait = true
+}
+
+function AspectFusion.ReloadAllTraits()
+    -- Modified ReloadAllTraits
+	local weaponName = GetEquippedWeapon()
+	local removedTraitData = {}
+	for i, traitData in pairs( CurrentRun.Hero.Traits ) do
+        if DoNotReload[traitData.Name] ~= true and traitData.Slot ~= "Assist" and traitData.Slot ~= "Keepsake" and not string.match(traitData.Name, "Chaos") then
+            table.insert(removedTraitData, { Name = traitData.Name, Rarity = traitData.Rarity })
+            DebugPrint({Text = "Reloading trait" .. traitData.Name })
+        end
+	end
+
+	for i, traitData in pairs(removedTraitData) do
+		RemoveTrait( CurrentRun.Hero, traitData.Name )
+	end
+	-- re-equip all weapons to flush Absolute change values
+
+	UnequipWeapon({ DestinationId = CurrentRun.Hero.ObjectId, Name = weaponName })
+	local weaponSetNames = WeaponSets.HeroWeaponSets[weaponName]
+	if weaponSetNames ~= nil then
+		for k, linkedWeaponName in pairs( weaponSetNames ) do
+			UnequipWeapon({ DestinationId = CurrentRun.Hero.ObjectId, Name = linkedWeaponName })
+		end
+	end
+	UnequipWeapon({ DestinationId = CurrentRun.Hero.ObjectId, Name = "RangedWeapon "})
+
+
+	EquipWeapon({ DestinationId = CurrentRun.Hero.ObjectId, Name = weaponName })
+	if weaponSetNames ~= nil then
+		for k, linkedWeaponName in pairs( weaponSetNames ) do
+			EquipWeapon({ DestinationId = CurrentRun.Hero.ObjectId, Name = linkedWeaponName })
+		end
+	end
+	EquipWeapon({ DestinationId = CurrentRun.Hero.ObjectId, Name = "RangedWeapon" })
+
+
+	for i, traitData in pairs(removedTraitData) do
+		if traitData.Name then
+			if traitData.Rarity then
+				AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = traitData.Name, Rarity = traitData.Rarity}) })
+			else
+				AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = traitData.Name }) })
+			end
+		end
+	end
+	UpdateHeroTraitDictionary()
+	DebugPrint({Text = "Finished reloading "})
+end
+
 function AspectFusion.WeaponUpgradeScreenPrevious( screen, button )
 	if not WeaponUpgradeData[screen.WeaponName][screen.StartingIndex - 4] then
 		return
@@ -1252,7 +1309,7 @@ end)
 OnAnyLoad{ function (triggerArgs)
     if HeroHasTrait("UltraGunTrait") then
         if HeroHasTrait("GunGrenadeClusterTrait") or HeroHasTrait("GunExplodingSecondaryTrait") then
-            ReloadAllTraits()
+            AspectFusion.ReloadAllTraits()
         end
     end
 end}

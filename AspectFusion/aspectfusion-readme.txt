@@ -14,3 +14,6 @@ Changes :
 Changes:
 -Disabled Hunter Dash and Chaos Lunge blessing on Exagryph
 -Fixed Varatha max health buff triggering from destroying environment
+-Fixed Exagryph's Eris buff being +50% global damage instead of +75%
+-Fixed Poseidon's special boon knocking back the player with Exagryph
+-Fixed Assists and Keepsakes gaining levels with Exagryph equipped

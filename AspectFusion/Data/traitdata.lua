@@ -5209,7 +5209,7 @@ if AspectFusion.Config.Enabled then
                 WeaponNames = { "GunBombWeapon", "GunBombImmolation" },
                 EffectName = "GrenadeSelfDamageOutput",
                 EffectProperty = "Modifier",
-                BaseValue = 0.50,
+                ChangeValue = 0.75,
                 ChangeType = "Add",
             },
             -- Hestia
@@ -5476,7 +5476,7 @@ if AspectFusion.Config.Enabled then
                     end
                 elseif property.TraitName ~= nil and property.TraitName == "GunLoadedGrenadeTrait" then
                     -- Exclude cluster bomb and rocket bomb
-                    if traitData.Icon ~= "Weapon_Gun_05" and traitData.Icon ~= "Weapon_Gun_08" then
+                    if traitData.Icon ~= "Weapon_Gun_05" and traitData.Icon ~= "Weapon_Gun_08" and traitData.Icon ~= "Boon_Poseidon_00" then
                         local propertyCopy = DeepCopyTable(property)
                         propertyCopy.TraitName = "UltraGunTrait"
                         table.insert(traitData.PropertyChanges, propertyCopy)
@@ -5542,6 +5542,13 @@ if AspectFusion.Config.Enabled then
                             propertyCopy.ProjectileName = "UltraSniperGunWeapon"
                         end
                         table.insert(traitData.PropertyChanges, propertyCopy)
+                    end
+                elseif property.WeaponNames ~= nil and Contains(property.WeaponNames, "GunBombImmolation") then
+                    --Removes poseidon special self knockback
+                    if traitData.Icon == "Boon_Poseidon_00" and property.ProjectileProperty == "ImpactVelocity" and property.TraitName == nil then
+                        property.TraitName = "GunLoadedGrenadeTrait"
+                    elseif traitData.Icon == "Boon_Poseidon_00" and property.ProjectileProperty == "ImpactVelocityCap" and property.TraitName == nil then
+                        property.TraitName = "GunLoadedGrenadeTrait"
                     end
                 end
             end
