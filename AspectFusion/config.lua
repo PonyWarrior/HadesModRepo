@@ -76,7 +76,7 @@ Spear hammers
 -Chain Skewer no
 -Breaching Skewer yes
 -Vicious Skewer no
--Exploding Launcher yes
+-Exploding Launcher no
 -Massive Spin yes
 -Quick Spin yes
 -Flurry Jab yes

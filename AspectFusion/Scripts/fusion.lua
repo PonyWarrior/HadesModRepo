@@ -1248,6 +1248,15 @@ ModUtil.Path.Wrap("ReloadPresentationComplete", function (baseFunc, attacker, we
     end
 end)
 
+--Necessary to prevent the weapon breaking when reloading traits on room change
+OnAnyLoad{ function (triggerArgs)
+    if HeroHasTrait("UltraGunTrait") then
+        if HeroHasTrait("GunGrenadeClusterTrait") or HeroHasTrait("GunExplodingSecondaryTrait") then
+            ReloadAllTraits()
+        end
+    end
+end}
+
 -- ultra spear
 ModUtil.Path.Wrap("MarkTargetSpinApply", function (baseFunc, triggerArgs)
     baseFunc(triggerArgs)
@@ -1340,7 +1349,7 @@ function AspectFusion.SoulLevelUp()
         return
     else
         CurrentRun.Hero.SoulCount = 0
-        CurrentRun.Hero.MaxHealth = CurrentRun.Hero.MaxHealth + 1
+        AddMaxHealth( 1, "UltraSpearTrait" )
     end
 end
 

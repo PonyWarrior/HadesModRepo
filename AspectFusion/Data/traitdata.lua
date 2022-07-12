@@ -5627,7 +5627,7 @@ if AspectFusion.Config.Enabled then
         ProjectileProperty = "Graphic",
         ChangeValue = "GunGrenadeLuciferOrb",
     })
-    
+
     TraitData.UltraGunGrenadeDropTrait  =
 	{
 		InheritFrom = { "WeaponTrait" },
@@ -5996,18 +5996,19 @@ if AspectFusion.Config.Enabled then
     }
 
         -- Spear
-    
+
     table.insert(TraitData.SpearThrowBounce.RequiredFalseTraits, "UltraSpearTrait")
     table.insert(TraitData.SpearThrowCritical.RequiredFalseTraits, "UltraSpearTrait")
     table.insert(TraitData.SpearThrowElectiveCharge.RequiredFalseTraits, "UltraSpearTrait")
     table.insert(TraitData.SpearSpinChargeAreaDamageTrait.RequiredFalseTraits, "UltraSpearTrait")
+    table.insert(TraitData.SpearThrowExplode.RequiredFalseTraits, "UltraSpearTrait")
 
     TraitData.SpearSpinTravelDurationTrait.RequiredTrait = nil
     TraitData.SpearSpinTravelDurationTrait.RequiredOneOfTraits = {"SpearSpinTravel", "UltraSpearTrait"}
         -- Sword
     TraitData.SwordConsecrationBoostTrait.RequiredTrait = nil
     TraitData.SwordConsecrationBoostTrait.RequiredOneOfTraits = {"SwordConsecrationTrait", "UltraSwordTrait"}
-    
+
     table.insert(TraitData.SwordTwoComboTrait.PropertyChanges,
     {
         TraitName = "UltraSwordTrait",
