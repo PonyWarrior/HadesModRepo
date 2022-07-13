@@ -18,15 +18,11 @@ Changes:
 -Fixed Poseidon's special boon knocking back the player with Exagryph
 -Fixed Assists and Keepsakes gaining levels with Exagryph equipped
 
-1.0.3
-
-Changes:
--Added requirements and cost to unlock final forms
--Removed duplicate code from Aspect Extender
-
 1.1.0
 
 Changes :
+-Added requirements and cost to unlock final forms
+-Removed duplicate code from Aspect Extender
 -Fixed Charon's well items being refreshed with Exagryph equipped
 -Coronacht now uses flares instead of shots
 -Exagryph's empowered shot is no longer a seeking projectile, shoots in a straight line instead
