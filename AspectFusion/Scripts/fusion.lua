@@ -1211,4 +1211,21 @@ ModUtil.Path.Wrap("EquipPlayerWeaponPresentation", function (baseFunc, weaponDat
     thread(AspectFusion.ShowSoulUI)
 end)
 
+ModUtil.Path.Wrap("DoSpearCharge", function (baseFunc)
+    AddTraitToHero({ TraitName = "UltraSpearSpinChargeSlow" })
+    baseFunc()
+end)
+
+ModUtil.Path.Wrap("EmptySpearCharge", function (baseFunc, stageReached)
+    RemoveTrait( CurrentRun.Hero, "UltraSpearSpinChargeSlow" )
+    baseFunc(stageReached)
+end)
+
+--safety net
+OnAnyLoad{ function (triggerArgs)
+    if HeroHasTrait("UltraSpearSpinChargeSlow") then
+        RemoveTrait( CurrentRun.Hero, "UltraSpearSpinChargeSlow" )
+    end
+end}
+
 end

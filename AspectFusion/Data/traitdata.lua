@@ -716,13 +716,13 @@ if AspectFusion.Config.Enabled then
 				ChangeValue = false,
 				ChangeType = "Absolute",
 			},
-            {
-				WeaponName = "SwordWeaponDash",
-				WeaponProperty = "SwapOnFire",
-				ChangeValue = "SwordWeapon2",
-				ChangeType = "Absolute",
-				ExcludeLinked = true,
-			},
+            -- {
+			-- 	WeaponName = "SwordWeaponDash",
+			-- 	WeaponProperty = "SwapOnFire",
+			-- 	ChangeValue = "SwordWeapon2",
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
 
 			--[[
 			{
@@ -3465,7 +3465,7 @@ if AspectFusion.Config.Enabled then
                 WeaponName = "SpearRushWeapon" ,
                 EffectName = "SpearRushBonus",
                 EffectProperty = "Modifier",
-                BaseValue = 1.5,
+                ChangeValue = 1.5,
                 ChangeType = "Add",
                 ExtractValue =
                 {
@@ -3657,7 +3657,7 @@ if AspectFusion.Config.Enabled then
 			},
             {
                 LuaProperty = "MaxHealth",
-                BaseValue = 0.50, -- Make sure to change MaxHealthMultiplier in this trait above if this is altered
+                ChangeValue = 0.50, -- Make sure to change MaxHealthMultiplier in this trait above if this is altered
                 SourceIsMultiplier = true,
                 ChangeType = "Multiply",
                 MaintainDelta = true,
@@ -3673,7 +3673,7 @@ if AspectFusion.Config.Enabled then
             {
                 WeaponNames = { "SpearWeaponThrowReturn", "SpearWeaponThrow" },
                 ProjectileProperty = "Range",
-                BaseValue = 1.25,
+                ChangeValue = 1.25,
                 SourceIsMultiplier = true,
                 ChangeType = "MultiplyBase",
                 ExcludeLinked = true,
@@ -3681,7 +3681,7 @@ if AspectFusion.Config.Enabled then
             {
                 WeaponNames = { "SpearWeaponThrowReturn", "SpearWeaponThrow" },
                 ProjectileProperty = "Speed",
-                BaseValue = 1.25,
+                ChangeValue = 1.25,
                 SourceIsMultiplier = true,
                 ChangeType = "MultiplyBase",
                 ExcludeLinked = true,
@@ -3689,7 +3689,7 @@ if AspectFusion.Config.Enabled then
             {
                 WeaponNames = { "SpearWeaponThrowReturn", "SpearWeaponThrow" },
                 WeaponProperty = "ChargeTime",
-                BaseValue = 0.75,
+                ChangeValue = 0.75,
                 SourceIsMultiplier = true,
                 ChangeType = "Multiply",
                 ExcludeLinked = true,
@@ -3729,66 +3729,134 @@ if AspectFusion.Config.Enabled then
                 WeaponNames = WeaponSets.HeroPhysicalWeapons,
                 EffectName = "MarkTargetSpin",
                 EffectProperty = "Modifier",
-                BaseValue = 1.5,
+                ChangeValue = 1.5,
                 ChangeType = "Add",
                 DeriveSource = "DeriveSource"
             },
-            --fff
+            --Flurry
             {
-				WeaponNames = { "GunBombWeapon" },
-				ProjectileProperty = "DamageLow",
-				ChangeValue = 100,
+				WeaponNames = { "SpearWeapon", "SpearWeapon2", "SpearWeapon3", "SpearWeaponDash" },
+				WeaponProperty = "FullyAutomatic",
+				ChangeValue = true,
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
 			{
-				WeaponNames = { "GunBombWeapon" },
-				ProjectileProperty = "DamageHigh",
-                ChangeValue = 100,
+				WeaponNames = { "SpearWeapon", "SpearWeapon2", "SpearWeapon3", "SpearWeaponDash" },
+				EffectName = "SpearDisable",
+				EffectProperty = "Duration",
+				ChangeValue = 0.34,
+				ChangeType = "Multiply",
+			},
+
+			{
+				WeaponNames = { "SpearWeapon", "SpearWeapon2", "SpearWeapon3", "SpearWeaponDash" },
+				EffectName = "SpearDisableCancelableAndLockTrigger",
+				EffectProperty = "Duration",
+				ChangeValue = 0.34,
+				ChangeType = "Multiply",
+			},
+
+			{
+				WeaponNames = { "SpearWeapon", "SpearWeapon2", "SpearWeapon3", "SpearWeaponDash" },
+				EffectName = "SpearDisableCancelableAndLockRotation",
+				EffectProperty = "Duration",
+				ChangeValue = 0.34,
+				ChangeType = "Multiply",
+			},
+			{
+				WeaponNames = { "SpearWeapon", "SpearWeapon2", "SpearWeapon3", "SpearWeaponDash" },
+				WeaponProperty = "ChargeTime",
+				ChangeValue = 0.42,
+				ChangeType = "Multiply",
+				ExcludeLinked = true,
+			},
+			-- {
+			-- 	WeaponNames = { "SpearWeapon", "SpearWeapon2", "SpearWeapon3", "SpearWeaponDash" },
+			-- 	WeaponProperty = "AddOnFire",
+			-- 	ChangeValue = "null",
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
+			{
+				WeaponNames = { "SpearWeapon", "SpearWeapon2", "SpearWeapon3", "SpearWeaponDash" },
+				WeaponProperty = "AllowExternalForceRelease",
+				ChangeValue = false,
 				ChangeType = "Absolute",
 				ExcludeLinked = true,
 			},
             {
-				WeaponNames = { "GunBombWeapon" },
-				ProjectileProperty = "DamageRadius",
-                ChangeValue = 300,
-				ChangeType = "Absolute",
+				WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+				WeaponProperty = "Control",
+				ChangeValue = "Reload",
+				ExcludeLinked = true,
+			},
+            {
+				WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+				WeaponProperty = "RootOwnerWhileFiring",
+				ChangeValue = false,
+				ExcludeLinked = true,
+			},
+            {
+				WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+				WeaponProperty = "BlockMoveInput",
+				ChangeValue = false,
+				ExcludeLinked = true,
+			},
+            {
+				WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+				WeaponProperty = "CancelMovement",
+				ChangeValue = false,
+				ExcludeLinked = true,
+			},
+            {
+				WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+				WeaponProperty = "ChargeCancelMovement",
+				ChangeValue = false,
 				ExcludeLinked = true,
 			},
             -- {
-			-- 	WeaponNames = { "SpearWeaponSpin3" },
-			-- 	ProjectileProperty = "SpawnsInheritGroups",
+			-- 	WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+			-- 	WeaponProperty = "LoseControlOnRelease",
 			-- 	ChangeValue = false,
 			-- 	ExcludeLinked = true,
 			-- },
+            {
+				WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+				WeaponProperty = "AllowExternalForceReleaseIfAnyCharged",
+				ChangeValue = false,
+				ExcludeLinked = true,
+			},
 			-- {
-			-- 	WeaponNames = { "SpearWeaponSpin3" },
-			-- 	ProjectileProperty = "SkipSpawnsIfBlocked",
-			-- 	ChangeValue = true,
+			-- 	WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+			-- 	EffectName = "SpearSpinDisable",
+			-- 	EffectProperty = "DisableMove",
+			-- 	ChangeValue = false,
+			-- 	ChangeType = "Absolute",
 			-- 	ExcludeLinked = true,
 			-- },
 			-- {
-			-- 	WeaponNames = { "SpearWeaponSpin3" },
-			-- 	ProjectileProperty = "SpawnGroup",
-			-- 	ChangeValue = "Standing",
+			-- 	WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+			-- 	EffectName = "SpearSpinDisableCancelable",
+			-- 	EffectProperty = "DisableMove",
+			-- 	ChangeValue = false,
+			-- 	ChangeType = "Absolute",
 			-- 	ExcludeLinked = true,
 			-- },
 			-- {
-			-- 	WeaponNames = { "SpearWeaponSpin3" },
-			-- 	ProjectileProperty = "SpawnType",
-			-- 	ChangeValue = "UNIT",
+			-- 	WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+			-- 	EffectName = "SpearSpinDisableFast",
+			-- 	EffectProperty = "DisableMove",
+			-- 	ChangeValue = false,
+			-- 	ChangeType = "Absolute",
 			-- 	ExcludeLinked = true,
 			-- },
 			-- {
-			-- 	WeaponNames = { "SpearWeaponSpin3" },
-			-- 	ProjectileProperty = "SkipSpawnsIfBlocked",
-			-- 	ChangeValue = "false",
-			-- 	ExcludeLinked = true,
-			-- },
-			-- {
-			-- 	WeaponNames = { "SpearWeaponSpin3" },
-			-- 	ProjectileProperty = "SpawnOnDetonate",
-			-- 	ChangeValue = "ZagreusTombStone",
+			-- 	WeaponNames = { "SpearWeaponSpin", "SpearWeaponSpin2", "SpearWeaponSpin3" },
+			-- 	EffectName = "SpearSpinDisableCancelableFast",
+			-- 	EffectProperty = "DisableMove",
+			-- 	ChangeValue = false,
+			-- 	ChangeType = "Absolute",
 			-- 	ExcludeLinked = true,
 			-- },
 		},
@@ -4596,7 +4664,7 @@ if AspectFusion.Config.Enabled then
 			},
             UltraSniperGunWeapon =
             {
-                Sounds = 
+                Sounds =
                 {
                     FireSounds =
                     {
@@ -5425,6 +5493,19 @@ if AspectFusion.Config.Enabled then
             }
         }
     }
+
+    TraitData.UltraSpearSpinChargeSlow =
+	{
+        Hidden = true,
+		PropertyChanges =
+		{
+			{
+				UnitProperty = "Speed",
+				ChangeValue = 0.25,
+				ChangeType = "Multiply",
+			},
+		}
+	}
 
     -- Trait specific changes
 

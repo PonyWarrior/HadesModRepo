@@ -26,3 +26,10 @@ Changes :
 -Fixed Charon's well items being refreshed with Exagryph equipped
 -Coronacht now uses flares instead of shots
 -Exagryph's empowered shot is no longer a seeking projectile, shoots in a straight line instead
+
+1.2.0
+
+Changes :
+-Varatha Main and Dash attack now use the Flurry Jab version
+-Varatha spin attack rebound to Reload, hold during attacks to charge
+-Can now move at 25% speed and dash while charging spear spins
