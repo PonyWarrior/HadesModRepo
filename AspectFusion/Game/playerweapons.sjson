@@ -15,8 +15,8 @@
         InheritFrom = "ArtemisLegendary"
         Projectile = "UltraSniperGunWeapon"
         ProjectileAngleOffset = 0
-        ProjectileAngleStartOffset = 180
-        Spread = 270
+        ProjectileAngleStartOffset = 0
+        // Spread = 270
         MaxAmmo = 999999
     }
     {

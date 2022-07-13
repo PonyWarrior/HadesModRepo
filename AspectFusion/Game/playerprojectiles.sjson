@@ -52,8 +52,8 @@
     Name = "UltraSniperGunWeapon"
     InheritFrom = "GunWeapon"
     ImpactFx = "GunWeaponImpact"
-    CheckObstacleImpact = false
-    DetonateAtVictimLocation = true
+    // CheckObstacleImpact = false
+    // DetonateAtVictimLocation = true
     Fuse = 0.0
 	Range = 1500
     Thing = {

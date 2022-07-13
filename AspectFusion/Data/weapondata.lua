@@ -28,4 +28,8 @@ if AspectFusion.Config.Enabled then
 		OnFiredFunctionName = "ClearManualReloadVFX",
 	}
 
+    --Bow
+    ProjectileData.AphroditeBeowulfProjectile.StoreAmmoInLastHit = false
+    ProjectileData.AresBeowulfProjectile.StoreAmmoInLastHit = false
+    ProjectileData.AthenaDeflectingBeowulfProjectile.StoreAmmoInLastHit = false
 end

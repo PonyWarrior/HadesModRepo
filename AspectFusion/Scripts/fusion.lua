@@ -120,7 +120,8 @@ function AspectFusion.ReloadAllTraits()
 	local weaponName = GetEquippedWeapon()
 	local removedTraitData = {}
 	for i, traitData in pairs( CurrentRun.Hero.Traits ) do
-        if DoNotReload[traitData.Name] ~= true and traitData.Slot ~= "Assist" and traitData.Slot ~= "Keepsake" and not string.match(traitData.Name, "Chaos") then
+        if DoNotReload[traitData.Name] ~= true and traitData.Slot ~= "Assist" and traitData.Slot ~= "Keepsake" and not string.match(traitData.Name, "Chaos")
+        and traitData.Frame ~= "Shop" then
             table.insert(removedTraitData, { Name = traitData.Name, Rarity = traitData.Rarity })
             DebugPrint({Text = "Reloading trait" .. traitData.Name })
         end
@@ -660,8 +661,6 @@ ModUtil.Path.Wrap("MarkTargetApply", function (baseFunc, triggerArgs)
             SetProjectileProperty({ WeaponName = "BowSplitShot", DestinationId = CurrentRun.Hero.ObjectId, Property = "UseStartLocation", Value = false })
             -- thread(AspectFusion.ArrowRain, triggerArgs.triggeredById)
     elseif not triggerArgs.Reapplied then
-    DebugPrint({Text="fuck"})
-
         baseFunc(triggerArgs)
     end
 end)

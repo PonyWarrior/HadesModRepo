@@ -3939,7 +3939,8 @@ if AspectFusion.Config.Enabled then
         },
         AmmoReclaimTimeDivisor =
         {
-            BaseValue = 3.125,
+            -- basically instant, required for demeter flare
+            BaseValue = 999,
             SourceIsMultiplier = true,
         },
         OverrideWeaponFireNames =
@@ -4361,83 +4362,123 @@ if AspectFusion.Config.Enabled then
                 ChangeValue = true,
             },
             -- Hera
-            {
-                WeaponName = "RangedWeapon",
-                WeaponProperty = "IgnoreOwnerAttackDisabled",
-                ChangeValue = true,
-                ChangeType = "Absolute",
-            },
-            {
-                WeaponName = "RangedWeapon",
-                WeaponProperty = "Cooldown",
-                ChangeValue = 0,
-                ChangeType = "Absolute",
-            },
-            {
-                WeaponName = "RangedWeapon",
-                WeaponProperty = "ChargeTime",
-                ChangeValue = 0,
-                ChangeType = "Absolute",
-            },
-            {
-                WeaponName = "RangedWeapon",
-                WeaponProperty = "SelfVelocity",
-                ChangeValue = 0,
-                ChangeType = "Absolute",
-            },
-            {
-                WeaponName = "RangedWeapon",
-                WeaponProperty = "FireGraphic",
-                ChangeValue = "null",
-                ChangeType = "Absolute",
-            },
-            {
-                WeaponName = "RangedWeapon",
-                WeaponProperty = "AllowMultiFireRequest",
-                ChangeValue = true,
-                ChangeType = "Absolute",
-            },
-            {
-                WeaponName = "RangedWeapon",
-                WeaponProperty = "RootOwnerWhileFiring",
+			{
+				WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+				WeaponProperty = "FullyAutomatic",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "RangedWeapon",
+				WeaponProperty = "ShowFreeAimLine",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "RangedWeapon",
+				WeaponProperty = "IgnoreOwnerAttackDisabled",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "RangedWeapon",
+				WeaponProperty = "ClearFireRequestOnChargeCancel",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "RangedWeapon",
+				WeaponProperty = "Cooldown",
+				ChangeValue = 0,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "RangedWeapon",
+				WeaponProperty = "ChargeTime",
+				ChangeValue = 0,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "RangedWeapon",
+				WeaponProperty = "SelfVelocity",
+				ChangeValue = 0,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "RangedWeapon",
+				WeaponProperty = "FireGraphic",
+				ChangeValue = "null",
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "RangedWeapon",
+				WeaponProperty = "AllowMultiFireRequest",
+				ChangeValue = true,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "RangedWeapon",
+				WeaponProperty = "AllowExternalForceRelease",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "RangedWeapon",
+				WeaponProperty = "RootOwnerWhileFiring",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "RangedWeapon",
+				WeaponProperty = "ChargeStartAnimation",
+				ChangeValue = "null",
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "RangedWeapon",
+				WeaponProperty = "SetCompleteAngleOnFire",
+				ChangeValue = false,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponName = "RangedWeapon",
+				WeaponProperty = "IgnoreForceCooldown",
+				ChangeValue = true,
+				ChangeType = "Absolute"
+			},
+			{
+				WeaponName = "RangedWeapon",
+				EffectName = "RangedDisable",
+				EffectProperty = "Active",
+				ChangeValue = false,
+			},
+			{
+				WeaponName = "RangedWeapon",
+				EffectName = "RangedDisableCancelable",
+				EffectProperty = "Active",
+				ChangeValue = false,
+			},
+			{
+                WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+                WeaponProperty = "FireOnRelease",
                 ChangeValue = false,
                 ChangeType = "Absolute",
             },
             {
-                WeaponName = "RangedWeapon",
-                WeaponProperty = "ChargeStartAnimation",
-                ChangeValue = "null",
-                ChangeType = "Absolute",
+                WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+                ProjectileProperty = "Type",
+                ChangeValue = "INSTANT",
             },
             {
-                WeaponName = "RangedWeapon",
-                WeaponProperty = "SetCompleteAngleOnFire",
-                ChangeValue = false,
-                ChangeType = "Absolute",
+                WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+                ProjectileProperty = "DamageRadius",
+                ChangeValue = 300
             },
             {
-                WeaponName = "RangedWeapon",
-                WeaponProperty = "IgnoreForceCooldown",
-                ChangeValue = true,
-                ChangeType = "Absolute"
-            },
-            {
-                WeaponName = "RangedWeapon",
-                EffectName = "RangedDisable",
-                EffectProperty = "Active",
-                ChangeValue = false,
-            },
-            {
-                WeaponName = "RangedWeapon",
-                EffectName = "RangedDisableCancelable",
-                EffectProperty = "Active",
-                ChangeValue = false,
-            },
-            {
-                WeaponName = "RangedWeapon",
-                WeaponProperty = "AllowExternalForceRelease",
-                ChangeValue = false,
-                ChangeType = "Absolute",
+                WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+				ProjectileName = "RangedWeapon",
+                ProjectileProperty = "DetonateGraphic",
+                ChangeValue = "RadialNovaSwordParry"
             },
 		},
     ExtractValues =
@@ -5242,45 +5283,45 @@ if AspectFusion.Config.Enabled then
                 ExcludeLinked = true,
             },
 
-            {
-				WeaponName = "UltraSniperGunWeapon",
-				ProjectileProperty = "MaxAdjustRate",
-				ChangeValue = 20,
-				ChangeType = "Absolute",
-				ExcludeLinked = true,
-			},
+            -- {
+			-- 	WeaponName = "UltraSniperGunWeapon",
+			-- 	ProjectileProperty = "MaxAdjustRate",
+			-- 	ChangeValue = 20,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
 
-			{
-				WeaponName = "UltraSniperGunWeapon",
-				ProjectileProperty = "AdjustRateAcceleration",
-				ChangeValue = 50,
-				ChangeType = "Absolute",
-				ExcludeLinked = true,
-			},
+			-- {
+			-- 	WeaponName = "UltraSniperGunWeapon",
+			-- 	ProjectileProperty = "AdjustRateAcceleration",
+			-- 	ChangeValue = 50,
+			-- 	ChangeType = "Absolute",
+			-- 	ExcludeLinked = true,
+			-- },
 
-			{
-				WeaponName = "UltraSniperGunWeapon",
-				ProjectileProperty = "Speed",
-				ChangeValue = 0.60,
-				ChangeType = "Multiply",
-				ExcludeLinked = true,
-			},
+			-- {
+			-- 	WeaponName = "UltraSniperGunWeapon",
+			-- 	ProjectileProperty = "Speed",
+			-- 	ChangeValue = 0.60,
+			-- 	ChangeType = "Multiply",
+			-- 	ExcludeLinked = true,
+			-- },
 
-			{
-				WeaponName = "UltraSniperGunWeapon",
-				ProjectileProperty = "MaxSpeed",
-				ChangeValue = 0.60,
-				ChangeType = "Multiply",
-				ExcludeLinked = true,
-			},
+			-- {
+			-- 	WeaponName = "UltraSniperGunWeapon",
+			-- 	ProjectileProperty = "MaxSpeed",
+			-- 	ChangeValue = 0.60,
+			-- 	ChangeType = "Multiply",
+			-- 	ExcludeLinked = true,
+			-- },
 
-			{
-				WeaponName = "UltraSniperGunWeapon",
-				ProjectileProperty = "Acceleration",
-				ChangeValue = 0.60,
-				ChangeType = "Multiply",
-				ExcludeLinked = true,
-			},
+			-- {
+			-- 	WeaponName = "UltraSniperGunWeapon",
+			-- 	ProjectileProperty = "Acceleration",
+			-- 	ChangeValue = 0.60,
+			-- 	ChangeType = "Multiply",
+			-- 	ExcludeLinked = true,
+			-- },
 
 			{
 				WeaponName = "UltraSniperGunWeapon",
@@ -5389,16 +5430,25 @@ if AspectFusion.Config.Enabled then
 
     for traitName, traitData in pairs(TraitData) do
 
+        --Shield and bow flares
         if traitData.RequiredFalseTrait ~= nil and traitData.RequiredFalseTrait == "ShieldLoadAmmoTrait" then
             traitData.RequiredFalseTrait = nil
-            traitData.RequiredFalseTraits = { "ShieldLoadAmmoTrait", "UltraShieldTrait"}
+            traitData.RequiredFalseTraits = { "ShieldLoadAmmoTrait", "UltraShieldTrait", "UltraBowTrait"}
         elseif traitData.RequiredFalseTraits ~= nil and Contains(traitData.RequiredFalseTraits, "ShieldLoadAmmoTrait") then
             table.insert(traitData.RequiredFalseTraits, "UltraShieldTrait")
+            table.insert(traitData.RequiredFalseTraits, "UltraBowTrait")
+        end
+
+        if traitData.RequiredTrait ~= nil and traitData.RequiredTrait == "ShieldLoadAmmoTrait" then
+            traitData.RequiredTrait = nil
+            traitData.RequiredOneOfTraits = { "ShieldLoadAmmoTrait", "UltraShieldTrait", "UltraBowTrait"}
         end
 
         if traitData.TraitDependencyTextOverrides ~= nil and traitData.TraitDependencyTextOverrides.ShieldLoadAmmoTrait ~= nil then
             local UltraShieldTrait = traitData.TraitDependencyTextOverrides.ShieldLoadAmmoTrait
             table.insert(traitData.TraitDependencyTextOverrides, UltraShieldTrait)
+            local UltraBowTrait = traitData.TraitDependencyTextOverrides.ShieldLoadAmmoTrait
+            table.insert(traitData.TraitDependencyTextOverrides, UltraBowTrait)
         end
 
         if traitData.PropertyChanges ~= nil then
@@ -5408,6 +5458,7 @@ if AspectFusion.Config.Enabled then
                     propertyCopy.TraitName = "UltraSwordTrait"
                     table.insert(traitData.PropertyChanges, propertyCopy)
                 elseif property.TraitName ~= nil and property.TraitName == "ShieldLoadAmmoTrait" then
+                    --shield
                     local legal = false
                     local propertyCopy = DeepCopyTable(property)
                     propertyCopy.TraitName = "UltraShieldTrait"
@@ -5433,6 +5484,12 @@ if AspectFusion.Config.Enabled then
 
                     if legal then
                         table.insert(traitData.PropertyChanges, propertyCopy)
+                    end
+                    --bow
+                    if traitData.Slot == "Ranged" then
+                        local propertyCopy2 = DeepCopyTable(property)
+                        propertyCopy2.TraitName = "UltraBowTrait"
+                        table.insert(traitData.PropertyChanges, propertyCopy2)
                     end
 
                 elseif property.TraitName ~= nil and property.TraitName == "ShieldTwoShieldTrait" then
