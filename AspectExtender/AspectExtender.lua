@@ -106,12 +106,12 @@ ModUtil.BaseOverride("ShowWeaponUpgradeScreen", function (args)
     components.PageUp = CreateScreenComponent({ Name = "ButtonCodexUp", Scale = 0.8, Sound = "/SFX/Menu Sounds/GeneralWhooshMENU", Group = "Combat_Menu_TraitTray_Backing" })
     Attach({ Id = components.PageUp.Id, DestinationId = components.ShopBackground.Id, OffsetX = -400 , OffsetY = -395 })
     components.PageUp.OnPressedFunctionName = "AspectExtender.WeaponUpgradeScreenPrevious"
-    components.PageUp.ControlHotkey = "MenuUp"
+    components.PageUp.ControlHotkeys = { "MenuUp", "MenuLeft" }
 
     components.PageDown = CreateScreenComponent({ Name = "ButtonCodexDown", Scale = 0.8, Sound = "/SFX/Menu Sounds/GeneralWhooshMENU", Group = "Combat_Menu_TraitTray_Backing" })
     Attach({ Id = components.PageDown.Id, DestinationId = components.ShopBackground.Id, OffsetX = -400 , OffsetY = 465 })
     components.PageDown.OnPressedFunctionName = "AspectExtender.WeaponUpgradeScreenNext"
-    components.PageDown.ControlHotkey = "MenuDown"
+    components.PageDown.ControlHotkeys = { "MenuDown", "MenuRight" }
 
     components.CloseButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "Combat_Menu_TraitTray_Overlay" })
     Attach({ Id = components.CloseButton.Id, DestinationId = components.ShopBackground.Id, OffsetX = 0 , OffsetY = 515 })
@@ -120,8 +120,8 @@ ModUtil.BaseOverride("ShowWeaponUpgradeScreen", function (args)
 
     screen.KeepOpen = true
     screen.CanClose = true
-    thread(HandleWASDInput, screen)
-    HandleScreenInput(screen)
+	thread( HandleWASDInput, ScreenAnchors.WeaponUpgradeScreen )
+	HandleScreenInput( ScreenAnchors.WeaponUpgradeScreen )
 end)
 
 ModUtil.BaseOverride("UpdateWeaponUpgradeButtons", function (weaponName, lastEquippedIndex)
