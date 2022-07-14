@@ -12,13 +12,135 @@
     }
     {
       Name = "Ultra_Sword_Large"
-      InheritFrom = "WeaponEnchantment"
-      FilePath = "AspectFusion\WeaponIcons\Ultra_Sword"
+      Type = "Book"
+      FilePath = "AspectFusion\WeaponIcons\FinalFormSword\FinalFormSword"
+      NumFrames = 239
+      Loop = true
+      PlaySpeed = 30
+      Material = "Unlit"
+      AngleFromOwner = "Ignore"
+      Scale = 0.75
     }
     {
       Name = "Ultra_Sword_Small"
-      InheritFrom = "WeaponEnchantmentTray"
-      FilePath = "AspectFusion\WeaponIcons\Ultra_Sword"
+      Type = "Book"
+      FilePath = "AspectFusion\WeaponIcons\FinalFormSword\FinalFormSword"
+      NumFrames = 239
+      Loop = true
+      PlaySpeed = 30
+      Material = "Unlit"
+      AngleFromOwner = "Ignore"
+      Scale = 0.375
+    }
+    {
+      Name = "Ultra_Spear_Large"
+      Type = "Book"
+      FilePath = "AspectFusion\WeaponIcons\FinalFormSpear\FinalFormSpear"
+      NumFrames = 239
+      Loop = true
+      PlaySpeed = 30
+      Material = "Unlit"
+      AngleFromOwner = "Ignore"
+      Scale = 0.75
+    }
+    {
+      Name = "Ultra_Spear_Small"
+      Type = "Book"
+      FilePath = "AspectFusion\WeaponIcons\FinalFormSpear\FinalFormSpear"
+      NumFrames = 239
+      Loop = true
+      PlaySpeed = 30
+      Material = "Unlit"
+      AngleFromOwner = "Ignore"
+      Scale = 0.375
+    }
+    {
+      Name = "Ultra_Shield_Large"
+      Type = "Book"
+      FilePath = "AspectFusion\WeaponIcons\FinalFormShield\FinalFormShield"
+      NumFrames = 239
+      Loop = true
+      PlaySpeed = 30
+      Material = "Unlit"
+      AngleFromOwner = "Ignore"
+      Scale = 0.75
+    }
+    {
+      Name = "Ultra_Shield_Small"
+      Type = "Book"
+      FilePath = "AspectFusion\WeaponIcons\FinalFormShield\FinalFormShield"
+      NumFrames = 239
+      Loop = true
+      PlaySpeed = 30
+      Material = "Unlit"
+      AngleFromOwner = "Ignore"
+      Scale = 0.375
+    }
+    {
+      Name = "Ultra_Bow_Large"
+      Type = "Book"
+      FilePath = "AspectFusion\WeaponIcons\FinalFormCoronacht\FinalFormCoronacht"
+      NumFrames = 239
+      Loop = true
+      PlaySpeed = 30
+      Material = "Unlit"
+      AngleFromOwner = "Ignore"
+      Scale = 0.75
+    }
+    {
+      Name = "Ultra_Bow_Small"
+      Type = "Book"
+      FilePath = "AspectFusion\WeaponIcons\FinalFormCoronacht\FinalFormCoronacht"
+      NumFrames = 239
+      Loop = true
+      PlaySpeed = 30
+      Material = "Unlit"
+      AngleFromOwner = "Ignore"
+      Scale = 0.375
+    }
+    {
+      Name = "Ultra_Fists_Large"
+      Type = "Book"
+      FilePath = "AspectFusion\WeaponIcons\FinalFormFists\FinalFormFists"
+      NumFrames = 239
+      Loop = true
+      PlaySpeed = 30
+      Material = "Unlit"
+      AngleFromOwner = "Ignore"
+      Scale = 0.75
+    }
+    {
+      Name = "Ultra_Fists_Small"
+      Type = "Book"
+      FilePath = "AspectFusion\WeaponIcons\FinalFormFists\FinalFormFists"
+      NumFrames = 239
+      Loop = true
+      PlaySpeed = 30
+      Material = "Unlit"
+      AngleFromOwner = "Ignore"
+      Scale = 0.375
+    }
+    {
+      Name = "Ultra_Gun_Large"
+      Type = "Book"
+      FilePath = "AspectFusion\WeaponIcons\FinalFormExagryph\FinalFormExagryph"
+      NumFrames = 239
+      Loop = true
+      PlaySpeed = 30
+      Material = "Unlit"
+      AngleFromOwner = "Ignore"
+      Scale = 0.75
+    }
+    {
+      Name = "Ultra_Gun_Small"
+      Type = "Book"
+      FilePath = "AspectFusion\WeaponIcons\FinalFormExagryph\FinalFormExagryph"
+      NumFrames = 239
+      Loop = true
+      PlaySpeed = 30
+      Material = "Unlit"
+      AngleFromOwner = "Ignore"
+      Scale = 0.375
     }
     ]
 }

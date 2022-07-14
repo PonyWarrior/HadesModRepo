@@ -79,7 +79,8 @@ local DoNotReload =
     FastClearDodgeBonusTrait = true,
     PerfectClearDamageBonusTrait = true,
     RoomRewardMaxHealthTrait = true,
-    RoomRewardEmptyMaxHealthTrait = true
+    RoomRewardEmptyMaxHealthTrait = true,
+    HarvestBoonDrop = true,
 }
 
 OnAnyLoad{ function (triggerArgs)

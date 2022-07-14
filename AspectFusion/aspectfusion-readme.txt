@@ -30,6 +30,17 @@ Changes :
 1.2.0
 
 Changes :
+-Fixed Stygius dash attack switching to a sweep on second dash
+-Fixed Varatha's Zagreus buff being higher than intended
 -Varatha Main and Dash attack now use the Flurry Jab version
 -Varatha spin attack rebound to Reload, hold during attacks to charge
 -Can now move at 25% speed and dash while charging spear spins
+
+1.3.0
+
+Changes:
+-Added new animated icons for every weapon
+-Fixed Rare Crop applying multiple times with Exagryph
+-Fixed Poseidon Shot being offered instead of Flare with Aegis and Coronacht
+-Charged Flight now works on extra shields
+-Increased the casting time of spear throws to make it easier to aim

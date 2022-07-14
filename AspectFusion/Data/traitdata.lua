@@ -895,7 +895,7 @@ if AspectFusion.Config.Enabled then
 
     TraitData.UltraFistTrait =
     {
-        Icon = "Weapon_Fist_16",
+        Icon = "Ultra_Fists",
         InheritFrom = { "WeaponEnchantmentTrait" },
         PostWeaponUpgradeScreenAnimation = "ZagreusFistAlt03FlashKick_ReturnToIdle",
         PostWeaponUpgradeScreenAngle = 208,
@@ -1664,7 +1664,7 @@ if AspectFusion.Config.Enabled then
     TraitData.UltraShieldTrait =
 	{
 		InheritFrom = { "WeaponEnchantmentTrait" },
-		Icon = "Weapon_Shield_15",
+		Icon = "Ultra_Shield",
 		RequiredWeapons = { "ShieldWeapon", "RangedWeapon" },
 		PostWeaponUpgradeScreenAnimation = "ZagreusShieldBeowulfIdle",
 		PostWeaponUpgradeScreenAngle = 180,
@@ -3075,7 +3075,7 @@ if AspectFusion.Config.Enabled then
     TraitData.UltraSpearTrait =
 	{
 		InheritFrom = { "WeaponEnchantmentTrait" },
-		Icon = "Weapon_Spear_07",
+		Icon = "Ultra_Spear",
         Frame = "Fusion",
         CustomRarityName = "Boon_Fusion",
 		CustomRarityColor = {3, 94, 252, 255},
@@ -3689,7 +3689,7 @@ if AspectFusion.Config.Enabled then
             {
                 WeaponNames = { "SpearWeaponThrowReturn", "SpearWeaponThrow" },
                 WeaponProperty = "ChargeTime",
-                ChangeValue = 0.75,
+                ChangeValue = 3.0,
                 SourceIsMultiplier = true,
                 ChangeType = "Multiply",
                 ExcludeLinked = true,
@@ -3867,7 +3867,7 @@ if AspectFusion.Config.Enabled then
         Frame = "Fusion",
         CustomRarityName = "Boon_Fusion",
 		CustomRarityColor = {3, 94, 252, 255},
-		Icon = "Weapon_Bow_14",
+		Icon = "Ultra_Bow",
 		InheritFrom = { "WeaponEnchantmentTrait" },
         PreEquipWeapons = { "LoadAmmoApplicator" },
         RequiredWeapons = { "BowWeapon" },
@@ -4571,7 +4571,7 @@ if AspectFusion.Config.Enabled then
 		InheritFrom = { "WeaponEnchantmentTrait" },
 		PostWeaponUpgradeScreenAnimation = "ZagreusGunLuciferReload_End",
 		PostWeaponUpgradeScreenAngle = 210,
-		Icon = "Weapon_Gun_Lucifer_01",
+		Icon = "Ultra_Gun",
 		RequiredWeapon = "GunWeapon",
 		PreEquipWeapons = { "GunBombWeapon", "GunBombImmolation", "ManualReloadEffectApplicator", "UltraSniperGunWeapon"  },
         AddOnFireWeapons = { "UltraGunWeapon" },
@@ -5526,10 +5526,16 @@ if AspectFusion.Config.Enabled then
         end
 
         if traitData.TraitDependencyTextOverrides ~= nil and traitData.TraitDependencyTextOverrides.ShieldLoadAmmoTrait ~= nil then
-            local UltraShieldTrait = traitData.TraitDependencyTextOverrides.ShieldLoadAmmoTrait
-            table.insert(traitData.TraitDependencyTextOverrides, UltraShieldTrait)
-            local UltraBowTrait = traitData.TraitDependencyTextOverrides.ShieldLoadAmmoTrait
-            table.insert(traitData.TraitDependencyTextOverrides, UltraBowTrait)
+            traitData.TraitDependencyTextOverrides.UltraShieldTrait =
+            {
+				Name = "ShieldLoadAmmo_PoseidonRangedTrait",
+				CustomTrayText = "ShieldLoadAmmo_PoseidonRangedTrait_Tray",
+            }
+            traitData.TraitDependencyTextOverrides.UltraBowTrait =
+            {
+				Name = "ShieldLoadAmmo_PoseidonRangedTrait",
+				CustomTrayText = "ShieldLoadAmmo_PoseidonRangedTrait_Tray",
+            }
         end
 
         if traitData.PropertyChanges ~= nil then
@@ -5626,7 +5632,8 @@ if AspectFusion.Config.Enabled then
                 and traitData.Icon ~= "WeaponEnchantment_Gun02"
                 and traitData.Icon ~= "WeaponEnchantment_Gun03"
                 and traitData.Icon ~= "WeaponEnchantment_Gun04"
-                and traitData.Icon ~= "Weapon_Gun_Lucifer_01" then
+                and traitData.Icon ~= "Weapon_Gun_Lucifer_01" 
+                and traitData.Icon ~= "Ultra_Gun" then
                     if property.TraitName ~= "GunLoadedGrenadeTrait" and property.TraitName ~= "UltraGunTrait" then
                         local propertyCopy = DeepCopyTable(property)
                         propertyCopy.TraitName = "UltraGunTrait"
@@ -5641,7 +5648,8 @@ if AspectFusion.Config.Enabled then
                 and traitData.Icon ~= "WeaponEnchantment_Gun02"
                 and traitData.Icon ~= "WeaponEnchantment_Gun03"
                 and traitData.Icon ~= "WeaponEnchantment_Gun04"
-                and traitData.Icon ~= "Weapon_Gun_Lucifer_01" then
+                and traitData.Icon ~= "Weapon_Gun_Lucifer_01"
+                and traitData.Icon ~= "Ultra_Gun" then
                     if property.TraitName ~= "GunLoadedGrenadeTrait" and property.TraitName ~= "UltraGunTrait" then
                         local propertyCopy = DeepCopyTable(property)
                         propertyCopy.TraitName = "UltraGunTrait"
@@ -5656,7 +5664,8 @@ if AspectFusion.Config.Enabled then
                 and traitData.Icon ~= "WeaponEnchantment_Gun02"
                 and traitData.Icon ~= "WeaponEnchantment_Gun03"
                 and traitData.Icon ~= "WeaponEnchantment_Gun04"
-                and traitData.Icon ~= "Weapon_Gun_Lucifer_01" then
+                and traitData.Icon ~= "Weapon_Gun_Lucifer_01"
+                and traitData.Icon ~= "Ultra_Gun" then
                     if property.TraitName ~= "GunLoadedGrenadeTrait" and property.TraitName ~= "UltraGunTrait" then
                         local propertyCopy = DeepCopyTable(property)
                         propertyCopy.TraitName = "UltraGunTrait"
@@ -5671,7 +5680,8 @@ if AspectFusion.Config.Enabled then
                 and traitData.Icon ~= "WeaponEnchantment_Gun02"
                 and traitData.Icon ~= "WeaponEnchantment_Gun03"
                 and traitData.Icon ~= "WeaponEnchantment_Gun04"
-                and traitData.Icon ~= "Weapon_Gun_Lucifer_01" then
+                and traitData.Icon ~= "Weapon_Gun_Lucifer_01"
+                and traitData.Icon ~= "Ultra_Gun" then
                     if property.TraitName ~= "GunLoadedGrenadeTrait" and property.TraitName ~= "UltraGunTrait" then
                         local propertyCopy = DeepCopyTable(property)
                         propertyCopy.TraitName = "UltraGunTrait"
@@ -5688,6 +5698,9 @@ if AspectFusion.Config.Enabled then
                     elseif traitData.Icon == "Boon_Poseidon_00" and property.ProjectileProperty == "ImpactVelocityCap" and property.TraitName == nil then
                         property.TraitName = "GunLoadedGrenadeTrait"
                     end
+                elseif property.WeaponNames ~= nil and traitData.Icon == "Weapon_Shield_12" and property.WeaponProperty == "ChargeDamageMultiplier" then
+                    --Charged flight
+                    table.insert(property.WeaponNames, "ChaosShieldThrow")
                 end
             end
         end
