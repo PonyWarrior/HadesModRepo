@@ -6164,6 +6164,7 @@ if AspectFusion.Config.Enabled then
     table.insert(TraitData.SpearThrowElectiveCharge.RequiredFalseTraits, "UltraSpearTrait")
     table.insert(TraitData.SpearSpinChargeAreaDamageTrait.RequiredFalseTraits, "UltraSpearTrait")
     table.insert(TraitData.SpearThrowExplode.RequiredFalseTraits, "UltraSpearTrait")
+    table.insert(TraitData.SpearAutoAttack.RequiredFalseTraits, "UltraSpearTrait")
 
     TraitData.SpearSpinTravelDurationTrait.RequiredTrait = nil
     TraitData.SpearSpinTravelDurationTrait.RequiredOneOfTraits = {"SpearSpinTravel", "UltraSpearTrait"}

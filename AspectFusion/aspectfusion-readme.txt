@@ -44,3 +44,9 @@ Changes:
 -Fixed Poseidon Shot being offered instead of Flare with Aegis and Coronacht
 -Charged Flight now works on extra shields
 -Increased the casting time of spear throws to make it easier to aim
+
+1.3.1
+
+Changes:
+-Disabled Flurry Jab for Varatha
+-Fixed some boons not working correctly on Exagryph with cluster bomb or rocket bomb equipped

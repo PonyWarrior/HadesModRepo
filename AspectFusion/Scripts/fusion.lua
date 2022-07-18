@@ -81,8 +81,10 @@ local DoNotReload =
     RoomRewardMaxHealthTrait = true,
     RoomRewardEmptyMaxHealthTrait = true,
     HarvestBoonDrop = true,
+    FountainDamageBonusTrait = true,
 }
 
+--Unlock final form aspects
 OnAnyLoad{ function (triggerArgs)
     if CurrentDeathAreaRoom ~= nil and CurrentDeathAreaRoom.Name == "RoomPreRun" then
         if not TextLinesRecord["UltraSwordUnlocked"] and AspectFusion.CalculateBloodInvestment("SwordWeapon") >= 51 then
@@ -116,13 +118,19 @@ function AspectFusion.CalculateBloodInvestment(weaponName)
     return totalInvestment
 end
 
-function AspectFusion.ReloadAllTraits()
+function AspectFusion.ReloadAllTraits(reloadTraits)
     -- Modified ReloadAllTraits
 	local weaponName = GetEquippedWeapon()
 	local removedTraitData = {}
-	for i, traitData in pairs( CurrentRun.Hero.Traits ) do
-        if DoNotReload[traitData.Name] ~= true and traitData.Slot ~= "Assist" and traitData.Slot ~= "Keepsake" and not string.match(traitData.Name, "Chaos")
-        and traitData.Frame ~= "Shop" then
+	-- for i, traitData in pairs( CurrentRun.Hero.Traits ) do
+    --     if DoNotReload[traitData.Name] ~= true and traitData.Slot ~= "Assist" and traitData.Slot ~= "Keepsake" and not string.match(traitData.Name, "Chaos")
+    --     and traitData.Frame ~= "Shop" then
+    --         table.insert(removedTraitData, { Name = traitData.Name, Rarity = traitData.Rarity })
+    --         DebugPrint({Text = "Reloading trait" .. traitData.Name })
+    --     end
+	-- end
+    for i, traitData in pairs( CurrentRun.Hero.Traits ) do
+        if reloadTraits[traitData.Name] == true then
             table.insert(removedTraitData, { Name = traitData.Name, Rarity = traitData.Rarity })
             DebugPrint({Text = "Reloading trait" .. traitData.Name })
         end
@@ -860,7 +868,13 @@ end)
 OnAnyLoad{ function (triggerArgs)
     if HeroHasTrait("UltraGunTrait") then
         if HeroHasTrait("GunGrenadeClusterTrait") or HeroHasTrait("GunExplodingSecondaryTrait") then
-            AspectFusion.ReloadAllTraits()
+            local reloadTraits =
+            {
+                GunGrenadeClusterTrait = true,
+                GunExplodingSecondaryTrait = true,
+                UltraGunTrait = true
+            }
+            AspectFusion.ReloadAllTraits(reloadTraits)
         end
     end
 end}
