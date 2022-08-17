@@ -2182,7 +2182,7 @@ function CodexMenuReloadAllTraits()
 	local weaponName = GetEquippedWeapon()
 	local removedTraitData = {}
 	for i, traitData in pairs( CurrentRun.Hero.Traits ) do
-		if CodexMenuReloadShouldSkip[traitData.Name] ~= true then
+		if CodexMenu.ReloadShouldSkip[traitData.Name] ~= true and not string.match(traitData.Name, "Chaos") then
 			table.insert(removedTraitData, { Name = traitData.Name, Rarity = traitData.Rarity })
 		end
 	end
