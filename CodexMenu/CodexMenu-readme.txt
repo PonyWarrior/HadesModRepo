@@ -298,3 +298,7 @@ fixed issues :
 crash when trying to load a boss fight with a god's aid equipped
 rapid inputs opening the boon selector/manager multiple times
 re-added demeter's rare crop boon to boon selector
+
+2.4.11
+
+modified internal data for easier third party access

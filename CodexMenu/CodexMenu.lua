@@ -1,158 +1,267 @@
+ModUtil.RegisterMod("CodexMenu")
+ModUtil.Table.Merge(CodexMenu, {
+    BoonData =
+    {
+        ZeusUpgrade =
+        {
+            "ZeusWeaponTrait", "ZeusRushTrait", "ZeusRangedTrait", "ZeusSecondaryTrait", "ZeusShoutTrait",
+            "RetaliateWeaponTrait", "SuperGenerationTrait", "OnWrathDamageBuffTrait", "ZeusBonusBounceTrait",
+            "ZeusLightningDebuff", "ZeusBoltAoETrait", "ZeusBonusBoltTrait", "ZeusChargedBoltTrait",
+            "PerfectDashBoltTrait",
+        },
+        PoseidonUpgrade =
+        {
+            "PoseidonWeaponTrait", "PoseidonSecondaryTrait", "PoseidonRushTrait", "PoseidonRangedTrait", "PoseidonShoutTrait",
+            "RoomRewardBonusTrait", "DefensiveSuperGenerationTrait", "BonusCollisionTrait", "SlamExplosionTrait", "SlipperyTrait", "BossDamageTrait",
+            "RandomMinorLootDrop", "DoubleCollisionTrait",
+            "PoseidonShoutDurationTrait", "EncounterStartOffenseBuffTrait", "FishingTrait"
+        },
+        AthenaUpgrade =
+        {
+            "AthenaWeaponTrait", "AthenaSecondaryTrait", "AthenaRushTrait", "AthenaRangedTrait", "AthenaShoutTrait",
+            "TrapDamageTrait", "EnemyDamageTrait", "AthenaRetaliateTrait", "PreloadSuperGenerationTrait",
+            "AthenaBackstabDebuffTrait", "AthenaShieldTrait", "LastStandDurationDrop", "LastStandHealDrop", "ShieldHitTrait",
+            "LastStandDurationTrait", "LastStandHealTrait"
+        },
+        AphroditeUpgrade =
+        {
+            "AphroditeWeaponTrait", "AphroditeRushTrait", "AphroditeRangedTrait", "AphroditeSecondaryTrait", "AphroditeShoutTrait",
+            "AphroditeRetaliateTrait", "AphroditeDeathTrait", "ProximityArmorTrait", "HealthRewardBonusTrait",
+            "AphroditeDurationTrait", "AphroditeWeakenTrait", "AphroditePotencyTrait", "CharmTrait",
+            "AphroditeRangedBonusTrait",
+        },
+        ArtemisUpgrade =
+        {
+            "ArtemisWeaponTrait", "ArtemisRushTrait", "ArtemisRangedTrait", "ArtemisSecondaryTrait", "ArtemisShoutTrait",
+            "CritBonusTrait", "ArtemisSupportingFireTrait", "CritVulnerabilityTrait", "ArtemisCriticalTrait",
+            "CriticalBufferMultiplierTrait", "CriticalSuperGenerationTrait", "ArtemisAmmoExitTrait", "MoreAmmoTrait",
+        },
+        AresUpgrade =
+        {
+            "AresWeaponTrait", "AresRushTrait", "AresRangedTrait", "AresSecondaryTrait" , "AresShoutTrait",
+            "AresRetaliateTrait", "IncreasedDamageTrait", "OnEnemyDeathDamageInstanceBuffTrait", "AresLongCurseTrait",
+            "AresLoadCurseTrait", "AresDragTrait", "AresAoETrait", "AresCursedRiftTrait",
+            "LastStandDamageBonusTrait",
+        },
+        DionysusUpgrade =
+        {
+            "DionysusWeaponTrait", "DionysusSecondaryTrait", "DionysusRushTrait", "DionysusRangedTrait", "DionysusShoutTrait",
+            "DoorHealTrait", "LowHealthDefenseTrait", "DionysusSpreadTrait", "DionysusSlowTrait", "DionysusPoisonPowerTrait",
+            "DionysusDefenseTrait", "DionysusGiftDrop", "DionysusComboVulnerability",
+            "FountainDamageBonusTrait",
+            "GiftHealthTrait",
+        },
+        HermesUpgrade =
+        {
+            "AmmoReloadTrait", "HermesShoutDodge", "HermesWeaponTrait", "HermesSecondaryTrait", "RushRallyTrait", "MoveSpeedTrait",
+            "RushSpeedBoostTrait", "RapidCastTrait", "BonusDashTrait", "DodgeChanceTrait", "AmmoReclaimTrait", "MagnetismTrait", "UnstoredAmmoDamageTrait",
+            "RegeneratingSuperTrait", "ChamberGoldTrait", "SpeedDamageTrait",
+        },
+        DemeterUpgrade =
+        {
+            "DemeterWeaponTrait", "DemeterSecondaryTrait", "DemeterRushTrait", "DemeterRangedTrait", "DemeterShoutTrait",
+            "CastNovaTrait", "ZeroAmmoBonusTrait", "MaximumChillBlast", "MaximumChillBonusSlow", "HealingPotencyDrop", "InstantChillKill",
+            "DemeterRangedBonusTrait", "DemeterRetaliateTrait", "HarvestBoonDrop", "HealingPotencyTrait"
+        },
+        TrialUpgrade =
+        {
+            "ChaosBlessingMeleeTrait", "ChaosBlessingRangedTrait", "ChaosBlessingAmmoTrait", "ChaosBlessingMaxHealthTrait",
+            "ChaosBlessingBoonRarityTrait", "ChaosBlessingMoneyTrait", "ChaosBlessingMetapointTrait", "ChaosBlessingSecondaryTrait",
+            "ChaosBlessingDashAttackTrait", "ChaosBlessingExtraChanceTrait", "ChaosBlessingBackstabTrait", "ChaosBlessingAlphaStrikeTrait",
+        },
+        --Hammer boons
+        WeaponUpgrade = {},
 
-CodexMenuData =
-{
-	ZeusUpgrade =
-	{
-	  "ZeusWeaponTrait", "ZeusRushTrait", "ZeusRangedTrait", "ZeusSecondaryTrait", "ZeusShoutTrait",
-		"RetaliateWeaponTrait", "SuperGenerationTrait", "OnWrathDamageBuffTrait", "ZeusBonusBounceTrait",
-		"ZeusLightningDebuff", "ZeusBoltAoETrait", "ZeusBonusBoltTrait", "ZeusChargedBoltTrait",
-		"PerfectDashBoltTrait",
-	},
-	PoseidonUpgrade =
-	{
-		"PoseidonWeaponTrait", "PoseidonSecondaryTrait", "PoseidonRushTrait", "PoseidonRangedTrait", "PoseidonShoutTrait",
-		"RoomRewardBonusTrait", "DefensiveSuperGenerationTrait", "BonusCollisionTrait", "SlamExplosionTrait", "SlipperyTrait", "BossDamageTrait",
-		"RandomMinorLootDrop", "DoubleCollisionTrait",
-		"PoseidonShoutDurationTrait", "EncounterStartOffenseBuffTrait", "FishingTrait"
-	},
-	AthenaUpgrade =
-	{
-		"AthenaWeaponTrait", "AthenaSecondaryTrait", "AthenaRushTrait", "AthenaRangedTrait", "AthenaShoutTrait",
-		"TrapDamageTrait", "EnemyDamageTrait", "AthenaRetaliateTrait", "PreloadSuperGenerationTrait",
-		"AthenaBackstabDebuffTrait", "AthenaShieldTrait", "LastStandDurationDrop", "LastStandHealDrop", "ShieldHitTrait",
-		"LastStandDurationTrait", "LastStandHealTrait"
-	},
-	AphroditeUpgrade =
-	{
-		"AphroditeWeaponTrait", "AphroditeRushTrait", "AphroditeRangedTrait", "AphroditeSecondaryTrait", "AphroditeShoutTrait",
-		"AphroditeRetaliateTrait", "AphroditeDeathTrait", "ProximityArmorTrait", "HealthRewardBonusTrait",
-		"AphroditeDurationTrait", "AphroditeWeakenTrait", "AphroditePotencyTrait", "CharmTrait",
-		"AphroditeRangedBonusTrait",
-	},
-	ArtemisUpgrade =
-	{
-		"ArtemisWeaponTrait", "ArtemisRushTrait", "ArtemisRangedTrait", "ArtemisSecondaryTrait", "ArtemisShoutTrait",
-		"CritBonusTrait", "ArtemisSupportingFireTrait", "CritVulnerabilityTrait", "ArtemisCriticalTrait",
-		"CriticalBufferMultiplierTrait", "CriticalSuperGenerationTrait", "ArtemisAmmoExitTrait", "MoreAmmoTrait",
-	},
-	AresUpgrade =
-	{
-		"AresWeaponTrait", "AresRushTrait", "AresRangedTrait", "AresSecondaryTrait" , "AresShoutTrait",
-		"AresRetaliateTrait", "IncreasedDamageTrait", "OnEnemyDeathDamageInstanceBuffTrait", "AresLongCurseTrait",
-		"AresLoadCurseTrait", "AresDragTrait", "AresAoETrait", "AresCursedRiftTrait",
-		"LastStandDamageBonusTrait",
-	},
-	DionysusUpgrade =
-	{
-		"DionysusWeaponTrait", "DionysusSecondaryTrait", "DionysusRushTrait", "DionysusRangedTrait", "DionysusShoutTrait",
-		"DoorHealTrait", "LowHealthDefenseTrait", "DionysusSpreadTrait", "DionysusSlowTrait", "DionysusPoisonPowerTrait",
-		"DionysusDefenseTrait", "DionysusGiftDrop", "DionysusComboVulnerability",
-		"FountainDamageBonusTrait",
-		"GiftHealthTrait",
-	},
-	HermesUpgrade =
-	{
-		"AmmoReloadTrait", "HermesShoutDodge", "HermesWeaponTrait", "HermesSecondaryTrait", "RushRallyTrait", "MoveSpeedTrait",
-		"RushSpeedBoostTrait", "RapidCastTrait", "BonusDashTrait", "DodgeChanceTrait", "AmmoReclaimTrait", "MagnetismTrait", "UnstoredAmmoDamageTrait",
-		"RegeneratingSuperTrait", "ChamberGoldTrait", "SpeedDamageTrait",
-	},
-	DemeterUpgrade =
-	{
-		"DemeterWeaponTrait", "DemeterSecondaryTrait", "DemeterRushTrait", "DemeterRangedTrait", "DemeterShoutTrait",
-		"CastNovaTrait", "ZeroAmmoBonusTrait", "MaximumChillBlast", "MaximumChillBonusSlow", "HealingPotencyDrop", "InstantChillKill",
-		"DemeterRangedBonusTrait", "DemeterRetaliateTrait", "HarvestBoonDrop", "HealingPotencyTrait"
-	},
-	TrialUpgrade =
-	{
-		"ChaosBlessingMeleeTrait", "ChaosBlessingRangedTrait", "ChaosBlessingAmmoTrait", "ChaosBlessingMaxHealthTrait",
-		"ChaosBlessingBoonRarityTrait", "ChaosBlessingMoneyTrait", "ChaosBlessingMetapointTrait", "ChaosBlessingSecondaryTrait",
-		"ChaosBlessingDashAttackTrait", "ChaosBlessingExtraChanceTrait", "ChaosBlessingBackstabTrait", "ChaosBlessingAlphaStrikeTrait",
-	},
-	--Hammer boons
-	WeaponUpgrade = {},
+        SwordWeapon = { "SwordTwoComboTrait", "SwordSecondaryAreaDamageTrait", "SwordHeavySecondStrikeTrait", "SwordThrustWaveTrait", "SwordSecondaryDoubleAttackTrait", "SwordHealthBufferDamageTrait", "SwordDoubleDashAttackTrait", "SwordCriticalTrait", "SwordBackstabTrait", "SwordCursedLifeStealTrait", "SwordGoldDamageTrait", "SwordBlinkTrait", "SwordConsecrationBoostTrait"},
 
-	SwordWeapon = { "SwordTwoComboTrait", "SwordSecondaryAreaDamageTrait", "SwordHeavySecondStrikeTrait", "SwordThrustWaveTrait", "SwordSecondaryDoubleAttackTrait", "SwordHealthBufferDamageTrait", "SwordDoubleDashAttackTrait", "SwordCriticalTrait", "SwordBackstabTrait", "SwordCursedLifeStealTrait", "SwordGoldDamageTrait", "SwordBlinkTrait", "SwordConsecrationBoostTrait"},
+        BowWeapon = { "BowDoubleShotTrait", "BowLongRangeDamageTrait", "BowSlowChargeDamageTrait", "BowTapFireTrait", "BowPenetrationTrait", "BowPowerShotTrait", "BowSecondaryBarrageTrait", "BowTripleShotTrait", "BowSecondaryFocusedFireTrait", "BowChainShotTrait", "BowConsecutiveBarrageTrait", "BowCloseAttackTrait", "BowBondBoostTrait"},
 
-	BowWeapon = { "BowDoubleShotTrait", "BowLongRangeDamageTrait", "BowSlowChargeDamageTrait", "BowTapFireTrait", "BowPenetrationTrait", "BowPowerShotTrait", "BowSecondaryBarrageTrait", "BowTripleShotTrait", "BowSecondaryFocusedFireTrait", "BowChainShotTrait", "BowConsecutiveBarrageTrait", "BowCloseAttackTrait", "BowBondBoostTrait"},
+        ShieldWeapon = { "ShieldDashAOETrait", "ShieldRushProjectileTrait", "ShieldThrowFastTrait", "ShieldThrowCatchExplode", "ShieldChargeHealthBufferTrait", "ShieldChargeSpeedTrait", "ShieldBashDamageTrait", "ShieldPerfectRushTrait", "ShieldThrowElectiveCharge", "ShieldThrowEmpowerTrait", "ShieldBlockEmpowerTrait", "ShieldThrowRushTrait", "ShieldLoadAmmoBoostTrait"},
 
-	ShieldWeapon = { "ShieldDashAOETrait", "ShieldRushProjectileTrait", "ShieldThrowFastTrait", "ShieldThrowCatchExplode", "ShieldChargeHealthBufferTrait", "ShieldChargeSpeedTrait", "ShieldBashDamageTrait", "ShieldPerfectRushTrait", "ShieldThrowElectiveCharge", "ShieldThrowEmpowerTrait", "ShieldBlockEmpowerTrait", "ShieldThrowRushTrait", "ShieldLoadAmmoBoostTrait"},
+        SpearWeapon = { "SpearReachAttack", "SpearAutoAttack", "SpearThrowExplode", "SpearThrowBounce", "SpearThrowPenetrate", "SpearThrowCritical", "SpearSpinDamageRadius", "SpearSpinChargeLevelTime", "SpearDashMultiStrike", "SpearThrowElectiveCharge", "SpearSpinChargeAreaDamageTrait", "SpearAttackPhalanxTrait", "SpearSpinTravelDurationTrait"},
 
-	SpearWeapon = { "SpearReachAttack", "SpearAutoAttack", "SpearThrowExplode", "SpearThrowBounce", "SpearThrowPenetrate", "SpearThrowCritical", "SpearSpinDamageRadius", "SpearSpinChargeLevelTime", "SpearDashMultiStrike", "SpearThrowElectiveCharge", "SpearSpinChargeAreaDamageTrait", "SpearAttackPhalanxTrait", "SpearSpinTravelDurationTrait"},
+        GunWeapon = { "GunSlowGrenade", "GunMinigunTrait", "GunShotgunTrait", "GunExplodingSecondaryTrait", "GunGrenadeFastTrait", "GunArmorPenerationTrait", "GunInfiniteAmmoTrait", "GunConsecutiveFireTrait", "GunGrenadeClusterTrait", "GunGrenadeDropTrait", "GunHeavyBulletTrait", "GunHomingBulletTrait", "GunChainShotTrait", "GunLoadedGrenadeBoostTrait", "GunLoadedGrenadeLaserTrait", "GunLoadedGrenadeSpeedTrait", "GunLoadedGrenadeWideTrait", "GunLoadedGrenadeInfiniteAmmoTrait"},
 
-	GunWeapon = { "GunSlowGrenade", "GunMinigunTrait", "GunShotgunTrait", "GunExplodingSecondaryTrait", "GunGrenadeFastTrait", "GunArmorPenerationTrait", "GunInfiniteAmmoTrait", "GunConsecutiveFireTrait", "GunGrenadeClusterTrait", "GunGrenadeDropTrait", "GunHeavyBulletTrait", "GunHomingBulletTrait", "GunChainShotTrait", "GunLoadedGrenadeBoostTrait", "GunLoadedGrenadeLaserTrait", "GunLoadedGrenadeSpeedTrait", "GunLoadedGrenadeWideTrait", "GunLoadedGrenadeInfiniteAmmoTrait"},
+        FistWeapon = { "FistReachAttackTrait", "FistDashAttackHealthBufferTrait", "FistTeleportSpecialTrait", "FistDoubleDashSpecialTrait", "FistChargeSpecialTrait", "FistKillTrait", "FistSpecialLandTrait", "FistAttackFinisherTrait", "FistConsecutiveAttackTrait", "FistSpecialFireballTrait", "FistHeavyAttackTrait", "FistAttackDefenseTrait", "FistDetonateBoostTrait", "MaimBoostTrait"},
 
-	FistWeapon = { "FistReachAttackTrait", "FistDashAttackHealthBufferTrait", "FistTeleportSpecialTrait", "FistDoubleDashSpecialTrait", "FistChargeSpecialTrait", "FistKillTrait", "FistSpecialLandTrait", "FistAttackFinisherTrait", "FistConsecutiveAttackTrait", "FistSpecialFireballTrait", "FistHeavyAttackTrait", "FistAttackDefenseTrait", "FistDetonateBoostTrait", "MaimBoostTrait"},
-
-	Legendaries =
-	{
-		"ZeusChargedBoltTrait", "MoreAmmoTrait", "DionysusComboVulnerability", "InstantChillKill", "DoubleCollisionTrait",
-		"ShieldHitTrait", "CharmTrait", "AresCursedRiftTrait", "MagnetismTrait", "UnstoredAmmoDamageTrait",
-	},
-	Duos =
-	{
-		"LightningCloudTrait", "AutoRetaliateTrait", "AmmoBoltTrait", "ImpactBoltTrait", 
-		"ReboundingAthenaCastTrait", "JoltDurationTrait", "ImprovedPomTrait", "RaritySuperBoost", 
-		"BlizzardOrbTrait", "TriggerCurseTrait", "SlowProjectileTrait", "ArtemisReflectBuffTrait", 
-		"CurseSickTrait", "HeartsickCritDamageTrait", "DionysusAphroditeStackIncreaseTrait", "AresHomingTrait", 
-		"IceStrikeArrayTrait", "HomingLaserTrait", "RegeneratingCappedSuperTrait", "StatusImmunityTrait", 
-		"PoseidonAresProjectileTrait", "CastBackstabTrait", "NoLastStandRegenerationTrait", "PoisonTickRateTrait", 
-		"StationaryRiftTrait", "SelfLaserTrait", "ArtemisBonusProjectileTrait", "PoisonCritVulnerabilityTrait",
-	},
-	Consumables =
-	{
-		"RandomMinorLootDrop", "LastStandDurationDrop", "LastStandHealDrop", "DionysusGiftDrop", "HealingPotencyDrop", "HarvestBoonDrop",
-	},
-	ConsumableTraits =
-	{
-		RandomMinorLootDrop = "PoseidonPickedUpMinorLootTrait",
-		LastStandDurationDrop = "LastStandDurationTrait",
-		LastStandHealDrop = "LastStandHealTrait",
-		DionysusGiftDrop = "GiftHealthTrait",
-		HealingPotencyDrop = "HealingPotencyTrait",
-		HarvestBoonDrop = "HarvestBoonTrait",
-	},
-	BeowulfTraits =
-	{
-		ZeusRangedTrait = "ShieldLoadAmmo_ZeusRangedTrait",
-		PoseidonRangedTrait = "ShieldLoadAmmo_PoseidonRangedTrait",
-		AthenaRangedTrait = "ShieldLoadAmmo_AthenaRangedTrait",
-		AphroditeRangedTrait = "ShieldLoadAmmo_AphroditeRangedTrait",
-		ArtemisRangedTrait = "ShieldLoadAmmo_ArtemisRangedTrait",
-		AresRangedTrait = "ShieldLoadAmmo_AresRangedTrait",
-		-- DionysusRangedTrait = "ShieldLoadAmmo_DionysusRangedTrait",
-		DemeterRangedTrait = "ShieldLoadAmmo_DemeterRangedTrait",
-	},
-}
-
-CodexMenuColors =
-{
-	Duos = {210, 255, 97, 255},
-	Legendaries = { 255, 144, 0, 255 },
-	SwordWeapon = { 176, 196, 222, 255 },
-	BowWeapon = { 176, 196, 222, 255 },
-	ShieldWeapon = { 176, 196, 222, 255 },
-	SpearWeapon = { 176, 196, 222, 255 },
-	GunWeapon = { 176, 196, 222, 255 },
-	FistWeapon = { 176, 196, 222, 255 },
-}
-
-RealGodNames = {
-	"Zeus", "Athena", "Poseidon", "Artemis",
-	"Aphrodite", "Ares", "Dionysus", "Demeter"
-}
-
--- Any trait that should not be reloaded
-CodexMenuReloadShouldSkip = {
-    FastClearDodgeBonusTrait = true,
-    PerfectClearDamageBonusTrait = true,
-    RoomRewardMaxHealthTrait = true,
-    RoomRewardEmptyMaxHealthTrait = true
-}
-
-SaveIgnores["CodexMenuData"] = true
-SaveIgnores["CodexMenuColors"] = true
-SaveIgnores["RealGodNames"] = true
-SaveIgnores["CodexMenuReloadShouldSkip"] = true
+        Legendaries =
+        {
+            "ZeusChargedBoltTrait", "MoreAmmoTrait", "DionysusComboVulnerability", "InstantChillKill", "DoubleCollisionTrait",
+            "ShieldHitTrait", "CharmTrait", "AresCursedRiftTrait", "MagnetismTrait", "UnstoredAmmoDamageTrait",
+        },
+        Duos =
+        {
+            "LightningCloudTrait", "AutoRetaliateTrait", "AmmoBoltTrait", "ImpactBoltTrait", 
+            "ReboundingAthenaCastTrait", "JoltDurationTrait", "ImprovedPomTrait", "RaritySuperBoost", 
+            "BlizzardOrbTrait", "TriggerCurseTrait", "SlowProjectileTrait", "ArtemisReflectBuffTrait", 
+            "CurseSickTrait", "HeartsickCritDamageTrait", "DionysusAphroditeStackIncreaseTrait", "AresHomingTrait", 
+            "IceStrikeArrayTrait", "HomingLaserTrait", "RegeneratingCappedSuperTrait", "StatusImmunityTrait", 
+            "PoseidonAresProjectileTrait", "CastBackstabTrait", "NoLastStandRegenerationTrait", "PoisonTickRateTrait", 
+            "StationaryRiftTrait", "SelfLaserTrait", "ArtemisBonusProjectileTrait", "PoisonCritVulnerabilityTrait",
+        },
+        Consumables =
+        {
+            "RandomMinorLootDrop", "LastStandDurationDrop", "LastStandHealDrop", "DionysusGiftDrop", "HealingPotencyDrop", "HarvestBoonDrop",
+        },
+        ConsumableTraits =
+        {
+            RandomMinorLootDrop = "PoseidonPickedUpMinorLootTrait",
+            LastStandDurationDrop = "LastStandDurationTrait",
+            LastStandHealDrop = "LastStandHealTrait",
+            DionysusGiftDrop = "GiftHealthTrait",
+            HealingPotencyDrop = "HealingPotencyTrait",
+            HarvestBoonDrop = "HarvestBoonTrait",
+        },
+        BeowulfTraits =
+        {
+            ZeusRangedTrait = "ShieldLoadAmmo_ZeusRangedTrait",
+            PoseidonRangedTrait = "ShieldLoadAmmo_PoseidonRangedTrait",
+            AthenaRangedTrait = "ShieldLoadAmmo_AthenaRangedTrait",
+            AphroditeRangedTrait = "ShieldLoadAmmo_AphroditeRangedTrait",
+            ArtemisRangedTrait = "ShieldLoadAmmo_ArtemisRangedTrait",
+            AresRangedTrait = "ShieldLoadAmmo_AresRangedTrait",
+            DionysusRangedTrait = "ShieldLoadAmmo_DionysusRangedTrait",
+            DemeterRangedTrait = "ShieldLoadAmmo_DemeterRangedTrait",
+        },
+    },
+    Colors =
+    {
+        Duos = {210, 255, 97, 255},
+        Legendaries = { 255, 144, 0, 255 },
+        SwordWeapon = { 176, 196, 222, 255 },
+        BowWeapon = { 176, 196, 222, 255 },
+        ShieldWeapon = { 176, 196, 222, 255 },
+        SpearWeapon = { 176, 196, 222, 255 },
+        GunWeapon = { 176, 196, 222, 255 },
+        FistWeapon = { 176, 196, 222, 255 },
+    },
+    RealGodNames =
+    {
+        "Zeus", "Athena", "Poseidon", "Artemis",
+        "Aphrodite", "Ares", "Dionysus", "Demeter"
+    },
+    -- Any trait that should not be reloaded
+    ReloadShouldSkip = {
+        FastClearDodgeBonusTrait = true,
+        PerfectClearDamageBonusTrait = true,
+        RoomRewardMaxHealthTrait = true,
+        RoomRewardEmptyMaxHealthTrait = true
+    },
+    FishTable = CodexOrdering.Fish.Order,
+    WeaponTable = CodexOrdering.Weapons.Order,
+    BoonTable =
+    {
+        "TrialUpgrade",
+        "ZeusUpgrade",
+        "PoseidonUpgrade",
+        "AthenaUpgrade",
+        "AphroditeUpgrade",
+        "ArtemisUpgrade",
+        "AresUpgrade",
+        "DionysusUpgrade",
+        "HermesUpgrade",
+        "DemeterUpgrade",
+        "WeaponUpgrade",
+        NPC_Dusa_01 = "Duos"
+    },
+    ConsumableTable =
+    {
+        "RoomRewardMetaPointDrop",
+        "AmmoPack",
+        "RoomRewardMoneyDrop",
+        "RoomRewardMaxHealthDrop",
+        "ChaosWeaponUpgrade",
+        "LockKeyDrop",
+        "SuperLockKeyDrop",
+        "GemDrop",
+        "SuperGemDrop",
+        "GiftDrop",
+        "SuperGiftDrop",
+        "CharonStoreDiscount",
+        "RoomRewardConsolationPrize"
+    },
+    LootTable =
+    {
+        "StackUpgrade"
+    },
+    EnemyTable =
+    { "HeavyMelee", "LightRanged", "PunchingBagUnit", "ThiefMineLayer", "WretchAssassinMiniboss", "Swarmer", "LightSpawner", "DisembodiedHand",
+    "HeavyRanged", "HeavyRangedSplitterMiniboss", "ShieldRanged", "BloodlessNaked", "BloodlessNakedBerserker", "BloodlessGrenadier", "BloodlessSelfDestruct",
+    "BloodlessPitcher", "BloodlessWaveFist", "RangedBurrower", "SpreadShotUnit", "FreezeShotUnit", "CrusherUnit", "HitAndRunUnit", "SplitShotUnit", "Chariot",
+    "ChariotSuicide", "ShadeSwordUnit", "ShadeSpearUnit", "ShadeBowUnit", "ShadeShieldUnit", "FlurrySpawner", "Crawler", "RatThug", "CrawlerMiniBoss",
+    "ThiefImpulseMineLayer", "HeavyRangedForked", "SatyrRanged"
+    },
+    BossTable =
+    {
+        NPC_FurySister_01 = RoomSetData.Tartarus.A_Boss01,
+        Harpy2 = RoomSetData.Tartarus.A_Boss02,
+        Harpy3 = RoomSetData.Tartarus.A_Boss03,
+        HydraHeadImmortal = RoomSetData.Asphodel.B_Boss01,
+        Theseus = RoomSetData.Elysium.C_Boss01,
+        Minotaur = RoomSetData.Elysium.C_MiniBoss01,
+        NPC_Hades_01 = RoomSetData.Styx.D_Boss01,
+    },
+    CommandTable =
+    {
+        PlayerUnit = function()
+        RemoveAllTraits()
+        ReloadEquipment()
+        CloseCodexScreen()
+        end,
+        NPC_Achilles_01 = function()
+            if IsSuperValid() then
+                CloseCodexScreen()
+                wait(1, RoomThreadName)
+                BuildSuperMeter(CurrentRun, 100)
+                CommenceSuperMove()
+                UpdateSuperDamageBonus()
+                thread( MarkObjectiveComplete, "EXMove" )
+                CloseCodexScreen()
+            end
+        end,
+        NPC_Nyx_01 = function()
+            CloseCodexScreen()
+            OpenCustomMirror()
+        end,
+        NPC_Skelly_01 = function(triggerArgs)
+            CloseCodexScreen()
+            KillHero(CurrentRun.Hero, triggerArgs)
+        end,
+        NPC_Cerberus_01 = function(triggerArgs)
+            CloseCodexScreen()
+            UIData.AwardMenu.AvailableKeepsakeTraits = GetAvailableKeepsakeTraits()
+            UIData.AwardMenu.AvailableAssistTraits = GetAllAssistTraits()
+            ShowAwardMenu()
+        end,
+        NPC_Charon_01 = function()
+            CloseCodexScreen()
+            CurrentRun.CurrentRoom.Store = nil
+            StartUpStore()
+        end,
+        NPC_Hypnos_01 = function()
+            CloseCodexScreen()
+            GenerateSellTraitShop(CurrentRun, CurrentRun.CurrentRoom)
+            OpenSellTraitMenu()
+        end,
+        NPC_Orpheus_01 = function()
+            --Save state
+            CloseCodexScreen()
+            SaveState()
+        end,
+        NPC_Patroclus_01 = function()
+            --Load state
+            CloseCodexScreen()
+            LoadState()
+        end,
+        NPC_Eurydice_01 = function()
+            OpenBoonManager()
+        end,
+        NPC_Sisyphus_01 = function ()
+            CloseCodexScreen()
+            OpenBuildMenu()
+        end,
+    }
+})
 
 -- ModUtil part
 if ModUtil ~= nil and PQOL == nil then
@@ -176,9 +285,9 @@ if ModUtil ~= nil and PQOL == nil then
     end)
 end
 
-CodexMenuData.GodNames = {}
-for key,_ in pairs(CodexMenuData) do
-    table.insert(CodexMenuData.GodNames,key)
+CodexMenu.BoonData.GodNames = {}
+for key,_ in pairs(CodexMenu.BoonData) do
+    table.insert(CodexMenu.BoonData.GodNames,key)
 end
 
 function CustomInvertTable(tableArg)
@@ -189,11 +298,11 @@ function CustomInvertTable(tableArg)
     return inverseTable
 end
 
-for _,value in ipairs(CodexMenuData.GodNames) do
-    CodexMenuData[value.."Inverted"]=CustomInvertTable(CodexMenuData[value])
+for _,value in ipairs(CodexMenu.BoonData.GodNames) do
+    CodexMenu.BoonData[value.."Inverted"]=CustomInvertTable(CodexMenu.BoonData[value])
 end
 
-CodexMenuData.BoonSelector = { Components = {} }
+CodexMenu.BoonData.BoonSelector = { Components = {} }
 
 function ChangeBoonSelectorRarity(screen, button)
 	if screen.LockedRarityButton ~= nil and screen.LockedRarityButton ~= button then
@@ -212,7 +321,7 @@ function GiveSelectedBoonToPlayer(screen, button)
 		if IsWeaponTrait(button.Boon) then
 			RemoveSameSlotWeapon(button.Boon)
 		end
-		for i, trait in pairs (CodexMenuData.Legendaries) do
+		for i, trait in pairs (CodexMenu.BoonData.Legendaries) do
 			if button.Boon == trait then
 				isLegendary = true
 			end
@@ -222,7 +331,7 @@ function GiveSelectedBoonToPlayer(screen, button)
 			LockChoice(screen.Components, button)
 			return
 		end
-		for i, trait in pairs (CodexMenuData.Duos) do
+		for i, trait in pairs (CodexMenu.BoonData.Duos) do
 			if button.Boon == trait then
 				isDuo = true
 			end
@@ -233,7 +342,7 @@ function GiveSelectedBoonToPlayer(screen, button)
 			LockChoice(screen.Components, button)
 			return
 		end
-		for i, trait in pairs (CodexMenuData.Consumables) do
+		for i, trait in pairs (CodexMenu.BoonData.Consumables) do
 			if button.Boon == trait then
 				isConsumable = true
 			end
@@ -289,7 +398,7 @@ end
 
 function HasBeowulf()
 	for i, traitData in pairs(CurrentRun.Hero.Traits) do
-		if traitData.Name == "ShieldLoadAmmoTrait" then
+		if traitData.Name == "ShieldLoadAmmoTrait" or traitData.Name == "UltraShieldTrait" or traitData.Name == "UltraBowTrait" then
 			return true
 		end
 	end
@@ -312,12 +421,12 @@ function OpenBoonSelector(godName, spawnBoon)
 	CloseCodexScreen()
 	CheckHadesShout(CurrentRun.Hero.Traits)
 	CodexMenuReloadAllTraits()
-	if godName ~= nil and CodexMenuData[godName] then
-		local Boons = DeepCopyTable(CodexMenuData[godName])
+	if godName ~= nil and CodexMenu.BoonData[godName] then
+		local Boons = DeepCopyTable(CodexMenu.BoonData[godName])
 		if Boons == nil then
 			return
 		end
-		ScreenAnchors.BoonSelector = DeepCopyTable(CodexMenuData.BoonSelector)
+		ScreenAnchors.BoonSelector = DeepCopyTable(CodexMenu.BoonData.BoonSelector)
 		local screen = ScreenAnchors.BoonSelector
 		local components = screen.Components
 		screen.Name = "BoonSelector"
@@ -339,11 +448,11 @@ function OpenBoonSelector(godName, spawnBoon)
 		components.FrontFx = CreateScreenComponent({ Name = "BoonSelectInFrontFx", Group = "BoonSelector" })
 		local lColor = Color.White
 		if LootData[godName] then
-			lColor = LootData[godName].LootColor or CodexMenuColors[godName]
+			lColor = LootData[godName].LootColor or CodexMenu.Colors[godName]
 			components.BoonIcon = CreateScreenComponent({ Name = "rectangle01", Group = "BoonSelector", X = 182, Y = 160 })
 			SetAnimation({ DestinationId = components.BoonIcon.Id, Name = LootData[godName].Icon, Scale = 0.5 })
 		else
-			lColor = CodexMenuColors[godName]
+			lColor = CodexMenu.Colors[godName]
 		end
 		SetColor({ Id = components.Lighting.Id, Color = lColor })
 		SetScale({ Id = components.BackgroundDim.Id, Fraction = 4 })
@@ -370,8 +479,8 @@ function OpenBoonSelector(godName, spawnBoon)
 		--Display the boons
 		if godName == "WeaponUpgrade" then
 			local wp = GetEquippedWeapon()
-			Boons = CodexMenuData[wp]
-			lColor = CodexMenuColors[wp]
+			Boons = CodexMenu.BoonData[wp]
+			lColor = CodexMenu.Colors[wp]
 		end
         if godName == "Duos" then
             local displayedTraits = {}
@@ -420,8 +529,8 @@ function OpenBoonSelector(godName, spawnBoon)
                         local offsetY = screen.RowStartY + rowoffset*(math.floor((index-1)/numperrow))
                         local color = lColor
                         local lockColor = Color.White
-                        if HasBeowulf() and CodexMenuData.BeowulfTraits[boon] ~= nil then
-                            boon = CodexMenuData.BeowulfTraits[boon]
+                        if HasBeowulf() and CodexMenu.BoonData.BeowulfTraits[boon] ~= nil then
+                            boon = CodexMenu.BoonData.BeowulfTraits[boon]
                         end
                         if HeroHasTrait(boon) then
                             components[purchaseButtonKey] = CreateScreenComponent({ Name = "BlankObstacle", Group = "BoonSelector", Scale = 0.3, })
@@ -598,7 +707,7 @@ function HandleBoonManagerClick(screen, button)
 			local upgradableTraits = {}
 			local upgradedTraits = {}
 			for i, traitData in pairs( CurrentRun.Hero.Traits ) do
-				if IsGodTrait(traitData.Name, { ForShop = true }) or Contains(CodexMenuData.ConsumableTraits, traitData.Name) or IsHermesChaosHammerCharonBoon(traitData.Name) then
+				if IsGodTrait(traitData.Name, { ForShop = true }) or Contains(CodexMenu.BoonData.ConsumableTraits, traitData.Name) or IsHermesChaosHammerCharonBoon(traitData.Name) then
 					if TraitData[traitData.Name] and traitData.Rarity ~= nil and GetUpgradedRarity(traitData.Rarity) ~= nil and traitData.RarityLevels ~= nil and traitData.RarityLevels[GetUpgradedRarity(traitData.Rarity)] ~= nil then
 						if Contains(upgradableTraits, traitData) or traitData.Rarity == "Legendary" then
 						else
@@ -653,7 +762,7 @@ function HandleBoonManagerClick(screen, button)
 			end
 			return
 		elseif screen.Mode == "Rarity" and screen.LockedModeButton.Add == true then
-			if IsGodTrait(button.Boon.Name, { ForShop = true }) or Contains(CodexMenuData.ConsumableTraits, button.Boon.Name) or IsChaosBoon(button.Boon.Name) or IsHermesBoon(button.Boon.Name) then
+			if IsGodTrait(button.Boon.Name, { ForShop = true }) or Contains(CodexMenu.BoonData.ConsumableTraits, button.Boon.Name) or IsChaosBoon(button.Boon.Name) or IsHermesBoon(button.Boon.Name) then
 				if TraitData[button.Boon.Name] and button.Boon.Rarity ~= nil and GetUpgradedRarity(button.Boon.Rarity) ~= nil and button.Boon.RarityLevels[GetUpgradedRarity(button.Boon.Rarity)] ~= nil then
 					local numOldTrait = GetTraitNameCount(CurrentRun.Hero, button.Boon.Name)
 					if numOldTrait > 100 then
@@ -674,7 +783,7 @@ function HandleBoonManagerClick(screen, button)
 			end
 			return
 		elseif screen.Mode == "Rarity" and screen.LockedModeButton.Substract == true then
-			if IsGodTrait(button.Boon.Name, { ForShop = true }) or Contains(CodexMenuData.ConsumableTraits, button.Boon.Name) or IsChaosBoon(button.Boon.Name) or IsHermesBoon(button.Boon.Name) then
+			if IsGodTrait(button.Boon.Name, { ForShop = true }) or Contains(CodexMenu.BoonData.ConsumableTraits, button.Boon.Name) or IsChaosBoon(button.Boon.Name) or IsHermesBoon(button.Boon.Name) then
 				if TraitData[button.Boon.Name] and button.Boon.Rarity ~= nil and GetDowngradedRarity(button.Boon.Rarity) ~= nil and button.Boon.RarityLevels[GetDowngradedRarity(button.Boon.Rarity)] ~= nil then
 					local numOldTrait = GetTraitNameCount(CurrentRun.Hero, button.Boon.Name)
 					if numOldTrait > 100 then
@@ -735,13 +844,13 @@ function BoonManagerLoadPage(screen)
                 --Skip
             else
                 local color = Color.White
-            for _,godName in ipairs(CodexMenuData.GodNames) do
-                if CodexMenuData[godName.."Inverted"] then
-                    if CodexMenuData[godName.."Inverted"][boonData.boon.Name] or CodexMenuData[godName.."Inverted"][boonData.boon] then
+            for _,godName in ipairs(CodexMenu.BoonData.GodNames) do
+                if CodexMenu.BoonData[godName.."Inverted"] then
+                    if CodexMenu.BoonData[godName.."Inverted"][boonData.boon.Name] or CodexMenu.BoonData[godName.."Inverted"][boonData.boon] then
                         if LootData[godName] then
-                            color = CodexMenuColors[godName] or LootData[godName].LootColor
+                            color = CodexMenu.Colors[godName] or LootData[godName].LootColor
                         else
-                            color = CodexMenuColors[godName]
+                            color = CodexMenu.Colors[godName]
                             break
                         end
                     end
@@ -847,7 +956,7 @@ function OpenBoonManager()
 	CheckHadesShout(CurrentRun.Hero.Traits)
 	CodexMenuReloadAllTraits()
 	if CurrentRun.Hero.Traits ~= nil then
-		ScreenAnchors.BoonSelector = DeepCopyTable(CodexMenuData.BoonSelector)
+		ScreenAnchors.BoonSelector = DeepCopyTable(CodexMenu.BoonData.BoonSelector)
 		local screen = ScreenAnchors.BoonSelector
 		local components = screen.Components
 		screen.Name = "BoonManager"
@@ -892,7 +1001,7 @@ function OpenBoonManager()
 		for i,boon in ipairs(CurrentRun.Hero.Traits) do
 			if Contains(displayedTraits, boon.Name) or boon.Name == "GodModeTrait" then
 			else
-				if IsGodTrait(boon.Name) or IsHermesChaosHammerCharonBoon(boon.Name) or Contains(CodexMenuData.ConsumableTraits, boon.Name) then
+				if IsGodTrait(boon.Name) or IsHermesChaosHammerCharonBoon(boon.Name) or Contains(CodexMenu.BoonData.ConsumableTraits, boon.Name) then
 					table.insert(displayedTraits, boon.Name)
 					local rowOffset = 100
 					local columnOffset = 300
@@ -918,6 +1027,7 @@ function OpenBoonManager()
 				end
 			end
 		end
+        -- print(ModUtil.ToString.Deep( displayedTraits, nil, nil, '\t' ))
 		BoonManagerLoadPage(screen)
 		--Instructions
 		components.ModeDisplay = CreateScreenComponent({ Name = "BlankObstacle", Group = "BoonManager" })
@@ -1286,7 +1396,7 @@ end
 
 function RemoveSameSlotWeapon(traitName)
 	local weaponType
-	for _, god in pairs(RealGodNames) do
+	for _, god in pairs(CodexMenu.RealGodNames) do
 		if string.match(traitName, god) then
 			if string.match(traitName, "WeaponTrait") then
 				weaponType = "WeaponTrait"
@@ -1308,7 +1418,7 @@ function RemoveSameSlotWeapon(traitName)
 	end
 	for i, traitData in pairs (CurrentRun.Hero.Traits) do
 		if string.match(traitData.Name, weaponType) and not IsHermesChaosHammerCharonBoon(traitData.Name) then
-			for _, god in pairs(RealGodNames) do
+			for _, god in pairs(CodexMenu.RealGodNames) do
 				if string.match(traitData.Name, god) then
 					RemoveWeaponTrait(traitData.Name)
 				end
@@ -1447,400 +1557,385 @@ function ReloadEquipment()
 	EquipAssist(CurrentRun.Hero)
 end
 
-function ModDebugPrint(text, delay)
-	if delay == nil then
-		delay = 5
-	end
-	Destroy({Ids = ScreenAnchors.HoldDisplayId})
-	ScreenAnchors.HoldDisplayId = SpawnObstacle({ Name = "BlankObstacle", Group = "Combat_Menu_Overlay", DestinationId = CurrentRun.Hero.ObjectId })
-	Attach({ Id = ScreenAnchors.HoldDisplayId, DestinationId = CurrentRun.Hero.ObjectId })
-	CreateTextBox({ Id = ScreenAnchors.HoldDisplayId, Text = text, FontSize = 38, OffsetX = 0, OffsetY = -150, Color = Color.Yellow, Font = "AlegreyaSansSCBold", Justification = "Center" })
-	wait(delay, RoomThreadName)
-	if delay > 0 then
-			Destroy({Ids = ScreenAnchors.HoldDisplayId})
-			ScreenAnchors.HoldDisplayId = nil
-	end
-end
+-- ModUtil.RegisterMod("BuildManager")
 
-ModUtil.RegisterMod("BuildManager")
+-- BuildMenuScreen = { Components = {} }
+-- BuildMenuData = {
+-- 	BuildMenuScreen =
+-- 	{
+-- 		Buttons =
+-- 		{
+-- 			OpenBuildMaker =
+-- 			{
+-- 				Name = "OpenBuildMakerButton",
+-- 				Title = "Open Build Maker",
+-- 				Function = "OpenBuildMaker",
+-- 				Index = 1,
+-- 				Buttons =
+-- 				{
+-- 					BuildMakerOverview =
+-- 					{
+-- 						Name = "BuildMakerOverviewButton",
+-- 						Title = "Show build overview",
+-- 						Function = "BuildMakerOverview",
+-- 						Index = 1,
+-- 					},
+-- 					BuildMakerMirror =
+-- 					{
+-- 						Name = "BuildMakerMirrorButton",
+-- 						Title = "Choose mirror upgrades",
+-- 						Function = "BuildMakerMirror",
+-- 						Index = 2,
+-- 					},
+-- 					BuildMakerWeapon =
+-- 					{
+-- 						Name = "BuildMakerWeaponButton",
+-- 						Title = "Choose weapon and aspect",
+-- 						Function = "BuildMakerWeapon",
+-- 						Index = 3,
+-- 					},
+-- 					BuildMakerKeepsake =
+-- 					{
+-- 						Name = "BuildMakerKeepsakeButton",
+-- 						Title = "Choose keepsake and summon",
+-- 						Function = "BuildMakerKeepsake",
+-- 						Index = 4,
+-- 					},
+-- 					BuildMakerBoons =
+-- 					{
+-- 						Name = "BuildMakerBoonsButton",
+-- 						Title = "Pick boons",
+-- 						Function = "BuildMakerBoons",
+-- 						Index = 5,
+-- 					},
+-- 					BuildMakerPact =
+-- 					{
+-- 						Name = "BuildMakerPactButton",
+-- 						Title = "Choose pact options",
+-- 						Function = "BuildMakerPact",
+-- 						Index = 6,
+-- 					},
+-- 					BuildMakerContractor = 
+-- 					{
+-- 						Name = "BuildMakerContractorButton",
+-- 						Title = "Choose contractor upgrades",
+-- 						Function = "BuildMakerContractor",
+-- 						Index = 7,
+-- 					},
+-- 					BuildMakerImport =
+-- 					{
+-- 						Name = "BuildMakerImportButton",
+-- 						Title = "Import current build",
+-- 						Function = "BuildMakerImport",
+-- 						Index = 8,
+-- 					},
+-- 					BuildMakerSave = 
+-- 					{
+-- 						Name = "BuildMakerSaveButton",
+-- 						Title = "Save build",
+-- 						Function = "BuildMakerSave",
+-- 						Index = 9,
+-- 					}
+-- 				}
+-- 			},
+-- 			OpenBuildMenu =
+-- 			{
+-- 				Name = "OpenBuildViewerButton",
+-- 				Title = "View Saved Builds",
+-- 				Function = "OpenBuildViewer",
+-- 				Index = 2,
+-- 			},
+-- 		},
+-- 	},
+-- }
 
-BuildMenuScreen = { Components = {} }
-BuildMenuData = {
-	BuildMenuScreen =
-	{
-		Buttons =
-		{
-			OpenBuildMaker =
-			{
-				Name = "OpenBuildMakerButton",
-				Title = "Open Build Maker",
-				Function = "OpenBuildMaker",
-				Index = 1,
-				Buttons =
-				{
-					BuildMakerOverview =
-					{
-						Name = "BuildMakerOverviewButton",
-						Title = "Show build overview",
-						Function = "BuildMakerOverview",
-						Index = 1,
-					},
-					BuildMakerMirror =
-					{
-						Name = "BuildMakerMirrorButton",
-						Title = "Choose mirror upgrades",
-						Function = "BuildMakerMirror",
-						Index = 2,
-					},
-					BuildMakerWeapon =
-					{
-						Name = "BuildMakerWeaponButton",
-						Title = "Choose weapon and aspect",
-						Function = "BuildMakerWeapon",
-						Index = 3,
-					},
-					BuildMakerKeepsake =
-					{
-						Name = "BuildMakerKeepsakeButton",
-						Title = "Choose keepsake and summon",
-						Function = "BuildMakerKeepsake",
-						Index = 4,
-					},
-					BuildMakerBoons =
-					{
-						Name = "BuildMakerBoonsButton",
-						Title = "Pick boons",
-						Function = "BuildMakerBoons",
-						Index = 5,
-					},
-					BuildMakerPact =
-					{
-						Name = "BuildMakerPactButton",
-						Title = "Choose pact options",
-						Function = "BuildMakerPact",
-						Index = 6,
-					},
-					BuildMakerContractor = 
-					{
-						Name = "BuildMakerContractorButton",
-						Title = "Choose contractor upgrades",
-						Function = "BuildMakerContractor",
-						Index = 7,
-					},
-					BuildMakerImport =
-					{
-						Name = "BuildMakerImportButton",
-						Title = "Import current build",
-						Function = "BuildMakerImport",
-						Index = 8,
-					},
-					BuildMakerSave = 
-					{
-						Name = "BuildMakerSaveButton",
-						Title = "Save build",
-						Function = "BuildMakerSave",
-						Index = 9,
-					}
-				}
-			},
-			OpenBuildMenu =
-			{
-				Name = "OpenBuildViewerButton",
-				Title = "View Saved Builds",
-				Function = "OpenBuildViewer",
-				Index = 2,
-			},
-		},
-	},
-}
+-- function OpenBuildMenu()
+-- 	ScreenAnchors.BuildMenu = DeepCopyTable(BuildMenuScreen)
+-- 	local screen = ScreenAnchors.BuildMenu
+-- 	local components = screen.Components
+-- 	screen.Title = "Codex Menu Build Menu"
+-- 	screen.Name = "BuildMenuScreen"
+--     if BuildManager.Data.SavedBuilds == nil then
+--         BuildManager.Data.SavedBuilds = {}
+--     end
+-- 	OnScreenOpened({ Flag = screen.Name, PersistCombatUI = true })
+-- 	SetConfigOption({ Name = "UseOcclusion", Value = false })
+-- 	FreezePlayerUnit()
+-- 	EnableShopGamepadCursor()
+-- 	PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
+-- 	--Background
+-- 	components.BackgroundDim = CreateScreenComponent({ Name = "rectangle01", Group = "BuildMenu" })
+-- 	components.Background = CreateScreenComponent({ Name = "BlankObstacle", Group = "BuildMenu" })
+-- 	components.TitleAnchor = CreateScreenComponent({ Name = "BlankObstacle", Group = "BuildMenu" })
+-- 	SetScale({ Id = components.BackgroundDim.Id, Fraction = 4 })
+-- 	SetColor({ Id = components.BackgroundDim.Id, Color = { 69, 69, 69, 255 } })
+-- 	--Title
+-- 	CreateTextBox({ Id = components.TitleAnchor.Id, Text = screen.Title, FontSize = 34,
+-- 	OffsetX = 0, OffsetY = -500, Color = Color.White, Font = "SpectralSCLight",
+-- 	ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
+-- 	--Close button
+-- 	components.CloseButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "BuildMenu" })
+-- 	Attach({ Id = components.CloseButton.Id, DestinationId = components.Background.Id, OffsetX = 0, OffsetY = 500 })
+-- 	components.CloseButton.OnPressedFunctionName = "CloseBuildMenu"
+-- 	components.CloseButton.ControlHotkey = "Cancel"
+-- 	--Display
+-- 	if BuildMenuData[screen.Name] ~= nil then
+-- 		if BuildMenuData[screen.Name].Buttons ~= nil then
+-- 			for i, button in pairs(BuildMenuData[screen.Name].Buttons) do
+-- 				local index = button.Index
+-- 				local rowstartX = 0
+-- 				local rowstartY = -400
+-- 				local rowoffset = 100
+-- 				local columnoffset = 300
+-- 				local numperrow = 1
+-- 				local offsetX = rowstartX + columnoffset*((index-1) % numperrow)
+-- 				local offsetY = rowstartY + rowoffset*(math.floor((index-1)/numperrow))
 
-function OpenBuildMenu()
-	ScreenAnchors.BuildMenu = DeepCopyTable(BuildMenuScreen)
-	local screen = ScreenAnchors.BuildMenu
-	local components = screen.Components
-	screen.Title = "Codex Menu Build Menu"
-	screen.Name = "BuildMenuScreen"
-    if BuildManager.Data.SavedBuilds == nil then
-        BuildManager.Data.SavedBuilds = {}
-    end
-	OnScreenOpened({ Flag = screen.Name, PersistCombatUI = true })
-	SetConfigOption({ Name = "UseOcclusion", Value = false })
-	FreezePlayerUnit()
-	EnableShopGamepadCursor()
-	PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
-	--Background
-	components.BackgroundDim = CreateScreenComponent({ Name = "rectangle01", Group = "BuildMenu" })
-	components.Background = CreateScreenComponent({ Name = "BlankObstacle", Group = "BuildMenu" })
-	components.TitleAnchor = CreateScreenComponent({ Name = "BlankObstacle", Group = "BuildMenu" })
-	SetScale({ Id = components.BackgroundDim.Id, Fraction = 4 })
-	SetColor({ Id = components.BackgroundDim.Id, Color = { 69, 69, 69, 255 } })
-	--Title
-	CreateTextBox({ Id = components.TitleAnchor.Id, Text = screen.Title, FontSize = 34,
-	OffsetX = 0, OffsetY = -500, Color = Color.White, Font = "SpectralSCLight",
-	ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
-	--Close button
-	components.CloseButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "BuildMenu" })
-	Attach({ Id = components.CloseButton.Id, DestinationId = components.Background.Id, OffsetX = 0, OffsetY = 500 })
-	components.CloseButton.OnPressedFunctionName = "CloseBuildMenu"
-	components.CloseButton.ControlHotkey = "Cancel"
-	--Display
-	if BuildMenuData[screen.Name] ~= nil then
-		if BuildMenuData[screen.Name].Buttons ~= nil then
-			for i, button in pairs(BuildMenuData[screen.Name].Buttons) do
-				local index = button.Index
-				local rowstartX = 0
-				local rowstartY = -400
-				local rowoffset = 100
-				local columnoffset = 300
-				local numperrow = 1
-				local offsetX = rowstartX + columnoffset*((index-1) % numperrow)
-				local offsetY = rowstartY + rowoffset*(math.floor((index-1)/numperrow))
+-- 				components[button.Name] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BuildMenu", Scale = 0.3 })
+-- 				SetScaleX({Id = components[button.Name].Id, Fraction = 1.5})
+-- 				components[button.Name].OnPressedFunctionName = button.Function
+-- 				components[button.Name].ToDestroy = true
+-- 				Attach({Id = components[button.Name].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
+-- 				CreateTextBox({ Id = components[button.Name].Id, Text = button.Title, FontSize = 22,
+-- 				OffsetX = 0, OffsetY = 0, Color = Color.White, Font = "AlegreyaSansSCLight", Justification = "Center" })
+-- 			end
+-- 		end
+-- 	end
+-- 	--End
+-- 	screen.KeepOpen = true
+-- 	thread(HandleWASDInput, screen)
+-- 	HandleScreenInput(screen)
+-- end
 
-				components[button.Name] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BuildMenu", Scale = 0.3 })
-				SetScaleX({Id = components[button.Name].Id, Fraction = 1.5})
-				components[button.Name].OnPressedFunctionName = button.Function
-				components[button.Name].ToDestroy = true
-				Attach({Id = components[button.Name].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
-				CreateTextBox({ Id = components[button.Name].Id, Text = button.Title, FontSize = 22,
-				OffsetX = 0, OffsetY = 0, Color = Color.White, Font = "AlegreyaSansSCLight", Justification = "Center" })
-			end
-		end
-	end
-	--End
-	screen.KeepOpen = true
-	thread(HandleWASDInput, screen)
-	HandleScreenInput(screen)
-end
+-- function OpenBuildMaker(screen, button)
+-- 	CleanScreen(screen, button)
+-- 	local components = screen.Components
+-- 	ModifyTextBox({Id = components.TitleAnchor.Id, Text = "Codex Menu Build Maker"})
+-- 	PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
+-- 	components.ReturnButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "BuildMenu" })
+-- 	components.ReturnButton.OnPressedFunctionName = "ReturnToBuildMenu"
+-- 	components.ReturnButton.ToDestroy = true
+-- 	Attach({ Id = components.ReturnButton.Id, DestinationId = components.Background.Id, OffsetX = -100, OffsetY = 500 })
+-- 	SetColor({Id = components.ReturnButton.Id, Color = Color.LightBlue})
 
-function OpenBuildMaker(screen, button)
-	CleanScreen(screen, button)
-	local components = screen.Components
-	ModifyTextBox({Id = components.TitleAnchor.Id, Text = "Codex Menu Build Maker"})
-	PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
-	components.ReturnButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "BuildMenu" })
-	components.ReturnButton.OnPressedFunctionName = "ReturnToBuildMenu"
-	components.ReturnButton.ToDestroy = true
-	Attach({ Id = components.ReturnButton.Id, DestinationId = components.Background.Id, OffsetX = -100, OffsetY = 500 })
-	SetColor({Id = components.ReturnButton.Id, Color = Color.LightBlue})
+-- 	screen.Build = CreateNewBuild()
 
-	screen.Build = CreateNewBuild()
+-- 	for i, button in pairs(BuildMenuData.BuildMenuScreen.Buttons.OpenBuildMaker.Buttons) do
+-- 		local index = button.Index
+-- 		local rowstartX = 0
+-- 		local rowstartY = -400
+-- 		local rowoffset = 100
+-- 		local columnoffset = 300
+-- 		local numperrow = 1
+-- 		local offsetX = rowstartX + columnoffset*((index-1) % numperrow)
+-- 		local offsetY = rowstartY + rowoffset*(math.floor((index-1)/numperrow))
 
-	for i, button in pairs(BuildMenuData.BuildMenuScreen.Buttons.OpenBuildMaker.Buttons) do
-		local index = button.Index
-		local rowstartX = 0
-		local rowstartY = -400
-		local rowoffset = 100
-		local columnoffset = 300
-		local numperrow = 1
-		local offsetX = rowstartX + columnoffset*((index-1) % numperrow)
-		local offsetY = rowstartY + rowoffset*(math.floor((index-1)/numperrow))
+-- 		components[button.Name] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BuildMenu", Scale = 0.3 })
+-- 		SetScaleX({Id = components[button.Name].Id, Fraction = 1.5})
+-- 		components[button.Name].OnPressedFunctionName = button.Function
+-- 		components[button.Name].ToDestroy = true
+-- 		Attach({Id = components[button.Name].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
+-- 		CreateTextBox({ Id = components[button.Name].Id, Text = button.Title, FontSize = 22,
+-- 		OffsetX = 0, OffsetY = 0, Color = Color.White, Font = "AlegreyaSansSCLight", Justification = "Center" })
+-- 	end
+-- end
 
-		components[button.Name] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BuildMenu", Scale = 0.3 })
-		SetScaleX({Id = components[button.Name].Id, Fraction = 1.5})
-		components[button.Name].OnPressedFunctionName = button.Function
-		components[button.Name].ToDestroy = true
-		Attach({Id = components[button.Name].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
-		CreateTextBox({ Id = components[button.Name].Id, Text = button.Title, FontSize = 22,
-		OffsetX = 0, OffsetY = 0, Color = Color.White, Font = "AlegreyaSansSCLight", Justification = "Center" })
-	end
-end
+-- function CreateNewBuild()
+-- 	local newBuild =
+-- 	{
+-- 		Weapon = "",
+-- 		Aspect = {},
+-- 		Keepsake = "",
+-- 		Assist = "",
+-- 		MirrorUpgrades = {},
+-- 		PactOptions = {},
+-- 		Boons = {},
+-- 		ContractorUpgrades = {},
+-- 	}
+-- 	return newBuild
+-- end
 
-function CreateNewBuild()
-	local newBuild =
-	{
-		Weapon = "",
-		Aspect = {},
-		Keepsake = "",
-		Assist = "",
-		MirrorUpgrades = {},
-		PactOptions = {},
-		Boons = {},
-		ContractorUpgrades = {},
-	}
-	return newBuild
-end
+-- function ReturnToBuildMaker(screen, button)
+-- 	CleanScreen(screen, button)
+-- 	local components = screen.Components
+-- 	ModifyTextBox({Id = components.TitleAnchor.Id, Text = "Codex Menu Build"})
+-- 	PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
+-- 	components.ReturnButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "BuildMenu" })
+-- 	components.ReturnButton.OnPressedFunctionName = "ReturnToBuildMenu"
+-- 	components.ReturnButton.ToDestroy = true
+-- 	Attach({ Id = components.ReturnButton.Id, DestinationId = components.Background.Id, OffsetX = -100, OffsetY = 500 })
+-- 	SetColor({Id = components.ReturnButton.Id, Color = Color.LightBlue})
 
-function ReturnToBuildMaker(screen, button)
-	CleanScreen(screen, button)
-	local components = screen.Components
-	ModifyTextBox({Id = components.TitleAnchor.Id, Text = "Codex Menu Build"})
-	PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
-	components.ReturnButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "BuildMenu" })
-	components.ReturnButton.OnPressedFunctionName = "ReturnToBuildMenu"
-	components.ReturnButton.ToDestroy = true
-	Attach({ Id = components.ReturnButton.Id, DestinationId = components.Background.Id, OffsetX = -100, OffsetY = 500 })
-	SetColor({Id = components.ReturnButton.Id, Color = Color.LightBlue})
+-- 	for i, button in pairs(BuildMenuData.BuildMenuScreen.Buttons.OpenBuildMaker.Buttons) do
+-- 		local index = button.Index
+-- 		local rowstartX = 0
+-- 		local rowstartY = -400
+-- 		local rowoffset = 100
+-- 		local columnoffset = 300
+-- 		local numperrow = 1
+-- 		local offsetX = rowstartX + columnoffset*((index-1) % numperrow)
+-- 		local offsetY = rowstartY + rowoffset*(math.floor((index-1)/numperrow))
 
-	for i, button in pairs(BuildMenuData.BuildMenuScreen.Buttons.OpenBuildMaker.Buttons) do
-		local index = button.Index
-		local rowstartX = 0
-		local rowstartY = -400
-		local rowoffset = 100
-		local columnoffset = 300
-		local numperrow = 1
-		local offsetX = rowstartX + columnoffset*((index-1) % numperrow)
-		local offsetY = rowstartY + rowoffset*(math.floor((index-1)/numperrow))
+-- 		components[button.Name] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BuildMenu", Scale = 0.3 })
+-- 		SetScaleX({Id = components[button.Name].Id, Fraction = 1.5})
+-- 		components[button.Name].OnPressedFunctionName = button.Function
+-- 		components[button.Name].ToDestroy = true
+-- 		Attach({Id = components[button.Name].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
+-- 		CreateTextBox({ Id = components[button.Name].Id, Text = button.Title, FontSize = 22,
+-- 		OffsetX = 0, OffsetY = 0, Color = Color.White, Font = "AlegreyaSansSCLight", Justification = "Center" })
+-- 	end
+-- end
 
-		components[button.Name] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BuildMenu", Scale = 0.3 })
-		SetScaleX({Id = components[button.Name].Id, Fraction = 1.5})
-		components[button.Name].OnPressedFunctionName = button.Function
-		components[button.Name].ToDestroy = true
-		Attach({Id = components[button.Name].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
-		CreateTextBox({ Id = components[button.Name].Id, Text = button.Title, FontSize = 22,
-		OffsetX = 0, OffsetY = 0, Color = Color.White, Font = "AlegreyaSansSCLight", Justification = "Center" })
-	end
-end
+-- function BuildMakerOverview(screen, button)
+-- 	CleanScreen(screen, button)
+-- 	local components = screen.Components
+-- 	ModifyTextBox({Id = components.TitleAnchor.Id, Text = "Codex Menu Build Overview"})
+-- 	PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
+-- 	components.ReturnButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "BuildMenu" })
+-- 	components.ReturnButton.OnPressedFunctionName = "ReturnToBuildMaker"
+-- 	components.ReturnButton.ToDestroy = true
+-- 	Attach({ Id = components.ReturnButton.Id, DestinationId = components.Background.Id, OffsetX = -100, OffsetY = 500 })
+-- 	SetColor({Id = components.ReturnButton.Id, Color = Color.LightBlue})
 
-function BuildMakerOverview(screen, button)
-	CleanScreen(screen, button)
-	local components = screen.Components
-	ModifyTextBox({Id = components.TitleAnchor.Id, Text = "Codex Menu Build Overview"})
-	PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
-	components.ReturnButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "BuildMenu" })
-	components.ReturnButton.OnPressedFunctionName = "ReturnToBuildMaker"
-	components.ReturnButton.ToDestroy = true
-	Attach({ Id = components.ReturnButton.Id, DestinationId = components.Background.Id, OffsetX = -100, OffsetY = 500 })
-	SetColor({Id = components.ReturnButton.Id, Color = Color.LightBlue})
+--     local build = screen.Build
 
-    local build = screen.Build
-
-    if build.Weapon ~= "" then
+--     if build.Weapon ~= "" then
         
-    end
+--     end
 
 
-end
+-- end
 
-function BuildMakerMirror(screen, button)
+-- function BuildMakerMirror(screen, button)
 
-end
+-- end
 
-function BuildMakerWeapon(screen, button)
+-- function BuildMakerWeapon(screen, button)
 
-end
+-- end
 
-function BuildMakerKeepsake(screen, button)
+-- function BuildMakerKeepsake(screen, button)
 
-end
+-- end
 
-function BuildMakerBoons(screen, button)
-    CleanScreen(screen, button)
-	local components = screen.Components
-	ModifyTextBox({Id = components.TitleAnchor.Id, Text = "Boon Picker"})
-	PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
-	components.ReturnButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "BuildMenu" })
-	components.ReturnButton.OnPressedFunctionName = "ReturnToBuildMaker"
-	components.ReturnButton.ToDestroy = true
-	Attach({ Id = components.ReturnButton.Id, DestinationId = components.Background.Id, OffsetX = -100, OffsetY = 500 })
-	SetColor({Id = components.ReturnButton.Id, Color = Color.LightBlue})
+-- function BuildMakerBoons(screen, button)
+--     CleanScreen(screen, button)
+-- 	local components = screen.Components
+-- 	ModifyTextBox({Id = components.TitleAnchor.Id, Text = "Boon Picker"})
+-- 	PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
+-- 	components.ReturnButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "BuildMenu" })
+-- 	components.ReturnButton.OnPressedFunctionName = "ReturnToBuildMaker"
+-- 	components.ReturnButton.ToDestroy = true
+-- 	Attach({ Id = components.ReturnButton.Id, DestinationId = components.Background.Id, OffsetX = -100, OffsetY = 500 })
+-- 	SetColor({Id = components.ReturnButton.Id, Color = Color.LightBlue})
     
-end
+-- end
 
-function BuildMakerPact(screen, button)
+-- function BuildMakerPact(screen, button)
 
-end
+-- end
 
-function BuildMakerContractor(screen, button)
+-- function BuildMakerContractor(screen, button)
 
-end
+-- end
 
-function BuildMakerImport(screen, button)
-	local build = screen.Build
+-- function BuildMakerImport(screen, button)
+-- 	local build = screen.Build
 
-	build.Weapon = GetEquippedWeapon()
-	if GameState.LastInteractedWeaponUpgrade ~= nil and GetWeaponUpgradeTrait( GameState.LastInteractedWeaponUpgrade.WeaponName, GameState.LastInteractedWeaponUpgrade.ItemIndex ) ~= nil then
-		build.Aspect = { Name = GetWeaponUpgradeTrait(build.Weapon, GameState.LastWeaponUpgradeData[build.Weapon].Index), Rarity = GetRarityKey(GetWeaponUpgradeLevel(build.Weapon, GetEquippedWeaponTraitIndex(build.Weapon))) }
-	end
-	build.Keepsake = GameState.LastAwardTrait
-	build.Assist = GameState.LastAssistTrait
+-- 	build.Weapon = GetEquippedWeapon()
+-- 	if GameState.LastInteractedWeaponUpgrade ~= nil and GetWeaponUpgradeTrait( GameState.LastInteractedWeaponUpgrade.WeaponName, GameState.LastInteractedWeaponUpgrade.ItemIndex ) ~= nil then
+-- 		build.Aspect = { Name = GetWeaponUpgradeTrait(build.Weapon, GameState.LastWeaponUpgradeData[build.Weapon].Index), Rarity = GetRarityKey(GetWeaponUpgradeLevel(build.Weapon, GetEquippedWeaponTraitIndex(build.Weapon))) }
+-- 	end
+-- 	build.Keepsake = GameState.LastAwardTrait
+-- 	build.Assist = GameState.LastAssistTrait
 
-	for i, traitData in pairs( CurrentRun.Hero.Traits ) do
-		if traitData.Name ~= build.Weapon and traitData.Name ~= build.Aspect.Name
-		and traitData.Name ~= build.Keepsake and traitData.Name ~= build.Assist then
-			table.insert(build.Boons, { Name = traitData.Name, Rarity = traitData.Rarity, })
-		end
-	end
+-- 	for i, traitData in pairs( CurrentRun.Hero.Traits ) do
+-- 		if traitData.Name ~= build.Weapon and traitData.Name ~= build.Aspect.Name
+-- 		and traitData.Name ~= build.Keepsake and traitData.Name ~= build.Assist then
+-- 			table.insert(build.Boons, { Name = traitData.Name, Rarity = traitData.Rarity, })
+-- 		end
+-- 	end
 
-    screen.Build = build
-end
+--     screen.Build = build
+-- end
 
-function BuildMakerSave(screen, button)
-    if screen.Build ~= nil and not Contains(BuildManager.Data.SavedBuilds, screen.Build) then
-        table.insert(BuildManager.Data.SavedBuilds, screen.Build)
-    end
-end
+-- function BuildMakerSave(screen, button)
+--     if screen.Build ~= nil and not Contains(BuildManager.Data.SavedBuilds, screen.Build) then
+--         table.insert(BuildManager.Data.SavedBuilds, screen.Build)
+--     end
+-- end
 
-function OpenBuildViewer(screen, button)
-	CleanScreen(screen, button)
-	local components = screen.Components
-	ModifyTextBox({Id = components.TitleAnchor.Id, Text = "Codex Menu Build Viewer"})
-	PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
+-- function OpenBuildViewer(screen, button)
+-- 	CleanScreen(screen, button)
+-- 	local components = screen.Components
+-- 	ModifyTextBox({Id = components.TitleAnchor.Id, Text = "Codex Menu Build Viewer"})
+-- 	PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
 
-	components.ReturnButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "BuildMenu" })
-	components.ReturnButton.OnPressedFunctionName = "ReturnToBuildMenu"
-	components.ReturnButton.ToDestroy = true
-	Attach({ Id = components.ReturnButton.Id, DestinationId = components.Background.Id, OffsetX = -100, OffsetY = 500 })
-	SetColor({Id = components.ReturnButton.Id, Color = Color.LightBlue})
-end
+-- 	components.ReturnButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "BuildMenu" })
+-- 	components.ReturnButton.OnPressedFunctionName = "ReturnToBuildMenu"
+-- 	components.ReturnButton.ToDestroy = true
+-- 	Attach({ Id = components.ReturnButton.Id, DestinationId = components.Background.Id, OffsetX = -100, OffsetY = 500 })
+-- 	SetColor({Id = components.ReturnButton.Id, Color = Color.LightBlue})
+-- end
 
-function ReturnToBuildMenu(screen, button)
-	CleanScreen(screen, button)
-	local components = screen.Components
-	ModifyTextBox({Id = components.TitleAnchor.Id, Text = screen.Title})
-	PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
+-- function ReturnToBuildMenu(screen, button)
+-- 	CleanScreen(screen, button)
+-- 	local components = screen.Components
+-- 	ModifyTextBox({Id = components.TitleAnchor.Id, Text = screen.Title})
+-- 	PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
 
-	if BuildMenuData[screen.Name] ~= nil then
-		if BuildMenuData[screen.Name].Buttons ~= nil then
-			for i, button in pairs(BuildMenuData[screen.Name].Buttons) do
-				local index = button.Index
-				local rowstartX = 0
-				local rowstartY = -400
-				local rowoffset = 100
-				local columnoffset = 300
-				local numperrow = 1
-				local offsetX = rowstartX + columnoffset*((index-1) % numperrow)
-				local offsetY = rowstartY + rowoffset*(math.floor((index-1)/numperrow))
+-- 	if BuildMenuData[screen.Name] ~= nil then
+-- 		if BuildMenuData[screen.Name].Buttons ~= nil then
+-- 			for i, button in pairs(BuildMenuData[screen.Name].Buttons) do
+-- 				local index = button.Index
+-- 				local rowstartX = 0
+-- 				local rowstartY = -400
+-- 				local rowoffset = 100
+-- 				local columnoffset = 300
+-- 				local numperrow = 1
+-- 				local offsetX = rowstartX + columnoffset*((index-1) % numperrow)
+-- 				local offsetY = rowstartY + rowoffset*(math.floor((index-1)/numperrow))
 
-				components[button.Name] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BuildMenu", Scale = 0.3 })
-				SetScaleX({Id = components[button.Name].Id, Fraction = 1.5})
-				components[button.Name].OnPressedFunctionName = button.Function
-				components[button.Name].ToDestroy = true
-				Attach({Id = components[button.Name].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
-				CreateTextBox({ Id = components[button.Name].Id, Text = button.Title, FontSize = 22,
-				OffsetX = 0, OffsetY = 0, Color = Color.White, Font = "AlegreyaSansSCLight", Justification = "Center" })
-			end
-		end
-	end
-end
+-- 				components[button.Name] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BuildMenu", Scale = 0.3 })
+-- 				SetScaleX({Id = components[button.Name].Id, Fraction = 1.5})
+-- 				components[button.Name].OnPressedFunctionName = button.Function
+-- 				components[button.Name].ToDestroy = true
+-- 				Attach({Id = components[button.Name].Id, DestinationId = components.Background.Id, OffsetX = offsetX, OffsetY = offsetY })
+-- 				CreateTextBox({ Id = components[button.Name].Id, Text = button.Title, FontSize = 22,
+-- 				OffsetX = 0, OffsetY = 0, Color = Color.White, Font = "AlegreyaSansSCLight", Justification = "Center" })
+-- 			end
+-- 		end
+-- 	end
+-- end
 
-function CleanScreen(screen, button)
-	if screen == nil then
-		return
-	end
+-- function CleanScreen(screen, button)
+-- 	if screen == nil then
+-- 		return
+-- 	end
 
-	local ToDestroy = {}
-	for i, component in pairs(screen.Components) do
-		if component.ToDestroy then
-			table.insert(ToDestroy, component.Id)
-		end
-	end
+-- 	local ToDestroy = {}
+-- 	for i, component in pairs(screen.Components) do
+-- 		if component.ToDestroy then
+-- 			table.insert(ToDestroy, component.Id)
+-- 		end
+-- 	end
 
-	if ToDestroy ~= nil then
-		Destroy({Ids = ToDestroy})
-	end
-end
+-- 	if ToDestroy ~= nil then
+-- 		Destroy({Ids = ToDestroy})
+-- 	end
+-- end
 
-function CloseBuildMenu(screen, button)
-  DisableShopGamepadCursor()
-  SetConfigOption({ Name = "FreeFormSelectWrapY", Value = false })
-  SetConfigOption({ Name = "UseOcclusion", Value = true })
-  CloseScreen(GetAllIds(screen.Components), 0.1)
-  PlaySound({ Name = "/SFX/Menu Sounds/GeneralWhooshMENU" })
-  ScreenAnchors.BuildMenu = nil
-  UnfreezePlayerUnit()
-  screen.KeepOpen = false
-  OnScreenClosed({ Flag = screen.Name })
-end
+-- function CloseBuildMenu(screen, button)
+--   DisableShopGamepadCursor()
+--   SetConfigOption({ Name = "FreeFormSelectWrapY", Value = false })
+--   SetConfigOption({ Name = "UseOcclusion", Value = true })
+--   CloseScreen(GetAllIds(screen.Components), 0.1)
+--   PlaySound({ Name = "/SFX/Menu Sounds/GeneralWhooshMENU" })
+--   ScreenAnchors.BuildMenu = nil
+--   UnfreezePlayerUnit()
+--   screen.KeepOpen = false
+--   OnScreenClosed({ Flag = screen.Name })
+-- end
 
 function SaveState()
 	if CurrentRun.Hero.Traits ~= nil then
@@ -1902,116 +1997,6 @@ OnControlPressed{ "Confirm",
 	end
 }
 
-local FishTable = CodexOrdering.Fish.Order
-local WeaponTable = CodexOrdering.Weapons.Order
-CodexBoonTable =
-{
-	"TrialUpgrade",
-	"ZeusUpgrade",
-	"PoseidonUpgrade",
-	"AthenaUpgrade",
-	"AphroditeUpgrade",
-	"ArtemisUpgrade",
-	"AresUpgrade",
-	"DionysusUpgrade",
-	"HermesUpgrade",
-	"DemeterUpgrade",
-	"WeaponUpgrade",
-	NPC_Dusa_01 = "Duos"
-}
-local ConsumableTable =
-{
-	"RoomRewardMetaPointDrop",
-	"AmmoPack",
-	"RoomRewardMoneyDrop",
-	"RoomRewardMaxHealthDrop",
-	"ChaosWeaponUpgrade",
-	"LockKeyDrop",
-	"SuperLockKeyDrop",
-	"GemDrop",
-	"SuperGemDrop",
-	"GiftDrop",
-	"SuperGiftDrop",
-	"CharonStoreDiscount",
-	"RoomRewardConsolationPrize"
-}
-local LootTable =
-{
-	"StackUpgrade"
-}
-local EnemyTable =
-{ "HeavyMelee", "LightRanged", "PunchingBagUnit", "ThiefMineLayer", "WretchAssassinMiniboss", "Swarmer", "LightSpawner", "DisembodiedHand", "HeavyRanged", "HeavyRangedSplitterMiniboss", "ShieldRanged", "BloodlessNaked", "BloodlessNakedBerserker", "BloodlessGrenadier", "BloodlessSelfDestruct", "BloodlessPitcher", "BloodlessWaveFist", "RangedBurrower", "SpreadShotUnit", "FreezeShotUnit", "CrusherUnit", "HitAndRunUnit", "SplitShotUnit", "Chariot", "ChariotSuicide", "ShadeSwordUnit", "ShadeSpearUnit", "ShadeBowUnit", "ShadeShieldUnit", "FlurrySpawner", "Crawler", "RatThug", "CrawlerMiniBoss", "ThiefImpulseMineLayer", "HeavyRangedForked", "SatyrRanged" }
-local BossTable =
-{
-	NPC_FurySister_01 = RoomSetData.Tartarus.A_Boss01,
-	Harpy2 = RoomSetData.Tartarus.A_Boss02,
-	Harpy3 = RoomSetData.Tartarus.A_Boss03,
-	HydraHeadImmortal = RoomSetData.Asphodel.B_Boss01,
-	Theseus = RoomSetData.Elysium.C_Boss01,
-	Minotaur = RoomSetData.Elysium.C_MiniBoss01,
-	NPC_Hades_01 = RoomSetData.Styx.D_Boss01,
-}
-local CommandTable =
-{
-	PlayerUnit = function()
-	RemoveAllTraits()
-	ReloadEquipment()
-	CloseCodexScreen()
-	end,
-	NPC_Achilles_01 = function()
-		if IsSuperValid() then
-			CloseCodexScreen()
-			wait(1, RoomThreadName)
-			BuildSuperMeter(CurrentRun, 100)
-			CommenceSuperMove()
-			UpdateSuperDamageBonus()
-			thread( MarkObjectiveComplete, "EXMove" )
-			CloseCodexScreen()
-		end
-	end,
-	NPC_Nyx_01 = function()
-		CloseCodexScreen()
-		OpenCustomMirror()
-	end,
-	NPC_Skelly_01 = function(triggerArgs)
-		CloseCodexScreen()
-		KillHero(CurrentRun.Hero, triggerArgs)
-	end,
-	NPC_Cerberus_01 = function(triggerArgs)
-		CloseCodexScreen()
-		UIData.AwardMenu.AvailableKeepsakeTraits = GetAvailableKeepsakeTraits()
-		UIData.AwardMenu.AvailableAssistTraits = GetAllAssistTraits()
-		ShowAwardMenu()
-	end,
-	NPC_Charon_01 = function()
-		CloseCodexScreen()
-		CurrentRun.CurrentRoom.Store = nil
-		StartUpStore()
-	end,
-	NPC_Hypnos_01 = function()
-		CloseCodexScreen()
-		GenerateSellTraitShop(CurrentRun, CurrentRun.CurrentRoom)
-		OpenSellTraitMenu()
-	end,
-	NPC_Orpheus_01 = function()
-		--Save state
-		CloseCodexScreen()
-		SaveState()
-	end,
-	NPC_Patroclus_01 = function()
-		--Load state
-		CloseCodexScreen()
-		LoadState()
-	end,
-	NPC_Eurydice_01 = function()
-		OpenBoonManager()
-	end,
-	NPC_Sisyphus_01 = function ()
-		CloseCodexScreen()
-		OpenBuildMenu()
-	end,
-}
-
 function CodexMain(triggerArgs)
 	if CodexUI.Screen == nil or not IsScreenOpen("Codex") or IsScreenOpen("BoonInfoScreen") then
 		return
@@ -2023,24 +2008,24 @@ function CodexMain(triggerArgs)
 
 	local selection = CodexStatus.SelectedEntryNames[CodexStatus.SelectedChapterName]
 
-	if Contains(CodexBoonTable, selection) then
+	if Contains(CodexMenu.BoonTable, selection) then
 		DebugPrint({Text = "@CodexMenu Trying to open boon : "..selection})
 		OpenBoonSelector(selection, true)
 
-	elseif CodexBoonTable[selection] ~= nil then
+	elseif CodexMenu.BoonTable[selection] ~= nil then
 		DebugPrint({Text = "@CodexMenu Trying to open boon : "..selection})
-		OpenBoonSelector(CodexBoonTable[selection], false)
+		OpenBoonSelector(CodexMenu.BoonTable[selection], false)
 
-	elseif Contains(ConsumableTable, selection) then
+	elseif Contains(CodexMenu.ConsumableTable, selection) then
 		DebugPrint({Text = "@CodexMenu Trying to spawn consumable : "..selection})
 		local consumableId = SpawnObstacle({ Name = selection, DestinationId = CurrentRun.Hero.ObjectId, Group = "Standing", OffsetX = 100 })
 		local consumable = CreateConsumableItem( consumableId, selection, 0 )
 
-	elseif Contains(LootTable, selection) then
+	elseif Contains(CodexMenu.LootTable, selection) then
 		DebugPrint({Text = "@CodexMenu Trying to spawn loot : "..selection})
 		CreateLoot({ Name = selection, OffsetX = 100, SpawnPoint = CurrentRun.Hero.ObjectId })
 
-	elseif Contains(FishTable, selection) then
+	elseif Contains(CodexMenu.FishTable, selection) then
 		DebugPrint({Text = "@CodexMenu Trying to spawn fish : "..selection})
 		local fishData = FishingData.FishValues[selection]
 
@@ -2062,7 +2047,7 @@ function CodexMain(triggerArgs)
 			AnimationOutName = "LocationTextBGFishOut",
 		})
 
-	elseif Contains(WeaponTable, selection) then
+	elseif Contains(CodexMenu.WeaponTable, selection) then
 		DebugPrint({Text = "@CodexMenu Trying to equip weapon : "..selection})
 		CloseCodexScreen()
 		local weapon = CodexStatus.SelectedEntryNames[CodexStatus.SelectedChapterName]
@@ -2070,7 +2055,7 @@ function CodexMain(triggerArgs)
 		RemoveAllTraits()
 		ReloadEquipment()
 		ShowWeaponUpgradeScreen({ WeaponName = weapon })
-	elseif Contains(EnemyTable, selection) then
+	elseif Contains(CodexMenu.EnemyTable, selection) then
 		DebugPrint({Text = "@CodexMenu Trying to spawn enemy : "..selection})
 		local enemyData = EnemyData[selection]
 		local newEnemy = DeepCopyTable( enemyData )
@@ -2083,17 +2068,17 @@ function CodexMain(triggerArgs)
 				DestinationId = invaderSpawnPoint, OffsetX = 400, OffsetY = 200 })
 		SetupEnemyObject( newEnemy, CurrentRun )
 
-	elseif BossTable[selection] ~= nil then
+	elseif CodexMenu.BossTable[selection] ~= nil then
 		DebugPrint({Text = "@CodexMenu Trying to start boss fight : "..selection})
         RemoveAllTraits()
         ReloadEquipment()
 		CloseCodexScreen()
-		StartNewCustomRun(BossTable[selection])
+		StartNewCustomRun(CodexMenu.BossTable[selection])
 		LoadMap({ Name = CurrentRun.CurrentRoom.Name, ResetBinks = true, ResetWeaponBinks = true })
 
-	elseif CommandTable[selection] ~= nil then
+	elseif CodexMenu.CommandTable[selection] ~= nil then
 		DebugPrint({Text = "@CodexMenu Trying to execute command : "..selection})
-		CommandTable[selection](triggerArgs)
+		CodexMenu.CommandTable[selection](triggerArgs)
 	else
 		DebugPrint({Text = "@CodexMenu Selection did not match any feature : "..selection})
 	end
