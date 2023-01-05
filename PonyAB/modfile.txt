@@ -1,8 +1,12 @@
 Top Import "config.lua"
-Import "PonyAB.lua"
+Import "Scripts/PonyAB.lua"
 To "Scripts/TraitData.lua
-Import "traitdata.lua"
+Import "Scripts/traitdata.lua"
 To "Scripts/LootData.lua
-Import "lootdata.lua"
+Import "Scripts/lootdata.lua"
 To "Game/Text/en/HelpText.en.sjson"
-SJSON "helptext.sjson"
+SJSON "Data/helptext.sjson"
+To "Game/Animations/GUIAnimations.sjson"
+SJSON "Data/guianimations.sjson"
+To "Game/Obstacles/Gameplay.sjson"
+SJSON "Data/gameplay.sjson"

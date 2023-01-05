@@ -3,8 +3,8 @@
         "_append"
         {
         Id = "SuperGunManualReloadTrait"
-        DisplayName = "Hestia's Secret Gunpowder Recipe"
-        Description = "{#MarketScreenDescriptionFormat} After you manually {$Keywords.ManualReload}, your next shot is massively empowered. However, maximum ammo is reduced, reloading is slower and you can't {$Keywords.Dash}.{#PreviousFormat} \n {!Icons.Bullet}{#PropertyFormat}Empowered Shot Total Damage: \Column 380 {#UpgradeFormat}{$TooltipData.TooltipDamageBonus}%"
+        DisplayName = "Heavy Caliber"
+        Description = "{#MarketScreenDescriptionFormat}Massively increases the damage of empowered shots, however max ammo is reduced to 1 and reloading is twice as long.{#PreviousFormat} \n {!Icons.Bullet}{#PropertyFormat}Empowered Shot Total Damage: \Column 380 {#UpgradeFormat}{$TooltipData.TooltipDamageBonus}%"
         }
         {
         Id = "BowChainPerfectShotTrait"

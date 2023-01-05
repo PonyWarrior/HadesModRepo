@@ -74,3 +74,18 @@ Aspect of Beowulf :
 Rail hammers :
     -Fix cluster bombs and rocket bomb bug where the rockets did not deal reduced damage
     -Triple bombs Rocket bomb fire interval reduced from 1 second to 0.25 second
+
+1.3.0
+
+fixed issues:
+enabling hestia's secret powder recipe hammer also enabled echoing perfection
+fixed issues with hestia's secret gunpowder hammer and reloading
+
+updated features:
+hestia's secret gunpowder recipe reworked
+    -renamed to Heavy Caliber
+    -no longer disables dashing
+    -max ammo reduced to 1
+    -normal reload now also applies empower
+    -all values can now be configured (reload duration, range bonus, damage bonus)
+    -added a reload bar animation that matches the longer reload

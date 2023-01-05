@@ -9,15 +9,15 @@ if PAB.Config.Gameplay.Enabled then
     -- No Nourished Soul with LC4
     ModUtil.WrapBaseFunction( "SetTraitsOnLoot", function(baseFunc, lootData, args)
         if lootData.Name == "DemeterUpgrade" then
-        if GetNumMetaUpgrades("HealingReductionShrineUpgrade") == 4 and Contains(LootData[lootData.Name].Consumables, "HealingPotencyDrop") then
-            for i, loot in pairs (LootData[lootData.Name].Consumables) do
-            if loot == "HealingPotencyDrop" then
-                table.remove(LootData[lootData.Name].Consumables, i)
-            end
-            end
-        elseif GetNumMetaUpgrades("HealingReductionShrineUpgrade") < 4 and not Contains(LootData[lootData.Name].Consumables, "HealingPotencyDrop") then
-            table.insert(LootData[lootData.Name].Consumables, "HealingPotencyDrop")
-        end
+			if GetNumMetaUpgrades("HealingReductionShrineUpgrade") == 4 and Contains(LootData[lootData.Name].Consumables, "HealingPotencyDrop") then
+				for i, loot in pairs (LootData[lootData.Name].Consumables) do
+				if loot == "HealingPotencyDrop" then
+					table.remove(LootData[lootData.Name].Consumables, i)
+				end
+				end
+			elseif GetNumMetaUpgrades("HealingReductionShrineUpgrade") < 4 and not Contains(LootData[lootData.Name].Consumables, "HealingPotencyDrop") then
+				table.insert(LootData[lootData.Name].Consumables, "HealingPotencyDrop")
+			end
         end
         return baseFunc(lootData, args)
 	end)
@@ -114,80 +114,37 @@ if PAB.Config.Gameplay.Enabled then
 
 	if PAB.Config.Gameplay.ExtraHammers.Enabled then
 		if PAB.Config.Gameplay.ExtraHammers.SuperGunManualReloadTrait.Enabled then
-			function ApplyWeaponPropertyChange( unit, weaponName, propertyChange, reverse )
 
-				if propertyChange.LegalWeapons ~= nil then
-					if not Contains( propertyChange.LegalWeapons, weaponName ) then
-						return
-					end
+			--Regular reload applies empower
+			ModUtil.WrapBaseFunction( "ReloadGun", function (baseFunc, attacker, weaponData )
+				baseFunc(attacker, weaponData)
+				if HeroHasTrait("SuperGunManualReloadTrait") then
+					thread( MarkObjectiveComplete, "ManualReload" )
+					ApplyEffectFromWeapon({ Id = CurrentRun.Hero.ObjectId, DestinationId = CurrentRun.Hero.ObjectId, WeaponName = "ManualReloadEffectApplicator", EffectName = "ManualReloadBonus" })
 				end
+				return
+			end)
 
-				if propertyChange.LegalWeapon ~= nil then
-					if propertyChange.LegalWeapon ~= weaponName then
-						return
-					end
+			--Custom reload animation
+			ModUtil.BaseOverride( "ReloadPresentationStart", function (attacker, weaponData, state)
+				if IsMoving({ Id = attacker.ObjectId }) then
+					SetAnimation({ DestinationId = attacker.ObjectId, Name = weaponData.MovingReloadAnimation })
+				else
+					SetAnimation({ DestinationId = attacker.ObjectId, Name = weaponData.IdleReloadAnimation })
+					FireWeaponFromUnit({ Weapon = "GunReloadSelf", AutoEquip = true, Id = attacker.ObjectId, DestinationId = attacker.ObjectId })
 				end
-
-				if propertyChange.LegalUnits ~= nil then
-					if not Contains( propertyChange.LegalUnits, unit.Name ) then
-						return
-					end
-				end
-
-				local changeValue = propertyChange.ChangeValue
-				if reverse then
-					if propertyChange.ChangeType == "Multiply" then
-						changeValue = 1 / changeValue
-					elseif propertyChange.ChangeType == "Add" then
-						changeValue = 0 - changeValue
-					elseif type(changeValue) == "boolean" then
-						changeValue = not changeValue
-					else
-						return
-					end
-				end
-			if propertyChange.WeaponProperty ~= nil then
-				SetWeaponProperty({ WeaponName = weaponName, DestinationId = unit.ObjectId, Property = propertyChange.WeaponProperty, Value = changeValue, ValueChangeType = propertyChange.ChangeType })
-				if propertyChange.WeaponProperty == "MaxAmmo" then
-
-					if weaponName == "GunWeapon" then
-						thread( UpdateGunUI )
-					elseif weaponName == "RangedWeapon" then
-						if propertyChange.ChangeType == "Add" and changeValue > 0 then
-							RunWeaponMethod({ Id = unit.ObjectId, Weapon = "RangedWeapon", Method = "AddAmmo", Parameters = { math.ceil(changeValue) } })
-						end
-						thread( UpdateAmmoUI )
-					end
-				end
-				if propertyChange.WeaponProperty == "ClipSize" then
-					RunWeaponMethod({ Id = unit.ObjectId, Weapon = "RushWeapon", Method = "forceReload" })
-				end
-				if propertyChange.WeaponProperty == "ChargeTime" then
-					RunWeaponMethod({ Id = unit.ObjectId, Weapon = weaponName, Method = "cancelCharge" })
-				end
+				local startX = GetLocalizedValue(GunUI.StartX, {
+					{ Code = "ja", Value = 650 },
+				})
 				--mod start
-				if propertyChange.WeaponProperty == "ActiveReloadTime" then
-					if weaponName == "GunWeapon" then
-						WeaponData.GunWeapon.ActiveReloadTime = changeValue
-					end
+				if HeroHasTrait("SuperGunManualReloadTrait") then
+					state.GunReloadDisplayId = CreateScreenObstacle({ Name = "GunReloadIndicatorSGRT", Group = "Combat_UI", X = startX + GunUI.ReloadingOffsetX, Y = GunUI.StartY + GunUI.ReloadingOffsetY })
+				else
+					state.GunReloadDisplayId = CreateScreenObstacle({ Name = "GunReloadIndicator", Group = "Combat_UI", X = startX + GunUI.ReloadingOffsetX, Y = GunUI.StartY + GunUI.ReloadingOffsetY })
 				end
 				--mod end
-				end
-				if propertyChange.ProjectileProperty ~= nil then
-					SetProjectileProperty({ WeaponName = weaponName, ProjectileName = propertyChange.ProjectileName, ExcludeProjectileName = propertyChange.ExcludeProjectileName, DestinationId = unit.ObjectId, Property = propertyChange.ProjectileProperty, Value = changeValue, ValueChangeType = propertyChange.ChangeType })
-				end
-				if propertyChange.EffectProperty ~= nil then
-					SetEffectProperty({ WeaponName = weaponName, EffectName = propertyChange.EffectName, DestinationId = unit.ObjectId, Property = propertyChange.EffectProperty, Value = changeValue, ValueChangeType = propertyChange.ChangeType })
-				end
-
-				local linkedWeapons = WeaponSets.LinkedWeaponUpgrades[weaponName]
-				if linkedWeapons and not propertyChange.ExcludeLinked then
-					for k, linkedWeaponName in pairs( linkedWeapons ) do
-						--DebugPrint({ Text = "Applying linked upgrade to "..linkedWeaponName, LogOnly = true })
-						ApplyWeaponPropertyChange( unit, linkedWeaponName, propertyChange, reverse )
-					end
-				end
-			end
+				thread( PlayVoiceLines, HeroVoiceLines.GunWeaponReloadingStartVoiceLines, true )
+			end)
 		end
 		if PAB.Config.Gameplay.ExtraHammers.BowChainPerfectShotTrait.Enabled then
             local config = PAB.Config.Gameplay.ExtraHammers.BowChainPerfectShotTrait

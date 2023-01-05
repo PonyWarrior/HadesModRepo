@@ -1,0 +1,15 @@
+{
+    Obstacles = [
+        "_append"
+        {
+        Name = "GunReloadIndicatorSGRT"
+        DisplayInEditor = true
+        Thing =
+        {
+            EditorOutlineDrawBounds = false
+            Graphic = "GunReloadIndicatorSGRT"
+            Scale = 0.5
+        }
+        }
+    ]
+}

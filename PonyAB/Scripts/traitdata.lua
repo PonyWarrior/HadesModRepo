@@ -8,74 +8,31 @@ if PAB.Config.Gameplay.Enabled then
                 RequiredWeapon = "GunWeapon",
                 RequiredTrait = "GunManualReloadTrait",
                 RequiredFalseTraits = { "GunSniperTrait", "GunInfiniteAmmoTrait", "GunMinigunTrait", "GunConsecutiveFireTrait", "GunChainShotTrait", "GunLoadedGrenadeTrait", "GunHomingBulletTrait" },
-                PropertyChanges =
+                WeaponDataOverride =
                 {
-                    {
-                        WeaponName = "GunWeapon",
-                        WeaponProperty = "MaxAmmo",
-                        ChangeValue = 2,
-                        ChangeType = "Absolute",
-                    },
-                    {
-                        WeaponName = "GunWeapon",
-                        WeaponProperty = "ActiveReloadTime",
-                        ChangeValue = 1.5,
-                        ChangeType = "Absolute",
-                        ExcludeLinked = true,
-                    },
-                    {
-                        WeaponNames = { "SniperGunWeapon", "SniperGunWeaponDash" },
-                        ProjectileProperty = "Range",
-                        ChangeValue = 1.5,
-                        ChangeType = "Multiply",
-                        ExcludeLinked = true,
-                    },
-                    {
-                        WeaponNames = { "SniperGunWeapon", "SniperGunWeaponDash" },
-                        WeaponProperty = "AutoLockRange",
-                        ChangeValue = 1.5,
-                        ChangeType = "Multiply",
-                        ExcludeLinked = true,
-                    },
-                    {
-                        WeaponNames = WeaponSets.HeroRushWeapons,
-                        WeaponProperty = "Enabled",
-                        ChangeValue = false,
-                        ChangeType = "Absolute",
-                    },
-    
                     GunWeapon =
                     {
-                        Sounds =
-                        {
-                            FireSounds =
-                            {
-                                { Name = "/VO/ZagreusEmotes/EmoteCharging_Bow" },
-                                { Name = "/SFX/Player Sounds/ZagreusGunFire" },
-                                { Name = "/Leftovers/SFX/AuraPerfectThrow" },
-                            },
-                            ImpactSounds =
-                            {
-                                Invulnerable = "/SFX/Player Sounds/ZagreusShieldRicochet",
-                                Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
-                                Bone = "/SFX/ArrowMetalBoneSmash",
-                                Brick = "/SFX/ArrowMetalStoneClang",
-                                Stone = "/SFX/ArrowMetalStoneClang",
-                                Organic = "/SFX/GunBulletOrganicImpact",
-                                StoneObstacle = "/SFX/ArrowWallHitClankSmall",
-                                BrickObstacle = "/SFX/ArrowWallHitClankSmall",
-                                MetalObstacle = "/SFX/ArrowWallHitClankSmall",
-                            },
-                        },
+                        ActiveReloadTime = PAB.Config.Gameplay.ExtraHammers.SuperGunManualReloadTrait.ReloadDuration
+                    },
+                    GunWeaponDash =
+                    {
+                        ActiveReloadTime = PAB.Config.Gameplay.ExtraHammers.SuperGunManualReloadTrait.ReloadDuration
+                    },
+                    SniperGunWeapon =
+                    {
+                        ActiveReloadTime = PAB.Config.Gameplay.ExtraHammers.SuperGunManualReloadTrait.ReloadDuration
+                    },
+                    SniperGunWeaponDash =
+                    {
+                        ActiveReloadTime = PAB.Config.Gameplay.ExtraHammers.SuperGunManualReloadTrait.ReloadDuration
                     },
                 },
-    
                 AddOutgoingDamageModifiers =
                 {
                     ValidWeapons = { "SniperGunWeapon", "SniperGunWeaponDash" },
                     ValidWeaponMultiplier =
                     {
-                        BaseValue = 3.0,
+                        BaseValue = PAB.Config.Gameplay.ExtraHammers.SuperGunManualReloadTrait.EmpoweredShotDamage,
                         SourceIsMultiplier = true,
                     },
                     ExtractValues =
@@ -87,84 +44,32 @@ if PAB.Config.Gameplay.Enabled then
                         },
                     }
                 },
-    
-                WeaponDataOverride =
+                PropertyChanges =
                 {
-                    GunWeapon =
                     {
-                        Sounds =
-                        {
-                            FireSounds =
-                            {
-                                { Name = "/SFX/Player Sounds/ZagreusGunFire" },
-                                { Name = "/Leftovers/SFX/AuraPerfectThrow" },
-                            },
-                            ImpactSounds =
-                            {
-                                Invulnerable = "/SFX/Player Sounds/ZagreusShieldRicochet",
-                                Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
-                                Bone = "/SFX/ArrowMetalBoneSmash",
-                                Brick = "/SFX/ArrowMetalStoneClang",
-                                Stone = "/SFX/ArrowMetalStoneClang",
-                                Organic = "/SFX/GunBulletOrganicImpact",
-                                StoneObstacle = "/SFX/ArrowWallHitClankSmall",
-                                BrickObstacle = "/SFX/ArrowWallHitClankSmall",
-                                MetalObstacle = "/SFX/ArrowWallHitClankSmall",
-                            },
-                        },
+                        WeaponName = "GunWeapon",
+                        WeaponProperty = "MaxAmmo",
+                        ChangeValue = 1,
+                        ChangeType = "Absolute",
                     },
-    
-                    GunWeaponDash =
                     {
-                        Sounds =
-                        {
-                            FireSounds =
-                            {
-                                { Name = "/SFX/Player Sounds/ZagreusGunFire" },
-                                { Name = "/Leftovers/SFX/AuraPerfectThrow" },
-                            },
-                            ImpactSounds =
-                            {
-                                Invulnerable = "/SFX/Player Sounds/ZagreusShieldRicochet",
-                                Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
-                                Bone = "/SFX/ArrowMetalBoneSmash",
-                                Brick = "/SFX/ArrowMetalStoneClang",
-                                Stone = "/SFX/ArrowMetalStoneClang",
-                                Organic = "/SFX/GunBulletOrganicImpact",
-                                StoneObstacle = "/SFX/ArrowWallHitClankSmall",
-                                BrickObstacle = "/SFX/ArrowWallHitClankSmall",
-                                MetalObstacle = "/SFX/ArrowWallHitClankSmall",
-                            },
-                        },
+                        WeaponNames = { "SniperGunWeapon", "SniperGunWeaponDash" },
+                        ProjectileProperty = "Range",
+                        ChangeValue = PAB.Config.Gameplay.ExtraHammers.SuperGunManualReloadTrait.EmpoweredShotRange,
+                        ChangeType = "Multiply",
+                        ExcludeLinked = true,
                     },
-    
-                    SniperGunWeapon =
                     {
-                        Sounds =
-                        {
-                            FireSounds =
-                            {
-                                { Name = "/SFX/Player Sounds/ZagreusGunFire" },
-                                { Name = "/Leftovers/SFX/AuraPerfectThrow" },
-                            },
-                            ImpactSounds =
-                            {
-                                Invulnerable = "/SFX/Player Sounds/ZagreusShieldRicochet",
-                                Armored = "/SFX/Player Sounds/ZagreusShieldRicochet",
-                                Bone = "/SFX/ArrowMetalBoneSmash",
-                                Brick = "/SFX/ArrowMetalStoneClang",
-                                Stone = "/SFX/ArrowMetalStoneClang",
-                                Organic = "/SFX/GunBulletOrganicImpact",
-                                StoneObstacle = "/SFX/ArrowWallHitClankSmall",
-                                BrickObstacle = "/SFX/ArrowWallHitClankSmall",
-                                MetalObstacle = "/SFX/ArrowWallHitClankSmall",
-                            },
-                        },
+                        WeaponNames = { "SniperGunWeapon", "SniperGunWeaponDash" },
+                        WeaponProperty = "AutoLockRange",
+                        ChangeValue = PAB.Config.Gameplay.ExtraHammers.SuperGunManualReloadTrait.EmpoweredShotRange,
+                        ChangeType = "Multiply",
+                        ExcludeLinked = true,
                     },
                 },
             }
         end
-        if PAB.Config.Gameplay.ExtraHammers.SuperGunManualReloadTrait.Enabled then
+        if PAB.Config.Gameplay.ExtraHammers.BowChainPerfectShotTrait.Enabled then
             local config = PAB.Config.Gameplay.ExtraHammers.BowChainPerfectShotTrait
             TraitData.BowChainPerfectShotTrait =
             {

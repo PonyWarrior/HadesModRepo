@@ -1,0 +1,26 @@
+{
+    Animations = [
+        "_append"
+            {
+                Name = "GunReloadIndicatorSGRT"
+                ChildAnimation = "GunReloadBarSGRT"
+                FilePath = "GUI\HUD\ReloadBarBacking"
+                Type = "Constant"
+                Duration = 1.5
+                EndFrame = 1
+                NumFrames = 1
+                StartFrame = 1
+                Material = "Unlit"
+            }
+            {
+                Name = "GunReloadBarSGRT"
+                FilePath = "GUI\HUD\ReloadBar\ReloadBar"
+                Type = "Book"
+                Duration = 1.5
+                EndFrame = 100
+                NumFrames = 100
+                StartFrame = 1
+                Material = "Unlit"
+            }
+    ]
+}
