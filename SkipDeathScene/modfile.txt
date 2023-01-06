@@ -1,1 +1,2 @@
+Top Import "config.lua"
 Import "SkipDeathScene.lua"
