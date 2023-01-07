@@ -2335,6 +2335,13 @@ Commands = {
 				}
 			}
 		},
+		OpenResourceMenu = {
+			Entries = {
+				{
+					Text = "Spawn resources."
+				}
+			}
+		},
 	}
 }
 
@@ -2415,4 +2422,244 @@ end
 
 function CodexMenu.LoadState()
 	LoadState()
+end
+
+ResourceMenu = { Components = {} }
+
+function CodexMenu.OpenResourceMenu()
+	if IsScreenOpen("ResourceMenu") then
+		return
+	end
+	OnScreenOpened( { Flag = "ResourceMenu", SkipBlockTimer = true } )
+	CloseCodexScreen()
+	ScreenAnchors.ResourceMenu = DeepCopyTable(ResourceMenu)
+	local screen = ScreenAnchors.ResourceMenu
+	local components = screen.Components
+	local title = "Resource Spawner"
+	local subtitle = "Choose which resource and how much you want to spawn."
+	screen.Name = "ResourceMenu"
+	screen.Resource = "None"
+	screen.Amount = 0
+	OnScreenOpened({ Flag = screen.Name, PersistCombatUI = true })
+	SetConfigOption({ Name = "UseOcclusion", Value = false })
+	FreezePlayerUnit()
+	EnableShopGamepadCursor()
+	PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
+	--Background
+	-- components.BackgroundDim = CreateScreenComponent({ Name = "rectangle01", Group = "ResourceMenu" })
+	components.Background = CreateScreenComponent({ Name = "BlankObstacle", Group = "ResourceMenu" })
+	-- SetScale({ Id = components.BackgroundDim.Id, Fraction = 4 })
+	-- SetColor({ Id = components.BackgroundDim.Id, Color = {0.090, 0.055, 0.157, 0.8} })
+	components.LeftPart = CreateScreenComponent({ Name = "TraitTrayBackground", Group = "ResourceMenu", X = 775, Y = 350})
+	components.MiddlePart = CreateScreenComponent({ Name = "TraitTray_Center", Group = "ResourceMenu", X = 415, Y = 419 })
+	components.RightPart = CreateScreenComponent({ Name = "TraitTray_Right", Group = "ResourceMenu", X = 1435, Y = 374 })
+	SetScaleY({Id = components.LeftPart.Id, Fraction = 1.4})
+	SetScaleY({Id = components.MiddlePart.Id, Fraction = 1.4})
+	SetScaleX({Id = components.MiddlePart.Id, Fraction = 8})
+	SetScaleY({Id = components.RightPart.Id, Fraction = 1.4})
+	--Title
+	CreateTextBox({ Id = components.Background.Id, Text = title, FontSize = 34,
+	OffsetX = -50, OffsetY = -390, Color = Color.White, Font = "SpectralSCLight",
+	ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
+	--SubTitle
+	CreateTextBox({ Id = components.Background.Id, Text = subtitle, FontSize = 19,
+	OffsetX = -50, OffsetY = -345, Width = 840, Color = Color.SubTitle, Font = "CrimsonTextItalic",
+	ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 1}, Justification = "Center" })
+	--Close button
+	components.CloseButton = CreateScreenComponent({ Name = "ButtonClose", Scale = 0.7, Group = "ResourceMenu" })
+	Attach({ Id = components.CloseButton.Id, DestinationId = components.Background.Id, OffsetX = -50, OffsetY = ScreenCenterY - 120 })
+	components.CloseButton.OnPressedFunctionName = "CodexMenu.CloseResourceMenu"
+	components.CloseButton.ControlHotkey = "Cancel"
+	--Display
+		--Resource buttons
+		components.DarknessButton = CreateScreenComponent({ Name = "BoonSlot1", Group = "ResourceMenu", Scale = 0.3, })
+		components.DarknessButton.OnPressedFunctionName = "CodexMenu.ChangeTargetResource"
+		components.DarknessButton.Resource = "MetaPoints"
+		components.DarknessButton.ResourceDisplay = "Darkness"
+		Attach({ Id = components.DarknessButton.Id, DestinationId = components.Background.Id, OffsetX = -450, OffsetY = -250 })
+		CreateTextBox({ Id = components.DarknessButton.Id, Text = "Darkness",
+			FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = lColor, Font = "AlegreyaSansSCLight",
+			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+		})
+		components.KeyButton = CreateScreenComponent({ Name = "BoonSlot1", Group = "ResourceMenu", Scale = 0.3, })
+		components.KeyButton.OnPressedFunctionName = "CodexMenu.ChangeTargetResource"
+		components.KeyButton.Resource = "LockKeys"
+		components.KeyButton.ResourceDisplay = "Chthonic Key"
+		Attach({ Id = components.KeyButton.Id, DestinationId = components.Background.Id, OffsetX = -180, OffsetY = -250 })
+		CreateTextBox({ Id = components.KeyButton.Id, Text = "Chthonic Key",
+			FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = lColor, Font = "AlegreyaSansSCLight",
+			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+		})
+		components.BloodButton = CreateScreenComponent({ Name = "BoonSlot1", Group = "ResourceMenu", Scale = 0.3, })
+		components.BloodButton.OnPressedFunctionName = "CodexMenu.ChangeTargetResource"
+		components.BloodButton.Resource = "SuperLockKeys"
+		components.BloodButton.ResourceDisplay = "Titan Blood"
+		Attach({ Id = components.BloodButton.Id, DestinationId = components.Background.Id, OffsetX = 90, OffsetY = -250 })
+		CreateTextBox({ Id = components.BloodButton.Id, Text = "Titan Blood",
+			FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = lColor, Font = "AlegreyaSansSCLight",
+			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+		})
+		components.GemButton = CreateScreenComponent({ Name = "BoonSlot1", Group = "ResourceMenu", Scale = 0.3, })
+		components.GemButton.OnPressedFunctionName = "CodexMenu.ChangeTargetResource"
+		components.GemButton.Resource = "Gems"
+		components.GemButton.ResourceDisplay = "Gems"
+		Attach({ Id = components.GemButton.Id, DestinationId = components.Background.Id, OffsetX = 360, OffsetY = -250 })
+		CreateTextBox({ Id = components.GemButton.Id, Text = "Gems",
+			FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = lColor, Font = "AlegreyaSansSCLight",
+			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+		})
+		components.DiamondButton = CreateScreenComponent({ Name = "BoonSlot1", Group = "ResourceMenu", Scale = 0.3, })
+		components.DiamondButton.OnPressedFunctionName = "CodexMenu.ChangeTargetResource"
+		components.DiamondButton.Resource = "SuperGems"
+		components.DiamondButton.ResourceDisplay = "Diamond"
+		Attach({ Id = components.DiamondButton.Id, DestinationId = components.Background.Id, OffsetX = -450, OffsetY = -180 })
+		CreateTextBox({ Id = components.DiamondButton.Id, Text = "Diamond",
+			FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = lColor, Font = "AlegreyaSansSCLight",
+			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+		})
+		components.NectarButton = CreateScreenComponent({ Name = "BoonSlot1", Group = "ResourceMenu", Scale = 0.3, })
+		components.NectarButton.OnPressedFunctionName = "CodexMenu.ChangeTargetResource"
+		components.NectarButton.Resource = "GiftPoints"
+		components.NectarButton.ResourceDisplay = "Nectar"
+		Attach({ Id = components.NectarButton.Id, DestinationId = components.Background.Id, OffsetX = -180, OffsetY = -180 })
+		CreateTextBox({ Id = components.NectarButton.Id, Text = "Nectar",
+			FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = lColor, Font = "AlegreyaSansSCLight",
+			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+		})
+		components.AmbrosiaButton = CreateScreenComponent({ Name = "BoonSlot1", Group = "ResourceMenu", Scale = 0.3, })
+		components.AmbrosiaButton.OnPressedFunctionName = "CodexMenu.ChangeTargetResource"
+		components.AmbrosiaButton.Resource = "SuperGiftPoints"
+		components.AmbrosiaButton.ResourceDisplay = "Ambrosia"
+		Attach({ Id = components.AmbrosiaButton.Id, DestinationId = components.Background.Id, OffsetX = 90, OffsetY = -180 })
+		CreateTextBox({ Id = components.AmbrosiaButton.Id, Text = "Ambrosia",
+			FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = lColor, Font = "AlegreyaSansSCLight",
+			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+		})
+
+		--Amount buttons
+
+		components.IncreaseButton1 = CreateScreenComponent({ Name = "BoonSlot1", Group = "ResourceMenu", Scale = 0.3, })
+		components.IncreaseButton1.OnPressedFunctionName = "CodexMenu.ChangeTargetResourceAmount"
+		components.IncreaseButton1.Amount = 1
+		Attach({ Id = components.IncreaseButton1.Id, DestinationId = components.Background.Id, OffsetX = -450, OffsetY = -40 })
+		CreateTextBox({ Id = components.IncreaseButton1.Id, Text = "+1",
+			FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = lColor, Font = "AlegreyaSansSCLight",
+			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+		})
+		components.IncreaseButton2 = CreateScreenComponent({ Name = "BoonSlot1", Group = "ResourceMenu", Scale = 0.3, })
+		components.IncreaseButton2.OnPressedFunctionName = "CodexMenu.ChangeTargetResourceAmount"
+		components.IncreaseButton2.Amount = 10
+		Attach({ Id = components.IncreaseButton2.Id, DestinationId = components.Background.Id, OffsetX = -180, OffsetY = -40 })
+		CreateTextBox({ Id = components.IncreaseButton2.Id, Text = "+10",
+			FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = lColor, Font = "AlegreyaSansSCLight",
+			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+		})
+		components.IncreaseButton3 = CreateScreenComponent({ Name = "BoonSlot1", Group = "ResourceMenu", Scale = 0.3, })
+		components.IncreaseButton3.OnPressedFunctionName = "CodexMenu.ChangeTargetResourceAmount"
+		components.IncreaseButton3.Amount = 100
+		Attach({ Id = components.IncreaseButton3.Id, DestinationId = components.Background.Id, OffsetX = 90, OffsetY = -40 })
+		CreateTextBox({ Id = components.IncreaseButton3.Id, Text = "+100",
+			FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = lColor, Font = "AlegreyaSansSCLight",
+			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+		})
+		components.IncreaseButton4 = CreateScreenComponent({ Name = "BoonSlot1", Group = "ResourceMenu", Scale = 0.3, })
+		components.IncreaseButton4.OnPressedFunctionName = "CodexMenu.ChangeTargetResourceAmount"
+		components.IncreaseButton4.Amount = 1000
+		Attach({ Id = components.IncreaseButton4.Id, DestinationId = components.Background.Id, OffsetX = 360, OffsetY = -40 })
+		CreateTextBox({ Id = components.IncreaseButton4.Id, Text = "+1000",
+			FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = lColor, Font = "AlegreyaSansSCLight",
+			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+		})
+
+		components.DecreaseButton1 = CreateScreenComponent({ Name = "BoonSlot1", Group = "ResourceMenu", Scale = 0.3, })
+		components.DecreaseButton1.OnPressedFunctionName = "CodexMenu.ChangeTargetResourceAmount"
+		components.DecreaseButton1.Amount = -1
+		Attach({ Id = components.DecreaseButton1.Id, DestinationId = components.Background.Id, OffsetX = -450, OffsetY = 30 })
+		CreateTextBox({ Id = components.DecreaseButton1.Id, Text = "-1",
+			FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = lColor, Font = "AlegreyaSansSCLight",
+			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+		})
+		components.DecreaseButton2 = CreateScreenComponent({ Name = "BoonSlot1", Group = "ResourceMenu", Scale = 0.3, })
+		components.DecreaseButton2.OnPressedFunctionName = "CodexMenu.ChangeTargetResourceAmount"
+		components.DecreaseButton2.Amount = -10
+		Attach({ Id = components.DecreaseButton2.Id, DestinationId = components.Background.Id, OffsetX = -180, OffsetY = 30 })
+		CreateTextBox({ Id = components.DecreaseButton2.Id, Text = "-10",
+			FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = lColor, Font = "AlegreyaSansSCLight",
+			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+		})
+		components.DecreaseButton3 = CreateScreenComponent({ Name = "BoonSlot1", Group = "ResourceMenu", Scale = 0.3, })
+		components.DecreaseButton3.OnPressedFunctionName = "CodexMenu.ChangeTargetResourceAmount"
+		components.DecreaseButton3.Amount = -100
+		Attach({ Id = components.DecreaseButton3.Id, DestinationId = components.Background.Id, OffsetX = 90, OffsetY = 30 })
+		CreateTextBox({ Id = components.DecreaseButton3.Id, Text = "-100",
+			FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = lColor, Font = "AlegreyaSansSCLight",
+			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+		})
+		components.DecreaseButton4 = CreateScreenComponent({ Name = "BoonSlot1", Group = "ResourceMenu", Scale = 0.3, })
+		components.DecreaseButton4.OnPressedFunctionName = "CodexMenu.ChangeTargetResourceAmount"
+		components.DecreaseButton4.Amount = -1000
+		Attach({ Id = components.DecreaseButton4.Id, DestinationId = components.Background.Id, OffsetX = 360, OffsetY = 30 })
+		CreateTextBox({ Id = components.DecreaseButton4.Id, Text = "-1000",
+			FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = lColor, Font = "AlegreyaSansSCLight",
+			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+		})
+
+	components.ResourceTextbox = CreateScreenComponent({ Name = "BlankObstacle", Group = "ResourceMenu" })
+	Attach({ Id = components.ResourceTextbox.Id, DestinationId = components.Background.Id, OffsetX = -150, OffsetY = 250 })
+	CreateTextBox({ Id = components.ResourceTextbox.Id, Text = screen.Resource,
+		FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = lColor, Font = "AlegreyaSansSCLight",
+		ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+	})
+	components.ResourceAmountTextbox = CreateScreenComponent({ Name = "BlankObstacle", Group = "ResourceMenu" })
+	Attach({ Id = components.ResourceAmountTextbox.Id, DestinationId = components.Background.Id, OffsetX = 100, OffsetY = 250 })
+	CreateTextBox({ Id = components.ResourceAmountTextbox.Id, Text = screen.Amount,
+		FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = lColor, Font = "AlegreyaSansSCLight",
+		ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+	})
+	components.SpawnButton = CreateScreenComponent({ Name = "BoonSlot1", Group = "ResourceMenu", Scale = 0.3, })
+	components.SpawnButton.OnPressedFunctionName = "CodexMenu.SpawnResource"
+	Attach({ Id = components.SpawnButton.Id, DestinationId = components.Background.Id, OffsetX = -50, OffsetY = 300 })
+	CreateTextBox({ Id = components.SpawnButton.Id, Text = "Spawn resource",
+		FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = lColor, Font = "AlegreyaSansSCLight",
+		ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+	})
+
+
+	--End
+	screen.KeepOpen = true
+	HandleScreenInput(screen)
+end
+
+function CodexMenu.CloseResourceMenu(screen, button)
+	DisableShopGamepadCursor()
+	SetConfigOption({ Name = "FreeFormSelectWrapY", Value = false })
+	SetConfigOption({ Name = "UseOcclusion", Value = true })
+	CloseScreen(GetAllIds(screen.Components), 0.1)
+	PlaySound({ Name = "/SFX/Menu Sounds/GeneralWhooshMENU" })
+	ScreenAnchors.ResourceMenu = nil
+	UnfreezePlayerUnit()
+	screen.KeepOpen = false
+	OnScreenClosed({ Flag = screen.Name })
+end
+
+function CodexMenu.ChangeTargetResource(screen, button)
+	screen.Resource = button.Resource
+	ModifyTextBox({Id = screen.Components.ResourceTextbox.Id, Text = button.ResourceDisplay} )
+end
+
+function CodexMenu.ChangeTargetResourceAmount(screen, button)
+	local amount = screen.Amount + button.Amount
+	if amount < 0 then
+		amount = 0
+	end
+	screen.Amount = amount
+	ModifyTextBox({Id = screen.Components.ResourceAmountTextbox.Id, Text = screen.Amount} )
+end
+
+function CodexMenu.SpawnResource(screen, button)
+	if screen.Resource == "None" or screen.Amount == 0 then
+		return
+	end
+
+	AddResource(screen.Resource, screen.Amount)
 end
