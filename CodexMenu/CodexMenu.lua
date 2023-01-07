@@ -2079,6 +2079,9 @@ function CodexMain(triggerArgs)
 	elseif CodexMenu.CommandTable[selection] ~= nil then
 		DebugPrint({Text = "@CodexMenu Trying to execute command : "..selection})
 		CodexMenu.CommandTable[selection](triggerArgs)
+	elseif Codex.Commands.Entries[selection] ~= nil then
+		DebugPrint({Text = "@CodexMenu Trying to execute command : "..selection})
+		CodexMenu.UseCommand(selection, triggerArgs)
 	else
 		DebugPrint({Text = "@CodexMenu Selection did not match any feature : "..selection})
 	end
@@ -2221,4 +2224,195 @@ function CodexMenuReloadAllTraits()
 		end
 	end
 	UpdateHeroTraitDictionary()
+end
+
+--New codex tab
+
+local Commands = {
+	Order = {
+		"OpenBoonManager",
+		"OpenDuoBoonSelector",
+		"ClearAllBoons",
+		"UseShout",
+		"OpenCustomMirror",
+		"KillPlayer",
+		"OpenKeepsakeRack",
+		"OpenCharonShop",
+		"OpenPool",
+		"SaveState",
+		"LoadState",
+	}
+}
+
+table.insert(CodexOrdering.Order, "Commands")
+CodexOrdering.Commands = Commands
+
+Commands = {
+	UnlockType = CodexUnlockTypes.Mystery,
+	TitleText = "Commands",
+	Entries = {
+		OpenBoonManager = {
+			Entries = {
+				{
+					Text = "Opens the boon manager."
+				}
+			}
+		},
+		OpenDuoBoonSelector = {
+			Entries = {
+				{
+					Text = "Opens the duo boon selector."
+				}
+			}
+		},
+		ClearAllBoons = {
+			Entries = {
+				{
+					Text = "Removes all equipped boons."
+				}
+			}
+		},
+		UseShout = {
+			Entries = {
+				{
+					Text = "Uses your shout with max wrath."
+				}
+			}
+		},
+		OpenCustomMirror = {
+			Entries = {
+				{
+					Text = "Opens the custom mirror of night."
+				}
+			}
+		},
+		KillPlayer = {
+			Entries = {
+				{
+					Text = "Kills you."
+				}
+			}
+		},
+		OpenKeepsakeRack = {
+			Entries = {
+				{
+					Text = "Opens the keepsake rack."
+				}
+			}
+		},
+		OpenCharonShop = {
+			Entries = {
+				{
+					Text = "Opens the Charon well."
+				}
+			}
+		},
+		OpenPool = {
+			Entries = {
+				{
+					Text = "Opens the Pool of purging."
+				}
+			}
+		},
+		SaveState = {
+			Entries = {
+				{
+					Text = "Save current state. After saving you need to exit the room to actually save."
+				}
+			}
+		},
+		LoadState = {
+			Entries = {
+				{
+					Text = "Load saved state."
+				}
+			}
+		},
+		ModList = {
+			Entries = {
+				{
+					Text = ""
+				}
+			}
+		},
+	}
+}
+
+ModUtil.LoadOnce(function ()
+    local text = "List of all the mods you have installed. Only mods registered with Mod Utility can be shown. : "
+    local tbl = { }
+    local n = 0
+    for name in pairs( ModUtil.Mods.Data ) do
+        n = n + 1
+        tbl[n] = name
+    end
+    local entry = {
+        Text = text .. table.concat(tbl, ', ')
+    }
+    Commands.Entries.ModList.Entries[1] = entry
+end)
+
+Codex.Commands = Commands
+
+function CodexMenu.UseCommand(commandName, triggerArgs)
+	CloseCodexScreen()
+	local command = "CodexMenu." .. commandName
+	local commandFunction = _G[command]
+	commandFunction(triggerArgs)
+end
+
+function CodexMenu.OpenBoonManager()
+	OpenBoonManager()
+end
+
+function CodexMenu.OpenDuoBoonSelector()
+	OpenBoonSelector(CodexMenu.BoonTable.NPC_Dusa_01, false)
+end
+
+function CodexMenu.ClearAllBoons()
+	RemoveAllTraits()
+	ReloadEquipment()
+end
+
+function CodexMenu.UseShout()
+	if IsSuperValid() then
+		CloseCodexScreen()
+		wait(1, RoomThreadName)
+		BuildSuperMeter(CurrentRun, 100)
+		CommenceSuperMove()
+		UpdateSuperDamageBonus()
+		thread( MarkObjectiveComplete, "EXMove" )
+	end
+end
+
+function CodexMenu.OpenCustomMirror()
+	OpenCustomMirror()
+end
+
+function CodexMenu.KillPlayer(triggerArgs)
+	KillHero(CurrentRun.Hero, triggerArgs)
+end
+
+function CodexMenu.OpenKeepsakeRack()
+	UIData.AwardMenu.AvailableKeepsakeTraits = GetAvailableKeepsakeTraits()
+	UIData.AwardMenu.AvailableAssistTraits = GetAllAssistTraits()
+	ShowAwardMenu()
+end
+
+function CodexMenu.OpenCharonShop()
+	CurrentRun.CurrentRoom.Store = nil
+	StartUpStore()
+end
+
+function CodexMenu.OpenPool()
+	GenerateSellTraitShop(CurrentRun, CurrentRun.CurrentRoom)
+	OpenSellTraitMenu()
+end
+
+function CodexMenu.SaveState()
+	SaveState()
+end
+
+function CodexMenu.LoadState()
+	LoadState()
 end
