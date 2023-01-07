@@ -302,3 +302,9 @@ re-added demeter's rare crop boon to boon selector
 2.4.11
 
 modified internal data for easier third party access
+
+2.5.0
+
+Added a new Commands tab in the codex, listing all the special commands. Press Enter on any entry you want to use
+Added Mod list, lists all mods you have installed, accessed from Commands tab
+Added Resource Menu, lets you spawn resources in any amount you desire, accessed from Commands tab 
