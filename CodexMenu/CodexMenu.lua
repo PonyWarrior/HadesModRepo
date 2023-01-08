@@ -292,13 +292,13 @@ end
 
 function CustomInvertTable(tableArg)
     local inverseTable = {}
-    for _,value in ipairs(tableArg) do
+    for _,value in pairs(tableArg) do
         inverseTable[value]=true
     end
     return inverseTable
 end
 
-for _,value in ipairs(CodexMenu.BoonData.GodNames) do
+for _,value in pairs(CodexMenu.BoonData.GodNames) do
     CodexMenu.BoonData[value.."Inverted"]=CustomInvertTable(CodexMenu.BoonData[value])
 end
 
@@ -372,8 +372,8 @@ function GiveSelectedBoonToPlayer(screen, button)
 			LockChoice(screen.Components, button)
 			return
 		end
-			AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon, Rarity = screen.Rarity }) })
-			LockChoice(screen.Components, button)
+		AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon, Rarity = screen.Rarity }) })
+		LockChoice(screen.Components, button)
 	end
 end
 
@@ -420,7 +420,7 @@ function OpenBoonSelector(godName, spawnBoon)
 	OnScreenOpened( { Flag = "BoonSelector", SkipBlockTimer = true } )
 	CloseCodexScreen()
 	CheckHadesShout(CurrentRun.Hero.Traits)
-	CodexMenuReloadAllTraits()
+	
 	if godName ~= nil and CodexMenu.BoonData[godName] then
 		local Boons = DeepCopyTable(CodexMenu.BoonData[godName])
 		if Boons == nil then
@@ -487,7 +487,7 @@ function OpenBoonSelector(godName, spawnBoon)
             local index = 0
             screen.BoonsList = {}
             screen.DuoScreen = true
-            for i,boon in ipairs(Boons) do
+            for i,boon in pairs(Boons) do
                 if Contains(displayedTraits, boon.Name) then
                     --Skip boon
                 else
@@ -517,7 +517,7 @@ function OpenBoonSelector(godName, spawnBoon)
             end
             BoonManagerLoadPage(screen)
         else
-            for index, boon in ipairs (Boons) do
+            for index, boon in pairs (Boons) do
                     if boon == "LastStandDurationTrait" or boon == "LastStandHealTrait" or boon == "GiftHealthTrait" or boon == "HealingPotencyTrait" then
                         --Skip boon
                     else
@@ -592,14 +592,16 @@ function OpenBoonSelector(godName, spawnBoon)
                 FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = Color.BoonPatchEpic, Font = "AlegreyaSansSCLight",
                 ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
             })
-            components.HeroicButton = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonSelector", Scale = 0.3, })
-            components.HeroicButton.OnPressedFunctionName = "ChangeBoonSelectorRarity"
-            components.HeroicButton.Rarity = "Heroic"
-            Attach({ Id = components.HeroicButton.Id, DestinationId = components.Background.Id, OffsetX = 550, OffsetY = 300 })
-            CreateTextBox({ Id = components.HeroicButton.Id, Text = "Heroic",
-                FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = Color.BoonPatchHeroic, Font = "AlegreyaSansSCLight",
-                ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
-            })
+			if godName ~= "TrialUpgrade" then
+				components.HeroicButton = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonSelector", Scale = 0.3, })
+				components.HeroicButton.OnPressedFunctionName = "ChangeBoonSelectorRarity"
+				components.HeroicButton.Rarity = "Heroic"
+				Attach({ Id = components.HeroicButton.Id, DestinationId = components.Background.Id, OffsetX = 550, OffsetY = 300 })
+				CreateTextBox({ Id = components.HeroicButton.Id, Text = "Heroic",
+					FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = Color.BoonPatchHeroic, Font = "AlegreyaSansSCLight",
+					ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+				})
+			end
         end
 		--End
 		screen.KeepOpen = true
@@ -778,7 +780,7 @@ function HandleBoonManagerClick(screen, button)
 						AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon.Name, Rarity = button.Boon.Rarity }) })
 					end
 					CheckHadesShout(CurrentRun.Hero.Traits)
-					CodexMenuReloadAllTraits()
+					
 				end
 			end
 			return
@@ -799,7 +801,7 @@ function HandleBoonManagerClick(screen, button)
 						AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon.Name, Rarity = button.Boon.Rarity }) })
 					end
 					CheckHadesShout(CurrentRun.Hero.Traits)
-					CodexMenuReloadAllTraits()
+					
 				end
 			end
 			return
@@ -810,7 +812,7 @@ function HandleBoonManagerClick(screen, button)
 			end
 			Destroy({ Ids = { button.Id, button.Background.Id } })
 			CheckHadesShout(CurrentRun.Hero.Traits)
-			CodexMenuReloadAllTraits()
+			
 			return
 		end
 	end
@@ -839,83 +841,82 @@ function BoonManagerLoadPage(screen)
     local displayedTraits = {}
     local pageBoons = screen.BoonsList[screen.CurrentPage]
     if pageBoons then
-    for i, boonData in pairs(pageBoons) do
-            if displayedTraits[boonData.boon.Name] or displayedTraits[boonData.boon] then
-                --Skip
-            else
-                local color = Color.White
-            for _,godName in ipairs(CodexMenu.BoonData.GodNames) do
-                if CodexMenu.BoonData[godName.."Inverted"] then
-                    if CodexMenu.BoonData[godName.."Inverted"][boonData.boon.Name] or CodexMenu.BoonData[godName.."Inverted"][boonData.boon] then
-                        if LootData[godName] then
-                            color = CodexMenu.Colors[godName] or LootData[godName].LootColor
-                        else
-                            color = CodexMenu.Colors[godName]
-                            break
-                        end
-                    end
-                end
-            end
-            if screen.DuoScreen then
-                displayedTraits[boonData.boon] = true
-                local purchaseButtonKey = "PurchaseButton"..boonData.index
-                if HeroHasTrait(boonData.boon) then
-                    screen.Components[purchaseButtonKey] = CreateScreenComponent({ Name = "BlankObstacle", Group = "BoonManager", Scale = 0.3, })
-                    screen.Components[purchaseButtonKey].Boon = boonData.boon
-                    screen.Components[purchaseButtonKey].Index = boonData.index
-                    screen.Components[purchaseButtonKey].X = boonData.offsetX
-                    screen.Components[purchaseButtonKey].Y = boonData.offsetY
-                    Attach({ Id = screen.Components[purchaseButtonKey].Id, DestinationId = screen.Components.Background.Id, OffsetX = boonData.offsetX, OffsetY = boonData.offsetY })
-                    CreateTextBox({ Id = screen.Components[purchaseButtonKey].Id, Text = boonData.boon,
-                        FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = Color.DarkGray, Font = "AlegreyaSansSCLight",
-                        ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
-                    })
-                    SetAnimation({DestinationId = screen.Components[purchaseButtonKey].Id, Name = "BoonSlotLocked" })
-                else
-                    screen.Components[purchaseButtonKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonManager", Scale = 0.3, })
-                    screen.Components[purchaseButtonKey].OnPressedFunctionName = "GiveSelectedBoonToPlayer"
-                    screen.Components[purchaseButtonKey].Boon = boonData.boon
-                    screen.Components[purchaseButtonKey].Index = boonData.index
-                    screen.Components[purchaseButtonKey].X = boonData.offsetX
-                    screen.Components[purchaseButtonKey].Y = boonData.offsetY
-                    Attach({ Id = screen.Components[purchaseButtonKey].Id, DestinationId = screen.Components.Background.Id, OffsetX = boonData.offsetX, OffsetY = boonData.offsetY })
-                    CreateTextBox({ Id = screen.Components[purchaseButtonKey].Id, Text = boonData.boon,
-                        FontSize = 22, OffsetX = 0, OffsetY = -5, Width = 720, Color = color, Font = "AlegreyaSansSCLight",
-                        ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
-                    })
-                end
-      else
-			if boonData.boon.Rarity == nil then
-				boonData.boon.Rarity = "Common"
-			end
-		  displayedTraits[boonData.boon.Name] = true
-			local purchaseButtonKeyBG = "PurchaseButtonBG"..boonData.index
-			screen.Components[purchaseButtonKeyBG] = CreateScreenComponent({ Name = "rectangle01", Group = "BoonManager", Scale = 0.28, })
-			screen.Components[purchaseButtonKeyBG].IsBackground = true
-			screen.Components[purchaseButtonKeyBG].Boon = boonData.boon
-			boonData.boon.LevelButton = screen.Components[purchaseButtonKeyBG]
-			CreateTextBox({ Id = screen.Components[purchaseButtonKeyBG].Id, Text = "Lv. "..boonData.boon.Level,
-					FontSize = 15, OffsetX = 95, OffsetY = 16, Width = 720, Color = Color.White, Font = "AlegreyaSansSCLight",
+		for i, boonData in pairs(pageBoons) do
+				if displayedTraits[boonData.boon.Name] or displayedTraits[boonData.boon] then
+					--Skip
+				else
+					local color = Color.White
+				for _, godName in pairs(CodexMenu.BoonData.GodNames) do
+					if CodexMenu.BoonData[godName.."Inverted"] then
+						if CodexMenu.BoonData[godName.."Inverted"][boonData.boon.Name] or CodexMenu.BoonData[godName.."Inverted"][boonData.boon] then
+							if LootData[godName] then
+								color = CodexMenu.Colors[godName] or LootData[godName].LootColor
+							else
+								color = CodexMenu.Colors[godName]
+								break
+							end
+						end
+					end
+				end
+				if screen.DuoScreen then
+					displayedTraits[boonData.boon] = true
+					local purchaseButtonKey = "PurchaseButton"..boonData.index
+					if HeroHasTrait(boonData.boon) then
+						screen.Components[purchaseButtonKey] = CreateScreenComponent({ Name = "BlankObstacle", Group = "BoonManager", Scale = 0.3, })
+						screen.Components[purchaseButtonKey].Boon = boonData.boon
+						screen.Components[purchaseButtonKey].Index = boonData.index
+						screen.Components[purchaseButtonKey].X = boonData.offsetX
+						screen.Components[purchaseButtonKey].Y = boonData.offsetY
+						Attach({ Id = screen.Components[purchaseButtonKey].Id, DestinationId = screen.Components.Background.Id, OffsetX = boonData.offsetX, OffsetY = boonData.offsetY })
+						CreateTextBox({ Id = screen.Components[purchaseButtonKey].Id, Text = boonData.boon,
+							FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = Color.DarkGray, Font = "AlegreyaSansSCLight",
+							ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+						})
+						SetAnimation({DestinationId = screen.Components[purchaseButtonKey].Id, Name = "BoonSlotLocked" })
+					else
+						screen.Components[purchaseButtonKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonManager", Scale = 0.3, })
+						screen.Components[purchaseButtonKey].OnPressedFunctionName = "GiveSelectedBoonToPlayer"
+						screen.Components[purchaseButtonKey].Boon = boonData.boon
+						screen.Components[purchaseButtonKey].Index = boonData.index
+						screen.Components[purchaseButtonKey].X = boonData.offsetX
+						screen.Components[purchaseButtonKey].Y = boonData.offsetY
+						Attach({ Id = screen.Components[purchaseButtonKey].Id, DestinationId = screen.Components.Background.Id, OffsetX = boonData.offsetX, OffsetY = boonData.offsetY })
+						CreateTextBox({ Id = screen.Components[purchaseButtonKey].Id, Text = boonData.boon,
+							FontSize = 22, OffsetX = 0, OffsetY = -5, Width = 720, Color = color, Font = "AlegreyaSansSCLight",
+							ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+						})
+					end
+				else
+					if boonData.boon.Rarity == nil then
+						boonData.boon.Rarity = "Common"
+					end
+					displayedTraits[boonData.boon.Name] = true
+					local purchaseButtonKeyBG = "PurchaseButtonBG"..boonData.index
+					screen.Components[purchaseButtonKeyBG] = CreateScreenComponent({ Name = "rectangle01", Group = "BoonManager", Scale = 0.28, })
+					screen.Components[purchaseButtonKeyBG].IsBackground = true
+					screen.Components[purchaseButtonKeyBG].Boon = boonData.boon
+					CreateTextBox({ Id = screen.Components[purchaseButtonKeyBG].Id, Text = "Lv. "..boonData.boon.Level,
+						FontSize = 15, OffsetX = 95, OffsetY = 16, Width = 720, Color = Color.White, Font = "AlegreyaSansSCLight",
+						ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
+					})
+					SetColor({ Id = screen.Components[purchaseButtonKeyBG].Id, Color = Color["BoonPatch"..boonData.boon.Rarity]})
+					SetScaleX({ Id = screen.Components[purchaseButtonKeyBG].Id, Fraction = 2})
+					local purchaseButtonKey = "PurchaseButton"..boonData.index
+					screen.Components[purchaseButtonKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonManager", Scale = 0.3, })
+					screen.Components[purchaseButtonKey].OnPressedFunctionName = "HandleBoonManagerClick"
+					screen.Components[purchaseButtonKey].Boon = boonData.boon
+					screen.Components[purchaseButtonKey].Index = boonData.index
+					screen.Components[purchaseButtonKey].Background = screen.Components[purchaseButtonKeyBG]
+					Attach({ Id = screen.Components[purchaseButtonKey].Id, DestinationId = screen.Components.Background.Id, OffsetX = boonData.offsetX, OffsetY = boonData.offsetY })
+					Attach({ Id = screen.Components[purchaseButtonKeyBG].Id, DestinationId = screen.Components[purchaseButtonKey].Id })
+					CreateTextBox({ Id = screen.Components[purchaseButtonKey].Id, Text = boonData.boon.Name,
+					FontSize = 22, OffsetX = 0, OffsetY = -5, Width = 720, Color = color, Font = "AlegreyaSansSCLight",
 					ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
-			})
-			SetColor({ Id = screen.Components[purchaseButtonKeyBG].Id, Color = Color["BoonPatch"..boonData.boon.Rarity]})
-			SetScaleX({ Id = screen.Components[purchaseButtonKeyBG].Id, Fraction = 2})
-			local purchaseButtonKey = "PurchaseButton"..boonData.index
-			screen.Components[purchaseButtonKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "BoonManager", Scale = 0.3, })
-		  screen.Components[purchaseButtonKey].OnPressedFunctionName = "HandleBoonManagerClick"
-		  screen.Components[purchaseButtonKey].Boon = boonData.boon
-		  screen.Components[purchaseButtonKey].Index = boonData.index
-			screen.Components[purchaseButtonKey].Background = screen.Components[purchaseButtonKeyBG]
-		  Attach({ Id = screen.Components[purchaseButtonKey].Id, DestinationId = screen.Components.Background.Id, OffsetX = boonData.offsetX, OffsetY = boonData.offsetY })
-			Attach({ Id = screen.Components[purchaseButtonKeyBG].Id, DestinationId = screen.Components[purchaseButtonKey].Id })
-		  CreateTextBox({ Id = screen.Components[purchaseButtonKey].Id, Text = boonData.boon.Name,
-		      FontSize = 22, OffsetX = 0, OffsetY = -5, Width = 720, Color = color, Font = "AlegreyaSansSCLight",
-		      ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
-		  })
-        end
-      end
-    end
-  end
+					})
+				end
+			end
+		end
+  	end
 end
 
 function BoonManagerPageButtons(screen)
@@ -954,7 +955,6 @@ function OpenBoonManager()
 	OnScreenOpened( { Flag = "BoonManager", SkipBlockTimer = true } )
 	CloseCodexScreen()
 	CheckHadesShout(CurrentRun.Hero.Traits)
-	CodexMenuReloadAllTraits()
 	if CurrentRun.Hero.Traits ~= nil then
 		ScreenAnchors.BoonSelector = DeepCopyTable(CodexMenu.BoonData.BoonSelector)
 		local screen = ScreenAnchors.BoonSelector
@@ -998,7 +998,7 @@ function OpenBoonManager()
 		local displayedTraits = {}
 		local index = 0
 		screen.BoonsList = {}
-		for i,boon in ipairs(CurrentRun.Hero.Traits) do
+		for i, boon in pairs(CurrentRun.Hero.Traits) do
 			if Contains(displayedTraits, boon.Name) or boon.Name == "GodModeTrait" then
 			else
 				if IsGodTrait(boon.Name) or IsHermesChaosHammerCharonBoon(boon.Name) or Contains(CodexMenu.BoonData.ConsumableTraits, boon.Name) then
@@ -1096,7 +1096,6 @@ function CloseBoonManager(screen, button)
 	screen.KeepOpen = false
 	screen.BoonsList = {}
 	CheckHadesShout(CurrentRun.Hero.Traits)
-	CodexMenuReloadAllTraits()
 	OnScreenClosed({ Flag = "BoonManager" })
 end
 
@@ -1280,7 +1279,7 @@ function OpenCustomMirror( args )
 	local itemLocationX = ScreenCenterX - 40
 	local itemLocationY = 400
 	local firstUseable = false
-	for k, upgradeName in ipairs( GameState.MetaUpgradesSelected ) do
+	for k, upgradeName in pairs( GameState.MetaUpgradesSelected ) do
 		if k > GetNumLockedMetaUpgrades() then
 			break
 		end
@@ -1948,10 +1947,12 @@ function SaveState()
 		end
 		for i, traitData in pairs( CurrentRun.Hero.Traits ) do
 			if traitData.Name ~= GameState.CodexMenuSavedState.Weapon and traitData.Name ~= GameState.CodexMenuSavedState.Aspect.Name
-			and traitData.Name ~= GameState.CodexMenuSavedState.Keepsake and traitData.Name ~= GameState.CodexMenuSavedState.Assist then
+			and traitData.Name ~= GameState.CodexMenuSavedState.Keepsake and traitData.Name ~= GameState.CodexMenuSavedState.Assist
+			then
 				table.insert(GameState.CodexMenuSavedState.Traits, { Name = traitData.Name, Rarity = traitData.Rarity, })
 			end
 		end
+		SaveCheckpoint({ DevSaveName = CreateDevSaveName( CurrentRun )})
 	end
 end
 
@@ -1959,13 +1960,12 @@ function LoadState()
 	if GameState.CodexMenuSavedState ~= nil then
 		RemoveAllTraits()
 		if GameState.LastAwardTrait == "ReincarnationTrait" then
-				RemoveLastStand( CurrentRun.Hero, "ReincarnationTrait" )
-				CurrentRun.Hero.MaxLastStands = CurrentRun.Hero.MaxLastStands - 1
+			RemoveLastStand( CurrentRun.Hero, "ReincarnationTrait" )
+			CurrentRun.Hero.MaxLastStands = CurrentRun.Hero.MaxLastStands - 1
 		end
 		EquipPlayerWeapon( WeaponData[GameState.CodexMenuSavedState.Weapon], { PreLoadBinks = true } )
 		GameState.LastInteractedWeaponUpgrade = { WeaponName = GetEquippedWeapon(), ItemIndex = GetEquippedWeaponTraitIndex( GetEquippedWeapon() ) }
 		EquipKeepsake(CurrentRun.Hero, GameState.CodexMenuSavedState.Keepsake)
-
 		EquipAssist(CurrentRun.Hero, GameState.CodexMenuSavedState.Assist)
 		if GameState.CodexMenuSavedState.Aspect.Name ~= nil then
 			AddTraitToHero({ TraitName = GameState.CodexMenuSavedState.Aspect.Name, Rarity = GameState.CodexMenuSavedState.Aspect.Rarity })
@@ -2176,12 +2176,8 @@ function StartNewCustomRun(bossRoom)
 	return CurrentRun
 end
 
---[[
-Duplicate the ReloadAllTraits function because the default implementation will reset the bonuses for keepsakes from Thanatos and Hermes.
-It will also give bonus max health from the RoomRewardMaxHealthTrait trait, but that is more difficult to fix.
-]]--
 function CodexMenuReloadAllTraits()
-	-- Remove all traits, then readd them in order
+	--Remove all traits, then readd them in order
 	local weaponName = GetEquippedWeapon()
 	local removedTraitData = {}
 	for i, traitData in pairs( CurrentRun.Hero.Traits ) do
@@ -2317,7 +2313,7 @@ Commands = {
 		SaveState = {
 			Entries = {
 				{
-					Text = "Save current state. After saving you need to exit the room to actually save."
+					Text = "Save current state."
 				}
 			}
 		},

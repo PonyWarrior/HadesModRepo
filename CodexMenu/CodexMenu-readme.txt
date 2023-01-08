@@ -307,4 +307,17 @@ modified internal data for easier third party access
 
 Added a new Commands tab in the codex, listing all the special commands. Press Enter on any entry you want to use
 Added Mod list, lists all mods you have installed, accessed from Commands tab
-Added Resource Menu, lets you spawn resources in any amount you desire, accessed from Commands tab 
+Added Resource Menu, lets you spawn resources in any amount you desire, accessed from Commands tab
+
+2.5.1
+
+fixed issues :
+
+Boon Manager and Boon Selector no longer need to reload all boons, which fixed many problems with various boons and effects
+Boon Manager sometimes didn't show any boons
+opening the Boon Manager while having chaos boons would reroll them
+
+other changes :
+
+Boon Selector no longer shows the Heroic rarity button for chaos boons
+using the Save State command now saves the game, so you no longer need to leave the room after using it
