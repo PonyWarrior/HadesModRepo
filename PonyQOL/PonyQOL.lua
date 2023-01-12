@@ -32,9 +32,8 @@ if PQOL.Config.BoonList.Enabled then
 	ModUtil.WrapBaseFunction( "CreateBoonInfoButton", function(baseFunc, traitName, index)
 		if traitName == nil then
 			DebugPrint({Text = "@PonyQOL a traitName was nil! Closed boon info screen to prevent a crash"})
-			ModUtil.Hades.PrintStack("PonyQOL: a traitName was nil!")
-			ModUtil.Hades.PrintStack("Canceled opening boon list to prevent a crash!")
-			ModUtil.Hades.PrintStack("Please report to PonyWarrior and include your savefile!")
+			ModUtil.Hades.PrintStack("PonyQOL: there was an issue opening the boon list. Please try again and if it does not work please let me know on nexus mods.")
+			PQOL.InsertExtraBoonLists()
 			return
 		end
         return baseFunc(traitName, index)
@@ -2039,53 +2038,53 @@ if PQOL.Config.Commendations.Enabled then
 	{
 		Order =
 		{
-			"ClearNumOne",
-			"ClearNumTen",
-			"ClearNumFifty",
-			"ClearNumOneHundred",
-			"ClearNumTwoFifty",
-			"ClearNumFiveHundred",
-			"ClearNearDeath",
-			"ClearFullHealth",
-			"ClearHighMaxHealth",
-			"ClearTimeFast",
-			"ClearTimeVeryFast",
-			"ClearTimeSlow",
-			"ClearMoneyNone",
-			"ClearMoneyHigh",
-			"ClearMetaPointsInvestedNone",
-			"ClearNoOlympianBoons",
-			"ClearAllStoryRooms",
-			"ClearAllReprieveRooms",
-			"ClearAllShopRooms",
-			"ClearRequiredTraitsZeus",
-			"ClearRequiredTraitsPoseidon",
-			"ClearRequiredTraitsAthena",
-			"ClearRequiredTraitsAres",
-			"ClearRequiredTraitsArtemis",
-			"ClearRequiredTraitsAphrodite",
-			"ClearRequiredTraitsDionysus",
-			"ClearRequiredTraitsDemeter",
-			"ClearRequiredTraitsHermes",
-			"ClearRequiredTraitsChaos",
-			"ClearSynergyTraits",
-			"ClearLegendaryTraits",
-			"ClearChallengeSwitches",
-			"ClearDevotionEncounters",
-			"ClearShrineChallengeEncounters",
-			"ClearMiniBossEncounters",
-			"ClearWeaponsFiredWrath",
-			"ClearWeaponsFiredRanged",
-			"ClearFishCaught",
-			"ClearConsecutiveHigh",
-			"ClearHealItems",
-			"ClearStackUpgrades",
-			"ClearGiftDrops",
-			"ClearLockKeyDrops",
-			"ClearConsolationPrizes",
-			"ClearManyLastStands",
-			"ClearShutDownThanatos",
-			"ClearManyTraitsSold",
+			"ClearNumOnePQOL",
+			"ClearNumTenPQOL",
+			"ClearNumFiftyPQOL",
+			"ClearNumOneHundredPQOL",
+			"ClearNumTwoFiftyPQOL",
+			"ClearNumFiveHundredPQOL",
+			"ClearNearDeathPQOL",
+			"ClearFullHealthPQOL",
+			"ClearHighMaxHealthPQOL",
+			"ClearTimeFastPQOL",
+			"ClearTimeVeryFastPQOL",
+			"ClearTimeSlowPQOL",
+			"ClearMoneyNonePQOL",
+			"ClearMoneyHighPQOL",
+			"ClearMetaPointsInvestedNonePQOL",
+			"ClearNoOlympianBoonsPQOL",
+			"ClearAllStoryRoomsPQOL",
+			"ClearAllReprieveRoomsPQOL",
+			"ClearAllShopRoomsPQOL",
+			"ClearRequiredTraitsZeusPQOL",
+			"ClearRequiredTraitsPoseidonPQOL",
+			"ClearRequiredTraitsAthenaPQOL",
+			"ClearRequiredTraitsAresPQOL",
+			"ClearRequiredTraitsArtemisPQOL",
+			"ClearRequiredTraitsAphroditePQOL",
+			"ClearRequiredTraitsDionysusPQOL",
+			"ClearRequiredTraitsDemeterPQOL",
+			"ClearRequiredTraitsHermesPQOL",
+			"ClearRequiredTraitsChaosPQOL",
+			"ClearSynergyTraitsPQOL",
+			"ClearLegendaryTraitsPQOL",
+			"ClearChallengeSwitchesPQOL",
+			"ClearDevotionEncountersPQOL",
+			"ClearShrineChallengeEncountersPQOL",
+			"ClearMiniBossEncountersPQOL",
+			"ClearWeaponsFiredWrathPQOL",
+			"ClearWeaponsFiredRangedPQOL",
+			"ClearFishCaughtPQOL",
+			"ClearConsecutiveHighPQOL",
+			"ClearHealItemsPQOL",
+			"ClearStackUpgradesPQOL",
+			"ClearGiftDropsPQOL",
+			"ClearLockKeyDropsPQOL",
+			"ClearConsolationPrizesPQOL",
+			"ClearManyLastStandsPQOL",
+			"ClearShutDownThanatosPQOL",
+			"ClearManyTraitsSoldPQOL",
 		}
 	}
 
@@ -2098,7 +2097,7 @@ if PQOL.Config.Commendations.Enabled then
 		TitleText = "Commendations",
 		Entries =
 		{
-			ClearNumOne =
+			ClearNumOnePQOL =
 			{
 				Entries =
 				{
@@ -2112,7 +2111,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearNumTen =
+			ClearNumTenPQOL =
 			{
 				Entries =
 				{
@@ -2126,7 +2125,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearNumFifty =
+			ClearNumFiftyPQOL =
 			{
 				Entries =
 				{
@@ -2140,7 +2139,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearNumOneHundred =
+			ClearNumOneHundredPQOL =
 			{
 				Entries =
 				{
@@ -2154,7 +2153,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearNumTwoFifty =
+			ClearNumTwoFiftyPQOL =
 			{
 				Entries =
 				{
@@ -2168,7 +2167,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearNumFiveHundred =
+			ClearNumFiveHundredPQOL =
 			{
 				Entries =
 				{
@@ -2182,7 +2181,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearNearDeath =
+			ClearNearDeathPQOL =
 			{
 				Entries =
 				{
@@ -2196,7 +2195,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearFullHealth =
+			ClearFullHealthPQOL =
 			{
 				Entries =
 				{
@@ -2210,7 +2209,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearHighMaxHealth =
+			ClearHighMaxHealthPQOL =
 			{
 				Entries =
 				{
@@ -2224,7 +2223,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearTimeFast =
+			ClearTimeFastPQOL =
 			{
 				Entries =
 				{
@@ -2238,7 +2237,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearTimeVeryFast =
+			ClearTimeVeryFastPQOL =
 			{
 				Entries =
 				{
@@ -2252,7 +2251,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearTimeSlow =
+			ClearTimeSlowPQOL =
 			{
 				Entries =
 				{
@@ -2266,7 +2265,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearMoneyNone =
+			ClearMoneyNonePQOL =
 			{
 				Entries =
 				{
@@ -2280,7 +2279,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearMoneyHigh =
+			ClearMoneyHighPQOL =
 			{
 				Entries =
 				{
@@ -2294,7 +2293,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearMetaPointsInvestedNone =
+			ClearMetaPointsInvestedNonePQOL =
 			{
 				Entries =
 				{
@@ -2308,7 +2307,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearNoOlympianBoons =
+			ClearNoOlympianBoonsPQOL =
 			{
 				Entries =
 				{
@@ -2322,7 +2321,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearAllStoryRooms =
+			ClearAllStoryRoomsPQOL =
 			{
 				Entries =
 				{
@@ -2336,7 +2335,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearAllReprieveRooms =
+			ClearAllReprieveRoomsPQOL =
 			{
 				Entries =
 				{
@@ -2350,7 +2349,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearAllShopRooms =
+			ClearAllShopRoomsPQOL =
 			{
 				Entries =
 				{
@@ -2364,7 +2363,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearRequiredTraitsZeus =
+			ClearRequiredTraitsZeusPQOL =
 			{
 				Entries =
 				{
@@ -2378,7 +2377,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearRequiredTraitsPoseidon =
+			ClearRequiredTraitsPoseidonPQOL =
 			{
 				Entries =
 				{
@@ -2392,7 +2391,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearRequiredTraitsAthena =
+			ClearRequiredTraitsAthenaPQOL =
 			{
 				Entries =
 				{
@@ -2406,7 +2405,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearRequiredTraitsAres =
+			ClearRequiredTraitsAresPQOL =
 			{
 				Entries =
 				{
@@ -2420,7 +2419,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearRequiredTraitsArtemis =
+			ClearRequiredTraitsArtemisPQOL =
 			{
 				Entries =
 				{
@@ -2434,7 +2433,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearRequiredTraitsAphrodite =
+			ClearRequiredTraitsAphroditePQOL =
 			{
 				Entries =
 				{
@@ -2448,7 +2447,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearRequiredTraitsDionysus =
+			ClearRequiredTraitsDionysusPQOL =
 			{
 				Entries =
 				{
@@ -2462,7 +2461,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearRequiredTraitsDemeter =
+			ClearRequiredTraitsDemeterPQOL =
 			{
 				Entries =
 				{
@@ -2476,7 +2475,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearRequiredTraitsHermes =
+			ClearRequiredTraitsHermesPQOL =
 			{
 				Entries =
 				{
@@ -2490,7 +2489,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearRequiredTraitsChaos =
+			ClearRequiredTraitsChaosPQOL =
 			{
 				Entries =
 				{
@@ -2504,7 +2503,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearSynergyTraits =
+			ClearSynergyTraitsPQOL =
 			{
 				Entries =
 				{
@@ -2518,7 +2517,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearLegendaryTraits =
+			ClearLegendaryTraitsPQOL =
 			{
 				Entries =
 				{
@@ -2532,7 +2531,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearChallengeSwitches =
+			ClearChallengeSwitchesPQOL =
 			{
 				Entries =
 				{
@@ -2546,7 +2545,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearDevotionEncounters =
+			ClearDevotionEncountersPQOL =
 			{
 				Entries =
 				{
@@ -2560,7 +2559,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearShrineChallengeEncounters =
+			ClearShrineChallengeEncountersPQOL =
 			{
 				Entries =
 				{
@@ -2574,7 +2573,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearMiniBossEncounters =
+			ClearMiniBossEncountersPQOL =
 			{
 				Entries =
 				{
@@ -2588,7 +2587,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearWeaponsFiredWrath =
+			ClearWeaponsFiredWrathPQOL =
 			{
 				Entries =
 				{
@@ -2602,7 +2601,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearWeaponsFiredRanged =
+			ClearWeaponsFiredRangedPQOL =
 			{
 				Entries =
 				{
@@ -2616,7 +2615,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearFishCaught =
+			ClearFishCaughtPQOL =
 			{
 				Entries =
 				{
@@ -2630,7 +2629,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearConsecutiveHigh =
+			ClearConsecutiveHighPQOL =
 			{
 				Entries =
 				{
@@ -2644,7 +2643,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearHealItems =
+			ClearHealItemsPQOL =
 			{
 				Entries =
 				{
@@ -2658,7 +2657,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearStackUpgrades =
+			ClearStackUpgradesPQOL =
 			{
 				Entries =
 				{
@@ -2672,7 +2671,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearGiftDrops =
+			ClearGiftDropsPQOL =
 			{
 				Entries =
 				{
@@ -2686,7 +2685,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearLockKeyDrops =
+			ClearLockKeyDropsPQOL =
 			{
 				Entries =
 				{
@@ -2700,7 +2699,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearConsolationPrizes =
+			ClearConsolationPrizesPQOL =
 			{
 				Entries =
 				{
@@ -2714,7 +2713,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearManyLastStands =
+			ClearManyLastStandsPQOL =
 			{
 				Entries =
 				{
@@ -2728,7 +2727,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearShutDownThanatos =
+			ClearShutDownThanatosPQOL =
 			{
 				Entries =
 				{
@@ -2742,7 +2741,7 @@ if PQOL.Config.Commendations.Enabled then
 					}
 				}
 			},
-			ClearManyTraitsSold =
+			ClearManyTraitsSoldPQOL =
 			{
 				Entries =
 				{
@@ -2765,35 +2764,47 @@ if PQOL.Config.Commendations.Enabled then
 		baseShowRunClearScreen()
 		for name, message in pairs( GameData.RunClearMessageData ) do
 			if IsGameStateEligible( CurrentRun, message.GameStateRequirements ) then
-				UnlockCodexEntry("Commendations", message.Name, 2)
+				UnlockCodexEntry("Commendations", message.Name.."PQOL", 2)
 			end
 		end
 	end
 
+	--inherits unlocks and cleans up after entry names got updated
+	ModUtil.LoadOnce(function ()
+		local chapterName = "Commendations"
+		for entryName in pairs(Codex[chapterName].Entries) do
+			local tempName = string.gsub(entryName, "PQOL", "")
+
+			if CodexStatus[chapterName] and CodexStatus[chapterName][tempName] and CodexStatus[chapterName][tempName][2] and CodexStatus[chapterName][tempName][2].Unlocked then
+				UnlockCodexEntry(chapterName, entryName, 2)
+				CodexStatus[chapterName][tempName] = nil
+			end
+		end
+	end)
+
 	function CheckRunCompletionCommendations()
 		local totalRuns = GetNumRunsCleared()
 		if totalRuns >= 1 then
-			UnlockCodexEntry("Commendations", "ClearNumOne", 2)
+			UnlockCodexEntry("Commendations", "ClearNumOnePQOL", 2)
 		end
 		if totalRuns >= 10 then
-			UnlockCodexEntry("Commendations", "ClearNumTen", 2)
+			UnlockCodexEntry("Commendations", "ClearNumTenPQOL", 2)
 		end
 		if totalRuns >= 50 then
-			UnlockCodexEntry("Commendations", "ClearNumFifty", 2)
+			UnlockCodexEntry("Commendations", "ClearNumFiftyPQOL", 2)
 		end
 		if totalRuns >= 100 then
-			UnlockCodexEntry("Commendations", "ClearNumOneHundred", 2)
+			UnlockCodexEntry("Commendations", "ClearNumOneHundredPQOL", 2)
 		end
 		if totalRuns >= 250 then
-			UnlockCodexEntry("Commendations", "ClearNumTwoFifty", 2)
+			UnlockCodexEntry("Commendations", "ClearNumTwoFiftyPQOL", 2)
 		end
 		if totalRuns >= 500 then
-			UnlockCodexEntry("Commendations", "ClearNumFiveHundred", 2)
+			UnlockCodexEntry("Commendations", "ClearNumFiveHundredPQOL", 2)
 		end
 	end
-	OnAnyLoad{"DeathArea",function(triggerArgs)
-	CheckRunCompletionCommendations()
-  end}
+
+	ModUtil.LoadOnce(CheckRunCompletionCommendations)
 end
 
 if PQOL.Config.PracticeFishing.Enabled then
@@ -3206,7 +3217,8 @@ if PQOL.Config.CompleteAllBounties.Enabled then
 		local activeShrinePoints = GameState.SpentShrinePointsCache
         local maxHeat = HeroData.DefaultHero.MaxShrinePointThreshold
         if GameState.Flags.HardMode then
-            local maxHeat = HeroData.DefaultHero.MaxShrinePointThresholdHardMode
+            maxHeat = HeroData.DefaultHero.MaxShrinePointThresholdHardMode
+			activeShrinePoints = activeShrinePoints - 5
         end
 		local weaponName = GetEquippedWeapon()
 		local roomName = CurrentRun.CurrentRoom.GenusName or CurrentRun.CurrentRoom.Name
@@ -3260,10 +3272,14 @@ if PQOL.Config.CompleteAllBounties.Enabled then
             local offsetY = RandomInt(0, 100)
             local offsetX = RandomInt(0, 100)
             ConsumableData.SuperLockKeyDrop.AddResources.SuperLockKeys = rewardcount
+            ConsumableData.SuperGiftDrop.AddResources.SuperGiftPoints = rewardcount
+            ConsumableData.SuperGemDrop.AddResources.SuperGems = rewardcount
             local consumableId = SpawnObstacle({ Name = rewardName, DestinationId = CurrentRun.Hero.ObjectId, Group = "Standing", OffsetX = offsetX, OffsetY = offsetY })
             local consumable = CreateConsumableItem( consumableId, rewardName, 0 )
 			thread( InCombatText, CurrentRun.Hero.ObjectId, rewardcount.." additional bounties rewarded", 1.8, { ShadowScale = 1.2 } )
             ConsumableData.SuperLockKeyDrop.AddResources.SuperLockKeys = 1
+			ConsumableData.SuperGiftDrop.AddResources.SuperGiftPoints = 1
+            ConsumableData.SuperGemDrop.AddResources.SuperGems = 1
 		end
 	end
 
@@ -3688,7 +3704,7 @@ if PQOL.Config.BloodRefund.Enabled then
 
 		--Mod start
 		local amount = bloodCost * PQOL.Config.BloodRefund.KeyCostPerBloodRefunded
-		if PQOL.Config.BloodRefund.EasyMode then
+		if PQOL.Config.BloodRefund.FreeMode then
 			amount = 0
 		end
 		components.RefundButton = CreateScreenComponent({ Name = "ButtonRefund", Scale = 1, Group = "Combat_Menu_TraitTray" })

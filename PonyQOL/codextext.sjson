@@ -314,12 +314,12 @@
     {
       Id = "Commendation_0063"
       Speaker = "Achilles"
-      DisplayName = "Clear a run while having bought Trove Tracker from Charon's well and opened a treasure trove in Tartatus, Asphodel and Elysium."
+      DisplayName = "Clear a run while having bought Trove Tracker from Charon's well and opened a treasure trove in Tartarus, Asphodel and Elysium."
     }
     {
       Id = "Commendation_0064"
       Speaker = "Achilles"
-      DisplayName = "Clear a run while having bought Trove Tracker from Charon's well and opened a treasure trove in Tartatus, Asphodel and Elysium. -- {#CodexBoldFormat}Complete!"
+      DisplayName = "Clear a run while having bought Trove Tracker from Charon's well and opened a treasure trove in Tartarus, Asphodel and Elysium. -- {#CodexBoldFormat}Complete!"
     }
     {
       Id = "Commendation_0065"

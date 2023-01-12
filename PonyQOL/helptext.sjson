@@ -15,5 +15,197 @@
         DisplayName = "Costs {$TempTextData.Amount}{!Icons.LockKeySmall} to refund"
         OverwriteLocalization = true
         }
+        {
+        Id = "ClearNumOnePQOL"
+        DisplayName = "The First of Many?"
+        }
+        {
+        Id = "ClearNumTenPQOL"
+        DisplayName = "Tenth Time's a Charm"
+        }
+        {
+        Id = "ClearNumFiftyPQOL"
+        DisplayName = "The Big Five-Oh"
+        }
+        {
+        Id = "ClearNumOneHundredPQOL"
+        DisplayName = "Happy Centennial"
+        }
+        {
+        Id = "ClearNumTwoFiftyPQOL"
+        DisplayName = "Quarter Century"
+        }
+        {
+        Id = "ClearNumFiveHundredPQOL"
+        DisplayName = "Five Hundred Patricides"
+        }
+        {
+        Id = "ClearNearDeathPQOL"
+        DisplayName = "(Close Call, Though)"
+        }
+        {
+        Id = "ClearFullHealthPQOL"
+        DisplayName = "Perfect Clear"
+        }
+        {
+        Id = "ClearTimeFastPQOL"
+        DisplayName = "Swiftness of Hermes"
+        }
+        {
+        Id = "ClearTimeVeryFastPQOL"
+        DisplayName = "Hermes Would Be Jealous"
+        }
+        {
+        Id = "ClearTimeSlowPQOL"
+        DisplayName = "Slow and Steady"
+        }
+        {
+        Id = "ClearMoneyNonePQOL"
+        DisplayName = "Poor as a Pauper"
+        }
+        {
+        Id = "ClearMoneyHighPQOL"
+        DisplayName = "Swimming in Cash"
+        }
+        {
+        Id = "ClearMetaPointsInvestedNonePQOL"
+        DisplayName = "100% Darkness-Free"
+        }
+        {
+        Id = "ClearNoOlympianBoonsPQOL"
+        DisplayName = "100% Olympian-Free"
+        }
+        {
+        Id = "ClearAllStoryRoomsPQOL"
+        DisplayName = "Made Friends Along the Way"
+        }
+        {
+        Id = "ClearAllReprieveRoomsPQOL"
+        DisplayName = "Fountain Finder Award"
+        }
+        {
+        Id = "ClearAllShopRoomsPQOL"
+        DisplayName = "Big Shopping Trip, Too"
+        }
+        {
+        Id = "ClearRequiredTraitsZeusPQOL"
+        DisplayName = "Disciple of Zeus"
+        }
+        {
+        Id = "ClearRequiredTraitsPoseidonPQOL"
+        DisplayName = "Disciple of Poseidon"
+        }
+        {
+        Id = "ClearRequiredTraitsAthenaPQOL"
+        DisplayName = "Disciple of Athena"
+        }
+        {
+        Id = "ClearRequiredTraitsAresPQOL"
+        DisplayName = "Disciple of Ares"
+        }
+        {
+        Id = "ClearRequiredTraitsArtemisPQOL"
+        DisplayName = "Disciple of Artemis"
+        }
+        {
+        Id = "ClearRequiredTraitsAphroditePQOL"
+        DisplayName = "Disciple of Aphrodite"
+        }
+        {
+        Id = "ClearRequiredTraitsDionysusPQOL"
+        DisplayName = "Disciple of Dionysus"
+        }
+        {
+        Id = "ClearRequiredTraitsHermesPQOL"
+        DisplayName = "Disciple of Hermes"
+        }
+        {
+        Id = "ClearRequiredTraitsDemeterPQOL"
+        DisplayName = "Disciple of Demeter"
+        }
+        {
+        Id = "ClearRequiredTraitsChaosPQOL"
+        DisplayName = "Scion of Chaos"
+        }
+        {
+        Id = "ClearHighMaxHealthPQOL"
+        DisplayName = "Minotaur's Toughness"
+        }
+        {
+        Id = "ClearChallengeSwitchesPQOL"
+        DisplayName = "Trove Taker"
+        }
+        {
+        Id = "ClearDevotionEncountersPQOL"
+        DisplayName = "Favored & Envied"
+        }
+        {
+        Id = "ClearShrineChallengeEncountersPQOL"
+        DisplayName = "Erebus Gatekeeper"
+        }
+        {
+        Id = "ClearMiniBossEncountersPQOL"
+        DisplayName = "Middle-Management Cutter"
+        }
+        {
+        Id = "ClearWeaponsFiredWrathPQOL"
+        DisplayName = "Olympus Caller"
+        }
+        {
+        Id = "ClearWeaponsFiredRangedPQOL"
+        DisplayName = "Master Caster"
+        }
+        {
+        Id = "ClearSynergyTraitsPQOL"
+        DisplayName = "Duo Digger"
+        }
+        {
+        Id = "ClearLegendaryTraitsPQOL"
+        DisplayName = "Pride of Olympus"
+        }
+        {
+        Id = "ClearFishCaughtPQOL"
+        DisplayName = "Fisher King"
+        }
+        {
+        Id = "ClearConsecutiveLowPQOL"
+        DisplayName = "Triathlete"
+        }
+        {
+        Id = "ClearConsecutiveHighPQOL"
+        DisplayName = "Decathlete"
+        }
+        {
+        Id = "ClearHealItemsPQOL"
+        DisplayName = "Souvla Snacker"
+        }
+        {
+        Id = "ClearStackUpgradesPQOL"
+        DisplayName = "Pom-Powered"
+        }
+        {
+        Id = "ClearGiftDropsPQOL"
+        DisplayName = "Nose for Nectar"
+        }
+        {
+        Id = "ClearLockKeyDropsPQOL"
+        DisplayName = "Chthonic Keymaster"
+        }
+        {
+        Id = "ClearConsolationPrizesPQOL"
+        DisplayName = "Onion Eater"
+        }
+        {
+        Id = "ClearManyLastStandsPQOL"
+        DisplayName = "Death Defier"
+        }
+        {
+        Id = "ClearShutDownThanatosPQOL"
+        DisplayName = "Robbed Thanatos"
+        }
+        {
+        Id = "ClearManyTraitsSoldPQOL"
+        DisplayName = "Boon Purger"
+        }
     ]
 }

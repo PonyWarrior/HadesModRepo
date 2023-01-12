@@ -192,3 +192,16 @@ added global config disable option
 CompleteAllBounties: added an option to disable the game's bounty limit (20 in normal, 25 in hell mode)
 added module Other, for minor features that do not fit in other modules
 Other: added an option to disable the sword nova attack zoom-in effect
+
+2.6.4
+
+bugfixes :
+
+fixed blood refund free mode still requiring you to have the keys refunding would have cost
+fixed a typo in the Trove Taker commendation
+fixed bounties being rewarded for heat 1-5 on hell mode
+fixed diamond and ambrosia bounties not being rewarded
+
+changes :
+
+entries in the Commendations tab no longer have stars on either side, which caused the formatting to be weird
