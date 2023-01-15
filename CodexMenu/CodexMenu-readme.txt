@@ -321,3 +321,9 @@ other changes :
 
 Boon Selector no longer shows the Heroic rarity button for chaos boons
 using the Save State command now saves the game, so you no longer need to leave the room after using it
+
+2.5.2
+
+bugfixes :
+
+fixed pressing Enter on the Modlist entry crashing the game

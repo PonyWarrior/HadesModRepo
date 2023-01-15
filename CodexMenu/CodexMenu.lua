@@ -2358,10 +2358,12 @@ end)
 Codex.Commands = Commands
 
 function CodexMenu.UseCommand(commandName, triggerArgs)
-	CloseCodexScreen()
 	local command = "CodexMenu." .. commandName
 	local commandFunction = _G[command]
-	commandFunction(triggerArgs)
+	if commandFunction ~= nil then
+		CloseCodexScreen()
+		commandFunction(triggerArgs)
+	end
 end
 
 function CodexMenu.OpenBoonManager()
