@@ -2338,6 +2338,20 @@ Commands = {
 				}
 			}
 		},
+		ClearRunHistory = {
+			Entries = {
+				{
+					Text = "Clears all history of previous runs."
+				}
+			}
+		},
+		OpenDialogManager = {
+			Entries = {
+				{
+					Text = "Opens the dialog manager. Select a character, a textline set then force or unforce a dialog to play next time you interact with the character by pressing the button. White = unseen dialog, green = seen dialog, blue = dialog is in the forced queue."
+				}
+			}
+		}
 	}
 }
 
@@ -2660,4 +2674,12 @@ function CodexMenu.SpawnResource(screen, button)
 	end
 
 	AddResource(screen.Resource, screen.Amount)
+end
+
+function CodexMenu.ClearRunHistory(screen, button)
+	GameState.RunHistory = {}
+end
+
+function CodexMenu.OpenDialogManager(screen, button)
+	CodexMenu.OpenDialogManagerScreen()
 end

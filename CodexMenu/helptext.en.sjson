@@ -1,0 +1,29 @@
+{
+    Texts = [
+        "_append"
+        {
+        Id = "NyxRevealsArthurAspect01"
+        DisplayName = "Nyx reveals Arthur"
+        }
+        {
+        Id = "AchillesRevealsGuanYuAspect01"
+        DisplayName = "Achilles reveals GuanYu"
+        }
+        {
+        Id = "ZeusRevealsLuciferAspect01"
+        DisplayName = "Zeus reveals Lucifer"
+        }
+        {
+        Id = "ArtemisRevealsRamaAspect01"
+        DisplayName = "Artemis reveals Rama"
+        }
+        {
+        Id = "ChaosRevealsBeowulfAspect01"
+        DisplayName = "Chaos reveals Beowulf"
+        }
+        {
+        Id = "MinotaurRevealsGilgameshAspect01"
+        DisplayName = "Asterius reveals Gilgamesh"
+        }
+    ]
+}

@@ -327,3 +327,8 @@ using the Save State command now saves the game, so you no longer need to leave 
 bugfixes :
 
 fixed pressing Enter on the Modlist entry crashing the game
+
+2.6.0
+
+added clear run history command
+added dialog manager
