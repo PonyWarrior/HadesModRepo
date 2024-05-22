@@ -1,4 +1,4 @@
-ModUtil.RegisterMod("CodexMenu")
+ModUtil.Mod.Register("CodexMenu")
 ModUtil.Table.Merge(CodexMenu, {
     BoonData =
     {
@@ -267,7 +267,7 @@ ModUtil.Table.Merge(CodexMenu, {
 if ModUtil ~= nil and PQOL == nil then
     local mod = "CodexMenu"
 
-    ModUtil.WrapBaseFunction( "SetupMap", function(baseFunc)
+    ModUtil.Path.Wrap( "SetupMap", function(baseFunc)
         DebugPrint({Text = "@"..mod.." Loading all god packages!"})
         LoadPackages({Names = {
             "ZeusUpgrade",
