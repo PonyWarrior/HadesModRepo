@@ -446,7 +446,7 @@ function CodexMenu.MakeTextLineForced(screen, button)
     end
 end
 
-ModUtil.BaseOverride("ForcePlayTextLines", function (source, textLinesName )
+ModUtil.Path.Override("ForcePlayTextLines", function (source, textLinesName )
     local possibleSets =
 	{
 		"OnUsedTextLineSets", "InteractTextLineSets", "RepeatableTextLineSets", "SuperPriorityPickupTextLineSets",
@@ -475,7 +475,7 @@ ModUtil.BaseOverride("ForcePlayTextLines", function (source, textLinesName )
 	return false
 end, DialogManager)
 
-ModUtil.BaseOverride("PlayTextLines", function (source, textLines, textline)
+ModUtil.Path.Override("PlayTextLines", function (source, textLines, textline)
     if textLines == nil then
 		return
 	end
