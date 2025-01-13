@@ -1,156 +1,158 @@
-local TextLineGroups =
-{
-    HiddenAspects =
+ModUtil.Table.Merge(CodexMenu, {
+    TextLineGroups =
     {
-        "NyxRevealsArthurAspect01",
-        "AchillesRevealsGuanYuAspect01",
-        "ZeusRevealsLuciferAspect01",
-        "ArtemisRevealsRamaAspect01",
-        "ChaosRevealsBeowulfAspect01",
-        "MinotaurRevealsGilgameshAspect01"
-    },
-    Keepsakes =
-    {
-        "AchillesGift01",
-        "AchillesGift07_A",
-        "SkellyGift01",
-        "SkellyGift07",
-        "SisyphusGift01",
-        "SisyphusGift07_A",
-        "MegaeraGift01",
-        "MegaeraGift07",
-        "ThanatosGift01",
-        "ThanatosGift07_A",
-        "DusaGift01",
-        "DusaGift07",
-    },
-    NPC_Hades_01 =
-    {
-        "InteractTextLineSets", "GiftTextLineSets"
-    },
-    NPC_Sisyphus_01 =
-    {
-        "InteractTextLineSets", "GiftTextLineSets"
-    },
-    --Skelly
-    TrainingMelee =
-    {
-        "InteractTextLineSets", "GiftTextLineSets"
-    },
-    NPC_Achilles_01 =
-    {
-        "InteractTextLineSets", "GiftTextLineSets"
-    },
-    --Megaera
-    NPC_FurySister_01 =
-    {
-        "InteractTextLineSets", "GiftTextLineSets"
-    },
-    Harpy2 =
-    {
-        "BossPresentationTextLineSets"
-    },
-    Harpy3 =
-    {
-        "BossPresentationTextLineSets"
-    },
-    NPC_Dusa_01 =
-    {
-        "InteractTextLineSets", "GiftTextLineSets"
+        HiddenAspects =
+        {
+            "NyxRevealsArthurAspect01",
+            "AchillesRevealsGuanYuAspect01",
+            "ZeusRevealsLuciferAspect01",
+            "ArtemisRevealsRamaAspect01",
+            "ChaosRevealsBeowulfAspect01",
+            "MinotaurRevealsGilgameshAspect01"
+        },
+        Keepsakes =
+        {
+            "AchillesGift01",
+            "AchillesGift07_A",
+            "SkellyGift01",
+            "SkellyGift07",
+            "SisyphusGift01",
+            "SisyphusGift07_A",
+            "MegaeraGift01",
+            "MegaeraGift07",
+            "ThanatosGift01",
+            "ThanatosGift07_A",
+            "DusaGift01",
+            "DusaGift07",
+        },
+        NPC_Hades_01 =
+        {
+            "InteractTextLineSets", "GiftTextLineSets"
+        },
+        NPC_Sisyphus_01 =
+        {
+            "InteractTextLineSets", "GiftTextLineSets"
+        },
+        --Skelly
+        TrainingMelee =
+        {
+            "InteractTextLineSets", "GiftTextLineSets"
+        },
+        NPC_Achilles_01 =
+        {
+            "InteractTextLineSets", "GiftTextLineSets"
+        },
+        --Megaera
+        NPC_FurySister_01 =
+        {
+            "InteractTextLineSets", "GiftTextLineSets"
+        },
+        Harpy2 =
+        {
+            "BossPresentationTextLineSets"
+        },
+        Harpy3 =
+        {
+            "BossPresentationTextLineSets"
+        },
+        NPC_Dusa_01 =
+        {
+            "InteractTextLineSets", "GiftTextLineSets"
 
-    },
-    NPC_Cerberus_01 =
-    {
-        "InteractTextLineSets", "GiftTextLineSets"
+        },
+        NPC_Cerberus_01 =
+        {
+            "InteractTextLineSets", "GiftTextLineSets"
 
-    },
-    NPC_Nyx_01 =
-    {
-        "InteractTextLineSets", "GiftTextLineSets"
+        },
+        NPC_Nyx_01 =
+        {
+            "InteractTextLineSets", "GiftTextLineSets"
 
-    },
-    NPC_Hypnos_01 =
-    {
-        "InteractTextLineSets", "GiftTextLineSets"
+        },
+        NPC_Hypnos_01 =
+        {
+            "InteractTextLineSets", "GiftTextLineSets"
 
-    },
-    NPC_Thanatos_01 =
-    {
-        "InteractTextLineSets", "GiftTextLineSets"
-    },
-    NPC_Charon_01 =
-    {
-        "InteractTextLineSets", "GiftTextLineSets"
-    },
-    TrialUpgrade =
-    {
-        "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
-    },
-    ZeusUpgrade =
-    {
-        "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
-    },
-    PoseidonUpgrade =
-    {
-        "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
-    },
-    AthenaUpgrade =
-    {
-        "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
-    },
-    AphroditeUpgrade =
-    {
-        "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
-    },
-    ArtemisUpgrade =
-    {
-        "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
-    },
-    AresUpgrade =
-    {
-        "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
-    },
-    DionysusUpgrade =
-    {
-        "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
-    },
-    HermesUpgrade =
-    {
-        "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
-    },
-    DemeterUpgrade =
-    {
-        "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
-    },
-    NPC_Orpheus_01 =
-    {
-        "InteractTextLineSets", "GiftTextLineSets"
-    },
-    NPC_Eurydice_01 =
-    {
-        "InteractTextLineSets", "GiftTextLineSets"
-    },
-    NPC_Patroclus_01 =
-    {
-        "InteractTextLineSets", "GiftTextLineSets"
-    },
-    Theseus =
-    {
-        "BossPresentationTextLineSets"
-    },
-    Minotaur =
-    {
-        "BossPresentationPriorityIntroTextLineSets", "BossPresentationIntroTextLineSets", "BossPresentationTextLineSets"
-    },
-    NPC_Persephone_01 =
-    {
-        "InteractTextLineSets"
-    },
-    NPC_Persephone_Home_01 =
-    {
-        "InteractTextLineSets", "GiftTextLineSets"
-    },
-}
+        },
+        NPC_Thanatos_01 =
+        {
+            "InteractTextLineSets", "GiftTextLineSets"
+        },
+        NPC_Charon_01 =
+        {
+            "InteractTextLineSets", "GiftTextLineSets"
+        },
+        TrialUpgrade =
+        {
+            "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
+        },
+        ZeusUpgrade =
+        {
+            "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
+        },
+        PoseidonUpgrade =
+        {
+            "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
+        },
+        AthenaUpgrade =
+        {
+            "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
+        },
+        AphroditeUpgrade =
+        {
+            "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
+        },
+        ArtemisUpgrade =
+        {
+            "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
+        },
+        AresUpgrade =
+        {
+            "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
+        },
+        DionysusUpgrade =
+        {
+            "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
+        },
+        HermesUpgrade =
+        {
+            "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
+        },
+        DemeterUpgrade =
+        {
+            "SuperPriorityPickupTextLineSets", "PriorityPickupTextLineSets", "PickupTextLineSets", "GiftTextLineSets"
+        },
+        NPC_Orpheus_01 =
+        {
+            "InteractTextLineSets", "GiftTextLineSets"
+        },
+        NPC_Eurydice_01 =
+        {
+            "InteractTextLineSets", "GiftTextLineSets"
+        },
+        NPC_Patroclus_01 =
+        {
+            "InteractTextLineSets", "GiftTextLineSets"
+        },
+        Theseus =
+        {
+            "BossPresentationTextLineSets"
+        },
+        Minotaur =
+        {
+            "BossPresentationPriorityIntroTextLineSets", "BossPresentationIntroTextLineSets", "BossPresentationTextLineSets"
+        },
+        NPC_Persephone_01 =
+        {
+            "InteractTextLineSets"
+        },
+        NPC_Persephone_Home_01 =
+        {
+            "InteractTextLineSets", "GiftTextLineSets"
+        },
+    }
+})
 
 -- we can't wrap callbacks so a hack is needed to prevent the game from concatenating a table
 local TempForceEvent
@@ -195,7 +197,7 @@ end
 
 function CodexMenu.DisplayTextLineGroups(components)
     local index = 1
-    for name, textlines in pairs(TextLineGroups) do
+    for name, textlines in pairs(CodexMenu.TextLineGroups) do
         local rowstartX = -650
         local rowstartY = -400
         local rowoffset = 100

@@ -332,3 +332,7 @@ fixed pressing Enter on the Modlist entry crashing the game
 
 added clear run history command
 added dialog manager
+
+2.6.1
+
+globalize dialog manager variables for 3rd party access
